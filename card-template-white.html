@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>White Minimal – Visitenkarte</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',sans-serif;background:#cbd5e1;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:40px 20px;gap:20px;}
+.lbl{font-size:9px;color:#94a3b8;letter-spacing:4px;text-transform:uppercase;text-align:center;}
+.bc{width:322px;height:204px;position:relative;overflow:hidden;border-radius:8px;box-shadow:0 4px 6px rgba(0,0,0,0.06),0 20px 40px rgba(0,0,0,0.14);}
+/* layers */
+.bc-bg{position:absolute;inset:0;background:#ffffff;z-index:0;}
+.bc-bgimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;display:none;}
+.bc-overlay{position:absolute;inset:0;background:#ffffff;z-index:2;opacity:1;transition:opacity .3s;}
+.bc-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(99,102,241,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(99,102,241,0.03) 1px,transparent 1px);background-size:18px 18px;z-index:3;}
+.bc-bottom-bar{position:absolute;bottom:0;left:0;right:0;height:5px;z-index:4;}
+.bc-content{position:relative;z-index:5;width:100%;height:calc(100% - 5px);padding:18px 20px;display:flex;flex-direction:column;justify-content:space-between;}
+.bc-logo-area{display:flex;align-items:center;gap:10px;margin-bottom:2px;}
+.bc-logo-img{width:32px;height:32px;object-fit:contain;border-radius:5px;display:none;}
+.bc-logo-txt{font-size:10px;font-weight:800;letter-spacing:3px;text-transform:uppercase;}
+.bc-divider{width:24px;height:2px;margin:6px 0;}
+.bc-name{font-size:17px;font-weight:700;color:#0f172a;}
+.bc-title{font-size:9px;color:#64748b;letter-spacing:1.5px;text-transform:uppercase;margin-top:3px;}
+.bc-bottom{display:flex;justify-content:space-between;align-items:flex-end;}
+.bc-contacts{display:flex;flex-direction:column;gap:3px;}
+.bc-crow{display:flex;align-items:center;gap:6px;font-size:9px;color:#64748b;}
+.bc-crow i{width:10px;text-align:center;font-size:8px;}
+.bc-qrs{display:flex;gap:7px;align-items:flex-end;}
+.bc-qr-item{display:flex;flex-direction:column;align-items:center;gap:3px;}
+.bc-qr-icon{width:20px;height:20px;background:#f1f5f9;border:1px solid #e2e8f0;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:10px;}
+.bc-qr-box{width:44px;height:44px;border-radius:4px;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+/* BACK */
+.bc-back-bg{position:absolute;inset:0;background:#ffffff;z-index:0;}
+.bc-back-bgimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;display:none;}
+.bc-back-overlay{position:absolute;inset:0;background:#ffffff;z-index:2;opacity:1;transition:opacity .3s;}
+.bc-top-bar{position:absolute;top:0;left:0;right:0;height:5px;z-index:4;}
+.bc-bot-bar{position:absolute;bottom:0;left:0;right:0;height:5px;z-index:4;}
+.bc-watermark{position:absolute;bottom:14px;right:14px;font-size:56px;opacity:0.04;z-index:3;line-height:1;}
+.bc-back-content{position:relative;z-index:5;height:calc(100% - 10px);margin-top:5px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;padding:16px;}
+.bc-back-logo-area{display:flex;align-items:center;gap:8px;}
+.bc-back-logo-img{width:34px;height:34px;object-fit:contain;border-radius:6px;display:none;}
+.bc-back-icon{font-size:22px;}
+.bc-back-company{font-size:11px;font-weight:800;letter-spacing:4px;color:#0f172a;text-transform:uppercase;}
+.bc-back-divider{width:36px;height:2px;}
+.bc-back-services{font-size:8px;color:#94a3b8;letter-spacing:1.5px;text-align:center;}
+.bc-back-qrs{display:flex;gap:14px;align-items:flex-end;margin-top:4px;}
+.bc-back-qr-item{display:flex;flex-direction:column;align-items:center;gap:4px;}
+.bc-back-qr-icon{width:24px;height:24px;background:#f1f5f9;border:1px solid #e2e8f0;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;}
+.bc-back-qr-box{width:52px;height:52px;border-radius:5px;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+</style>
+</head>
+<body>
+<p class="lbl">Vorderseite · White Minimal</p>
+<div class="bc" id="front">
+  <div class="bc-bg"></div>
+  <img class="bc-bgimg" id="front-bgimg" alt="">
+  <div class="bc-overlay" id="front-overlay"></div>
+  <div class="bc-grid"></div>
+  <div class="bc-bottom-bar" id="front-bar"></div>
+  <div class="bc-content">
+    <div>
+      <div class="bc-logo-area">
+        <img class="bc-logo-img" id="logo-img" alt="Logo">
+        <div class="bc-logo-txt" data-editable="companyName" id="front-logo-txt">Mein Unternehmen GmbH</div>
+      </div>
+      <div class="bc-divider" id="front-divider"></div>
+      <div class="bc-name" data-editable="personName">Max Mustermann</div>
+      <div class="bc-title" data-editable="jobTitle">Geschäftsführer · CEO</div>
+    </div>
+    <div class="bc-bottom">
+      <div class="bc-contacts">
+        <div class="bc-crow" id="row-phone1" style="display:none;"><i class="fas fa-phone" id="ic-ph"></i><span data-editable="phone1"></span></div>
+        <div class="bc-crow" id="row-email"  style="display:none;"><i class="fas fa-envelope" id="ic-em"></i><span data-editable="email"></span></div>
+        <div class="bc-crow" id="row-website" style="display:none;"><i class="fas fa-globe" id="ic-web"></i><span data-editable="website"></span></div>
+      </div>
+      <div class="bc-qrs" id="front-qrs"></div>
+    </div>
+  </div>
+</div>
+
+<p class="lbl">Rückseite · White Minimal</p>
+<div class="bc" id="back">
+  <div class="bc-back-bg"></div>
+  <img class="bc-back-bgimg" id="back-bgimg" alt="">
+  <div class="bc-back-overlay" id="back-overlay"></div>
+  <div class="bc-top-bar" id="back-top-bar"></div>
+  <div class="bc-bot-bar" id="back-bot-bar"></div>
+  <div class="bc-watermark" id="back-watermark"><i class="fas fa-bolt"></i></div>
+  <div class="bc-back-content">
+    <div class="bc-back-logo-area">
+      <img class="bc-back-logo-img" id="back-logo-img" alt="">
+      <i class="fas fa-bolt bc-back-icon" id="back-icon"></i>
+    </div>
+    <div class="bc-back-company" data-editable="companyName">Mein Unternehmen GmbH</div>
+    <div class="bc-back-divider" id="back-divider"></div>
+    <div class="bc-back-services" data-editable="jobTitle"></div>
+    <div class="bc-back-qrs" id="back-qrs"></div>
+  </div>
+</div>
+
+<p class="lbl" style="margin-top:8px;">85 × 54 mm · Druckfertig</p>
+
+<script>
+var state={
+  companyName:'Mein Unternehmen GmbH',personName:'Max Mustermann',
+  jobTitle:'Geschäftsführer · CEO',phone1:'+49 30 123 456 78',
+  email:'info@firma.de',website:'www.firma.de',
+  primaryColor:'#6366f1',accentColor:'#ec4899',textColor:'#6366f1',
+  bgImage:'',bgOpacity:0.7,logoImg:'',instagram:'',tiktok:''
+};
+
+function render(){
+  document.querySelectorAll('[data-editable]').forEach(function(el){
+    var k=el.getAttribute('data-editable');
+    if(state[k]!==undefined) el.textContent=state[k];
+  });
+  ['phone1','email','website'].forEach(function(k){
+    var r=document.getElementById('row-'+k);
+    if(r) r.style.display=state[k]?'flex':'none';
+  });
+  var p=state.primaryColor||'#6366f1';
+  var a=state.accentColor||'#ec4899';
+  var t=state.textColor||'#6366f1';
+  var barGrad='linear-gradient(90deg,'+p+','+a+')';
+  document.getElementById('front-bar').style.background=barGrad;
+  document.getElementById('back-top-bar').style.background=barGrad;
+  document.getElementById('back-bot-bar').style.background='linear-gradient(90deg,'+a+','+p+')';
+  document.getElementById('front-divider').style.background=a;
+  document.getElementById('back-divider').style.background='linear-gradient(90deg,'+p+','+a+')';
+  document.getElementById('front-logo-txt').style.color=t;
+  document.getElementById('back-icon').style.color=p;
+  document.getElementById('back-watermark').style.color=p;
+  document.getElementById('ic-ph').style.color=p;
+  document.getElementById('ic-em').style.color=a;
+  document.getElementById('ic-web').style.color=p;
+  // bg image
+  if(state.bgImage){
+    ['front-bgimg','back-bgimg'].forEach(function(id){
+      var img=document.getElementById(id); img.src=state.bgImage; img.style.display='block'; img.style.opacity=1-state.bgOpacity;
+    });
+    document.getElementById('front-overlay').style.opacity=state.bgOpacity;
+    document.getElementById('back-overlay').style.opacity=state.bgOpacity;
+  } else {
+    ['front-bgimg','back-bgimg'].forEach(function(id){ document.getElementById(id).style.display='none'; });
+    document.getElementById('front-overlay').style.opacity=1;
+    document.getElementById('back-overlay').style.opacity=1;
+  }
+  // logo
+  if(state.logoImg){
+    ['logo-img','back-logo-img'].forEach(function(id){ var el=document.getElementById(id); el.src=state.logoImg; el.style.display='block'; });
+    document.getElementById('back-icon').style.display='none';
+  } else {
+    ['logo-img','back-logo-img'].forEach(function(id){ document.getElementById(id).style.display='none'; });
+    document.getElementById('back-icon').style.display='';
+  }
+  buildQRs(p,a);
+}
+
+function buildQRs(p,a){
+  var fqrs=document.getElementById('front-qrs');
+  var bqrs=document.getElementById('back-qrs');
+  fqrs.innerHTML=''; bqrs.innerHTML='';
+  var items=[];
+  if(state.instagram) items.push({url:state.instagram,icon:'fab fa-instagram',color:'#e1306c'});
+  if(state.tiktok)    items.push({url:state.tiktok,   icon:'fab fa-tiktok',   color:'#0f172a'});
+  if(!items.length) return;
+  items.forEach(function(item){
+    var fw=document.createElement('div'); fw.className='bc-qr-item';
+    var fi=document.createElement('div'); fi.className='bc-qr-icon';
+    fi.innerHTML='<i class="'+item.icon+'" style="color:'+item.color+';font-size:10px;"></i>';
+    var fb=document.createElement('div'); fb.className='bc-qr-box'; fb.style.background=p;
+    var fe=document.createElement('div'); fe.style.cssText='width:40px;height:40px;';
+    fb.appendChild(fe); fw.appendChild(fi); fw.appendChild(fb); fqrs.appendChild(fw);
+    try{ new QRCode(fe,{text:item.url,width:40,height:40,colorDark:'#0f172a',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M}); }catch(e){}
+    var bw=document.createElement('div'); bw.className='bc-back-qr-item';
+    var bi=document.createElement('div'); bi.className='bc-back-qr-icon';
+    bi.innerHTML='<i class="'+item.icon+'" style="color:'+item.color+';font-size:12px;"></i>';
+    var bb=document.createElement('div'); bb.className='bc-back-qr-box'; bb.style.background='#0f172a';
+    var be=document.createElement('div'); be.style.cssText='width:48px;height:48px;';
+    bb.appendChild(be); bw.appendChild(bi); bw.appendChild(bb); bqrs.appendChild(bw);
+    try{ new QRCode(be,{text:item.url,width:48,height:48,colorDark:'#0f172a',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M}); }catch(e){}
+  });
+}
+
+render();
+window.addEventListener('message',function(e){
+  if(!e.data||e.data.type!=='cardUpdate') return;
+  Object.keys(e.data.data).forEach(function(k){ state[k]=e.data.data[k]; });
+  render();
+});
+</script>
+</body>
+</html>

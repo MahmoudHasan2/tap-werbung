@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>TAP · لوحة التحكم</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f0f0f;--panel:#1a1a1a;--panel2:#222;--line:rgba(255,255,255,.1);--text:#fff;--muted:rgba(255,255,255,.55);--purple:#8B5CF6;--purple2:#A78BFA;--red:#ef4444;--green:#22c55e}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+button,input,textarea,select{font-family:inherit;font-size:14px}
+.btn{background:var(--purple);color:#fff;border:0;border-radius:8px;padding:9px 16px;cursor:pointer;font-weight:600}
+.btn:hover{background:var(--purple2)}.btn.ghost{background:transparent;border:1px solid var(--line)}.btn.ghost:hover{border-color:var(--purple)}
+.btn.red{background:transparent;border:1px solid rgba(239,68,68,.5);color:#fca5a5}.btn.red:hover{background:var(--red);color:#fff}
+.btn.sm{padding:5px 10px;font-size:12px}
+input,textarea,select{width:100%;background:#111;border:1px solid var(--line);border-radius:8px;color:#fff;padding:8px 10px;outline:none}
+input:focus,textarea:focus{border-color:var(--purple)}textarea{resize:vertical;min-height:40px;line-height:1.6}
+[dir=ltr]{text-align:left}
+/* login */
+#login{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:16px}
+.login-box{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:36px 28px;width:100%;max-width:380px}
+.login-box h1{font-size:26px;margin-bottom:4px}.login-box h1 span{color:var(--purple)}
+.login-box p{color:var(--muted);font-size:13px;margin-bottom:22px}
+.login-box label{display:block;font-size:13px;color:var(--muted);margin:12px 0 6px}
+.login-box .btn{width:100%;margin-top:20px;padding:12px}
+.err{color:#fca5a5;font-size:13px;margin-top:12px;min-height:18px}
+/* layout */
+#app{display:none;min-height:100vh}
+aside{position:fixed;top:0;right:0;bottom:0;width:240px;background:var(--panel);border-left:1px solid var(--line);padding:20px 12px;overflow-y:auto}
+aside .logo{font-weight:900;font-size:20px;padding:0 10px 16px}.logo span{color:var(--purple)}
+aside h4{font-size:11px;color:var(--muted);margin:16px 10px 6px;letter-spacing:.05em}
+aside a{display:block;padding:8px 12px;border-radius:8px;color:#ddd;text-decoration:none;font-size:14px;cursor:pointer}
+aside a:hover{background:var(--panel2)}aside a.on{background:var(--purple);color:#fff}
+main{margin-right:240px;padding:0 28px 80px}
+.top{position:sticky;top:0;z-index:5;background:rgba(15,15,15,.92);backdrop-filter:blur(10px);display:flex;align-items:center;gap:10px;padding:16px 0;border-bottom:1px solid var(--line);margin-bottom:22px;flex-wrap:wrap}
+.top h2{font-size:20px;flex:1}
+.dirty{color:#fbbf24;font-size:13px;display:none}.dirty.show{display:inline}
+.group{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;margin-bottom:18px}
+.group>h3{font-size:15px;margin-bottom:14px;color:var(--purple2)}
+.field{padding:12px 0;border-top:1px solid var(--line)}.field:first-of-type{border-top:0}
+.field .k{font-size:11px;color:var(--muted);margin-bottom:6px;direction:ltr;text-align:right}
+.langs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.langs label{font-size:11px;color:var(--muted);display:block;margin-bottom:3px}
+.imgrow{display:flex;gap:12px;align-items:center}
+.imgrow img{width:90px;height:64px;object-fit:cover;border-radius:6px;background:#111;flex-shrink:0}
+.imgrow .inp{flex:1;display:flex;gap:8px}
+.items{display:grid;gap:14px}
+.item{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;display:grid;grid-template-columns:150px 1fr;gap:16px}
+.item .pic img{width:150px;height:110px;object-fit:cover;border-radius:8px;background:#111;display:block}
+.item .pic .btn{width:100%;margin-top:6px}
+.item .f{display:grid;gap:8px}.item .f label{font-size:11px;color:var(--muted)}
+.item .acts{display:flex;gap:6px;justify-content:flex-start;margin-top:4px;flex-wrap:wrap}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.hint{color:var(--muted);font-size:13px;margin-bottom:16px;line-height:1.8}
+.toast{position:fixed;bottom:20px;left:20px;background:var(--panel2);border:1px solid var(--line);padding:12px 18px;border-radius:10px;opacity:0;transition:.3s;z-index:50}
+.toast.show{opacity:1}.toast.ok{border-color:var(--green)}.toast.bad{border-color:var(--red)}
+#menuBtn{display:none}
+@media(max-width:900px){aside{transform:translateX(100%);transition:.25s;z-index:20}aside.open{transform:none}main{margin-right:0;padding:0 16px 80px}#menuBtn{display:inline-block}
+.langs{grid-template-columns:1fr}.item{grid-template-columns:1fr}.item .pic img{width:100%;height:180px}}
+</style>
+</head>
+<body>
+
+<div id="login">
+  <form class="login-box" id="loginForm">
+    <h1>T.A.P <span>لوحة التحكم</span></h1>
+    <p>سجّل الدخول لتعديل محتوى الموقع</p>
+    <label>اسم المستخدم</label><input id="lu" autocomplete="username" dir="ltr" required>
+    <label>كلمة المرور</label><input id="lp" type="password" autocomplete="current-password" dir="ltr" required>
+    <button class="btn" type="submit">دخول</button>
+    <div class="err" id="lerr"></div>
+  </form>
+</div>
+
+<div id="app">
+  <aside id="side">
+    <div class="logo">T.A.P <span>CMS</span></div>
+    <h4>النصوص والصور</h4>
+    <a data-view="page:common">الأجزاء المشتركة (القائمة، الفوتر، الشات)</a>
+    <a data-view="page:index">الصفحة الرئيسية</a>
+    <a data-view="page:digitaldruck">Digitaldruck</a>
+    <a data-view="page:werbetechnik">Werbetechnik</a>
+    <a data-view="page:grafikdesign">Grafikdesign</a>
+    <a data-view="page:webdesign">Webdesign</a>
+    <a data-view="page:textildruck">Textildruck</a>
+    <h4>الأعمال</h4>
+    <a data-view="col:digitaldruck">أعمال Digitaldruck</a>
+    <a data-view="col:werbetechnik">أعمال Werbetechnik</a>
+    <a data-view="col:grafikdesign">أعمال Grafikdesign</a>
+    <a data-view="col:websites">Webdesign – المواقع</a>
+    <a data-view="col:systems">Webdesign – الأنظمة</a>
+    <a data-view="col:textildruck">أعمال Textildruck</a>
+    <a data-view="col:portfolio">بورتفوليو الصفحة الرئيسية</a>
+    <h4>الحساب</h4>
+    <a data-view="account">اسم المستخدم وكلمة المرور</a>
+    <a id="logout">تسجيل الخروج</a>
+  </aside>
+  <main>
+    <div class="top">
+      <button class="btn ghost" id="menuBtn">☰</button>
+      <h2 id="title"></h2>
+      <span class="dirty" id="dirty">● تغييرات غير محفوظة</span>
+      <a class="btn ghost" id="preview" target="_blank">معاينة</a>
+      <button class="btn" id="save">حفظ التغييرات</button>
+    </div>
+    <div id="view"></div>
+  </main>
+</div>
+<input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp,image/gif" hidden>
+<div class="toast" id="toast"></div>
+
+<script>
+const API = '../api/';
+const LANGS = [['de', 'Deutsch (الأساسية)'], ['en', 'English'], ['ar', 'العربية']];
+const GROUPS = { meta: 'عنوان الصفحة (تبويب المتصفح)', logo: 'الشعار', nav: 'القائمة العلوية', footer: 'الفوتر', link: 'الروابط', chat: 'الشات', gallery: 'قسم الأعمال', cta: 'قسم التواصل', hero: 'القسم الأول (Hero)', about: 'من نحن', services: 'الخدمات', portfolio: 'البورتفوليو', orbit: 'الكلمات المتحركة', websites: 'قسم المواقع', systems: 'قسم الأنظمة', btn: 'أزرار', login_label: 'أخرى' };
+const COLS = {
+  digitaldruck: { title: 'أعمال Digitaldruck', page: 'digitaldruck', type: 'gallery' },
+  werbetechnik: { title: 'أعمال Werbetechnik', page: 'werbetechnik', type: 'gallery' },
+  grafikdesign: { title: 'أعمال Grafikdesign', page: 'grafikdesign', type: 'gallery' },
+  textildruck:  { title: 'أعمال Textildruck', page: 'textildruck', type: 'gallery' },
+  websites:     { title: 'Webdesign – المواقع', page: 'webdesign', type: 'site' },
+  systems:      { title: 'Webdesign – الأنظمة', page: 'webdesign', type: 'site' },
+  portfolio:    { title: 'بورتفوليو الصفحة الرئيسية', page: 'index', type: 'portfolio' },
+};
+let csrf = null, content = null, dirty = false, current = null;
+const pageCache = {};
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const src = u => !u ? '' : /^(https?:|data:|\/)/.test(u) ? u : '../' + u;
+
+function toast(msg, ok = true) {
+  const t = $('#toast'); t.textContent = msg; t.className = 'toast show ' + (ok ? 'ok' : 'bad');
+  clearTimeout(t._h); t._h = setTimeout(() => t.className = 'toast', 2800);
+}
+function setDirty(v = true) { dirty = v; $('#dirty').classList.toggle('show', v); }
+window.addEventListener('beforeunload', e => { if (dirty) { e.preventDefault(); e.returnValue = ''; } });
+
+async function api(path, opts = {}) {
+  opts.headers = Object.assign({}, opts.headers, csrf ? { 'X-CSRF-Token': csrf } : {});
+  opts.credentials = 'same-origin';
+  const r = await fetch(API + path, opts);
+  let d = {}; try { d = await r.json(); } catch (e) {}
+  if (r.status === 401 && path.indexOf('auth.php') < 0) { location.reload(); }
+  if (!r.ok) throw Object.assign(new Error(d.error || r.status), { code: d.error });
+  return d;
+}
+
+/* ---------- auth ---------- */
+$('#loginForm').onsubmit = async e => {
+  e.preventDefault(); $('#lerr').textContent = '';
+  try {
+    const d = await api('auth.php?action=login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username: $('#lu').value, password: $('#lp').value }) });
+    csrf = d.csrf; start();
+  } catch (err) {
+    $('#lerr').textContent = err.code === 'too_many_attempts' ? 'محاولات كثيرة، حاول بعد 15 دقيقة' : 'اسم المستخدم أو كلمة المرور غير صحيحة';
+  }
+};
+$('#logout').onclick = async () => {
+  if (dirty && !confirm('في تغييرات غير محفوظة. تخرج بدون حفظ؟')) return;
+  await api('auth.php?action=logout', { method: 'POST' }).catch(() => {});
+  dirty = false; location.reload();
+};
+
+async function start() {
+  const raw = await fetch(API + 'content.php', { cache: 'no-store' }).then(r => r.json()).catch(() => ({}));
+  content = Object.assign({ texts: {}, images: {}, links: {}, collections: {} }, raw);
+  ['de', 'en', 'ar'].forEach(l => content.texts[l] = content.texts[l] || {});
+  $('#login').style.display = 'none'; $('#app').style.display = 'block';
+  show(location.hash.slice(1) || 'page:index');
+}
+(async () => {
+  const me = await api('auth.php?action=me').catch(() => ({}));
+  if (me.loggedIn) { csrf = me.csrf; start(); }
+})();
+
+/* ---------- navigation ---------- */
+document.querySelectorAll('aside a[data-view]').forEach(a => a.onclick = () => { show(a.dataset.view); $('#side').classList.remove('open'); });
+$('#menuBtn').onclick = () => $('#side').classList.toggle('open');
+function show(view) {
+  current = view; location.hash = view;
+  document.querySelectorAll('aside a').forEach(a => a.classList.toggle('on', a.dataset.view === view));
+  const [kind, name] = view.split(':');
+  if (kind === 'page') renderPage(name);
+  else if (kind === 'col') renderCollection(name);
+  else renderAccount();
+}
+
+/* ---------- save ---------- */
+$('#save').onclick = async () => {
+  try {
+    $('#save').disabled = true;
+    await api('content.php', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(content) });
+    setDirty(false); toast('تم الحفظ ✓ التغييرات ظاهرة على الموقع');
+  } catch (e) { toast('فشل الحفظ: ' + e.message, false); }
+  finally { $('#save').disabled = false; }
+};
+
+/* ---------- text/image/link fields harvested from the real pages ---------- */
+async function harvest(page) {
+  if (pageCache[page]) return pageCache[page];
+  const html = await fetch('../' + page + '.html', { cache: 'no-store' }).then(r => r.text());
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+  const out = { texts: [], images: [], links: [] }, seen = new Set();
+  doc.querySelectorAll('[data-i18n],[data-i18n-ph]').forEach(el => {
+    const k = el.getAttribute('data-i18n') || el.getAttribute('data-i18n-ph');
+    if (seen.has(k) || k.indexOf("'") >= 0) return; seen.add(k);
+    out.texts.push({ key: k, def: el.hasAttribute('data-i18n') ? el.innerHTML.trim() : el.getAttribute('placeholder') });
+  });
+  doc.querySelectorAll('[data-img]').forEach(el => { const k = el.dataset.img; if (!seen.has(k)) { seen.add(k); out.images.push({ key: k, def: el.getAttribute('src') }); } });
+  doc.querySelectorAll('[data-link]').forEach(el => { const k = el.dataset.link; if (!seen.has(k)) { seen.add(k); out.links.push({ key: k, def: el.getAttribute('href') }); } });
+  return (pageCache[page] = out);
+}
+
+const groupOf = k => { const p = k.split('.'); return p[0] === 'common' && p[1] === 'link' ? 'link' : p[1]; };
+
+async function renderPage(page) {
+  const label = document.querySelector(`aside a[data-view="page:${page}"]`).textContent;
+  $('#title').textContent = label;
+  $('#preview').href = '../' + (page === 'common' ? 'index' : page) + '.html';
+  $('#view').innerHTML = '<p class="hint">جاري التحميل…</p>';
+  const f = await harvest(page === 'common' ? 'index' : page);
+  const isCommon = k => k.startsWith('common.');
+  const pick = arr => arr.filter(x => page === 'common' ? isCommon(x.key) : !isCommon(x.key));
+  const texts = pick(f.texts), images = pick(f.images), links = pick(f.links);
+
+  const groups = {};
+  texts.forEach(x => (groups[groupOf(x.key)] = groups[groupOf(x.key)] || { t: [], i: [], l: [] }).t.push(x));
+  images.forEach(x => (groups[groupOf(x.key)] = groups[groupOf(x.key)] || { t: [], i: [], l: [] }).i.push(x));
+  links.forEach(x => (groups[groupOf(x.key)] = groups[groupOf(x.key)] || { t: [], i: [], l: [] }).l.push(x));
+
+  let h = `<p class="hint">النص الألماني هو الأساسي. إذا تركت حقل الإنكليزي أو العربي فاضي، رح يظهر النص الألماني مكانه. الحقل الألماني الفاضي معناه النص الأصلي الظاهر بالخلفية.<br>تقدر تستخدم <code dir="ltr">&lt;br&gt;</code> لسطر جديد و <code dir="ltr">&lt;span&gt;…&lt;/span&gt;</code> للكلمة الملوّنة بالبنفسجي.</p>`;
+  for (const [g, it] of Object.entries(groups)) {
+    h += `<div class="group"><h3>${esc(GROUPS[g] || g)}</h3>`;
+    it.t.forEach(x => {
+      h += `<div class="field"><div class="k">${esc(x.key)}</div><div class="langs">` + LANGS.map(([l, n]) => {
+        const v = content.texts[l][x.key] ?? '';
+        const ph = l === 'de' ? x.def : (content.texts.de[x.key] || x.def);
+        return `<div><label>${n}</label><textarea rows="${Math.min(6, Math.max(1, Math.ceil(String(ph).length / 45)))}" data-t="${l}" data-key="${esc(x.key)}" dir="${l === 'ar' ? 'rtl' : 'ltr'}" placeholder="${esc(ph)}">${esc(v)}</textarea></div>`;
+      }).join('') + `</div></div>`;
+    });
+    it.i.forEach(x => {
+      const v = content.images[x.key] || '';
+      h += `<div class="field"><div class="k">${esc(x.key)} — صورة</div><div class="imgrow"><img src="${esc(src(v || x.def))}" alt=""><div class="inp"><input dir="ltr" data-img="${esc(x.key)}" value="${esc(v)}" placeholder="${esc(x.def)}"><button class="btn sm" data-up="${esc(x.key)}">رفع صورة</button></div></div></div>`;
+    });
+    it.l.forEach(x => {
+      h += `<div class="field"><div class="k">${esc(x.key)} — رابط</div><input dir="ltr" data-link="${esc(x.key)}" value="${esc(content.links[x.key] || '')}" placeholder="${esc(x.def)}"></div>`;
+    });
+    h += `</div>`;
+  }
+  $('#view').innerHTML = h;
+  $('#view').querySelectorAll('textarea[data-t]').forEach(el => el.oninput = () => {
+    const l = el.dataset.t, k = el.dataset.key;
+    if (el.value === '') delete content.texts[l][k]; else content.texts[l][k] = el.value;
+    setDirty();
+  });
+  $('#view').querySelectorAll('input[data-img]').forEach(el => el.oninput = () => {
+    const k = el.dataset.img;
+    if (el.value) content.images[k] = el.value.trim(); else delete content.images[k];
+    el.closest('.imgrow').querySelector('img').src = src(el.value || el.placeholder); setDirty();
+  });
+  $('#view').querySelectorAll('[data-up]').forEach(b => b.onclick = () => upload(url => {
+    const inp = b.parentElement.querySelector('input'); inp.value = url; inp.oninput();
+  }));
+  $('#view').querySelectorAll('input[data-link]').forEach(el => el.oninput = () => {
+    const k = el.dataset.link;
+    if (el.value) content.links[k] = el.value.trim(); else delete content.links[k];
+    setDirty();
+  });
+}
+
+/* ---------- image upload ---------- */
+function upload(done) {
+  const fi = $('#fileInput');
+  fi.value = '';
+  fi.onchange = async () => {
+    if (!fi.files[0]) return;
+    const fd = new FormData(); fd.append('file', fi.files[0]);
+    toast('جاري رفع الصورة…');
+    try { const d = await api('upload-image.php', { method: 'POST', body: fd }); done(d.url); toast('تم رفع الصورة ✓'); }
+    catch (e) { toast('فشل الرفع: ' + (e.code === 'not_an_image' ? 'الملف ليس صورة' : e.code === 'too_large' ? 'الصورة أكبر من 10MB' : e.message), false); }
+  };
+  fi.click();
+}
+
+/* ---------- works (collections) ---------- */
+const tri = () => ({ de: '', en: '', ar: '' });
+function newItem(type) {
+  const id = 'w' + Date.now().toString(36);
+  if (type === 'gallery') return { id, img: '', title: tri() };
+  if (type === 'site') return { id, url: '', name: '', tag: tri(), desc: tri(), img: '', user: '', pass: '' };
+  return { id, img: '', link: '', title: tri(), sub: tri() };
+}
+function triFields(it, field, label) {
+  return `<div><label>${label}</label><div class="langs">` + LANGS.map(([l, n]) =>
+    `<input data-tri="${field}" data-l="${l}" dir="${l === 'ar' ? 'rtl' : 'ltr'}" placeholder="${n}" value="${esc((it[field] || {})[l])}">`).join('') + `</div></div>`;
+}
+function renderCollection(name) {
+  const cfg = COLS[name];
+  $('#title').textContent = cfg.title;
+  $('#preview').href = '../' + cfg.page + '.html';
+  const list = content.collections[name] = content.collections[name] || [];
+  let h = `<p class="hint">أضف، عدّل، احذف أو رتّب الأعمال. لا تنسَ تضغط «حفظ التغييرات» فوق.</p>
+    <div style="margin-bottom:14px"><button class="btn" id="add">+ إضافة عمل جديد</button> <span class="hint">العدد: ${list.length}</span></div><div class="items">`;
+  list.forEach((it, i) => {
+    h += `<div class="item" data-i="${i}"><div class="pic"><img src="${esc(src(it.img))}" alt=""><button class="btn sm ghost" data-act="up-img">رفع صورة</button></div><div class="f">
+      <div><label>رابط الصورة</label><input dir="ltr" data-f="img" value="${esc(it.img)}" placeholder="https://… أو ارفع صورة"></div>`;
+    if (cfg.type === 'gallery') h += triFields(it, 'title', 'عنوان العمل (اختياري)');
+    if (cfg.type === 'portfolio') h += triFields(it, 'title', 'العنوان') + triFields(it, 'sub', 'الوصف') + `<div><label>رابط عند الضغط (اختياري)</label><input dir="ltr" data-f="link" value="${esc(it.link)}"></div>`;
+    if (cfg.type === 'site') h += `<div class="row2"><div><label>الاسم</label><input dir="ltr" data-f="name" value="${esc(it.name)}"></div><div><label>رابط الموقع</label><input dir="ltr" data-f="url" value="${esc(it.url)}"></div></div>`
+      + triFields(it, 'tag', 'التصنيف') + triFields(it, 'desc', 'الوصف')
+      + `<div class="row2"><div><label>يوزر تجريبي (اختياري)</label><input dir="ltr" data-f="user" value="${esc(it.user)}"></div><div><label>باسورد تجريبي (اختياري)</label><input dir="ltr" data-f="pass" value="${esc(it.pass)}"></div></div>`;
+    h += `<div class="acts"><button class="btn sm ghost" data-act="mv" data-d="-1" ${i === 0 ? 'disabled' : ''}>▲ للأعلى</button><button class="btn sm ghost" data-act="mv" data-d="1" ${i === list.length - 1 ? 'disabled' : ''}>▼ للأسفل</button><button class="btn sm red" data-act="del">حذف</button></div></div></div>`;
+  });
+  $('#view').innerHTML = h + '</div>';
+
+  $('#add').onclick = () => { list.unshift(newItem(cfg.type)); setDirty(); renderCollection(name); };
+  $('#view').querySelectorAll('.item').forEach(card => {
+    const it = list[+card.dataset.i];
+    card.querySelectorAll('[data-f]').forEach(inp => inp.oninput = () => {
+      it[inp.dataset.f] = inp.value.trim(); setDirty();
+      if (inp.dataset.f === 'img') card.querySelector('.pic img').src = src(inp.value);
+    });
+    card.querySelectorAll('[data-tri]').forEach(inp => inp.oninput = () => {
+      (it[inp.dataset.tri] = it[inp.dataset.tri] || tri())[inp.dataset.l] = inp.value; setDirty();
+    });
+    card.querySelector('[data-act="up-img"]').onclick = () => upload(url => {
+      const inp = card.querySelector('[data-f="img"]'); inp.value = url; inp.oninput();
+    });
+    card.querySelectorAll('[data-act="mv"]').forEach(b => b.onclick = () => {
+      const i = +card.dataset.i, j = i + +b.dataset.d;
+      [list[i], list[j]] = [list[j], list[i]]; setDirty(); renderCollection(name);
+    });
+    card.querySelector('[data-act="del"]').onclick = () => {
+      if (!confirm('أكيد بدك تحذف هالعمل؟')) return;
+      list.splice(+card.dataset.i, 1); setDirty(); renderCollection(name);
+    };
+  });
+}
+
+/* ---------- account ---------- */
+function renderAccount() {
+  $('#title').textContent = 'اسم المستخدم وكلمة المرور';
+  $('#preview').href = '../index.html';
+  $('#view').innerHTML = `<div class="group" style="max-width:460px"><h3>تغيير بيانات الدخول</h3>
+    <div class="f" style="display:grid;gap:10px">
+      <label>كلمة المرور الحالية</label><input type="password" id="cp" dir="ltr" autocomplete="current-password">
+      <label>اسم مستخدم جديد (اتركه فاضي لإبقائه)</label><input id="nu" dir="ltr" autocomplete="username">
+      <label>كلمة مرور جديدة (8 أحرف على الأقل)</label><input type="password" id="np" dir="ltr" autocomplete="new-password">
+      <label>تأكيد كلمة المرور الجديدة</label><input type="password" id="np2" dir="ltr" autocomplete="new-password">
+      <button class="btn" id="chg" style="margin-top:8px">حفظ بيانات الدخول</button></div></div>`;
+  $('#chg').onclick = async () => {
+    if ($('#np').value !== $('#np2').value) return toast('كلمتا المرور غير متطابقتين', false);
+    try {
+      const d = await api('auth.php?action=change', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ currentPassword: $('#cp').value, newUsername: $('#nu').value, newPassword: $('#np').value }) });
+      toast('تم التحديث ✓ المستخدم: ' + d.user); renderAccount();
+    } catch (e) {
+      toast({ wrong_password: 'كلمة المرور الحالية خاطئة', short_password: 'كلمة المرور قصيرة', bad_username: 'اسم المستخدم غير صالح (أحرف إنكليزية وأرقام فقط)' }[e.code] || e.message, false);
+    }
+  };
+}
+</script>
+</body>
+</html>

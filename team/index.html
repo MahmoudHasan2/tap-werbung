@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="de" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>TAP Team</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0d0d0f;--panel:#16161a;--panel2:#1e1e24;--line:rgba(255,255,255,.08);--text:#f4f4f5;--muted:#9a9aa5;--purple:#8B5CF6;--purple2:#A78BFA;
+--green:#22c55e;--yellow:#eab308;--red:#ef4444;--blue:#3b82f6;--r:14px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Plus Jakarta Sans','Cairo',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px}
+html[lang=ar] body{font-family:'Cairo',sans-serif}
+button,input,textarea,select{font:inherit;color:inherit}
+.btn{background:var(--purple);color:#fff;border:0;border-radius:10px;padding:9px 16px;cursor:pointer;font-weight:600;white-space:nowrap}
+.btn:hover{background:var(--purple2)}.btn.ghost{background:transparent;border:1px solid var(--line)}.btn.ghost:hover{border-color:var(--purple)}
+.btn.green{background:var(--green)}.btn.red{background:transparent;border:1px solid rgba(239,68,68,.5);color:#fca5a5}.btn.sm{padding:5px 11px;font-size:12px}
+input,textarea,select{width:100%;background:#0f0f12;border:1px solid var(--line);border-radius:10px;padding:10px 12px;outline:none}
+input:focus,textarea:focus,select:focus{border-color:var(--purple)}textarea{resize:vertical;min-height:80px}
+label{display:block;font-size:12px;color:var(--muted);margin:12px 0 5px}
+.muted{color:var(--muted)}.small{font-size:12px}
+/* auth */
+#auth{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:16px}
+.auth-box{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:30px;width:100%;max-width:440px}
+.auth-box h1{font-size:24px;font-weight:800}.auth-box h1 span{color:var(--purple)}
+.tabs{display:flex;gap:6px;margin:18px 0 6px}.tabs button{flex:1;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:9px;cursor:pointer}
+.tabs button.on{background:var(--purple);border-color:var(--purple)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:0 10px}
+.err{color:#fca5a5;font-size:13px;min-height:18px;margin-top:10px}
+.langsw{display:inline-flex;gap:4px}.langsw button{background:transparent;border:1px solid var(--line);border-radius:8px;padding:4px 9px;cursor:pointer;font-size:12px}
+.langsw button.on{background:var(--purple);border-color:var(--purple)}
+/* app */
+#app{display:none}
+header{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:14px;padding:12px 22px;background:rgba(13,13,15,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.logo{font-weight:800;font-size:18px}.logo span{color:var(--purple)}
+nav.main{display:flex;gap:4px;flex:1;overflow-x:auto}
+nav.main a{padding:8px 13px;border-radius:9px;cursor:pointer;color:var(--muted);white-space:nowrap;position:relative}
+nav.main a.on{background:var(--panel2);color:var(--text)}
+.badge{background:var(--red);color:#fff;border-radius:10px;font-size:10px;padding:1px 6px;margin-inline-start:5px}
+.av{width:34px;height:34px;border-radius:50%;object-fit:cover;background:var(--panel2);display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0;color:var(--purple2)}
+.av.lg{width:96px;height:96px;font-size:32px}
+.bell{position:relative;cursor:pointer;font-size:18px;background:none;border:0}
+.bell .badge{position:absolute;top:-6px;inset-inline-end:-10px}
+main{padding:24px 22px 60px;max-width:1400px;margin:0 auto}
+h2{font-size:22px;font-weight:800;margin-bottom:16px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:20px}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;cursor:pointer}
+.stat b{display:block;font-size:28px;font-weight:800}.stat span{color:var(--muted);font-size:12px}
+.stat.overdue b{color:var(--red)}.stat.active b{color:var(--yellow)}.stat.done b{color:var(--green)}.stat.inbox b{color:var(--blue)}
+/* board */
+.board{display:grid;grid-template-columns:280px 1fr;gap:18px}
+.inbox{background:var(--panel);border:1px dashed rgba(59,130,246,.4);border-radius:var(--r);padding:14px;min-height:300px}
+.inbox h3,.dept h3{font-size:14px;font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.depts{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.dept{border-radius:var(--r);padding:14px;border:2px solid;min-height:210px;transition:.2s;background:var(--panel)}
+.dept.green{border-color:rgba(34,197,94,.55);background:linear-gradient(180deg,rgba(34,197,94,.10),var(--panel) 60%)}
+.dept.yellow{border-color:rgba(234,179,8,.7);background:linear-gradient(180deg,rgba(234,179,8,.14),var(--panel) 60%)}
+.dept.red{border-color:rgba(239,68,68,.75);background:linear-gradient(180deg,rgba(239,68,68,.15),var(--panel) 60%)}
+.dept.over,.inbox.over{outline:3px dashed var(--purple);outline-offset:3px}
+.dot{width:10px;height:10px;border-radius:50%;display:inline-block}.dot.green{background:var(--green)}.dot.yellow{background:var(--yellow)}.dot.red{background:var(--red)}
+.dept .state{font-size:11px;color:var(--muted);margin-inline-start:auto;font-weight:500}
+.members{display:flex;margin:4px 0 10px}.members .av{width:26px;height:26px;font-size:10px;border:2px solid var(--panel);margin-inline-end:-6px}
+.lock{color:var(--muted);font-size:12px;padding:20px 0;text-align:center}
+.task{background:var(--panel2);border:1px solid var(--line);border-radius:11px;padding:10px 12px;margin-bottom:8px;cursor:pointer;border-inline-start:3px solid var(--purple)}
+.task[draggable=true]{cursor:grab}.task:hover{border-color:rgba(139,92,246,.5)}
+.task.high{border-inline-start-color:var(--red)}.task.low{border-inline-start-color:var(--muted)}
+.task .t{font-weight:600;margin-bottom:4px}.task .m{display:flex;gap:8px;font-size:11px;color:var(--muted);flex-wrap:wrap}
+.pill{font-size:11px;padding:2px 8px;border-radius:20px;background:var(--panel);border:1px solid var(--line)}
+.pill.overdue{color:#fca5a5;border-color:rgba(239,68,68,.5)}.pill.done{color:#86efac;border-color:rgba(34,197,94,.5)}.pill.cancelled{color:var(--muted)}
+.pill.inbox{color:#93c5fd}
+/* tasks list */
+.filters{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
+.filters button{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:6px 14px;cursor:pointer}
+.filters button.on{background:var(--purple);border-color:var(--purple)}
+.tlist .task{display:grid;grid-template-columns:1fr auto;align-items:center}
+/* modal */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:50;display:none;align-items:flex-start;justify-content:center;padding:40px 16px;overflow-y:auto}
+.modal-bg.open{display:flex}
+.modal{background:var(--panel);border:1px solid var(--line);border-radius:18px;width:100%;max-width:720px;padding:24px}
+.modal h3{font-size:20px;font-weight:800;margin-bottom:6px}
+.sec{margin-top:18px}.sec h4{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
+.desc{white-space:pre-wrap;line-height:1.7;background:var(--panel2);border-radius:10px;padding:12px}
+.file{display:flex;align-items:center;gap:10px;padding:8px 10px;background:var(--panel2);border-radius:9px;margin-bottom:6px}
+.file a{color:var(--purple2);text-decoration:none;flex:1;word-break:break-all}
+.warnbox{background:rgba(234,179,8,.1);border:1px solid rgba(234,179,8,.4);color:#fde68a;padding:10px 12px;border-radius:10px;font-size:13px;margin-top:10px}
+.timeline{border-inline-start:2px solid var(--line);padding-inline-start:14px}
+.timeline div{position:relative;padding:4px 0;font-size:12px;color:var(--muted)}
+.timeline div:before{content:'';position:absolute;inset-inline-start:-19px;top:10px;width:8px;height:8px;border-radius:50%;background:var(--purple)}
+.timeline b{color:var(--text);font-weight:600}
+.comment{display:flex;gap:10px;margin-bottom:10px}.comment .b{background:var(--panel2);border-radius:10px;padding:8px 12px;flex:1;white-space:pre-wrap}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px;justify-content:flex-end}
+/* chat */
+.chat{display:grid;grid-template-columns:260px 1fr;gap:16px;height:calc(100vh - 150px)}
+.threads{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);overflow-y:auto;padding:8px}
+.thread{display:flex;align-items:center;gap:10px;padding:9px;border-radius:10px;cursor:pointer}
+.thread:hover{background:var(--panel2)}.thread.on{background:var(--purple)}
+.thread .n{flex:1;min-width:0}.thread .n div{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.conv{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);display:flex;flex-direction:column;min-height:0}
+.conv-h{padding:14px 18px;border-bottom:1px solid var(--line);font-weight:700}
+.msgs{flex:1;overflow-y:auto;padding:16px 18px;display:flex;flex-direction:column;gap:10px}
+.msg{display:flex;gap:9px;max-width:78%}.msg.mine{align-self:flex-end;flex-direction:row-reverse}
+.msg .b{background:var(--panel2);border-radius:14px;padding:8px 13px;white-space:pre-wrap;word-break:break-word}
+.msg.mine .b{background:var(--purple)}.msg .who{font-size:11px;color:var(--muted);margin-bottom:2px}
+.composer{display:flex;gap:8px;padding:12px;border-top:1px solid var(--line)}.composer input{flex:1}
+/* team */
+.people{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+.person{display:flex;gap:12px;align-items:center}.person .av{width:52px;height:52px;font-size:18px}
+.role{font-size:11px;color:var(--purple2)}
+/* notif panel */
+#notifPanel{position:fixed;top:62px;inset-inline-end:16px;width:340px;max-height:70vh;overflow-y:auto;background:var(--panel);border:1px solid var(--line);border-radius:14px;z-index:40;display:none;padding:8px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+#notifPanel.open{display:block}
+.notif{padding:10px;border-radius:10px;font-size:13px;cursor:pointer;line-height:1.5}.notif:hover{background:var(--panel2)}
+.notif.unread{border-inline-start:3px solid var(--purple)}.notif.warn{color:#fde68a}
+.toast{position:fixed;bottom:20px;inset-inline-start:20px;background:var(--panel2);border:1px solid var(--line);padding:12px 18px;border-radius:12px;opacity:0;transition:.3s;z-index:90;pointer-events:none}
+.toast.show{opacity:1}
+@media(max-width:1000px){.board{grid-template-columns:1fr}.stats{grid-template-columns:repeat(3,1fr)}.chat{grid-template-columns:1fr;height:auto}.threads{max-height:200px}.conv{height:65vh}}
+@media(max-width:640px){.depts{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}header{padding:10px 12px;flex-wrap:wrap}main{padding:16px 12px 60px}.grid2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- ============ AUTH ============ -->
+<div id="auth">
+  <div class="auth-box">
+    <div style="display:flex;justify-content:space-between;align-items:center"><h1>T.A.P <span>Team</span></h1><div class="langsw"></div></div>
+    <div class="tabs"><button data-tab="login" class="on" data-t="login"></button><button data-tab="register" data-t="register"></button></div>
+    <form id="loginForm">
+      <label data-t="username"></label><input id="lgU" autocomplete="username" dir="ltr" required>
+      <label data-t="password"></label><input id="lgP" type="password" autocomplete="current-password" dir="ltr" required>
+      <button class="btn" style="width:100%;margin-top:18px" data-t="login"></button>
+    </form>
+    <form id="regForm" style="display:none">
+      <label data-t="code"></label><input id="rgCode" dir="ltr" placeholder="TAP-XXXX-XXXX" required>
+      <div class="grid2"><div><label data-t="first"></label><input id="rgFirst" required></div><div><label data-t="last"></label><input id="rgLast" required></div></div>
+      <div class="grid2"><div><label data-t="phone"></label><input id="rgPhone" dir="ltr" required></div><div><label data-t="email"></label><input id="rgEmail" type="email" dir="ltr" required></div></div>
+      <label data-t="dept_pick"></label><select id="rgDept"></select>
+      <div class="grid2"><div><label data-t="username"></label><input id="rgUser" dir="ltr" autocomplete="username" required></div><div><label data-t="password"></label><input id="rgPass" type="password" dir="ltr" autocomplete="new-password" required></div></div>
+      <button class="btn" style="width:100%;margin-top:18px" data-t="register"></button>
+    </form>
+    <div class="err" id="authErr"></div>
+  </div>
+</div>
+
+<!-- ============ APP ============ -->
+<div id="app">
+  <header>
+    <div class="logo">T.A.P <span>Team</span></div>
+    <nav class="main">
+      <a data-view="board" data-t="nav_board"></a>
+      <a data-view="tasks" data-t="nav_tasks"></a>
+      <a data-view="chat"><span data-t="nav_chat"></span><span class="badge" id="chatBadge" hidden></span></a>
+      <a data-view="team" data-t="nav_team"></a>
+      <a data-view="profile" data-t="nav_profile"></a>
+    </nav>
+    <div class="langsw"></div>
+    <button class="bell" id="bell">🔔<span class="badge" id="notifBadge" hidden></span></button>
+    <span id="meAv"></span>
+    <button class="btn ghost sm" id="logout" data-t="logout"></button>
+  </header>
+  <div id="notifPanel"></div>
+  <main id="view"></main>
+</div>
+
+<div class="modal-bg" id="modalBg"><div class="modal" id="modal"></div></div>
+<input type="file" id="fileIn" hidden>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ================= i18n (Deutsch / العربية) ================= */
+const I18N = {
+ de: { login:'Anmelden', register:'Registrieren', username:'Benutzername', password:'Passwort', code:'Einladungscode', first:'Vorname', last:'Nachname', phone:'Handynummer', email:'E-Mail',
+  dept_pick:'Abteilung', logout:'Abmelden', nav_board:'Board', nav_tasks:'Aufgaben', nav_chat:'Chat', nav_team:'Team', nav_profile:'Profil',
+  d_media:'Media & Design', d_it:'Software & IT', d_tech:'Technik & Druck', d_promo:'Promotion & Werbung',
+  r_manager:'Geschäftsführer', r_itadmin:'IT-Leitung', r_member:'Mitarbeiter',
+  s_active:'In Arbeit', s_overdue:'Überfällig', s_done:'Erledigt', s_cancelled:'Storniert', s_inbox:'Nicht zugewiesen',
+  free:'Frei', busy:'Beschäftigt', very_busy:'Stark ausgelastet', inbox:'Eingang – hierher ziehen', new_task:'Neue Aufgabe', title:'Titel', desc:'Beschreibung', hours:'Frist (Stunden, 0 = keine)',
+  priority:'Priorität', p_low:'Niedrig', p_normal:'Normal', p_high:'Hoch', dept_target:'Abteilung (oder später per Drag & Drop)', none_inbox:'— Eingang —', create:'Erstellen', cancel:'Abbrechen', close:'Schließen',
+  drag_hint:'Ziehe Aufgaben per Drag & Drop in eine Abteilung.', locked:'🔒 Nur für Mitglieder dieser Abteilung', no_tasks:'Keine Aufgaben', my_dept:'Meine Abteilung',
+  due:'Frist', left:'noch', late:'überfällig seit', created:'Erstellt', by:'von', files:'Dateien', upload:'Datei hochladen', comments:'Kommentare', write_comment:'Kommentar schreiben…', send:'Senden',
+  history:'Verlauf', mark_done:'✓ Als erledigt markieren', cancel_task:'Stornieren', reopen:'Wieder öffnen', move_to:'Verschieben nach',
+  ev_created:'hat die Aufgabe erstellt', ev_assigned:'hat sie zugewiesen an', ev_unassigned:'hat sie in den Eingang verschoben', ev_done:'hat sie erledigt', ev_cancelled:'hat sie storniert', ev_reopened:'hat sie wieder geöffnet', ev_file:'hat eine Datei hochgeladen:', ev_warned:'System: Löschwarnung für Dateien gesendet', ev_purged:'System: Dateien endgültig gelöscht',
+  warn_files:'⚠️ Die Dateien dieser Aufgabe werden am {d} automatisch gelöscht. Bitte jetzt herunterladen.', purged:'Die Dateien wurden nach Ablauf der Frist gelöscht.', files_after:'Nach Abschluss: Dateien werden 24 Std. später gewarnt und 24 Std. danach gelöscht.',
+  all:'Alle', public_chat:'# Allgemein (alle)', public_desc:'Für das ganze Team sichtbar', private:'Privat', type_msg:'Nachricht schreiben…', only_mgmt:'Private Chats nur mit der Geschäftsführung / IT-Leitung',
+  notifs:'Benachrichtigungen', no_notifs:'Keine Benachrichtigungen', n_task_assigned:'Neue Aufgabe für eure Abteilung: {t}', n_task_done:'Aufgabe erledigt: {t}', n_task_cancelled:'Aufgabe storniert: {t}', n_task_open:'Aufgabe wieder geöffnet: {t}', n_task_comment:'Neuer Kommentar: {t}', n_task_file:'Neue Datei: {t}',
+  n_files_warning:'⚠️ Dateien von „{t}“ werden in 24 Std. gelöscht – bitte herunterladen!',
+  profile:'Mein Profil', change_photo:'Foto ändern', save:'Speichern', saved:'Gespeichert ✓', cur_pass:'Aktuelles Passwort (nur bei Passwortänderung)', new_pass:'Neues Passwort (min. 8 Zeichen)',
+  e_invalid:'Benutzername oder Passwort falsch', e_bad_code:'Ungültiger Einladungscode', e_code_used:'Dieser Code wurde bereits verwendet', e_username_taken:'Benutzername vergeben', e_bad_username:'Benutzername: 3–40 Zeichen (A–Z, 0–9, . _ -)', e_short_password:'Passwort min. 8 Zeichen', e_missing_fields:'Bitte alle Felder korrekt ausfüllen', e_pick_dept:'Bitte Abteilung wählen', e_too_many:'Zu viele Versuche – bitte 15 Min. warten', e_wrong_password:'Aktuelles Passwort falsch', e_unknown:'Fehler', e_network:'Keine Verbindung zum Server', e_bad_reply:'Der Server hat falsch geantwortet (api.php fehlt oder PHP-Fehler)', e_server_error:'Serverfehler', e_storage_not_writable:'Ordner „data“ ist auf dem Server nicht beschreibbar (Rechte 755 setzen)',
+  dept_only_member:'(gilt nur für Mitarbeiter-Codes)', members_count:'Mitglieder', archive_hint:'Erledigte Aufgaben bleiben im Archiv sichtbar.' },
+ ar: { login:'تسجيل الدخول', register:'تسجيل جديد', username:'اسم المستخدم', password:'كلمة المرور', code:'الكود المميز', first:'الاسم', last:'الكنية', phone:'رقم الموبايل', email:'البريد الإلكتروني',
+  dept_pick:'القسم', logout:'خروج', nav_board:'اللوحة', nav_tasks:'المهام', nav_chat:'الدردشة', nav_team:'الفريق', nav_profile:'ملفي',
+  d_media:'الميديا والديزاين', d_it:'البرمجيات و IT', d_tech:'الفنيين والطباعة', d_promo:'الترويج والدعاية',
+  r_manager:'المدير', r_itadmin:'IT العام', r_member:'موظف',
+  s_active:'قيد العمل', s_overdue:'متأخرة', s_done:'منفذة', s_cancelled:'ملغاة', s_inbox:'متراكمة (غير موزعة)',
+  free:'متاح', busy:'مشغول', very_busy:'مشغول كتير', inbox:'الوارد – اسحب من هون', new_task:'مهمة جديدة', title:'العنوان', desc:'الوصف', hours:'مدة الانتظار (ساعات، 0 = بدون)',
+  priority:'الأولوية', p_low:'منخفضة', p_normal:'عادية', p_high:'عالية', dept_target:'القسم (أو لاحقاً بالسحب والإفلات)', none_inbox:'— الوارد —', create:'إنشاء', cancel:'إلغاء', close:'إغلاق',
+  drag_hint:'اسحب المهام وأفلتها داخل القسم المطلوب.', locked:'🔒 فقط لأعضاء هذا القسم', no_tasks:'لا توجد مهام', my_dept:'قسمي',
+  due:'الموعد', left:'باقي', late:'متأخرة منذ', created:'أُنشئت', by:'بواسطة', files:'الملفات', upload:'رفع ملف', comments:'التعليقات', write_comment:'اكتب تعليقاً…', send:'إرسال',
+  history:'السجل', mark_done:'✓ تأشير كمنتهية', cancel_task:'إلغاء المهمة', reopen:'إعادة فتح', move_to:'نقل إلى',
+  ev_created:'أنشأ المهمة', ev_assigned:'وزّعها على', ev_unassigned:'أعادها للوارد', ev_done:'أنهى المهمة', ev_cancelled:'ألغى المهمة', ev_reopened:'أعاد فتح المهمة', ev_file:'رفع ملف:', ev_warned:'النظام: أُرسل إنذار حذف الملفات', ev_purged:'النظام: حُذفت الملفات نهائياً',
+  warn_files:'⚠️ ملفات هذه المهمة رح تنحذف تلقائياً بتاريخ {d}. حمّلها هلق.', purged:'حُذفت الملفات بعد انتهاء المهلة.', files_after:'بعد انتهاء المهمة: إنذار بعد 24 ساعة، والحذف النهائي بعد 24 ساعة من الإنذار.',
+  all:'الكل', public_chat:'# العامة (للكل)', public_desc:'ظاهرة لكل الفريق', private:'خاص', type_msg:'اكتب رسالة…', only_mgmt:'الدردشة الخاصة فقط مع المدير / IT العام',
+  notifs:'الإشعارات', no_notifs:'لا توجد إشعارات', n_task_assigned:'مهمة جديدة لقسمكم: {t}', n_task_done:'انتهت المهمة: {t}', n_task_cancelled:'أُلغيت المهمة: {t}', n_task_open:'أُعيد فتح المهمة: {t}', n_task_comment:'تعليق جديد: {t}', n_task_file:'ملف جديد: {t}',
+  n_files_warning:'⚠️ ملفات «{t}» رح تنحذف بعد 24 ساعة – حمّلوها أو احفظوها!',
+  profile:'ملفي الشخصي', change_photo:'تغيير الصورة', save:'حفظ', saved:'تم الحفظ ✓', cur_pass:'كلمة المرور الحالية (فقط عند تغييرها)', new_pass:'كلمة مرور جديدة (8 أحرف على الأقل)',
+  e_invalid:'اسم المستخدم أو كلمة المرور خاطئة', e_bad_code:'الكود المميز غير صحيح', e_code_used:'هذا الكود مستخدم من قبل', e_username_taken:'اسم المستخدم محجوز', e_bad_username:'اسم المستخدم: 3–40 حرف إنكليزي أو رقم', e_short_password:'كلمة المرور 8 أحرف على الأقل', e_missing_fields:'عبّي كل الحقول بشكل صحيح', e_pick_dept:'اختر القسم', e_too_many:'محاولات كثيرة – انتظر 15 دقيقة', e_wrong_password:'كلمة المرور الحالية خاطئة', e_unknown:'خطأ', e_network:'لا يوجد اتصال بالسيرفر', e_bad_reply:'السيرفر ردّ بشكل خاطئ (ملف api.php مفقود أو خطأ PHP)', e_server_error:'خطأ في السيرفر', e_storage_not_writable:'مجلد data غير قابل للكتابة على السيرفر (اعطه صلاحية 755)',
+  dept_only_member:'(للموظفين فقط)', members_count:'أعضاء', archive_hint:'المهام المنفذة تبقى بالأرشيف للمراجعة.' }
+};
+let LANG = (() => { try { return localStorage.getItem('tap_team_lang') || 'de'; } catch (e) { return 'de'; } })();
+const errText = e => { const k = 'e_' + e.code; const m = (I18N[LANG][k] || I18N.de[k]) ? t(k) : t('e_unknown') + ' (' + e.code + ')'; return e.detail ? m + ' – ' + e.detail : m; };
+const t = (k, vars) => { let s = (I18N[LANG][k] ?? I18N.de[k] ?? k); if (vars) for (const v in vars) s = s.replace('{' + v + '}', vars[v]); return s; };
+function applyLang() {
+  document.documentElement.lang = LANG; document.documentElement.dir = LANG === 'ar' ? 'rtl' : 'ltr';
+  document.querySelectorAll('[data-t]').forEach(el => el.textContent = t(el.dataset.t));
+  document.querySelectorAll('.langsw').forEach(b => b.innerHTML = ['de', 'ar'].map(l => `<button class="${l === LANG ? 'on' : ''}" data-l="${l}">${l === 'de' ? 'DE' : 'ع'}</button>`).join(''));
+  document.querySelectorAll('.langsw button').forEach(b => b.onclick = () => { LANG = b.dataset.l; try { localStorage.setItem('tap_team_lang', LANG); } catch (e) {} applyLang(); if (S) render(); });
+  $('#rgDept').innerHTML = DEPTS.map(d => `<option value="${d}">${t('d_' + d)}</option>`).join('');
+  $('#rgDept').previousElementSibling.textContent = t('dept_pick') + ' ' + t('dept_only_member');
+}
+
+/* ================= helpers ================= */
+const DEPTS = ['media', 'it', 'tech', 'promo'];
+const DEPT_ICON = { media: '🎨', it: '💻', tech: '🖨️', promo: '📣' };
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+let csrf = null, S = null, VIEW = 'board', FILTER = 'active', CHAT = 'public', lastMsgId = 0, MSGS = [], OPEN_TASK = null, seenChat = 0;
+function toast(m) { const e = $('#toast'); e.textContent = m; e.classList.add('show'); clearTimeout(e._h); e._h = setTimeout(() => e.classList.remove('show'), 2600); }
+async function api(action, data, isForm) {
+  const opt = { method: data ? 'POST' : 'GET', credentials: 'same-origin', headers: csrf ? { 'X-CSRF-Token': csrf } : {} };
+  if (data) { if (isForm) opt.body = data; else { opt.body = JSON.stringify(data); opt.headers['Content-Type'] = 'application/json'; } }
+  let r, raw = '';
+  try { r = await fetch('api.php?action=' + action, opt); raw = await r.text(); }
+  catch (e) { const er = new Error('network'); er.code = 'network'; throw er; }
+  let d = null; try { d = JSON.parse(raw); } catch (e) {}
+  if (r.status === 401 && action !== 'login' && action !== 'register') { location.reload(); }
+  if (!d) {
+    // Not a JSON reply: missing api.php, blocked by the host, or a PHP crash
+    const e = new Error('bad_reply'); e.code = 'bad_reply';
+    e.detail = 'HTTP ' + r.status + ' – ' + raw.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 160);
+    throw e;
+  }
+  if (!r.ok) { const e = new Error(d.error || r.status); e.code = d.error || 'http_' + r.status; e.detail = d.detail; throw e; }
+  return d;
+}
+const user = id => S.users.find(u => u.id === id) || { first: '?', last: '', id: 0 };
+const fullName = u => (u.first + ' ' + u.last).trim();
+const isAdmin = u => u.role === 'manager' || u.role === 'itadmin';
+const avatar = (u, cls = '') => u.avatar ? `<img class="av ${cls}" src="${esc(u.avatar)}" alt="">` : `<span class="av ${cls}">${esc((u.first[0] || '') + (u.last[0] || ''))}</span>`;
+const fmtDate = s => new Date(s * 1000).toLocaleString(LANG === 'ar' ? 'ar' : 'de-DE', { dateStyle: 'short', timeStyle: 'short' });
+function dur(sec) { sec = Math.abs(sec); const d = Math.floor(sec / 86400), h = Math.floor(sec % 86400 / 3600), m = Math.floor(sec % 3600 / 60); return (d ? d + (LANG === 'ar' ? 'ي ' : 'T ') : '') + (h ? h + (LANG === 'ar' ? 'س ' : 'Std ') : '') + (d ? '' : m + (LANG === 'ar' ? 'د' : 'Min')); }
+const fmtSize = b => b > 1048576 ? (b / 1048576).toFixed(1) + ' MB' : Math.ceil(b / 1024) + ' KB';
+function taskState(tk) {
+  if (tk.status === 'done') return 'done';
+  if (tk.status === 'cancelled') return 'cancelled';
+  if (tk.dept === null) return 'inbox';
+  if (tk.dueAt && tk.dueAt < S.now) return 'overdue';
+  return 'active';
+}
+
+/* ================= auth ================= */
+document.querySelectorAll('.tabs button').forEach(b => b.onclick = () => {
+  document.querySelectorAll('.tabs button').forEach(x => x.classList.toggle('on', x === b));
+  $('#loginForm').style.display = b.dataset.tab === 'login' ? '' : 'none';
+  $('#regForm').style.display = b.dataset.tab === 'register' ? '' : 'none';
+  $('#authErr').textContent = '';
+});
+$('#loginForm').onsubmit = async e => {
+  e.preventDefault();
+  try { const d = await api('login', { username: $('#lgU').value, password: $('#lgP').value }); csrf = d.csrf; boot(); }
+  catch (err) { $('#authErr').textContent = errText(err); }
+};
+$('#regForm').onsubmit = async e => {
+  e.preventDefault();
+  try {
+    const d = await api('register', { code: $('#rgCode').value, first: $('#rgFirst').value, last: $('#rgLast').value, phone: $('#rgPhone').value, email: $('#rgEmail').value, dept: $('#rgDept').value, username: $('#rgUser').value, password: $('#rgPass').value });
+    csrf = d.csrf; boot();
+  } catch (err) { $('#authErr').textContent = errText(err); }
+};
+$('#logout').onclick = async () => { await api('logout', {}).catch(() => {}); location.reload(); };
+
+async function boot() {
+  $('#auth').style.display = 'none'; $('#app').style.display = 'block';
+  await refresh(); render();
+  setInterval(async () => { await refresh(); if (!document.querySelector('.modal-bg.open') && VIEW !== 'profile' && !(VIEW === 'board' && dragging)) render(true); else if (OPEN_TASK) {} }, 5000);
+}
+(async () => { applyLang(); const m = await api('me').catch(() => ({})); if (m.user) { csrf = m.csrf; boot(); } })();
+
+async function refresh() {
+  const d = await api('state&since=' + lastMsgId);
+  d.messages.forEach(m => { if (!MSGS.some(x => x.id === m.id)) MSGS.push(m); });
+  if (MSGS.length) lastMsgId = Math.max(...MSGS.map(m => m.id));
+  S = d;
+  const unread = S.notifs.filter(n => !n.read).length;
+  $('#notifBadge').hidden = !unread; $('#notifBadge').textContent = unread;
+  const newChat = MSGS.filter(m => m.id > seenChat && m.from !== S.me.id).length;
+  $('#chatBadge').hidden = !newChat || VIEW === 'chat'; $('#chatBadge').textContent = newChat;
+  $('#meAv').innerHTML = avatar(S.me);
+}
+
+/* ================= router ================= */
+document.querySelectorAll('nav.main a').forEach(a => a.onclick = () => { VIEW = a.dataset.view; render(); });
+function render(soft) {
+  document.querySelectorAll('nav.main a').forEach(a => a.classList.toggle('on', a.dataset.view === VIEW));
+  if (soft && VIEW === 'chat') return renderChatMsgs();
+  ({ board: renderBoard, tasks: renderTasks, chat: renderChat, team: renderTeam, profile: renderProfile })[VIEW]();
+}
+
+/* ================= board ================= */
+let dragging = false;
+function taskCard(tk, draggable) {
+  const st = taskState(tk);
+  let due = '';
+  if (tk.dueAt && st !== 'done' && st !== 'cancelled') due = tk.dueAt < S.now ? `<span class="pill overdue">${t('late')} ${dur(S.now - tk.dueAt)}</span>` : `<span>⏱ ${t('left')} ${dur(tk.dueAt - S.now)}</span>`;
+  return `<div class="task ${tk.priority}" data-id="${tk.id}" ${draggable ? 'draggable="true"' : ''}>
+    <div class="t">${esc(tk.title)}</div>
+    <div class="m">${due}${tk.files.length ? `<span>📎 ${tk.files.length}</span>` : ''}${tk.comments.length ? `<span>💬 ${tk.comments.length}</span>` : ''}<span>${esc(fullName(user(tk.createdBy)))}</span></div></div>`;
+}
+function renderBoard() {
+  const me = S.me, admin = isAdmin(me);
+  let h = `<h2>${admin ? t('nav_board') : t('my_dept') + ': ' + DEPT_ICON[me.dept] + ' ' + t('d_' + me.dept)}</h2>`;
+  if (admin) {
+    h += `<div class="stats">` + ['active', 'overdue', 'done', 'cancelled', 'inbox'].map(k => `<div class="stat ${k}" data-f="${k}"><b>${S.stats[k]}</b><span>${t('s_' + k)}</span></div>`).join('') + `</div>`;
+    h += `<div class="board"><div class="inbox" data-drop="">
+      <h3>📥 ${t('inbox')}</h3><button class="btn" id="newTask" style="width:100%;margin-bottom:12px">+ ${t('new_task')}</button>
+      <p class="muted small" style="margin-bottom:10px">${t('drag_hint')}</p>
+      ${S.tasks.filter(x => x.dept === null && x.status === 'open').map(x => taskCard(x, true)).join('') || `<p class="lock">${t('no_tasks')}</p>`}</div><div class="depts">`;
+  } else h += `<div class="depts">`;
+  S.depts.forEach(d => {
+    const mine = admin || d.id === me.dept;
+    const label = d.color === 'green' ? t('free') : d.color === 'yellow' ? t('busy') : t('very_busy');
+    h += `<div class="dept ${d.color}" ${admin ? `data-drop="${d.id}"` : ''}>
+      <h3>${DEPT_ICON[d.id]} ${t('d_' + d.id)} <span class="state"><span class="dot ${d.color}"></span> ${label} · ${d.open}</span></h3>
+      <div class="members">${d.members.map(id => avatar(user(id))).join('')}</div>
+      ${mine ? (S.tasks.filter(x => x.dept === d.id && x.status === 'open').map(x => taskCard(x, admin)).join('') || `<p class="lock">${t('no_tasks')}</p>`) : `<p class="lock">${t('locked')}</p>`}
+    </div>`;
+  });
+  h += admin ? `</div></div>` : `</div>`;
+  $('#view').innerHTML = h;
+  bindTaskClicks();
+  document.querySelectorAll('.stat').forEach(s => s.onclick = () => { FILTER = s.dataset.f; VIEW = 'tasks'; render(); });
+  if (!admin) return;
+  $('#newTask').onclick = openNewTask;
+  document.querySelectorAll('.task[draggable]').forEach(el => {
+    el.ondragstart = e => { dragging = true; e.dataTransfer.setData('text/plain', el.dataset.id); el.style.opacity = .4; };
+    el.ondragend = () => { dragging = false; el.style.opacity = 1; };
+  });
+  document.querySelectorAll('[data-drop]').forEach(z => {
+    z.ondragover = e => { e.preventDefault(); z.classList.add('over'); };
+    z.ondragleave = () => z.classList.remove('over');
+    z.ondrop = async e => {
+      e.preventDefault(); z.classList.remove('over'); dragging = false;
+      const id = +e.dataTransfer.getData('text/plain');
+      await api('task_move', { id, dept: z.dataset.drop || null });
+      await refresh(); render();
+    };
+  });
+}
+function bindTaskClicks() { document.querySelectorAll('.task').forEach(el => el.onclick = () => openTask(+el.dataset.id)); }
+
+function openNewTask() {
+  $('#modal').innerHTML = `<h3>+ ${t('new_task')}</h3>
+    <label>${t('title')}</label><input id="ntT" maxlength="200">
+    <label>${t('desc')}</label><textarea id="ntD"></textarea>
+    <div class="grid2"><div><label>${t('hours')}</label><input id="ntH" type="number" min="0" step="0.5" value="24" dir="ltr"></div>
+    <div><label>${t('priority')}</label><select id="ntP"><option value="normal">${t('p_normal')}</option><option value="high">${t('p_high')}</option><option value="low">${t('p_low')}</option></select></div></div>
+    <label>${t('dept_target')}</label><select id="ntDept"><option value="">${t('none_inbox')}</option>${DEPTS.map(d => `<option value="${d}">${DEPT_ICON[d]} ${t('d_' + d)}</option>`).join('')}</select>
+    <div class="actions"><button class="btn ghost" id="ntC">${t('cancel')}</button><button class="btn" id="ntS">${t('create')}</button></div>`;
+  $('#modalBg').classList.add('open');
+  $('#ntC').onclick = closeModal;
+  $('#ntS').onclick = async () => {
+    if (!$('#ntT').value.trim()) return $('#ntT').focus();
+    await api('task_create', { title: $('#ntT').value, desc: $('#ntD').value, hours: +$('#ntH').value, priority: $('#ntP').value, dept: $('#ntDept').value || null });
+    closeModal(); await refresh(); render();
+  };
+}
+function closeModal() { $('#modalBg').classList.remove('open'); OPEN_TASK = null; }
+$('#modalBg').onclick = e => { if (e.target.id === 'modalBg') closeModal(); };
+
+/* ================= task detail ================= */
+function openTask(id) {
+  const tk = S.tasks.find(x => x.id === id); if (!tk) return closeModal();
+  OPEN_TASK = id;
+  const me = S.me, admin = isAdmin(me), st = taskState(tk);
+  const ev = l => {
+    const who = l.by ? `<b>${esc(fullName(user(l.by)))}</b> ` : '';
+    const extra = l.type === 'assigned' ? ' <b>' + t('d_' + l.dept) + '</b>' : l.type === 'file' ? ' ' + esc(l.name) : '';
+    return `<div>${who}${t('ev_' + l.type)}${extra} · ${fmtDate(l.at)}</div>`;
+  };
+  let warn = '';
+  if (tk.warnedAt && tk.files.length) warn = `<div class="warnbox">${t('warn_files', { d: fmtDate(tk.warnedAt + 86400) })}</div>`;
+  if (tk.filesPurged) warn = `<div class="warnbox">${t('purged')}</div>`;
+  $('#modal').innerHTML = `
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;flex-wrap:wrap">
+      <span class="pill ${st}">${t('s_' + st)}</span>
+      ${tk.dept ? `<span class="pill">${DEPT_ICON[tk.dept]} ${t('d_' + tk.dept)}</span>` : ''}
+      <span class="pill">${t('priority')}: ${t('p_' + tk.priority)}</span></div>
+    <h3>${esc(tk.title)}</h3>
+    <p class="muted small">${t('created')} ${fmtDate(tk.createdAt)} ${t('by')} ${esc(fullName(user(tk.createdBy)))}${tk.dueAt ? ` · ${t('due')}: ${fmtDate(tk.dueAt)}` : ''}</p>
+    ${tk.desc ? `<div class="sec"><div class="desc">${esc(tk.desc)}</div></div>` : ''}
+    <div class="sec"><h4>📎 ${t('files')}</h4>
+      ${tk.files.map(f => `<div class="file">📄 <a href="api.php?action=file&task=${tk.id}&id=${f.id}">${esc(f.name)}</a><span class="muted small">${fmtSize(f.size)} · ${esc(user(f.by).first)}</span></div>`).join('')}
+      ${tk.filesPurged ? '' : `<button class="btn ghost sm" id="upBtn">⬆ ${t('upload')}</button> <span class="muted small" id="upState"></span>`}
+      <p class="muted small" style="margin-top:6px">${t('files_after')}</p>${warn}</div>
+    <div class="sec"><h4>💬 ${t('comments')}</h4>
+      ${tk.comments.map(c => `<div class="comment">${avatar(user(c.by))}<div class="b"><div class="muted small">${esc(fullName(user(c.by)))} · ${fmtDate(c.at)}</div>${esc(c.text)}</div></div>`).join('')}
+      <div style="display:flex;gap:8px"><input id="cmT" placeholder="${t('write_comment')}"><button class="btn" id="cmS">${t('send')}</button></div></div>
+    <div class="sec"><h4>🕓 ${t('history')}</h4><div class="timeline">${tk.log.map(ev).join('')}</div></div>
+    <div class="actions">
+      ${admin && tk.status === 'open' ? `<select id="mvSel" style="width:auto"><option value="">${t('move_to')}…</option><option value="__inbox">${t('none_inbox')}</option>${DEPTS.map(d => `<option value="${d}">${t('d_' + d)}</option>`).join('')}</select>` : ''}
+      ${admin && tk.status === 'open' ? `<button class="btn red" data-st="cancelled">${t('cancel_task')}</button>` : ''}
+      ${admin && tk.status !== 'open' ? `<button class="btn ghost" data-st="open">${t('reopen')}</button>` : ''}
+      ${tk.status === 'open' && tk.dept ? `<button class="btn green" data-st="done">${t('mark_done')}</button>` : ''}
+      <button class="btn ghost" id="mdC">${t('close')}</button></div>`;
+  $('#modalBg').classList.add('open');
+  $('#mdC').onclick = closeModal;
+  const reopenTask = async () => { await refresh(); openTask(id); };
+  document.querySelectorAll('[data-st]').forEach(b => b.onclick = async () => { await api('task_status', { id, status: b.dataset.st }); await reopenTask(); });
+  if ($('#mvSel')) $('#mvSel').onchange = async e => { if (!e.target.value) return; await api('task_move', { id, dept: e.target.value === '__inbox' ? null : e.target.value }); await reopenTask(); };
+  const sendC = async () => { if (!$('#cmT').value.trim()) return; await api('task_comment', { id, text: $('#cmT').value }); await reopenTask(); };
+  $('#cmS').onclick = sendC; $('#cmT').onkeydown = e => { if (e.key === 'Enter') sendC(); };
+  if ($('#upBtn')) $('#upBtn').onclick = () => {
+    const fi = $('#fileIn'); fi.value = '';
+    fi.onchange = () => {
+      if (!fi.files[0]) return;
+      const fd = new FormData(); fd.append('id', id); fd.append('file', fi.files[0]);
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', 'api.php?action=file_upload'); xhr.setRequestHeader('X-CSRF-Token', csrf);
+      xhr.upload.onprogress = e => { if (e.lengthComputable && $('#upState')) $('#upState').textContent = Math.round(e.loaded / e.total * 100) + '%'; };
+      xhr.onload = () => { if (xhr.status === 200) reopenTask(); else toast('Upload ✕ (' + xhr.status + ')'); };
+      xhr.send(fd);
+    };
+    fi.click();
+  };
+}
+
+/* ================= tasks list / archive ================= */
+function renderTasks() {
+  const admin = isAdmin(S.me);
+  const keys = ['active', 'overdue', 'done', 'cancelled'].concat(admin ? ['inbox'] : []).concat(['all']);
+  const list = S.tasks.filter(x => FILTER === 'all' || taskState(x) === FILTER).sort((a, b) => b.createdAt - a.createdAt);
+  let h = `<h2>${t('nav_tasks')}</h2><div class="filters">` + keys.map(k => `<button class="${k === FILTER ? 'on' : ''}" data-f="${k}">${k === 'all' ? t('all') : t('s_' + k)} (${k === 'all' ? S.tasks.length : S.tasks.filter(x => taskState(x) === k).length})</button>`).join('') + `</div>`;
+  if (FILTER === 'done') h += `<p class="muted small" style="margin-bottom:12px">${t('archive_hint')}</p>`;
+  h += `<div class="tlist">` + (list.map(tk => {
+    const st = taskState(tk);
+    return `<div class="task ${tk.priority}" data-id="${tk.id}"><div><div class="t">${esc(tk.title)}</div><div class="m">
+      ${tk.dept ? `<span>${DEPT_ICON[tk.dept]} ${t('d_' + tk.dept)}</span>` : ''}<span>${fmtDate(tk.createdAt)}</span>
+      ${tk.doneAt ? `<span>✓ ${fmtDate(tk.doneAt)} · ${esc(fullName(user(tk.doneBy)))}</span>` : ''}${tk.files.length ? `<span>📎 ${tk.files.length}</span>` : ''}</div></div>
+      <span class="pill ${st}">${t('s_' + st)}</span></div>`;
+  }).join('') || `<p class="lock">${t('no_tasks')}</p>`) + `</div>`;
+  $('#view').innerHTML = h;
+  document.querySelectorAll('.filters button').forEach(b => b.onclick = () => { FILTER = b.dataset.f; renderTasks(); });
+  bindTaskClicks();
+}
+
+/* ================= chat ================= */
+function threadsFor() {
+  const me = S.me;
+  // Members can talk privately only to management; management can talk to everyone
+  return S.users.filter(u => u.id !== me.id && (isAdmin(me) || isAdmin(u)));
+}
+function convMsgs() {
+  return MSGS.filter(m => CHAT === 'public' ? m.to === 'public' : (m.to !== 'public' && ((m.from === S.me.id && m.to === CHAT) || (m.from === CHAT && m.to === S.me.id))));
+}
+function renderChat() {
+  seenChat = lastMsgId; $('#chatBadge').hidden = true;
+  const th = threadsFor();
+  const unreadFrom = id => MSGS.filter(m => m.from === id && m.to === S.me.id && m.id > (window['seen_' + id] || 0)).length;
+  $('#view').innerHTML = `<div class="chat"><div class="threads">
+      <div class="thread ${CHAT === 'public' ? 'on' : ''}" data-c="public"><span class="av">#</span><div class="n"><div><b>${t('public_chat')}</b></div><div class="muted small">${t('public_desc')}</div></div></div>
+      <div class="muted small" style="padding:10px 8px 4px">${t('private')} · ${isAdmin(S.me) ? '' : t('only_mgmt')}</div>
+      ${th.map(u => `<div class="thread ${CHAT === u.id ? 'on' : ''}" data-c="${u.id}">${avatar(u)}<div class="n"><div>${esc(fullName(u))}</div><div class="muted small">${t('r_' + u.role)}${u.dept ? ' · ' + t('d_' + u.dept) : ''}</div></div></div>`).join('')}
+    </div><div class="conv"><div class="conv-h" id="convH"></div><div class="msgs" id="msgs"></div>
+      <div class="composer"><input id="msgIn" placeholder="${t('type_msg')}" maxlength="3000"><button class="btn" id="msgSend">${t('send')}</button></div></div></div>`;
+  document.querySelectorAll('.thread').forEach(el => el.onclick = () => { CHAT = el.dataset.c === 'public' ? 'public' : +el.dataset.c; renderChat(); });
+  $('#convH').textContent = CHAT === 'public' ? t('public_chat') : '🔒 ' + fullName(user(CHAT));
+  const send = async () => {
+    const v = $('#msgIn').value.trim(); if (!v) return;
+    $('#msgIn').value = '';
+    await api('chat_send', { to: CHAT, text: v }); await refresh(); renderChatMsgs(true);
+  };
+  $('#msgSend').onclick = send; $('#msgIn').onkeydown = e => { if (e.key === 'Enter') send(); };
+  renderChatMsgs(true); $('#msgIn').focus();
+}
+function renderChatMsgs(scroll) {
+  const box = $('#msgs'); if (!box) return;
+  seenChat = lastMsgId; $('#chatBadge').hidden = true;
+  const atBottom = box.scrollHeight - box.scrollTop - box.clientHeight < 60;
+  box.innerHTML = convMsgs().map(m => { const u = user(m.from), mine = m.from === S.me.id;
+    return `<div class="msg ${mine ? 'mine' : ''}">${avatar(u)}<div><div class="who">${mine ? '' : esc(fullName(u)) + ' · '}${fmtDate(m.at)}</div><div class="b">${esc(m.text)}</div></div></div>`; }).join('');
+  if (scroll || atBottom) box.scrollTop = box.scrollHeight;
+}
+
+/* ================= team ================= */
+function renderTeam() {
+  const groups = [['mgmt', S.users.filter(u => u.role === 'manager')]].concat(DEPTS.map(d => [d, S.users.filter(u => u.dept === d)]));
+  $('#view').innerHTML = `<h2>${t('nav_team')}</h2>` + groups.map(([g, us]) => `<div class="card" style="margin-bottom:14px">
+    <h3 style="margin-bottom:12px">${g === 'mgmt' ? '👑 ' + t('r_manager') : DEPT_ICON[g] + ' ' + t('d_' + g)} <span class="muted small">· ${us.length} ${t('members_count')}</span></h3>
+    <div class="people">${us.map(u => `<div class="person">${avatar(u)}<div><b>${esc(fullName(u))}</b><div class="role">${t('r_' + u.role)}</div>
+      <div class="muted small" dir="ltr">${esc(u.phone)}</div><div class="muted small" dir="ltr">${esc(u.email)}</div></div></div>`).join('') || `<span class="muted small">—</span>`}</div></div>`).join('');
+}
+
+/* ================= profile ================= */
+function renderProfile() {
+  const u = S.me;
+  $('#view').innerHTML = `<h2>${t('profile')}</h2><div class="card" style="max-width:560px">
+    <div style="display:flex;gap:18px;align-items:center">${avatar(u, 'lg')}<div><b style="font-size:18px">${esc(fullName(u))}</b><div class="role">${t('r_' + u.role)}${u.dept ? ' · ' + t('d_' + u.dept) : ''}</div>
+      <div class="muted small" dir="ltr">@${esc(u.username)}</div><button class="btn ghost sm" id="avBtn" style="margin-top:8px">📷 ${t('change_photo')}</button></div></div>
+    <div class="grid2"><div><label>${t('first')}</label><input id="pfF" value="${esc(u.first)}"></div><div><label>${t('last')}</label><input id="pfL" value="${esc(u.last)}"></div></div>
+    <div class="grid2"><div><label>${t('phone')}</label><input id="pfP" dir="ltr" value="${esc(u.phone)}"></div><div><label>${t('email')}</label><input id="pfE" dir="ltr" type="email" value="${esc(u.email)}"></div></div>
+    <div class="grid2"><div><label>${t('cur_pass')}</label><input id="pfC" type="password" dir="ltr" autocomplete="current-password"></div><div><label>${t('new_pass')}</label><input id="pfN" type="password" dir="ltr" autocomplete="new-password"></div></div>
+    <div class="actions"><button class="btn" id="pfS">${t('save')}</button></div></div>`;
+  $('#pfS').onclick = async () => {
+    try {
+      await api('profile', { first: $('#pfF').value, last: $('#pfL').value, phone: $('#pfP').value, email: $('#pfE').value, currentPassword: $('#pfC').value, newPassword: $('#pfN').value });
+      toast(t('saved')); await refresh(); renderProfile();
+    } catch (e) { toast(errText(e)); }
+  };
+  $('#avBtn').onclick = () => {
+    const fi = $('#fileIn'); fi.accept = 'image/*'; fi.value = '';
+    fi.onchange = async () => { if (!fi.files[0]) return; const fd = new FormData(); fd.append('file', fi.files[0]);
+      try { await api('avatar_upload', fd, true); toast(t('saved')); await refresh(); renderProfile(); } catch (e) { toast('✕ ' + e.code); } fi.accept = ''; };
+    fi.click();
+  };
+}
+
+/* ================= notifications ================= */
+$('#bell').onclick = async () => {
+  const p = $('#notifPanel'); p.classList.toggle('open');
+  if (!p.classList.contains('open')) return;
+  const list = S.notifs.slice().reverse();
+  p.innerHTML = `<div style="padding:8px 10px;font-weight:700">${t('notifs')}</div>` + (list.map(n =>
+    `<div class="notif ${n.read ? '' : 'unread'} ${n.type === 'files_warning' ? 'warn' : ''}" data-task="${n.data.task || ''}">${esc(t('n_' + n.type, { t: n.data.title || '' }))}<div class="muted small">${fmtDate(n.at)}</div></div>`).join('') || `<div class="notif muted">${t('no_notifs')}</div>`);
+  p.querySelectorAll('.notif[data-task]').forEach(el => el.onclick = () => { p.classList.remove('open'); if (el.dataset.task) openTask(+el.dataset.task); });
+  if (S.notifs.some(n => !n.read)) { await api('notifs_read', {}); S.notifs.forEach(n => n.read = true); $('#notifBadge').hidden = true; }
+};
+document.addEventListener('click', e => { if (!e.target.closest('#notifPanel,#bell')) $('#notifPanel').classList.remove('open'); });
+</script>
+</body>
+</html>

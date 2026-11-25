@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TAP Werbeagentur | Admin Panel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Firebase Compat SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "YOUR_FIREBASE_API_KEY",
+      authDomain: "your-firebase-project.firebaseapp.com",
+      databaseURL: "https://your-firebase-project-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "your-firebase-project",
+      storageBucket: "your-firebase-project.firebasestorage.app",
+      messagingSenderId: "000000000000",
+      appId: "YOUR_APP_ID"
+    };
+    try {
+      firebase.initializeApp(firebaseConfig);
+      window.db = firebase.database();
+      window.firebaseReady = true;
+    } catch(e) {
+      window.firebaseReady = false;
+      console.error('Firebase init error:', e);
+    }
+  </script>
+
+  <style>
+    :root {
+      --black:#0a0a0a; --white:#ffffff; --light-bg:#f4f3f0; --card-bg:#ffffff;
+      --accent:#c8102e; --accent-dark:#9e0c24; --accent-light:#f5e6e9;
+      --green:#198754; --green-light:#d1e7dd; --yellow:#856404; --yellow-light:#fff3cd;
+      --blue:#084298; --blue-light:#cfe2ff; --text-main:#1a1a1a; --text-muted:#6b6b6b;
+      --border:#e2e0dc; --shadow:0 2px 20px rgba(0,0,0,0.07); --radius:12px;
+      --font-display:'Bebas Neue',sans-serif; --font-body:'DM Sans',sans-serif;
+      --sidebar-w:240px;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:var(--font-body);background:var(--light-bg);color:var(--text-main);min-height:100vh;display:flex;flex-direction:column;}
+
+    /* LOGIN */
+    #loginOverlay{position:fixed;inset:0;background:var(--black);z-index:9999;display:flex;align-items:center;justify-content:center;}
+    .login-box{background:#111;border:2px solid var(--accent);border-radius:16px;padding:3rem 2.5rem;width:100%;max-width:400px;text-align:center;}
+    .login-logo{font-family:var(--font-display);font-size:2.2rem;color:white;letter-spacing:.15em;margin-bottom:.3rem;}
+    .login-logo span{color:var(--accent);}
+    .login-sub{color:#555;font-size:.75rem;letter-spacing:.2em;margin-bottom:.5rem;}
+    .firebase-status{font-size:.72rem;margin-bottom:1.5rem;}
+    .firebase-status.ok{color:#198754;} .firebase-status.err{color:#dc3545;}
+    .login-label{display:block;text-align:left;font-size:.72rem;font-weight:700;color:#666;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;}
+    .login-input{width:100%;padding:.8rem 1rem;background:#1a1a1a;border:1.5px solid #333;border-radius:8px;color:white;font-family:var(--font-body);font-size:.95rem;margin-bottom:1.2rem;}
+    .login-input:focus{outline:none;border-color:var(--accent);}
+    .login-btn{width:100%;background:var(--accent);color:white;border:none;border-radius:8px;padding:.85rem;font-family:var(--font-display);font-size:1.2rem;letter-spacing:.15em;cursor:pointer;transition:background .2s;}
+    .login-btn:hover{background:var(--accent-dark);}
+    .login-error{color:#ff6b6b;font-size:.82rem;margin-top:.8rem;display:none;}
+
+    /* CHANGE PW MODAL */
+    #changePwModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:8000;align-items:center;justify-content:center;}
+    #changePwModal.open{display:flex;}
+
+    /* HEADER */
+    header{background:var(--black);height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;border-bottom:2px solid var(--accent);position:sticky;top:0;z-index:200;}
+    .logo{font-family:var(--font-display);color:white;font-size:1.4rem;letter-spacing:.12em;text-decoration:none;}
+    .logo span{color:var(--accent);}
+    .logo-sub{font-family:var(--font-body);font-size:.58rem;color:#888;display:block;letter-spacing:.2em;}
+    .admin-badge{background:var(--accent);color:white;font-size:.7rem;font-weight:700;padding:4px 14px;border-radius:20px;letter-spacing:.08em;}
+    .header-right{display:flex;align-items:center;gap:1rem;}
+    .notif-btn{position:relative;background:none;border:1.5px solid #444;color:#ccc;border-radius:8px;padding:6px 12px;cursor:pointer;font-size:.82rem;font-family:var(--font-body);transition:all .2s;}
+    .notif-btn:hover{border-color:var(--accent);color:var(--accent);}
+    .notif-count{position:absolute;top:-8px;right:-8px;background:var(--accent);color:white;font-size:.65rem;font-weight:700;width:20px;height:20px;border-radius:50%;display:none;align-items:center;justify-content:center;}
+    .btn-changepw{background:none;border:1.5px solid #444;color:#ccc;border-radius:8px;padding:6px 12px;cursor:pointer;font-size:.78rem;font-family:var(--font-body);transition:all .2s;}
+    .btn-changepw:hover{border-color:#666;color:white;}
+
+    /* LAYOUT */
+    .layout{display:flex;flex:1;}
+    .sidebar{width:var(--sidebar-w);background:var(--black);min-height:calc(100vh - 68px);padding:1.5rem 0;position:sticky;top:68px;align-self:flex-start;max-height:calc(100vh - 68px);overflow-y:auto;}
+    .sidebar-label{font-size:.65rem;font-weight:700;color:#555;letter-spacing:.15em;text-transform:uppercase;margin-bottom:.5rem;padding:0 .8rem;}
+    .sidebar-section{padding:.5rem 1.2rem;}
+    .nav-item{display:flex;align-items:center;gap:.8rem;padding:.65rem .8rem;color:#aaa;font-size:.85rem;font-weight:500;cursor:pointer;border-radius:8px;transition:all .2s;margin-bottom:2px;border:none;background:none;width:100%;text-align:left;}
+    .nav-item:hover{background:#1a1a1a;color:white;}
+    .nav-item.active{background:var(--accent);color:white;}
+    .nav-icon{font-size:1.1rem;width:22px;text-align:center;}
+    .nav-badge{margin-left:auto;background:var(--accent);color:white;font-size:.62rem;font-weight:700;padding:2px 7px;border-radius:10px;}
+    .nav-item.active .nav-badge{background:rgba(255,255,255,.3);}
+
+    /* CONTENT */
+    .content{flex:1;padding:2rem;max-width:1100px;}
+    .page{display:none;}
+    .page.active{display:block;}
+
+    /* STATS */
+    .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin-bottom:2rem;}
+    .stat-card{background:var(--card-bg);border-radius:var(--radius);padding:1.3rem 1.5rem;border:1px solid var(--border);box-shadow:var(--shadow);}
+    .stat-label{font-size:.7rem;font-weight:700;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase;}
+    .stat-val{font-family:var(--font-display);font-size:2.4rem;letter-spacing:.06em;margin-top:4px;}
+    .stat-val.red{color:var(--accent);} .stat-val.green{color:var(--green);} .stat-val.blue{color:#0d6efd;}
+
+    .section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.2rem;flex-wrap:wrap;gap:.8rem;}
+    .section-title{font-family:var(--font-display);font-size:1.6rem;letter-spacing:.1em;}
+
+    /* TASK CARDS */
+    .task-card{background:var(--card-bg);border-radius:var(--radius);border:1px solid var(--border);box-shadow:var(--shadow);margin-bottom:1rem;overflow:hidden;transition:box-shadow .2s;}
+    .task-card:hover{box-shadow:0 6px 30px rgba(0,0,0,.1);}
+    .task-header{display:flex;align-items:center;justify-content:space-between;padding:1.1rem 1.5rem;flex-wrap:wrap;gap:.8rem;}
+    .task-left{flex:1;min-width:200px;}
+    .task-service{font-weight:700;font-size:.95rem;}
+    .task-customer{font-size:.8rem;color:var(--text-muted);margin-top:3px;}
+    .task-date{font-size:.75rem;color:#aaa;margin-top:2px;}
+    .task-desc{padding:.6rem 1.5rem 1rem;font-size:.84rem;color:var(--text-muted);font-style:italic;border-top:1px solid var(--light-bg);background:#fafaf9;}
+
+    .status-badge{display:inline-block;padding:4px 12px;border-radius:20px;font-size:.7rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;}
+    .status-pending{background:var(--yellow-light);color:var(--yellow);}
+    .status-priced{background:var(--blue-light);color:var(--blue);}
+    .status-negotiating{background:#f8d7da;color:#842029;}
+    .status-active{background:var(--green-light);color:#0a3622;}
+    .status-done{background:#e2e3e5;color:#41464b;}
+    .status-rejected{background:#e2e3e5;color:#41464b;}
+
+    .pricing-form{padding:1.2rem 1.5rem;background:#f9f8f7;border-top:1px solid var(--border);}
+    .pricing-row{display:flex;gap:.8rem;flex-wrap:wrap;}
+    .pf-group{flex:1;min-width:130px;}
+    .pf-label{font-size:.72rem;font-weight:700;color:var(--text-muted);letter-spacing:.07em;text-transform:uppercase;margin-bottom:5px;display:block;}
+    .pf-input{width:100%;padding:.6rem .9rem;border:1.5px solid var(--border);border-radius:8px;font-family:var(--font-body);font-size:.9rem;background:white;}
+    .pf-input:focus{outline:none;border-color:var(--accent);}
+    .pf-actions{display:flex;gap:.6rem;margin-top:1rem;flex-wrap:wrap;}
+
+    .btn{border:none;border-radius:8px;padding:.55rem 1.2rem;font-family:var(--font-body);font-size:.82rem;font-weight:700;cursor:pointer;letter-spacing:.04em;transition:all .2s;}
+    .btn-red{background:var(--accent);color:white;} .btn-red:hover{background:var(--accent-dark);}
+    .btn-green{background:var(--green);color:white;} .btn-green:hover{background:#146c43;}
+    .btn-dark{background:var(--black);color:white;} .btn-dark:hover{background:#333;}
+    .btn-outline{background:none;border:1.5px solid var(--border);color:var(--text-main);} .btn-outline:hover{background:var(--border);}
+    .btn-sm{padding:.38rem .9rem;font-size:.76rem;}
+    .btn-deliver{background:var(--green);color:white;font-family:var(--font-display);font-size:1rem;letter-spacing:.1em;padding:.6rem 1.5rem;border:none;border-radius:8px;cursor:pointer;transition:all .2s;}
+    .btn-deliver:hover{background:#146c43;transform:translateY(-1px);}
+
+    /* MODALS */
+    .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:500;justify-content:center;align-items:center;padding:1rem;}
+    .modal-overlay.open{display:flex;}
+    .modal{background:white;border-radius:16px;max-width:640px;width:100%;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.25);animation:slideUp .25s ease;max-height:90vh;overflow-y:auto;}
+    @keyframes slideUp{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}
+    .modal-header{background:var(--black);padding:1.5rem 2rem;display:flex;align-items:center;justify-content:space-between;}
+    .modal-title{font-family:var(--font-display);color:white;font-size:1.5rem;letter-spacing:.1em;}
+    .modal-close{background:none;border:none;color:#aaa;font-size:1.5rem;cursor:pointer;transition:color .2s;}
+    .modal-close:hover{color:white;}
+    .modal-body{padding:2rem;}
+    .modal-footer{padding:0 2rem 2rem;display:flex;gap:10px;}
+    .btn-modal-primary{flex:2;background:var(--accent);color:white;border:none;border-radius:8px;padding:.8rem;font-family:var(--font-display);font-size:1.1rem;letter-spacing:.1em;cursor:pointer;}
+    .btn-modal-primary:hover{background:var(--accent-dark);}
+    .btn-secondary{flex:1;background:var(--light-bg);color:var(--text-main);border:1.5px solid var(--border);border-radius:8px;padding:.8rem;font-family:var(--font-body);font-size:.9rem;font-weight:600;cursor:pointer;}
+
+    /* INVOICE */
+    .invoice-options{display:grid;grid-template-columns:repeat(2,1fr);gap:.8rem;margin-bottom:1.5rem;}
+    .inv-option{padding:1rem;background:var(--light-bg);border:2px solid var(--border);border-radius:10px;text-align:center;cursor:pointer;transition:all .2s;font-size:.85rem;font-weight:600;}
+    .inv-option:hover,.inv-option.selected{border-color:var(--accent);background:var(--accent-light);color:var(--accent);}
+    .inv-option-icon{font-size:1.6rem;display:block;margin-bottom:5px;}
+    .customer-select{width:100%;padding:.65rem 1rem;border:1.5px solid var(--border);border-radius:8px;font-family:var(--font-body);font-size:.9rem;background:white;margin-bottom:1rem;}
+    #invoicePreview{display:none;}
+    .inv-doc{background:white;padding:40px;font-family:Arial,sans-serif;max-width:700px;border:1px solid #ddd;}
+    .inv-logo-area{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:30px;}
+    .inv-logo-text{font-family:var(--font-display);font-size:28px;letter-spacing:3px;}
+    .inv-logo-text span{color:var(--accent);}
+    .inv-logo-sub{font-size:11px;letter-spacing:3px;color:#666;}
+    .inv-meta{text-align:right;font-size:13px;color:#555;}
+    .inv-meta strong{color:#000;}
+    .inv-divider{border:none;border-top:2px solid var(--accent);margin:20px 0;}
+    .inv-bill-to{margin-bottom:25px;font-size:13px;}
+    .inv-bill-to .label{font-size:10px;font-weight:700;letter-spacing:3px;color:#999;text-transform:uppercase;margin-bottom:5px;}
+    .inv-table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:25px;}
+    .inv-table th{background:#0a0a0a;color:white;padding:10px 12px;text-align:left;font-size:11px;letter-spacing:1px;text-transform:uppercase;}
+    .inv-table td{padding:10px 12px;border-bottom:1px solid #f0f0f0;}
+    .inv-totals{margin-left:auto;width:250px;font-size:13px;}
+    .inv-totals tr td:first-child{color:#666;padding:5px 0;}
+    .inv-totals tr td:last-child{text-align:right;font-weight:600;}
+    .inv-total-row td{font-size:15px;font-weight:700;border-top:2px solid #000;padding-top:8px;}
+    .inv-footer-text{font-size:11px;color:#888;margin-top:30px;padding-top:20px;border-top:1px solid #eee;line-height:1.6;}
+    .inv-bank{font-size:11px;color:#555;margin-top:15px;}
+    .inv-bank-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:8px;}
+    .inv-bank-item .bl{font-size:9px;color:#999;letter-spacing:1px;text-transform:uppercase;}
+    .inv-bank-item .bv{font-size:12px;font-weight:600;color:#000;}
+
+    /* NOTIFICATIONS PANEL */
+    #notifPanel{position:fixed;top:68px;right:0;width:360px;max-height:calc(100vh - 68px);background:white;border-left:2px solid var(--border);box-shadow:-6px 0 30px rgba(0,0,0,.12);z-index:150;overflow-y:auto;transform:translateX(100%);transition:transform .3s;}
+    #notifPanel.open{transform:translateX(0);}
+    .notif-panel-header{padding:1.2rem 1.5rem;background:var(--black);display:flex;justify-content:space-between;align-items:center;}
+    .notif-panel-title{font-family:var(--font-display);color:white;font-size:1.3rem;letter-spacing:.1em;}
+    .notif-close{background:none;border:none;color:#aaa;font-size:1.4rem;cursor:pointer;}
+    .notif-item{padding:1rem 1.5rem;border-bottom:1px solid var(--border);}
+    .notif-item.unread{background:#fff9f9;border-left:3px solid var(--accent);}
+    .notif-type{font-size:.7rem;font-weight:700;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px;}
+    .notif-text{font-size:.84rem;color:var(--text-main);}
+    .notif-time{font-size:.72rem;color:#aaa;margin-top:3px;}
+
+    /* ACCOUNTING */
+    .period-tabs{display:flex;gap:0;border:1.5px solid var(--border);border-radius:10px;overflow:hidden;width:fit-content;margin-bottom:1.5rem;background:white;}
+    .period-tab{padding:.55rem 1.4rem;background:none;border:none;font-family:var(--font-body);font-size:.82rem;font-weight:600;color:var(--text-muted);cursor:pointer;transition:all .2s;}
+    .period-tab.active{background:var(--black);color:white;}
+    .acc-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin-bottom:1.5rem;}
+    .acc-card{background:white;border-radius:var(--radius);padding:1.2rem 1.5rem;border:1px solid var(--border);}
+    .acc-label{font-size:.7rem;font-weight:700;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase;}
+    .acc-val{font-family:var(--font-display);font-size:2rem;color:var(--accent);letter-spacing:.08em;margin-top:4px;}
+    .acc-table{width:100%;border-collapse:collapse;background:white;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);}
+    .acc-table th{background:var(--black);color:white;font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.85rem 1.2rem;text-align:left;}
+    .acc-table td{padding:.85rem 1.2rem;font-size:.84rem;border-bottom:1px solid var(--border);}
+    .acc-table tr:last-child td{border-bottom:none;}
+    .acc-total{display:flex;justify-content:flex-end;margin-top:1rem;font-size:.9rem;color:var(--text-muted);}
+    .acc-total strong{font-family:var(--font-display);font-size:1.8rem;color:var(--accent);margin-left:1rem;letter-spacing:.08em;}
+
+    /* CUSTOMERS */
+    .customer-card{background:white;border-radius:var(--radius);border:1px solid var(--border);padding:1.3rem 1.5rem;margin-bottom:.8rem;display:flex;align-items:center;gap:1.2rem;box-shadow:var(--shadow);}
+    .cust-avatar{width:46px;height:46px;background:var(--black);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:1.2rem;color:white;flex-shrink:0;}
+    .cust-name{font-weight:700;font-size:.95rem;}
+    .cust-meta{font-size:.78rem;color:var(--text-muted);margin-top:2px;}
+    .cust-stats{margin-left:auto;text-align:right;}
+    .cust-orders{font-family:var(--font-display);font-size:1.5rem;color:var(--accent);letter-spacing:.06em;}
+    .cust-spent{font-size:.74rem;color:var(--text-muted);}
+
+    /* CHAT */
+    .chat-page-layout{display:grid;grid-template-columns:280px 1fr;gap:1.2rem;}
+    .chat-list{display:flex;flex-direction:column;gap:.5rem;}
+    .chat-list-item{display:flex;align-items:center;gap:1rem;padding:.9rem 1.2rem;background:white;border-radius:10px;border:1px solid var(--border);cursor:pointer;transition:all .2s;}
+    .chat-list-item:hover,.chat-list-item.active-chat{background:var(--accent-light);border-color:var(--accent);}
+    .chat-list-avatar{width:42px;height:42px;background:var(--black);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:1rem;color:white;flex-shrink:0;}
+    .chat-list-info{flex:1;}
+    .chat-list-name{font-weight:600;font-size:.9rem;}
+    .chat-list-last{font-size:.76rem;color:var(--text-muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:160px;}
+    .chat-unread{background:var(--accent);color:white;font-size:.65rem;font-weight:700;padding:2px 7px;border-radius:10px;}
+    .chat-window{background:white;border-radius:var(--radius);border:1px solid var(--border);display:flex;flex-direction:column;height:500px;}
+    .chat-header-w{padding:1rem 1.5rem;background:var(--black);border-radius:var(--radius) var(--radius) 0 0;display:flex;align-items:center;justify-content:space-between;}
+    .chat-header-name{font-family:var(--font-display);color:white;font-size:1.2rem;letter-spacing:.05em;}
+    .chat-messages{flex:1;overflow-y:auto;padding:1rem 1.5rem;display:flex;flex-direction:column;gap:.8rem;}
+    .chat-msg{max-width:70%;}
+    .chat-msg.mine{align-self:flex-end;}
+    .chat-msg.theirs{align-self:flex-start;}
+    .chat-bubble{padding:.7rem 1rem;border-radius:16px;font-size:.86rem;line-height:1.5;}
+    .chat-msg.mine .chat-bubble{background:var(--accent);color:white;border-radius:16px 16px 4px 16px;}
+    .chat-msg.theirs .chat-bubble{background:var(--light-bg);color:var(--text-main);border-radius:16px 16px 16px 4px;}
+    .chat-time{font-size:.68rem;color:#aaa;margin-top:3px;text-align:right;}
+    .chat-msg.theirs .chat-time{text-align:left;}
+    .chat-input-area{padding:1rem 1.5rem;border-top:1px solid var(--border);display:flex;gap:.7rem;align-items:flex-end;}
+    .chat-text-input{flex:1;padding:.65rem 1rem;border:1.5px solid var(--border);border-radius:10px;font-family:var(--font-body);font-size:.88rem;resize:none;max-height:100px;}
+    .chat-text-input:focus{outline:none;border-color:var(--accent);}
+    .chat-send-btn{background:var(--accent);color:white;border:none;border-radius:10px;padding:.65rem 1.2rem;cursor:pointer;font-size:.9rem;transition:background .2s;flex-shrink:0;}
+    .chat-send-btn:hover{background:var(--accent-dark);}
+    .chat-file-btn{background:var(--light-bg);color:var(--text-muted);border:1.5px solid var(--border);border-radius:10px;padding:.65rem .9rem;cursor:pointer;font-size:.9rem;transition:all .2s;flex-shrink:0;}
+    .chat-file-btn:hover{border-color:var(--accent);color:var(--accent);}
+    .file-msg{display:flex;align-items:center;gap:.7rem;padding:.6rem 1rem;background:rgba(255,255,255,.15);border-radius:10px;margin-top:4px;}
+    .file-msg.theirs-file{background:rgba(0,0,0,.05);}
+    .file-icon{font-size:1.4rem;}
+    .file-name{font-size:.8rem;font-weight:600;}
+    .file-size{font-size:.72rem;opacity:.7;}
+    .file-download{font-size:.75rem;text-decoration:underline;cursor:pointer;margin-top:2px;display:inline-block;}
+    .chat-img{max-width:200px;border-radius:10px;margin-top:5px;cursor:pointer;}
+
+    /* SEND FILES MODAL */
+    .upload-area{border:2px dashed var(--border);border-radius:12px;padding:2rem;text-align:center;cursor:pointer;transition:all .2s;background:var(--light-bg);}
+    .upload-area:hover,.upload-area.drag{border-color:var(--accent);background:var(--accent-light);}
+    .upload-icon{font-size:2.5rem;margin-bottom:.5rem;}
+    .upload-label{font-size:.88rem;color:var(--text-muted);}
+    .upload-label span{color:var(--accent);font-weight:600;cursor:pointer;}
+    .file-preview-list{margin-top:1rem;display:flex;flex-direction:column;gap:.5rem;}
+    .file-preview-item{display:flex;align-items:center;gap:.8rem;padding:.6rem 1rem;background:white;border-radius:8px;border:1px solid var(--border);}
+    .file-preview-icon{font-size:1.3rem;}
+    .file-preview-name{font-size:.83rem;font-weight:600;flex:1;}
+    .file-preview-size{font-size:.75rem;color:var(--text-muted);}
+    .file-preview-remove{background:none;border:none;cursor:pointer;color:#aaa;font-size:1rem;transition:color .2s;}
+    .file-preview-remove:hover{color:var(--accent);}
+
+    /* NEG FORM */
+    .neg-form{padding:1.2rem 1.5rem;background:#fff3f3;border-top:1px solid #f0c0c8;}
+    .neg-header{font-size:.78rem;font-weight:700;color:var(--accent);letter-spacing:.06em;margin-bottom:.8rem;}
+    .neg-info{font-size:.82rem;color:#842029;background:#f8d7da;padding:.7rem 1rem;border-radius:8px;margin-bottom:.9rem;}
+
+    .empty-state{text-align:center;padding:3rem 2rem;background:white;border-radius:var(--radius);border:1px dashed var(--border);color:var(--text-muted);}
+    .empty-state p{font-size:.88rem;margin-top:.5rem;}
+    .search-input{padding:.5rem 1rem;border:1.5px solid var(--border);border-radius:8px;font-family:var(--font-body);font-size:.84rem;width:220px;}
+    .search-input:focus{outline:none;border-color:var(--accent);}
+
+    /* TOAST */
+    .toast{position:fixed;bottom:2rem;right:2rem;background:var(--black);color:white;padding:1rem 1.5rem;border-radius:10px;box-shadow:0 8px 30px rgba(0,0,0,.3);font-size:.88rem;z-index:9000;border-left:4px solid var(--accent);animation:fadeInUp .3s ease;max-width:340px;display:none;}
+    .toast-title{font-weight:700;margin-bottom:3px;}
+    @keyframes fadeInUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+
+    footer{background:var(--black);color:#555;text-align:center;padding:1.2rem;font-size:.75rem;letter-spacing:.07em;border-top:2px solid var(--accent);margin-top:auto;}
+    footer a{color:var(--accent);text-decoration:none;}
+    ::-webkit-scrollbar{width:6px;} ::-webkit-scrollbar-track{background:transparent;} ::-webkit-scrollbar-thumb{background:#ccc;border-radius:3px;}
+    @media(max-width:768px){.chat-page-layout{grid-template-columns:1fr;} .sidebar{display:none;} .stats-grid{grid-template-columns:1fr 1fr;}}
+  </style>
+</head>
+<body>
+
+<!-- ═══ LOGIN ═══ -->
+<div id="loginOverlay">
+  <div class="login-box">
+    <div class="login-logo">T.A.P <span>ADMIN</span></div>
+    <div class="login-sub">WERBEAGENTUR WOB · SICHERHEITSBEREICH</div>
+    <div class="firebase-status" id="fbStatusAdmin">⏳ Verbinde mit Firebase…</div>
+    <label class="login-label">Administrator-Passwort</label>
+    <input type="password" class="login-input" id="adminPwInput" placeholder="••••••••" onkeypress="if(event.key==='Enter')checkAdminPw()" />
+    <button class="login-btn" onclick="checkAdminPw()">ANMELDEN →</button>
+    <div class="login-error" id="loginError">❌ Falsches Passwort.</div>
+  </div>
+</div>
+
+<!-- ═══ CHANGE PASSWORD MODAL ═══ -->
+<div class="modal-overlay" id="changePwModal">
+  <div class="modal" style="max-width:420px;">
+    <div class="modal-header"><div class="modal-title">PASSWORT ÄNDERN</div><button class="modal-close" onclick="closeModal('changePwModal')">✕</button></div>
+    <div class="modal-body">
+      <div style="margin-bottom:1rem;"><label style="display:block;font-size:.72rem;font-weight:700;color:var(--text-muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px;">Aktuelles Passwort</label><input type="password" class="pf-input" id="pw_current" placeholder="••••••••" /></div>
+      <div style="margin-bottom:1rem;"><label style="display:block;font-size:.72rem;font-weight:700;color:var(--text-muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px;">Neues Passwort</label><input type="password" class="pf-input" id="pw_new" placeholder="Min. 6 Zeichen" /></div>
+      <div><label style="display:block;font-size:.72rem;font-weight:700;color:var(--text-muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px;">Wiederholen</label><input type="password" class="pf-input" id="pw_new2" placeholder="••••••••" /></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="closeModal('changePwModal')">Abbrechen</button>
+      <button class="btn-modal-primary" onclick="doChangePassword()">ÄNDERN →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ INVOICE MODAL ═══ -->
+<div class="modal-overlay" id="invoiceModal">
+  <div class="modal" style="max-width:800px;">
+    <div class="modal-header"><div class="modal-title">RECHNUNG ERSTELLEN</div><button class="modal-close" onclick="closeModal('invoiceModal')">✕</button></div>
+    <div class="modal-body">
+      <div id="invoiceForm">
+        <div style="margin-bottom:1.2rem;">
+          <label style="display:block;font-size:.72rem;font-weight:700;color:var(--text-muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px;">Rechnungstyp</label>
+          <div class="invoice-options">
+            <div class="inv-option" onclick="selectInvType('daily',this)"><span class="inv-option-icon">📅</span>Tagesrechnung</div>
+            <div class="inv-option" onclick="selectInvType('weekly',this)"><span class="inv-option-icon">📆</span>Wochenrechnung</div>
+            <div class="inv-option" onclick="selectInvType('monthly',this)"><span class="inv-option-icon">🗓️</span>Monatsrechnung</div>
+            <div class="inv-option" onclick="selectInvType('customer',this)"><span class="inv-option-icon">👤</span>Kundenrechnung</div>
+          </div>
+        </div>
+        <div id="customerSelectGroup" style="display:none;margin-bottom:1rem;">
+          <label style="display:block;font-size:.72rem;font-weight:700;color:var(--text-muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px;">Kunde auswählen</label>
+          <select class="customer-select" id="invoiceCustomer"><option value="">— Bitte wählen —</option></select>
+        </div>
+        <button class="btn btn-red" onclick="generateInvoice()" style="width:100%;font-family:var(--font-display);font-size:1.1rem;letter-spacing:.1em;padding:.85rem;">RECHNUNG GENERIEREN →</button>
+      </div>
+      <div id="invoicePreview"></div>
+    </div>
+    <div class="modal-footer" id="invoiceActions" style="display:none;">
+      <button class="btn-secondary" onclick="resetInvoice()">← Zurück</button>
+      <button class="btn-modal-primary" onclick="printInvoice()">🖨️ DRUCKEN / PDF</button>
+      <button class="btn-modal-primary" id="sendInvBtn" style="background:var(--green);display:none;">📨 AN KUNDEN SENDEN</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SEND FILES MODAL ═══ -->
+<div class="modal-overlay" id="sendFilesModal">
+  <div class="modal" style="max-width:520px;">
+    <div class="modal-header"><div class="modal-title">DATEIEN SENDEN</div><button class="modal-close" onclick="closeModal('sendFilesModal')">✕</button></div>
+    <div class="modal-body">
+      <div style="margin-bottom:1rem;"><label style="display:block;font-size:.72rem;font-weight:700;color:var(--text-muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px;">An Kunden senden</label><select class="customer-select" id="filesSendTo"></select></div>
+      <div style="margin-bottom:1rem;"><label style="display:block;font-size:.72rem;font-weight:700;color:var(--text-muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px;">Nachricht (optional)</label><textarea class="pf-input" id="filesMessage" rows="2" placeholder="Kurze Nachricht..." style="resize:none;"></textarea></div>
+      <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileUploadInput').click()" ondragover="handleDragOver(event)" ondrop="handleDrop(event)">
+        <input type="file" id="fileUploadInput" multiple accept="image/*,video/*,.pdf,.doc,.docx,.zip,.ai,.eps,.svg,.psd" style="display:none;" onchange="handleFileSelect(event)">
+        <div class="upload-icon">📁</div>
+        <div class="upload-label">Dateien hier ablegen oder <span>durchsuchen</span></div>
+        <div style="font-size:.75rem;color:#aaa;margin-top:4px;">PDF, Bilder, Videos, Dokumente</div>
+      </div>
+      <div class="file-preview-list" id="filePreviewList"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="closeModal('sendFilesModal')">Abbrechen</button>
+      <button class="btn-modal-primary" onclick="sendFilesToCustomer()">📨 SENDEN →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ HEADER ═══ -->
+<header id="mainHeader" style="display:none;">
+  <a href="#" class="logo">T.A.P <span>WERBE</span>AGENTUR<span class="logo-sub">WOB · ADMIN PANEL</span></a>
+  <div class="header-right">
+    <button class="btn-changepw" onclick="openModal('changePwModal')">🔒 Passwort ändern</button>
+    <button class="notif-btn" onclick="toggleNotifPanel()">🔔 Benachrichtigungen<span class="notif-count" id="notifCount">0</span></button>
+    <span class="admin-badge">ADMIN</span>
+  </div>
+</header>
+
+<!-- ═══ LAYOUT ═══ -->
+<div class="layout" id="mainLayout" style="display:none;">
+  <nav class="sidebar">
+    <div class="sidebar-label">Übersicht</div>
+    <div class="sidebar-section"><button class="nav-item active" onclick="gotoPage('dashboard',this)"><span class="nav-icon">📊</span> Dashboard</button></div>
+    <div class="sidebar-label">Aufträge</div>
+    <div class="sidebar-section">
+      <button class="nav-item" onclick="gotoPage('pending',this)"><span class="nav-icon">⏳</span> Neue Anfragen <span class="nav-badge" id="pendingBadge">0</span></button>
+      <button class="nav-item" onclick="gotoPage('tasks',this)"><span class="nav-icon">⚙️</span> Laufend <span class="nav-badge" id="activeBadge">0</span></button>
+      <button class="nav-item" onclick="gotoPage('archive',this)"><span class="nav-icon">📁</span> Archiv</button>
+    </div>
+    <div class="sidebar-label">Kommunikation</div>
+    <div class="sidebar-section">
+      <button class="nav-item" onclick="gotoPage('chat',this)"><span class="nav-icon">💬</span> Chats <span class="nav-badge" id="chatBadge" style="display:none;">!</span></button>
+      <button class="nav-item" onclick="openInvoiceModal()"><span class="nav-icon">🧾</span> Rechnung</button>
+      <button class="nav-item" onclick="openSendFilesModal()"><span class="nav-icon">📎</span> Dateien senden</button>
+    </div>
+    <div class="sidebar-label">Verwaltung</div>
+    <div class="sidebar-section">
+      <button class="nav-item" onclick="gotoPage('customers',this)"><span class="nav-icon">👥</span> Kunden</button>
+      <button class="nav-item" onclick="gotoPage('accounting',this)"><span class="nav-icon">💰</span> Buchhaltung</button>
+    </div>
+  </nav>
+
+  <div class="content">
+    <!-- DASHBOARD -->
+    <div class="page active" id="page-dashboard">
+      <div class="section-header"><div class="section-title">ADMIN DASHBOARD</div><div style="font-size:.8rem;color:var(--text-muted);" id="dashDate"></div></div>
+      <div class="stats-grid" id="dashStats"></div>
+      <div class="section-title" style="margin-bottom:1rem;">NEUESTE AKTIVITÄTEN</div>
+      <div id="recentActivity"></div>
+    </div>
+    <!-- PENDING -->
+    <div class="page" id="page-pending">
+      <div class="section-header"><div class="section-title">NEUE ANFRAGEN</div><input class="search-input" placeholder="🔍 Suchen…" oninput="filterList('pending',this.value)" /></div>
+      <div id="pendingList"></div>
+    </div>
+    <!-- TASKS -->
+    <div class="page" id="page-tasks">
+      <div class="section-header"><div class="section-title">IN BEARBEITUNG</div><input class="search-input" placeholder="🔍 Suchen…" oninput="filterList('tasks',this.value)" /></div>
+      <div id="tasksList"></div>
+    </div>
+    <!-- ARCHIVE -->
+    <div class="page" id="page-archive">
+      <div class="section-header"><div class="section-title">ARCHIV</div><input class="search-input" placeholder="🔍 Suchen…" oninput="filterList('archive',this.value)" /></div>
+      <div id="archiveList"></div>
+    </div>
+    <!-- CHAT -->
+    <div class="page" id="page-chat">
+      <div class="section-title" style="margin-bottom:1.2rem;">KUNDENKOMMUNIKATION</div>
+      <div class="chat-page-layout">
+        <div><div style="font-size:.72rem;font-weight:700;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.8rem;">KUNDEN</div><div class="chat-list" id="chatCustomerList"></div></div>
+        <div id="chatWindowArea"><div class="empty-state" style="height:400px;display:flex;align-items:center;justify-content:center;flex-direction:column;"><div style="font-size:3rem;margin-bottom:1rem;">💬</div><p>Kunden auswählen zum Chatten</p></div></div>
+      </div>
+    </div>
+    <!-- CUSTOMERS -->
+    <div class="page" id="page-customers">
+      <div class="section-title" style="margin-bottom:1.2rem;">ALLE KUNDEN</div>
+      <div id="customersList"></div>
+    </div>
+    <!-- ACCOUNTING -->
+    <div class="page" id="page-accounting">
+      <div class="section-title" style="margin-bottom:1.2rem;">BUCHHALTUNG & UMSATZ</div>
+      <div class="period-tabs">
+        <button class="period-tab active" onclick="switchPeriod('month',this)">Diesen Monat</button>
+        <button class="period-tab" onclick="switchPeriod('year',this)">Dieses Jahr</button>
+        <button class="period-tab" onclick="switchPeriod('all',this)">Gesamt</button>
+      </div>
+      <div class="acc-summary" id="accSummary"></div>
+      <div id="accTableWrapper"></div>
+    </div>
+  </div>
+</div>
+
+<!-- NOTIFICATIONS PANEL -->
+<div id="notifPanel">
+  <div class="notif-panel-header"><div class="notif-panel-title">BENACHRICHTIGUNGEN</div><button class="notif-close" onclick="toggleNotifPanel()">✕</button></div>
+  <div id="notifList"></div>
+</div>
+
+<footer id="mainFooter" style="display:none;">© 2026 <a href="#">TAP Werbeagentur WOB</a> · Admin Panel</footer>
+<div class="toast" id="toast"><div class="toast-title" id="toastTitle"></div><div id="toastMsg"></div></div>
+
+<script>
+// ══════════════════════════════
+// CONSTANTS
+// ══════════════════════════════
+const SERVICES = [
+  {id:1,icon:'🍽️',name:'Speisekarte drucken'},{id:2,icon:'📄',name:'Papierflyer drucken'},
+  {id:3,icon:'🪟',name:'Schaufenster-Werbung'},{id:4,icon:'🚗',name:'Fahrzeugbeschriftung'},
+  {id:5,icon:'🍕',name:'Restaurant-Menü drucken'},{id:6,icon:'💳',name:'Visitenkarten drucken'},
+  {id:7,icon:'📦',name:'Folien & Aufkleber'},{id:8,icon:'👕',name:'Textildruck'},
+  {id:9,icon:'🌐',name:'Webdesign'},{id:10,icon:'📱',name:'Mobile App'},
+  {id:11,icon:'⚙️',name:'Softwarelösungen'},{id:12,icon:'🖨️',name:'Sonstige Werbung'}
+];
+const DEFAULT_PW = 'CHANGE_ME';
+const ADMIN_PW_KEY = 'admin_pw'; // stored in Firebase under admin/config/password
+
+let pendingFiles = [];
+let currentChatEmail = null;
+let selectedInvType = null;
+let currentInvoiceData = null;
+let allUsersCache = {};
+let chatListener = null;
+
+// ══════════════════════════════
+// FIREBASE HELPERS
+// ══════════════════════════════
+function encodeEmail(e){ return e.replace(/\./g,','); }
+function decodeEmail(k){ return k.replace(/,/g,'.'); }
+
+function fbRef(path){ return window.db.ref(path); }
+async function fbGet(path){
+  const snap = await fbRef(path).once('value');
+  return snap.val();
+}
+async function fbSet(path,val){ await fbRef(path).set(val); }
+async function fbUpdate(path,val){ await fbRef(path).update(val); }
+async function fbPush(path,val){
+  const ref = fbRef(path).push();
+  await ref.set(val);
+  return ref;
+}
+function fbListen(path,cb){
+  return fbRef(path).on('value', snap => cb(snap.val()));
+}
+function fbOff(path,fn){ fbRef(path).off('value',fn); }
+
+// ══════════════════════════════
+// HELPERS
+// ══════════════════════════════
+function svcName(id){ return SERVICES.find(s=>s.id===id)?.name||'—'; }
+function svcIcon(id){ return SERVICES.find(s=>s.id===id)?.icon||'📦'; }
+function statusLabel(s){
+  return {pending:'Ausstehend',priced:'Angebot gesendet',negotiating:'Verhandlung',active:'In Bearbeitung',done:'Abgeschlossen',rejected:'Abgelehnt'}[s]||s;
+}
+function nowDate(){ return new Date().toLocaleDateString('de-DE'); }
+function fmtTs(ts){
+  if(!ts) return '—';
+  try{ return new Date(ts).toLocaleString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}); }
+  catch{ return ts; }
+}
+function fmtTime(ts){
+  try{ return new Date(ts).toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'}); }
+  catch{ return ''; }
+}
+function getWeekNumber(d){
+  const onejan=new Date(d.getFullYear(),0,1);
+  return Math.ceil((((d-onejan)/86400000)+onejan.getDay()+1)/7);
+}
+
+// Get all orders across all users (from cache)
+function getAllOrders(){
+  const all=[];
+  for(const email in allUsersCache){
+    const u=allUsersCache[email];
+    const orders=u.orders ? Object.values(u.orders) : [];
+    orders.forEach(o=>all.push({...o,customerEmail:email,customerName:`${u.first} ${u.last}`,customerPhone:u.phone||'—'}));
+  }
+  return all;
+}
+
+async function updateOrderInDB(email, orderId, updates){
+  await fbUpdate('users/'+encodeEmail(email)+'/orders/'+orderId, updates);
+}
+
+// ══════════════════════════════
+// PASSWORD / AUTH
+// ══════════════════════════════
+window.addEventListener('load', async () => {
+  const el = document.getElementById('fbStatusAdmin');
+  if(window.firebaseReady && window.db){
+    el.textContent = '✅ Firebase verbunden'; el.className='firebase-status ok';
+  } else {
+    el.textContent = '❌ Firebase nicht verbunden'; el.className='firebase-status err';
+  }
+});
+
+async function getAdminPw(){
+  try{
+    const pw = await fbGet('admin/config/password');
+    return pw || DEFAULT_PW;
+  } catch{ return DEFAULT_PW; }
+}
+
+async function checkAdminPw(){
+  const val = document.getElementById('adminPwInput').value;
+  const correctPw = await getAdminPw();
+  if(val === correctPw){
+    document.getElementById('loginOverlay').style.display='none';
+    document.getElementById('mainHeader').style.display='flex';
+    document.getElementById('mainLayout').style.display='flex';
+    document.getElementById('mainFooter').style.display='block';
+    initAdmin();
+  } else {
+    const err=document.getElementById('loginError');
+    err.style.display='block';
+    document.getElementById('adminPwInput').value='';
+    setTimeout(()=>err.style.display='none',3000);
+  }
+}
+
+async function doChangePassword(){
+  const curr=document.getElementById('pw_current').value;
+  const nw=document.getElementById('pw_new').value;
+  const nw2=document.getElementById('pw_new2').value;
+  const correctPw=await getAdminPw();
+  if(curr!==correctPw) return showToast('❌','Aktuelles Passwort falsch.');
+  if(nw.length<6) return showToast('⚠️','Mind. 6 Zeichen.');
+  if(nw!==nw2) return showToast('⚠️','Passwörter stimmen nicht überein.');
+  await fbSet('admin/config/password',nw);
+  closeModal('changePwModal');
+  showToast('✅ Passwort geändert!','Das neue Passwort ist aktiv.');
+  document.getElementById('pw_current').value='';
+  document.getElementById('pw_new').value='';
+  document.getElementById('pw_new2').value='';
+}
+
+// ══════════════════════════════
+// INIT
+// ══════════════════════════════
+function initAdmin(){
+  // Listen to ALL users in real-time
+  fbListen('users', (data) => {
+    allUsersCache = data || {};
+    refreshCurrentPage();
+    updateBadges();
+  });
+  // Listen to admin notifications in real-time
+  fbListen('admin/notifications', (data) => {
+    const notifs = data ? Object.values(data) : [];
+    const unread = notifs.filter(n=>!n.read).length;
+    const el=document.getElementById('notifCount');
+    el.textContent=unread;
+    el.style.display=unread>0?'flex':'none';
+    document.title=(unread>0)?`(${unread}) TAP Admin`:'TAP Admin Panel';
+  });
+  renderDashboard();
+}
+
+function refreshCurrentPage(){
+  const activePage = document.querySelector('.page.active');
+  if(!activePage) return;
+  const id=activePage.id.replace('page-','');
+  renderPage(id);
+}
+
+function updateBadges(){
+  const all=getAllOrders();
+  const pending=all.filter(o=>['pending','negotiating'].includes(o.status)).length;
+  const active=all.filter(o=>o.status==='active').length;
+  document.getElementById('pendingBadge').textContent=pending;
+  document.getElementById('activeBadge').textContent=active;
+}
+
+// ══════════════════════════════
+// NAVIGATION
+// ══════════════════════════════
+function gotoPage(page,btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('page-'+page).classList.add('active');
+  if(btn) btn.classList.add('active');
+  renderPage(page);
+}
+function renderPage(page){
+  if(page==='dashboard')  renderDashboard();
+  if(page==='pending')    renderPending();
+  if(page==='tasks')      renderTasks();
+  if(page==='archive')    renderArchive();
+  if(page==='customers')  renderCustomers();
+  if(page==='accounting') renderAccounting('month');
+  if(page==='chat')       renderChatList();
+}
+
+// ══════════════════════════════
+// DASHBOARD
+// ══════════════════════════════
+function renderDashboard(){
+  const all=getAllOrders();
+  document.getElementById('dashDate').textContent=new Date().toLocaleDateString('de-DE',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  const pending=all.filter(o=>o.status==='pending').length;
+  const neg=all.filter(o=>o.status==='negotiating').length;
+  const active=all.filter(o=>o.status==='active').length;
+  const done=all.filter(o=>o.status==='done');
+  const revenue=done.reduce((s,o)=>s+(o.price||0),0);
+  const users=Object.keys(allUsersCache).length;
+  document.getElementById('dashStats').innerHTML=`
+    <div class="stat-card"><div class="stat-label">Neue Anfragen</div><div class="stat-val red">${pending}</div></div>
+    <div class="stat-card"><div class="stat-label">Verhandlungen</div><div class="stat-val" style="color:#856404">${neg}</div></div>
+    <div class="stat-card"><div class="stat-label">In Bearbeitung</div><div class="stat-val blue">${active}</div></div>
+    <div class="stat-card"><div class="stat-label">Abgeschlossen</div><div class="stat-val green">${done.length}</div></div>
+    <div class="stat-card"><div class="stat-label">Gesamtumsatz</div><div class="stat-val red">${revenue.toFixed(0)} €</div></div>
+    <div class="stat-card"><div class="stat-label">Kunden</div><div class="stat-val">${users}</div></div>`;
+  const recent=all.sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||'')).slice(0,5);
+  document.getElementById('recentActivity').innerHTML=recent.length===0
+    ?`<div class="empty-state"><p>Noch keine Aktivitäten.</p></div>`
+    :recent.map(o=>`<div class="task-card"><div class="task-header"><div class="task-left"><div class="task-service">${svcIcon(o.serviceId)} ${svcName(o.serviceId)}</div><div class="task-customer">👤 ${o.customerName} · ${o.customerPhone}</div><div class="task-date">📅 ${o.date||''}</div></div><span class="status-badge status-${o.status}">${statusLabel(o.status)}</span></div></div>`).join('');
+}
+
+// ══════════════════════════════
+// PENDING
+// ══════════════════════════════
+let pendingFilter='';
+function renderPending(filter){
+  if(filter!==undefined) pendingFilter=filter;
+  const all=getAllOrders().filter(o=>['pending','negotiating'].includes(o.status));
+  const list=pendingFilter?all.filter(o=>(o.customerName+svcName(o.serviceId)).toLowerCase().includes(pendingFilter.toLowerCase())):all;
+  document.getElementById('pendingList').innerHTML=list.length===0
+    ?`<div class="empty-state"><p>Keine neuen Anfragen. ✅</p></div>`
+    :list.map(o=>buildPendingCard(o)).join('');
+}
+
+function buildPendingCard(o){
+  const isNeg=o.status==='negotiating';
+  const negSection=isNeg?`
+    <div class="neg-form">
+      <div class="neg-header">💬 VERHANDLUNGSANFRAGE VOM KUNDEN</div>
+      <div class="neg-info">Wünscht: ${o.negPrice?'<strong>'+o.negPrice+' €</strong>':'—'} | Lieferzeit: ${o.negTime||'—'}</div>
+      <div class="pricing-row">
+        <div class="pf-group"><label class="pf-label">Ihr Preis (€)</label><input type="number" class="pf-input" id="np_${o.id}" placeholder="${o.negPrice||''}" min="1"/></div>
+        <div class="pf-group"><label class="pf-label">Lieferzeit</label><input type="text" class="pf-input" id="nd_${o.id}" placeholder="${o.negTime||'z.B. 5 Tage'}"/></div>
+      </div>
+      <div class="pf-actions">
+        <button class="btn btn-green btn-sm" onclick="acceptNegotiation('${o.customerEmail}','${o.id}')">✓ Annehmen</button>
+        <button class="btn btn-dark btn-sm" onclick="sendCounterOffer('${o.customerEmail}','${o.id}')">↩ Gegenangebot</button>
+      </div>
+    </div>`:`
+    <div class="pricing-form">
+      <div class="pricing-row">
+        <div class="pf-group"><label class="pf-label">Preis (€)</label><input type="number" class="pf-input" id="p_${o.id}" placeholder="z.B. 120" min="1"/></div>
+        <div class="pf-group"><label class="pf-label">Lieferdauer</label><input type="text" class="pf-input" id="d_${o.id}" placeholder="z.B. 3–5 Werktage"/></div>
+      </div>
+      <div class="pf-actions">
+        <button class="btn btn-red btn-sm" onclick="sendOffer('${o.customerEmail}','${o.id}')">📨 Angebot senden</button>
+      </div>
+    </div>`;
+  return `<div class="task-card" id="card_${o.id}">
+    <div class="task-header">
+      <div class="task-left">
+        <div class="task-service">${svcIcon(o.serviceId)} ${svcName(o.serviceId)}</div>
+        <div class="task-customer">👤 ${o.customerName} · 📞 ${o.customerPhone} · ✉️ ${o.customerEmail}</div>
+        <div class="task-date">📅 ${o.date||''} · ID: ${o.id}</div>
+      </div>
+      <span class="status-badge status-${o.status}">${statusLabel(o.status)}</span>
+    </div>
+    ${o.desc?`<div class="task-desc">"${o.desc}"</div>`:''}
+    ${negSection}
+  </div>`;
+}
+
+async function sendOffer(email, orderId){
+  const price=parseFloat(document.getElementById('p_'+orderId)?.value);
+  const dur=document.getElementById('d_'+orderId)?.value.trim();
+  if(!price||price<=0) return showToast('⚠️','Bitte gültigen Preis eingeben.');
+  if(!dur) return showToast('⚠️','Bitte Lieferdauer eingeben.');
+  await updateOrderInDB(email, orderId, {status:'priced',price,duration:dur});
+  await notifyCustomer(email, {type:'offer',price,duration:dur,date:nowDate(),read:false});
+  await fbPush('admin/notifications',{type:'offer_sent',orderId,price,duration:dur,ts:new Date().toISOString(),read:false});
+  showToast('✅ Angebot gesendet!',`${price} € / ${dur}`);
+}
+
+async function acceptNegotiation(email, orderId){
+  const o=getAllOrders().find(x=>x.id===orderId);
+  const price=parseFloat(document.getElementById('np_'+orderId)?.value)||o?.negPrice;
+  const dur=document.getElementById('nd_'+orderId)?.value.trim()||o?.negTime||'—';
+  if(!price) return showToast('⚠️','Preis eingeben.');
+  await updateOrderInDB(email, orderId, {status:'priced',price,duration:dur});
+  await notifyCustomer(email, {type:'offer',price,duration:dur,date:nowDate(),read:false});
+  showToast('✅ Angenommen!',`${price} € / ${dur}`);
+}
+
+async function sendCounterOffer(email, orderId){
+  const price=parseFloat(document.getElementById('np_'+orderId)?.value);
+  const dur=document.getElementById('nd_'+orderId)?.value.trim();
+  if(!price||!dur) return showToast('⚠️','Preis und Lieferzeit eingeben.');
+  await updateOrderInDB(email, orderId, {status:'priced',price,duration:dur});
+  await notifyCustomer(email, {type:'offer',price,duration:dur,date:nowDate(),read:false});
+  showToast('↩ Gegenangebot gesendet!',`${price} € / ${dur}`);
+}
+
+// ══════════════════════════════
+// TASKS
+// ══════════════════════════════
+let tasksFilter='';
+function renderTasks(filter){
+  if(filter!==undefined) tasksFilter=filter;
+  const all=getAllOrders().filter(o=>o.status==='active');
+  const list=tasksFilter?all.filter(o=>(o.customerName+svcName(o.serviceId)).toLowerCase().includes(tasksFilter.toLowerCase())):all;
+  document.getElementById('tasksList').innerHTML=list.length===0
+    ?`<div class="empty-state"><p>Keine laufenden Aufgaben. 🎉</p></div>`
+    :list.map(o=>`<div class="task-card"><div class="task-header"><div class="task-left"><div class="task-service">${svcIcon(o.serviceId)} ${svcName(o.serviceId)}</div><div class="task-customer">👤 ${o.customerName} · 📞 ${o.customerPhone}</div><div class="task-date">📅 ${o.date||''} · <strong style="color:var(--accent)">${o.price} €</strong> · ${o.duration||''}</div></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:.5rem;"><span class="status-badge status-active">In Bearbeitung</span><button class="btn-deliver" onclick="deliverOrder('${o.customerEmail}','${o.id}')">✓ ABLIEFERN</button></div></div>${o.desc?`<div class="task-desc">"${o.desc}"</div>`:''}</div>`).join('');
+}
+
+async function deliverOrder(email, orderId){
+  if(!confirm('Auftrag als abgeschlossen markieren?')) return;
+  await updateOrderInDB(email, orderId, {status:'done',doneAt:new Date().toISOString()});
+  await notifyCustomer(email, {type:'done',date:nowDate(),read:false});
+  showToast('🎉 Abgeliefert!','Archiviert und abgerechnet.');
+}
+
+// ══════════════════════════════
+// ARCHIVE
+// ══════════════════════════════
+let archiveFilter='';
+function renderArchive(filter){
+  if(filter!==undefined) archiveFilter=filter;
+  const all=getAllOrders().filter(o=>o.status==='done');
+  const list=archiveFilter?all.filter(o=>(o.customerName+svcName(o.serviceId)).toLowerCase().includes(archiveFilter.toLowerCase())):all;
+  document.getElementById('archiveList').innerHTML=list.length===0
+    ?`<div class="empty-state"><p>Noch keine abgeschlossenen Aufträge.</p></div>`
+    :list.map(o=>`<div class="task-card"><div class="task-header"><div class="task-left"><div class="task-service">${svcIcon(o.serviceId)} ${svcName(o.serviceId)}</div><div class="task-customer">👤 ${o.customerName} · ✉️ ${o.customerEmail}</div><div class="task-date">📅 ${o.date||''}</div></div><div style="text-align:right;"><div style="font-family:var(--font-display);font-size:1.6rem;color:var(--accent);">${o.price} €</div><span class="status-badge status-done">Abgeschlossen</span></div></div>${o.desc?`<div class="task-desc">"${o.desc}"</div>`:''}</div>`).join('');
+}
+
+// ══════════════════════════════
+// CUSTOMERS
+// ══════════════════════════════
+function renderCustomers(){
+  const list=document.getElementById('customersList');
+  if(!Object.keys(allUsersCache).length){list.innerHTML=`<div class="empty-state"><p>Noch keine Kunden.</p></div>`;return;}
+  list.innerHTML=Object.entries(allUsersCache).map(([email,u])=>{
+    const orders=u.orders?Object.values(u.orders):[];
+    const done=orders.filter(o=>o.status==='done');
+    const spent=done.reduce((s,o)=>s+(o.price||0),0);
+    return `<div class="customer-card">
+      <div class="cust-avatar">${(u.first?.[0]||'?')}${(u.last?.[0]||'')}</div>
+      <div><div class="cust-name">${u.first} ${u.last}${u.company?' — '+u.company:''}</div><div class="cust-meta">✉️ ${email} · 📞 ${u.phone||'—'} · Seit: ${u.createdAt||'—'}</div></div>
+      <div class="cust-stats"><div class="cust-orders">${orders.length}</div><div class="cust-spent">Aufträge · ${spent.toFixed(0)} €</div></div>
+    </div>`;
+  }).join('');
+}
+
+// ══════════════════════════════
+// ACCOUNTING
+// ══════════════════════════════
+let currentPeriod='month';
+function switchPeriod(period,btn){
+  currentPeriod=period;
+  document.querySelectorAll('.period-tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  renderAccounting(period);
+}
+function renderAccounting(period){
+  const allDone=getAllOrders().filter(o=>o.status==='done');
+  const now=new Date();
+  let filtered=allDone;
+  if(period==='month'){
+    filtered=allDone.filter(o=>{const p=o.date?.split('.');if(!p||p.length<3)return false;return parseInt(p[1])-1===now.getMonth()&&parseInt(p[2])===now.getFullYear();});
+  } else if(period==='year'){
+    filtered=allDone.filter(o=>{const p=o.date?.split('.');if(!p||p.length<3)return false;return parseInt(p[2])===now.getFullYear();});
+  }
+  const total=filtered.reduce((s,o)=>s+(o.price||0),0);
+  const byService={};
+  filtered.forEach(o=>{const sn=svcName(o.serviceId);byService[sn]=(byService[sn]||0)+(o.price||0);});
+  const topService=Object.entries(byService).sort((a,b)=>b[1]-a[1])[0]?.[0]||'—';
+  document.getElementById('accSummary').innerHTML=`
+    <div class="acc-card"><div class="acc-label">Umsatz</div><div class="acc-val">${total.toFixed(0)} €</div></div>
+    <div class="acc-card"><div class="acc-label">Aufträge</div><div class="acc-val">${filtered.length}</div></div>
+    <div class="acc-card"><div class="acc-label">Ø/Auftrag</div><div class="acc-val">${filtered.length?(total/filtered.length).toFixed(0):0} €</div></div>
+    <div class="acc-card"><div class="acc-label">Top Leistung</div><div style="font-family:var(--font-display);font-size:1rem;color:var(--accent);margin-top:6px;">${topService}</div></div>`;
+  if(!filtered.length){document.getElementById('accTableWrapper').innerHTML=`<div class="empty-state"><p>Keine Daten.</p></div>`;return;}
+  document.getElementById('accTableWrapper').innerHTML=`<table class="acc-table">
+    <thead><tr><th>Datum</th><th>Leistung</th><th>Kunde</th><th>Beschreibung</th><th>Betrag</th></tr></thead>
+    <tbody>${filtered.map(o=>`<tr><td>${o.date||''}</td><td>${svcIcon(o.serviceId)} ${svcName(o.serviceId)}</td><td>${o.customerName}</td><td style="font-style:italic;color:#888;">${o.desc||'—'}</td><td style="font-family:var(--font-display);font-size:1.2rem;color:var(--accent);">${o.price} €</td></tr>`).join('')}</tbody>
+    </table><div class="acc-total">Gesamt: <strong>${total.toFixed(2)} €</strong></div>`;
+}
+
+// ══════════════════════════════
+// INVOICE
+// ══════════════════════════════
+async function openInvoiceModal(){
+  selectedInvType=null;
+  document.getElementById('invoiceForm').style.display='block';
+  document.getElementById('invoicePreview').innerHTML='';
+  document.getElementById('invoicePreview').style.display='none';
+  document.getElementById('invoiceActions').style.display='none';
+  document.querySelectorAll('.inv-option').forEach(e=>e.classList.remove('selected'));
+  const sel=document.getElementById('invoiceCustomer');
+  sel.innerHTML='<option value="">— Bitte wählen —</option>';
+  Object.entries(allUsersCache).forEach(([email,u])=>{
+    sel.innerHTML+=`<option value="${email}">${u.first} ${u.last}${u.company?' – '+u.company:''}</option>`;
+  });
+  openModal('invoiceModal');
+}
+function selectInvType(type,el){
+  selectedInvType=type;
+  document.querySelectorAll('.inv-option').forEach(e=>e.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('customerSelectGroup').style.display=type==='customer'?'block':'none';
+}
+function generateInvoice(){
+  if(!selectedInvType) return showToast('⚠️','Bitte Rechnungstyp wählen.');
+  const now=new Date();
+  let orders=getAllOrders().filter(o=>o.status==='done');
+  let billTo={name:'Alle Kunden',addr:'Wolfsburg, Deutschland',company:''};
+  let periodLabel='';
+  if(selectedInvType==='daily'){
+    const today=nowDate();
+    orders=orders.filter(o=>o.date===today);
+    periodLabel='Tagesabrechnung: '+today;
+  } else if(selectedInvType==='weekly'){
+    const d=new Date(); d.setDate(d.getDate()-7);
+    orders=orders.filter(o=>{const p=o.date?.split('.');if(!p||p.length<3)return false;return new Date(p[2],p[1]-1,p[0])>=d;});
+    periodLabel='Wochenabrechnung: KW '+getWeekNumber(now);
+  } else if(selectedInvType==='monthly'){
+    orders=orders.filter(o=>{const p=o.date?.split('.');if(!p||p.length<3)return false;return parseInt(p[1])-1===now.getMonth()&&parseInt(p[2])===now.getFullYear();});
+    periodLabel=`Monatsabrechnung: ${now.toLocaleDateString('de-DE',{month:'long',year:'numeric'})}`;
+  } else if(selectedInvType==='customer'){
+    const email=document.getElementById('invoiceCustomer').value;
+    if(!email) return showToast('⚠️','Bitte Kunden auswählen.');
+    const u=allUsersCache[email];
+    if(!u) return;
+    orders=orders.filter(o=>o.customerEmail===email);
+    billTo={name:u.first+' '+u.last,addr:u.city||'Deutschland',company:u.company||''};
+    periodLabel='Kundenrechnung: '+u.first+' '+u.last;
+  }
+  const invNumber='RE-'+String(Date.now()).slice(-6);
+  const total=orders.reduce((s,o)=>s+(o.price||0),0);
+  const tax=total*0.19;
+  currentInvoiceData={invNumber,orders,billTo,periodLabel,total,tax,selectedInvType};
+  const rows=orders.map((o,i)=>`<tr><td>${i+1}</td><td><strong>${svcName(o.serviceId)}</strong>${o.desc?'<br><span style="font-size:11px;color:#888;">'+o.desc+'</span>':''}</td><td style="text-align:center;">1,00 Stk</td><td style="text-align:right;">${(o.price||0).toFixed(2)} EUR</td><td style="text-align:right;">${(o.price||0).toFixed(2)} EUR</td></tr>`).join('');
+  const html=`<div class="inv-doc" id="invDocContent">
+    <div class="inv-logo-area">
+      <div><div class="inv-logo-text">T.A.P <span>WERBEAGENTUR</span></div><div class="inv-logo-sub">WERBETECHNIK / DIGITALDRUCK</div><div style="font-size:11px;color:#888;margin-top:8px;">TAP Werbeagentur WOB · Musterstraße 1 · 38440 Wolfsburg</div></div>
+      <div class="inv-meta"><div><strong>Rechnungs-Nr.</strong> ${invNumber}</div><div>Rechnungsdatum: <strong>${nowDate()}</strong></div><div>Lieferdatum: <strong>${nowDate()}</strong></div><div style="margin-top:8px;">${periodLabel}</div></div>
+    </div>
+    <hr class="inv-divider">
+    <div class="inv-bill-to"><div class="label">Rechnung an</div><div><strong>${billTo.name}</strong>${billTo.company?'<br>'+billTo.company:''}</div><div>${billTo.addr}</div></div>
+    <table class="inv-table"><thead><tr><th>Pos.</th><th>Beschreibung</th><th>Menge</th><th>Einzelpreis</th><th>Gesamtpreis</th></tr></thead><tbody>${rows||'<tr><td colspan="5" style="text-align:center;color:#aaa;padding:20px;">Keine Aufträge im Zeitraum</td></tr>'}</tbody></table>
+    <table class="inv-totals"><tr><td>Netto</td><td>${total.toFixed(2)} EUR</td></tr><tr><td>USt. 19%</td><td>${tax.toFixed(2)} EUR</td></tr><tr class="inv-total-row"><td><strong>Brutto</strong></td><td><strong>${(total+tax).toFixed(2)} EUR</strong></td></tr></table>
+    <div class="inv-footer-text">Bitte überweisen Sie den Rechnungsbetrag unter Angabe der Rechnungsnummer.<br>Mit freundlichen Grüßen · Max Mustermann</div>
+    <div class="inv-bank"><div class="inv-bank-grid">
+      <div class="inv-bank-item"><div class="bl">Inhaber</div><div class="bv">Max Mustermann</div></div>
+      <div class="inv-bank-item"><div class="bl">IBAN</div><div class="bv">DE69 2699 1066 2806 5840 00</div></div>
+      <div class="inv-bank-item"><div class="bl">BIC</div><div class="bv">GENODEF1WOB</div></div>
+      <div class="inv-bank-item"><div class="bl">Bank</div><div class="bv">Volksbank BRAWO eG</div></div>
+    </div><div style="margin-top:8px;font-size:10px;color:#aaa;">USt.-ID DE451379108 · Tel. +49 151 00000000 · info@example.com</div></div>
+  </div>`;
+  document.getElementById('invoiceForm').style.display='none';
+  document.getElementById('invoicePreview').innerHTML=html;
+  document.getElementById('invoicePreview').style.display='block';
+  document.getElementById('invoiceActions').style.display='flex';
+  const sendBtn=document.getElementById('sendInvBtn');
+  sendBtn.style.display=selectedInvType==='customer'?'block':'none';
+  sendBtn.onclick=()=>sendInvoiceToCustomer(invNumber,currentInvoiceData);
+}
+function resetInvoice(){
+  document.getElementById('invoiceForm').style.display='block';
+  document.getElementById('invoicePreview').innerHTML='';
+  document.getElementById('invoicePreview').style.display='none';
+  document.getElementById('invoiceActions').style.display='none';
+  document.querySelectorAll('.inv-option').forEach(e=>e.classList.remove('selected'));
+  selectedInvType=null;
+}
+function printInvoice(){
+  const content=document.getElementById('invDocContent')?.innerHTML;
+  if(!content) return;
+  const win=window.open('','_blank');
+  win.document.write(`<!DOCTYPE html><html><head><title>Rechnung TAP</title><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet"><style>body{font-family:Arial,sans-serif;margin:40px;}.inv-logo-text{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:3px;}.inv-logo-text span{color:#c8102e;}.inv-logo-area{display:flex;justify-content:space-between;margin-bottom:30px;}.inv-divider{border:none;border-top:2px solid #c8102e;margin:20px 0;}.inv-bill-to{margin-bottom:25px;font-size:13px;}.inv-bill-to .label{font-size:10px;font-weight:700;letter-spacing:3px;color:#999;text-transform:uppercase;margin-bottom:5px;}.inv-table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:25px;}.inv-table th{background:#0a0a0a;color:white;padding:10px 12px;text-align:left;font-size:11px;}.inv-table td{padding:10px 12px;border-bottom:1px solid #f0f0f0;}.inv-totals{margin-left:auto;width:250px;font-size:13px;border-collapse:collapse;}.inv-totals td{padding:5px 0;}.inv-totals td:last-child{text-align:right;font-weight:600;}.inv-total-row td{font-size:15px;font-weight:700;border-top:2px solid #000;padding-top:8px;}.inv-footer-text{font-size:11px;color:#888;margin-top:30px;padding-top:20px;border-top:1px solid #eee;line-height:1.6;}.inv-bank-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:8px;}.bl{font-size:9px;color:#999;letter-spacing:1px;text-transform:uppercase;}.bv{font-size:12px;font-weight:600;}.inv-meta{text-align:right;font-size:13px;color:#555;}</style></head><body>${content}</body></html>`);
+  win.document.close();
+  setTimeout(()=>{win.print();win.close();},500);
+}
+async function sendInvoiceToCustomer(invNumber,data){
+  if(!data||data.selectedInvType!=='customer') return;
+  const email=document.getElementById('invoiceCustomer').value;
+  if(!email) return showToast('⚠️','Kein Kunde ausgewählt.');
+  const u=allUsersCache[email];
+  if(!u) return;
+  const invRef=fbRef('users/'+encodeEmail(email)+'/invoices').push();
+  await invRef.set({
+    id:invNumber,
+    date:nowDate(),
+    period:data.periodLabel,
+    total:(data.total+data.tax).toFixed(2),
+    items:data.orders.map(o=>({service:svcName(o.serviceId),price:o.price,desc:o.desc||''})),
+    htmlContent:document.getElementById('invDocContent')?.innerHTML||''
+  });
+  await notifyCustomer(email,{type:'invoice',id:invNumber,amount:(data.total+data.tax).toFixed(2),date:nowDate(),read:false});
+  await fbPush('admin/notifications',{type:'invoice_sent',customer:u.first+' '+u.last,invNumber,ts:new Date().toISOString(),read:false});
+  showToast('📨 Rechnung gesendet!',`${invNumber} an ${u.first} gesendet.`);
+  closeModal('invoiceModal');
+}
+
+// ══════════════════════════════
+// SEND FILES
+// ══════════════════════════════
+function openSendFilesModal(){
+  pendingFiles=[];
+  document.getElementById('filePreviewList').innerHTML='';
+  const sel=document.getElementById('filesSendTo');
+  sel.innerHTML='<option value="">— Kunden auswählen —</option>';
+  Object.entries(allUsersCache).forEach(([email,u])=>{
+    sel.innerHTML+=`<option value="${email}">${u.first} ${u.last}</option>`;
+  });
+  document.getElementById('filesMessage').value='';
+  openModal('sendFilesModal');
+}
+function handleDragOver(e){e.preventDefault();document.getElementById('uploadArea').classList.add('drag');}
+function handleDrop(e){e.preventDefault();document.getElementById('uploadArea').classList.remove('drag');Array.from(e.dataTransfer.files).forEach(addFile);}
+function handleFileSelect(e){Array.from(e.target.files).forEach(addFile);}
+function addFile(file){
+  pendingFiles.push(file);
+  const ext=file.name.split('.').pop().toLowerCase();
+  const isImg=['jpg','jpeg','png','gif','webp','svg'].includes(ext);
+  const isVid=['mp4','mov','avi','webm'].includes(ext);
+  const icon=isImg?'🖼️':isVid?'🎬':ext==='pdf'?'📄':'📎';
+  const size=file.size>1024*1024?(file.size/(1024*1024)).toFixed(1)+' MB':(file.size/1024).toFixed(0)+' KB';
+  const idx=pendingFiles.length-1;
+  const item=document.createElement('div');
+  item.className='file-preview-item';item.id='fpv_'+idx;
+  item.innerHTML=`<span class="file-preview-icon">${icon}</span><span class="file-preview-name">${file.name}</span><span class="file-preview-size">${size}</span><button class="file-preview-remove" onclick="removeFile(${idx})">✕</button>`;
+  document.getElementById('filePreviewList').appendChild(item);
+}
+function removeFile(idx){pendingFiles[idx]=null;const el=document.getElementById('fpv_'+idx);if(el)el.remove();}
+async function sendFilesToCustomer(){
+  const email=document.getElementById('filesSendTo').value;
+  if(!email) return showToast('⚠️','Bitte Kunden auswählen.');
+  const files=pendingFiles.filter(Boolean);
+  if(!files.length) return showToast('⚠️','Bitte mindestens eine Datei auswählen.');
+  const msg=document.getElementById('filesMessage').value.trim();
+  const u=allUsersCache[email];
+  if(!u) return;
+  const promises=files.map(f=>new Promise(resolve=>{
+    const reader=new FileReader();
+    reader.onload=e=>{
+      const ext=f.name.split('.').pop().toLowerCase();
+      const type=['jpg','jpeg','png','gif','webp','svg'].includes(ext)?'image':['mp4','mov','avi','webm'].includes(ext)?'video':ext==='pdf'?'pdf':'file';
+      resolve({name:f.name,type,size:f.size,data:e.target.result});
+    };
+    reader.readAsDataURL(f);
+  }));
+  const resolved=await Promise.all(promises);
+  for(const file of resolved){
+    await fbPush('users/'+encodeEmail(email)+'/sharedFiles',{...file,sentAt:new Date().toISOString(),message:msg});
+  }
+  await notifyCustomer(email,{type:'files',count:resolved.length,message:msg,date:nowDate(),read:false});
+  // Also add to chat
+  await addAdminChatMessage(email,msg||`${resolved.length} Datei(en) gesendet`,resolved);
+  showToast('✅ Gesendet!',`${resolved.length} Datei(en) an ${u.first} gesendet.`);
+  closeModal('sendFilesModal');
+}
+
+// ══════════════════════════════
+// CHAT SYSTEM — Firebase Realtime
+// ══════════════════════════════
+function renderChatList(){
+  const list=document.getElementById('chatCustomerList');
+  if(!Object.keys(allUsersCache).length){
+    list.innerHTML=`<div class="empty-state"><p>Noch keine Kunden.</p></div>`;return;
+  }
+  list.innerHTML='';
+  Object.entries(allUsersCache).forEach(([email,u])=>{
+    const item=document.createElement('div');
+    item.className='chat-list-item'+(email===currentChatEmail?' active-chat':'');
+    item.onclick=()=>openChat(email);
+    item.innerHTML=`
+      <div class="chat-list-avatar">${u.first[0]}${u.last[0]}</div>
+      <div class="chat-list-info">
+        <div class="chat-list-name">${u.first} ${u.last}</div>
+        <div class="chat-list-last">Chat öffnen</div>
+      </div>`;
+    list.appendChild(item);
+  });
+  // Check unread counts asynchronously
+  Object.entries(allUsersCache).forEach(([email,u])=>{
+    fbGet('chats/'+encodeEmail(email)).then(data=>{
+      if(!data) return;
+      const msgs=Object.values(data);
+      const unread=msgs.filter(m=>m.from==='customer'&&!m.read).length;
+      const lastMsg=msgs[msgs.length-1];
+      const el=list.querySelector(`[data-email="${email}"]`);
+      if(el){
+        if(lastMsg) el.querySelector('.chat-list-last').textContent=(lastMsg.from==='admin'?'Sie: ':'')+lastMsg.text.substring(0,40);
+        if(unread>0){
+          let badge=el.querySelector('.chat-unread');
+          if(!badge){badge=document.createElement('span');badge.className='chat-unread';el.appendChild(badge);}
+          badge.textContent=unread;
+        }
+      }
+    });
+  });
+  // Add data-email for above selection
+  list.querySelectorAll('.chat-list-item').forEach((el,i)=>{
+    el.setAttribute('data-email',Object.keys(allUsersCache)[i]);
+  });
+}
+
+function openChat(email){
+  currentChatEmail=email;
+  const u=allUsersCache[email];
+  if(!u) return;
+  // Remove old listener
+  if(chatListener){ fbOff('chats/'+encodeEmail(email),chatListener); chatListener=null; }
+  document.getElementById('chatWindowArea').innerHTML=`
+    <div class="chat-window">
+      <div class="chat-header-w">
+        <div><div class="chat-header-name">💬 ${u.first} ${u.last}</div><div style="font-size:.75rem;color:rgba(255,255,255,.5);">${email}</div></div>
+        <button class="btn btn-outline btn-sm" style="color:white;border-color:#555;" onclick="openSendFilesForEmail('${email}')">📎 Dateien</button>
+      </div>
+      <div class="chat-messages" id="chatMsgsArea"></div>
+      <div class="chat-input-area">
+        <textarea class="chat-text-input" id="adminChatInput" placeholder="Nachricht schreiben…" rows="1" onkeypress="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendAdminMsg('${email}');}"></textarea>
+        <label class="chat-file-btn" title="Datei">📎<input type="file" style="display:none;" multiple onchange="sendFileInChat('${email}',this)"></label>
+        <button class="chat-send-btn" onclick="sendAdminMsg('${email}')">➤</button>
+      </div>
+    </div>`;
+  // Mark as read + listen
+  chatListener=fbListen('chats/'+encodeEmail(email), async(data)=>{
+    const msgs=data?Object.values(data):[];
+    renderChatMessages(msgs,'admin');
+    // Mark customer messages as read
+    if(data){
+      const keys=Object.keys(data);
+      const updates={};
+      keys.forEach((k,i)=>{if(msgs[i].from==='customer'&&!msgs[i].read) updates['chats/'+encodeEmail(email)+'/'+k+'/read']=true;});
+      if(Object.keys(updates).length) await window.db.ref().update(updates);
+    }
+  });
+  renderChatList();
+}
+
+function renderChatMessages(msgs, viewAs){
+  const container=document.getElementById('chatMsgsArea');
+  if(!container) return;
+  container.innerHTML=msgs.length===0
+    ?`<div style="text-align:center;color:#aaa;font-size:.84rem;padding:2rem;">Noch keine Nachrichten</div>`
+    :msgs.map(m=>buildChatMsgHTML(m,viewAs)).join('');
+  container.scrollTop=container.scrollHeight;
+}
+
+function buildChatMsgHTML(m,viewAs){
+  const isMe=(m.from==='admin'&&viewAs==='admin')||(m.from==='customer'&&viewAs==='customer');
+  const side=isMe?'mine':'theirs';
+  const time=fmtTime(m.ts);
+  let content='';
+  if(m.files&&m.files.length){
+    content=m.files.map(f=>{
+      if(f.type==='image') return `<div><img src="${f.data}" class="chat-img" onclick="window.open('${f.data}','_blank')" alt="${f.name}"></div>`;
+      const icon=f.type==='video'?'🎬':f.type==='pdf'?'📄':'📎';
+      const sz=f.size>1024*1024?(f.size/(1024*1024)).toFixed(1)+' MB':(f.size/1024).toFixed(0)+' KB';
+      return `<div class="file-msg${side==='theirs'?' theirs-file':''}"><span class="file-icon">${icon}</span><div><div class="file-name">${f.name}</div><div class="file-size">${sz}</div><a class="file-download" href="${f.data}" download="${f.name}">Herunterladen ↓</a></div></div>`;
+    }).join('');
+    if(m.text) content=`<div>${m.text}</div>`+content;
+  } else {
+    content=`<div>${m.text||''}</div>`;
+  }
+  return `<div class="chat-msg ${side}"><div class="chat-bubble">${content}</div><div class="chat-time">${time}</div></div>`;
+}
+
+async function sendAdminMsg(email){
+  const input=document.getElementById('adminChatInput');
+  if(!input) return;
+  const text=input.value.trim();
+  if(!text) return;
+  await addAdminChatMessage(email,text,[]);
+  input.value='';
+  await notifyCustomer(email,{type:'chat',message:text.substring(0,60),date:nowDate(),read:false});
+}
+
+async function addAdminChatMessage(email,text,files){
+  await fbPush('chats/'+encodeEmail(email),{from:'admin',text,files,ts:new Date().toISOString(),read:false});
+}
+
+async function sendFileInChat(email,input){
+  const files=Array.from(input.files);
+  if(!files.length) return;
+  const promises=files.map(f=>new Promise(resolve=>{
+    const reader=new FileReader();
+    reader.onload=e=>{
+      const ext=f.name.split('.').pop().toLowerCase();
+      const type=['jpg','jpeg','png','gif','webp','svg'].includes(ext)?'image':['mp4','mov','avi','webm'].includes(ext)?'video':ext==='pdf'?'pdf':'file';
+      resolve({name:f.name,type,size:f.size,data:e.target.result});
+    };
+    reader.readAsDataURL(f);
+  }));
+  const resolved=await Promise.all(promises);
+  await addAdminChatMessage(email,'',resolved);
+  await notifyCustomer(email,{type:'files',count:resolved.length,date:nowDate(),read:false});
+  showToast('✅',`${resolved.length} Datei(en) gesendet.`);
+}
+
+function openSendFilesForEmail(email){
+  openSendFilesModal();
+  setTimeout(()=>{
+    const sel=document.getElementById('filesSendTo');
+    if(sel) sel.value=email;
+  },100);
+}
+
+// ══════════════════════════════
+// NOTIFY CUSTOMER
+// ══════════════════════════════
+async function notifyCustomer(email,notif){
+  await fbPush('users/'+encodeEmail(email)+'/notifications',notif);
+}
+
+// ══════════════════════════════
+// NOTIFICATIONS PANEL
+// ══════════════════════════════
+async function toggleNotifPanel(){
+  const p=document.getElementById('notifPanel');
+  p.classList.toggle('open');
+  if(p.classList.contains('open')){
+    await renderNotifPanel();
+    await markAdminNotifsRead();
+  }
+}
+async function renderNotifPanel(){
+  const data=await fbGet('admin/notifications')||{};
+  const notifs=Object.values(data).reverse();
+  const typeLabel={new_order:'🛒 Neue Bestellung',new_customer:'👤 Neuer Kunde',accepted:'✅ Angenommen',rejected:'❌ Abgelehnt',negotiation:'💬 Verhandlung',offer_sent:'💰 Angebot gesendet',invoice_sent:'🧾 Rechnung gesendet',chat_message:'💬 Chat-Nachricht'};
+  const notifMsg=n=>{
+    if(n.type==='new_order') return `${n.customer||''} — ${n.service||''}`;
+    if(n.type==='new_customer') return `${n.customer||''} hat sich registriert`;
+    if(n.type==='accepted') return `${n.customer||''} hat angenommen.`;
+    if(n.type==='rejected') return `${n.customer||''} hat abgelehnt.`;
+    if(n.type==='negotiation') return `${n.customer||''}: Preis ${n.negPrice||'—'}€ / ${n.negTime||'—'}`;
+    if(n.type==='offer_sent') return `${n.price}€ / ${n.duration}`;
+    if(n.type==='invoice_sent') return `Rechnung ${n.invNumber} an ${n.customer}`;
+    if(n.type==='chat_message') return `${n.customer||''}: ${n.preview||''}`;
+    return '';
+  };
+  if(!notifs.length){document.getElementById('notifList').innerHTML=`<div style="padding:2rem;text-align:center;color:#aaa;font-size:.88rem;">Keine Benachrichtigungen.</div>`;return;}
+  document.getElementById('notifList').innerHTML=notifs.slice(0,30).map(n=>`<div class="notif-item ${n.read?'':'unread'}"><div class="notif-type">${typeLabel[n.type]||n.type}</div><div class="notif-text">${notifMsg(n)}</div><div class="notif-time">${fmtTs(n.ts)}</div></div>`).join('');
+}
+async function markAdminNotifsRead(){
+  const data=await fbGet('admin/notifications')||{};
+  const updates={};
+  Object.keys(data).forEach(k=>{if(!data[k].read) updates['admin/notifications/'+k+'/read']=true;});
+  if(Object.keys(updates).length) await window.db.ref().update(updates);
+}
+
+// ══════════════════════════════
+// FILTER / SEARCH
+// ══════════════════════════════
+function filterList(page,val){
+  if(page==='pending') renderPending(val);
+  if(page==='tasks')   renderTasks(val);
+  if(page==='archive') renderArchive(val);
+}
+
+// ══════════════════════════════
+// MODAL / TOAST
+// ══════════════════════════════
+function openModal(id){document.getElementById(id).classList.add('open');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+document.querySelectorAll('.modal-overlay').forEach(m=>{
+  m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open');});
+});
+let toastTimer;
+function showToast(title,msg){
+  clearTimeout(toastTimer);
+  document.getElementById('toastTitle').textContent=title;
+  document.getElementById('toastMsg').textContent=msg;
+  const t=document.getElementById('toast');
+  t.style.display='block';
+  toastTimer=setTimeout(()=>t.style.display='none',5000);
+}
+</script>
+</body>
+</html>

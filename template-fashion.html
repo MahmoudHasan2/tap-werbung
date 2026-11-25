@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-editable="siteTitle">Kreatista | Fashion Design Studio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #5a8a72;
+            --primary-light: #7aaa92;
+            --primary-dark: #3d6b55;
+            --cream: #f8f6f1;
+            --cream-dark: #f0ece3;
+            --black: #1a1a1a;
+            --black-light: #2d2d2d;
+            --white: #ffffff;
+            --gray: #888888;
+            --gray-light: #b0b0b0;
+            --text-dark: #333333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--cream);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* ===== NAVIGATION ===== */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 20px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.4s ease;
+            background: transparent;
+        }
+
+        nav.scrolled {
+            background: rgba(248, 246, 241, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 60px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--black);
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 35px;
+        }
+
+        .nav-links a {
+            color: var(--black);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-icon {
+            color: var(--black);
+            font-size: 1rem;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-icon:hover {
+            color: var(--primary);
+        }
+
+        .nav-cta {
+            background: var(--primary);
+            color: var(--white);
+            padding: 10px 25px;
+            border: none;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 0.75rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-cta:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(90, 138, 114, 0.3);
+        }
+
+        /* ===== HERO / HEADER BANNER ===== */
+        .hero-banner {
+            position: relative;
+            height: 350px;
+            background: linear-gradient(to right, var(--cream) 40%, transparent 100%),
+                        url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1920&q=80') center/cover;
+            display: flex;
+            align-items: center;
+            padding: 0 60px;
+            margin-top: 70px;
+        }
+
+        .hero-banner-content h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--black);
+            margin-bottom: 10px;
+        }
+
+        .hero-banner-content .breadcrumb {
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gray);
+        }
+
+        .hero-banner-content .breadcrumb a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .hero-banner-content .breadcrumb a:hover {
+            color: var(--primary);
+        }
+
+        .hero-banner-content .breadcrumb span {
+            margin: 0 8px;
+        }
+
+        /* ===== ABOUT SECTION ===== */
+        .about-section {
+            padding: 80px 60px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .about-container {
+            display: flex;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about-left {
+            flex: 1;
+            position: relative;
+        }
+
+        .about-image-wrapper {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .about-image-wrapper img {
+            width: 100%;
+            height: 450px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .about-quote-box {
+            position: absolute;
+            bottom: 30px;
+            right: -30px;
+            background: var(--white);
+            padding: 25px 30px;
+            max-width: 280px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            border-radius: 4px;
+        }
+
+        .about-quote-box p {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+        }
+
+        .about-quote-box .quote-author {
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .about-right {
+            flex: 1;
+        }
+
+        .about-right .section-label {
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .about-right h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--black);
+            margin-bottom: 20px;
+        }
+
+        .about-right .about-desc {
+            font-size: 0.85rem;
+            line-height: 1.8;
+            color: var(--gray);
+            margin-bottom: 25px;
+        }
+
+        .about-feature {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--cream-dark);
+        }
+
+        .about-feature:last-of-type {
+            border-bottom: none;
+        }
+
+        .about-feature h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--black);
+            margin-bottom: 8px;
+        }
+
+        .about-feature p {
+            font-size: 0.8rem;
+            line-height: 1.7;
+            color: var(--gray);
+        }
+
+        .about-btn {
+            background: var(--primary);
+            color: var(--white);
+            padding: 12px 30px;
+            border: none;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 0.75rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .about-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(90, 138, 114, 0.3);
+        }
+
+        /* ===== STATS SECTION ===== */
+        .stats-section {
+            display: flex;
+            justify-content: center;
+            gap: 0;
+            padding: 40px 60px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .stat-item {
+            flex: 1;
+            text-align: center;
+            padding: 20px 30px;
+            border-right: 1px solid var(--cream-dark);
+        }
+
+        .stat-item:last-child {
+            border-right: none;
+        }
+
+        .stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--gray);
+        }
+
+        /* ===== CTA BANNER SECTION ===== */
+        .cta-banner {
+            position: relative;
+            height: 400px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .cta-banner-bg {
+            position: absolute;
+            inset: 0;
+            background: url('https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=1920&q=80') center/cover;
+            filter: brightness(0.4);
+        }
+
+        .cta-banner-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(26, 26, 26, 0.6);
+        }
+
+        .cta-banner-content {
+            position: relative;
+            z-index: 2;
+            max-width: 700px;
+            padding: 0 20px;
+        }
+
+        .cta-banner-content .cta-label {
+            font-size: 0.7rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--primary-light);
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .cta-banner-content h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--white);
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .cta-banner-content p {
+            font-size: 0.85rem;
+            line-height: 1.8;
+            color: var(--gray-light);
+            margin-bottom: 30px;
+        }
+
+        .cta-banner-btn {
+            background: var(--primary);
+            color: var(--white);
+            padding: 14px 35px;
+            border: none;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 0.75rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .cta-banner-btn:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(90, 138, 114, 0.4);
+        }
+
+        /* ===== SERVICES CARDS ===== */
+        .services-cards {
+            display: flex;
+            background: var(--white);
+            max-width: 1100px;
+            margin: -60px auto 0;
+            position: relative;
+            z-index: 3;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .service-card {
+            flex: 1;
+            padding: 40px 30px;
+            text-align: left;
+            border-right: 1px solid var(--cream-dark);
+            transition: all 0.3s ease;
+        }
+
+        .service-card:last-child {
+            border-right: none;
+        }
+
+        .service-card:hover {
+            background: var(--cream);
+        }
+
+        .service-card-icon {
+            width: 50px;
+            height: 50px;
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover .service-card-icon {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .service-card h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--black);
+        }
+
+        .service-card p {
+            font-size: 0.8rem;
+            line-height: 1.7;
+            color: var(--gray);
+        }
+
+        /* ===== TEAM SECTION ===== */
+        .team-section {
+            padding: 100px 60px 80px;
+            text-align: center;
+            background: var(--cream);
+        }
+
+        .team-section .section-label {
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .team-section h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--black);
+            margin-bottom: 50px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.3;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .team-card {
+            background: var(--white);
+            padding: 30px 20px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .team-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+
+        .team-card-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto 20px;
+            border: 3px solid var(--cream-dark);
+            transition: all 0.3s ease;
+        }
+
+        .team-card:hover .team-card-img {
+            border-color: var(--primary);
+        }
+
+        .team-card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .team-card h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--black);
+            margin-bottom: 5px;
+        }
+
+        .team-card .role {
+            font-size: 0.75rem;
+            color: var(--primary);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .team-social {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .team-social a {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--cream);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+            font-size: 0.8rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .team-social a:hover {
+            background: var(--primary);
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+
+        /* ===== CLIENTS SECTION ===== */
+        .clients-section {
+            padding: 50px 60px;
+            background: var(--white);
+            border-top: 1px solid var(--cream-dark);
+        }
+
+        .clients-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+        }
+
+        .clients-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--black);
+            line-height: 1.4;
+        }
+
+        .clients-label span {
+            display: block;
+            font-weight: 400;
+            color: var(--gray);
+            font-size: 0.75rem;
+        }
+
+        .clients-logos {
+            display: flex;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .client-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            color: var(--gray);
+            opacity: 0.6;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .client-logo:hover {
+            opacity: 1;
+            color: var(--primary);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--primary-dark);
+            color: var(--white);
+            padding: 50px 60px 30px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .footer-brand p {
+            font-size: 0.8rem;
+            line-height: 1.7;
+            color: var(--primary-light);
+            margin-bottom: 20px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+        }
+
+        .footer-social a {
+            color: var(--white);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .footer-social a:hover {
+            color: var(--primary-light);
+            transform: translateY(-3px);
+        }
+
+        .footer-col h4 {
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-col ul li a {
+            color: var(--primary-light);
+            text-decoration: none;
+            font-size: 0.8rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--white);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 20px;
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--primary-light);
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInLeft {
+            from { opacity: 0; transform: translateX(-40px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes fadeInRight {
+            from { opacity: 0; transform: translateX(40px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transition: all 0.8s ease;
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+        }
+
+        .fade-up.visible { animation: fadeInUp 0.8s ease forwards; }
+        .fade-left.visible { animation: fadeInLeft 0.8s ease forwards; }
+        .fade-right.visible { animation: fadeInRight 0.8s ease forwards; }
+
+        /* ===== MOBILE RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .about-container { flex-direction: column; }
+            .about-quote-box { right: 20px; bottom: 20px; }
+            .team-grid { grid-template-columns: repeat(2, 1fr); }
+            .services-cards { flex-direction: column; margin-top: 30px; }
+            .service-card { border-right: none; border-bottom: 1px solid var(--cream-dark); }
+            .footer-container { grid-template-columns: 1fr 1fr; }
+            .clients-container { flex-direction: column; text-align: center; }
+            .clients-logos { flex-wrap: wrap; justify-content: center; }
+        }
+
+        @media (max-width: 768px) {
+            nav { padding: 15px 20px; }
+            .nav-links { display: none; }
+            .hero-banner { padding: 0 20px; height: 250px; }
+            .hero-banner-content h1 { font-size: 2rem; }
+            .about-section { padding: 60px 20px; }
+            .stats-section { flex-wrap: wrap; padding: 20px; }
+            .stat-item { border-right: none; border-bottom: 1px solid var(--cream-dark); flex: 1 1 50%; }
+            .team-grid { grid-template-columns: 1fr; }
+            .cta-banner-content h2 { font-size: 1.8rem; }
+            .footer-container { grid-template-columns: 1fr; }
+            footer { padding: 40px 20px 20px; }
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--cream); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary-dark); }
+    </style>
+<base target="_blank">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <a href="#" class="logo" data-editable="logoText">kreatista</a>
+        <ul class="nav-links">
+            <li><a href="#home" data-editable="navHome">Homepage</a></li>
+            <li><a href="#about" data-editable="navAbout">About Us</a></li>
+            <li><a href="#services" data-editable="navServices">Services</a></li>
+            <li><a href="#collection" data-editable="navCollection">Collection</a></li>
+            <li><a href="#pages" data-editable="navPages">Pages</a></li>
+        </ul>
+        <div class="nav-right">
+            <i class="fab fa-facebook-f nav-icon"></i>
+            <i class="fab fa-twitter nav-icon"></i>
+            <i class="fab fa-instagram nav-icon"></i>
+            <button class="nav-cta" data-editable="navCta">Get Started</button>
+        </div>
+    </nav>
+
+    <!-- Hero Banner -->
+    <section class="hero-banner" id="home">
+        <div class="hero-banner-content">
+            <h1 data-editable="heroTitle">About Us</h1>
+            <div class="breadcrumb">
+                <a href="#" data-editable="breadcrumbHome">HOME</a>
+                <span>/</span>
+                <span data-editable="breadcrumbCurrent">ABOUT US</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section" id="about">
+        <div class="about-container">
+            <div class="about-left animate-on-scroll fade-left">
+                <div class="about-image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=600&q=80" alt="Fashion Designer" data-editable="aboutImage" data-type="image">
+                    <div class="about-quote-box">
+                        <p data-editable="aboutQuote">Life is short for making reason want to be different then try something different.</p>
+                        <div class="quote-author" data-editable="aboutQuoteAuthor">ERICA STEWART</div>
+                    </div>
+                </div>
+            </div>
+            <div class="about-right animate-on-scroll fade-right">
+                <div class="section-label" data-editable="aboutLabel">WHO WE ARE</div>
+                <h2 data-editable="aboutTitle">Fashion is about passion, not just clothes</h2>
+                <p class="about-desc" data-editable="aboutDesc">Interdum sociosqu una libero vulputate diam tristique pulvinar amet. Consequat porta leo tempor dapibus risus gravida adipiscing purus.</p>
+
+                <div class="about-feature">
+                    <h4 data-editable="feat1Title">Personalized Design</h4>
+                    <p data-editable="feat1Desc">Sagittis ipsum erat porta tempus consequat felis ante. Habitant class venenatis metus imperdiet nullam porta commodo donec consequat.</p>
+                </div>
+                <div class="about-feature">
+                    <h4 data-editable="feat2Title">Fashion Trendsetter</h4>
+                    <p data-editable="feat2Desc">Sagittis ipsum erat porta tempus consequat felis ante. Habitant class venenatis metus imperdiet nullam porta commodo donec consequat.</p>
+                </div>
+                <button class="about-btn" data-editable="aboutBtn">Discover More</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="stat-item animate-on-scroll fade-up">
+            <div class="stat-number" data-editable="stat1Number">1.4K+</div>
+            <div class="stat-label" data-editable="stat1Label">Product Sold</div>
+        </div>
+        <div class="stat-item animate-on-scroll fade-up">
+            <div class="stat-number" data-editable="stat2Number">720+</div>
+            <div class="stat-label" data-editable="stat2Label">Completed Projects</div>
+        </div>
+        <div class="stat-item animate-on-scroll fade-up">
+            <div class="stat-number" data-editable="stat3Number">899+</div>
+            <div class="stat-label" data-editable="stat3Label">Happy Customer</div>
+        </div>
+        <div class="stat-item animate-on-scroll fade-up">
+            <div class="stat-number" data-editable="stat4Number">15+</div>
+            <div class="stat-label" data-editable="stat4Label">Years Experience</div>
+        </div>
+    </section>
+
+    <!-- CTA Banner + Services Cards -->
+    <section class="cta-banner" id="services">
+        <div class="cta-banner-bg"></div>
+        <div class="cta-banner-overlay"></div>
+        <div class="cta-banner-content">
+            <div class="cta-label" data-editable="ctaLabel">GET STARTED</div>
+            <h2 data-editable="ctaTitle">Do styling your fashion with our best-personalized designs</h2>
+            <p data-editable="ctaDesc">Facilisi luctus finibus habitasse massa ex sodales consectetur ligula placerat. Condimentum iaculis montes eros fringilla si lacus suscipit. Ligula sit mattis vivamus scelerisque nisi aliquam dignissim placerat.</p>
+            <button class="cta-banner-btn" data-editable="ctaBtn">Discover More</button>
+        </div>
+    </section>
+
+    <div class="services-cards">
+        <div class="service-card animate-on-scroll fade-up">
+            <div class="service-card-icon">
+                <i class="fas fa-user"></i>
+            </div>
+            <h4 data-editable="svc1Title">Design for Personal</h4>
+            <p data-editable="svc1Desc">Parturient vulputate cursus scelerisque consequat lacinia maecenas. Tellus imperdiet nascetur.</p>
+        </div>
+        <div class="service-card animate-on-scroll fade-up">
+            <div class="service-card-icon">
+                <i class="fas fa-industry"></i>
+            </div>
+            <h4 data-editable="svc2Title">Massive Production</h4>
+            <p data-editable="svc2Desc">Parturient vulputate cursus scelerisque consequat lacinia maecenas. Tellus imperdiet nascetur.</p>
+        </div>
+        <div class="service-card animate-on-scroll fade-up">
+            <div class="service-card-icon">
+                <i class="fas fa-calendar-star"></i>
+            </div>
+            <h4 data-editable="svc3Title">Special Event Styling</h4>
+            <p data-editable="svc3Desc">Parturient vulputate cursus scelerisque consequat lacinia maecenas. Tellus imperdiet nascetur.</p>
+        </div>
+    </div>
+
+    <!-- Team Section -->
+    <section class="team-section" id="collection">
+        <div class="section-label" data-editable="teamLabel">MEET OUR TEAM</div>
+        <h2 data-editable="teamTitle">We serve uniqueness because you are unique to us</h2>
+        <div class="team-grid">
+            <div class="team-card animate-on-scroll fade-up">
+                <div class="team-card-img">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&q=80" alt="Erica Stewart" data-editable="team1Img" data-type="image">
+                </div>
+                <h4 data-editable="team1Name">Erica Stewart</h4>
+                <div class="role" data-editable="team1Role">Fashion Designer</div>
+                <div class="team-social">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="team-card animate-on-scroll fade-up">
+                <div class="team-card-img">
+                    <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=400&q=80" alt="Melissa Shafer" data-editable="team2Img" data-type="image">
+                </div>
+                <h4 data-editable="team2Name">Melissa Shafer</h4>
+                <div class="role" data-editable="team2Role">Fashion Designer</div>
+                <div class="team-social">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="team-card animate-on-scroll fade-up">
+                <div class="team-card-img">
+                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&q=80" alt="Claudia Stephens" data-editable="team3Img" data-type="image">
+                </div>
+                <h4 data-editable="team3Name">Claudia Stephens</h4>
+                <div class="role" data-editable="team3Role">Fashion Designer</div>
+                <div class="team-social">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="team-card animate-on-scroll fade-up">
+                <div class="team-card-img">
+                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80" alt="Hector Furman" data-editable="team4Img" data-type="image">
+                </div>
+                <h4 data-editable="team4Name">Hector Furman</h4>
+                <div class="role" data-editable="team4Role">Fashion Designer</div>
+                <div class="team-social">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Clients Section -->
+    <section class="clients-section">
+        <div class="clients-container">
+            <div class="clients-label" data-editable="clientsLabel">
+                Our Amazing Clients<br><span>Worldwide :</span>
+            </div>
+            <div class="clients-logos">
+                <div class="client-logo" data-editable="client1">LOGOIPSUM</div>
+                <div class="client-logo" data-editable="client2">logoipsum</div>
+                <div class="client-logo" data-editable="client3">logoipsum</div>
+                <div class="client-logo" data-editable="client4">Logoipsum</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-brand">
+                <h3 data-editable="footerBrand">kreatista</h3>
+                <p data-editable="footerDesc">Creating unique fashion experiences with passion and dedication. We believe every person deserves to feel special.</p>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4 data-editable="footerCol1Title">Quick Links</h4>
+                <ul>
+                    <li><a href="#" data-editable="footerLink1">Homepage</a></li>
+                    <li><a href="#" data-editable="footerLink2">About Us</a></li>
+                    <li><a href="#" data-editable="footerLink3">Services</a></li>
+                    <li><a href="#" data-editable="footerLink4">Collection</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4 data-editable="footerCol2Title">Support</h4>
+                <ul>
+                    <li><a href="#" data-editable="footerLink5">FAQ</a></li>
+                    <li><a href="#" data-editable="footerLink6">Help Center</a></li>
+                    <li><a href="#" data-editable="footerLink7">Terms of Service</a></li>
+                    <li><a href="#" data-editable="footerLink8">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4 data-editable="footerCol3Title">Contact</h4>
+                <ul>
+                    <li><a href="#" data-editable="footerLink9">hello@kreatista.com</a></li>
+                    <li><a href="#" data-editable="footerLink10">+1 234 567 890</a></li>
+                    <li><a href="#" data-editable="footerLink11">New York, USA</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom" data-editable="footerCopy">
+            © 2026 Kreatista. All Rights Reserved.
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scroll for nav links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Button click feedback
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => { this.style.transform = ''; }, 150);
+            });
+        });
+    </script>
+
+</body>
+</html>

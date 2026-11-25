@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="de">
+<head> 
+
+
+
+         <meta charset="UTF-8">
+    <title>TAP Werbeagentur WOB | Werbetechnik / Digitaldruck</title>
+    
+    <!-- Favicon — TAP Logo -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0iIzBmMGYwZiIvPjx0ZXh0IHg9IjE2IiB5PSIyMiIgZm9udC1mYW1pbHk9IkFyaWFsIEJsYWNrLEltcGFjdCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjIwIiBmb250LXdlaWdodD0iOTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjZmZmZmZmIj5UPC90ZXh0PjxjaXJjbGUgY3g9IjIzIiBjeT0iOSIgcj0iMi41IiBmaWxsPSIjOEI1Q0Y2Ii8+PC9zdmc+">
+    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0iIzBmMGYwZiIvPjx0ZXh0IHg9IjE2IiB5PSIyMiIgZm9udC1mYW1pbHk9IkFyaWFsIEJsYWNrLEltcGFjdCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjIwIiBmb250LXdlaWdodD0iOTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjZmZmZmZmIj5UPC90ZXh0PjxjaXJjbGUgY3g9IjIzIiBjeT0iOSIgcj0iMi41IiBmaWxsPSIjOEI1Q0Y2Ii8+PC9zdmc+">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/..." rel="stylesheet">
+    
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create | TAP Werbeagentur WOB</title>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,800&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <style>
+        :root {
+            --bg: #0f0f0f;
+            --bg-light: #1a1a1a;
+            --text: #ffffff;
+            --text-muted: rgba(255,255,255,0.6);
+            --purple: #8B5CF6;
+            --purple-light: #A78BFA;
+            --purple-dark: #6D28D9;
+            --gray: #2a2a2a;
+            --border: rgba(255,255,255,0.1);
+            --font-main: 'Plus Jakarta Sans', sans-serif;
+            --font-display: 'Oswald', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+
+        html { scroll-behavior: auto; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: var(--font-main);
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        /* Custom Cursor */
+        .cursor {
+            width: 20px; height: 20px;
+            border: 2px solid var(--purple);
+            border-radius: 50%;
+            position: fixed; pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.15s ease, width 0.3s ease, height 0.3s ease;
+            transform: translate(-50%, -50%);
+            mix-blend-mode: difference;
+        }
+        .cursor.hover {
+            width: 50px; height: 50px;
+            background: rgba(139, 92, 246, 0.1);
+        }
+        .cursor-dot {
+            width: 4px; height: 4px;
+            background: var(--purple);
+            border-radius: 50%;
+            position: fixed; pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+        }
+
+        /* --- Navigation --- */
+        nav {
+            position: fixed; top: 0; width: 100%; padding: 20px 5%;
+            display: flex; justify-content: space-between; align-items: center; z-index: 1000;
+            background: rgba(15,15,15,0.8); backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            transition: all 0.4s ease;
+        }
+        nav.scrolled {
+            padding: 15px 5%;
+            background: rgba(15,15,15,0.95);
+        }
+
+        .logo-group { 
+            display: flex; align-items: center; gap: 12px;
+            text-decoration: none;
+        }
+        .logo-icon {
+            font-family: var(--font-display);
+            font-size: 42px; font-weight: 700;
+            color: var(--text);
+            letter-spacing: 2px;
+            line-height: 1;
+        }
+        .logo-icon .dot {
+            color: var(--purple);
+            font-size: 48px;
+            line-height: 0.5;
+        }
+        .logo-text-group {
+            display: flex; flex-direction: column;
+        }
+        .logo-main { 
+            font-family: var(--font-display);
+            font-weight: 700; font-size: 24px; 
+            letter-spacing: 3px; color: var(--text);
+            line-height: 1;
+        }
+        .logo-main .wob {
+            color: var(--purple);
+            font-size: 16px;
+            vertical-align: super;
+            letter-spacing: 1px;
+        }
+        .logo-sub { 
+            font-size: 9px; text-transform: uppercase; 
+            letter-spacing: 3px; color: var(--purple);
+            font-weight: 600;
+            margin-top: 2px;
+        }
+
+        .nav-links { display: flex; gap: 40px; align-items: center; }
+        .nav-links a { 
+            text-decoration: none; color: var(--text-muted); 
+            font-weight: 500; font-size: 13px;
+            letter-spacing: 2px; text-transform: uppercase;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+        .nav-links a::after {
+            content: ''; position: absolute;
+            bottom: -6px; left: 0; width: 0; height: 1px;
+            background: var(--purple);
+            transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .nav-links a:hover {
+            color: var(--text);
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        .nav-links a.active {
+            color: var(--purple);
+        }
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .nav-social {
+            display: flex; gap: 20px; align-items: center;
+        }
+        .nav-social a {
+            color: var(--text-muted);
+            transition: color 0.3s ease;
+            font-size: 18px;
+        }
+        .nav-social a:hover {
+            color: var(--purple);
+        }
+        .hamburger {
+            width: 30px; height: 20px;
+            display: flex; flex-direction: column;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+        .hamburger span {
+            width: 100%; height: 2px;
+            background: var(--text);
+            transition: all 0.3s ease;
+        }
+        .hamburger:hover span {
+            background: var(--purple);
+        }
+
+        /* ============================================
+           CREATE PAGE - LIST GALLERY (NEW DESIGN)
+           ============================================ */
+
+        .create-hero {
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            overflow: hidden;
+            background: var(--bg);
+            padding-top: 140px;
+            padding-bottom: 60px;
+        }
+
+        .create-hero::before {
+            content: '';
+            position: absolute; top: 0; right: 0;
+            width: 60%; height: 100%;
+            background: radial-gradient(ellipse at center right, rgba(139, 92, 246, 0.06) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        /* Title */
+        .create-title {
+            font-family: var(--font-display);
+            font-size: clamp(36px, 7vw, 90px);
+            font-weight: 700;
+            line-height: 1;
+            letter-spacing: -3px;
+            text-transform: uppercase;
+            text-align: center;
+            z-index: 10;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .create-title span {
+            color: var(--purple);
+        }
+        .create-subtitle {
+            color: var(--text-muted);
+            font-size: clamp(14px, 2vw, 18px);
+            text-align: center;
+            max-width: 500px;
+            margin-bottom: 60px;
+            z-index: 10;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        /* List Gallery Container */
+        .list-gallery {
+            width: 100%;
+            max-width: 1100px;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            z-index: 5;
+            padding: 0 5%;
+        }
+
+        /* Each list item */
+        .list-item {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            padding: 30px 0;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .list-item:first-child {
+            border-top: 1px solid var(--border);
+        }
+
+        /* Number */
+        .list-number {
+            font-family: var(--font-main);
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--purple);
+            letter-spacing: 2px;
+            min-width: 50px;
+            flex-shrink: 0;
+            transition: all 0.4s ease;
+        }
+
+        /* Image */
+        .list-image-wrap {
+            width: 140px;
+            height: 100px;
+            border-radius: 16px;
+            overflow: hidden;
+            flex-shrink: 0;
+            position: relative;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            border: 1px solid var(--border);
+        }
+
+        .list-image-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        /* Content */
+        .list-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            transition: all 0.4s ease;
+        }
+
+        .list-title {
+            font-family: var(--font-display);
+            font-size: clamp(20px, 3vw, 32px);
+            font-weight: 700;
+            letter-spacing: -1px;
+            text-transform: uppercase;
+            line-height: 1.2;
+            transition: all 0.4s ease;
+        }
+
+        .list-desc {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.5;
+            max-width: 400px;
+            transition: all 0.4s ease;
+        }
+
+        /* Category tag */
+        .list-tag {
+            font-family: var(--font-main);
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--purple);
+            min-width: 80px;
+            text-align: right;
+            flex-shrink: 0;
+            transition: all 0.4s ease;
+        }
+
+        /* ============================================
+           HOVER EFFECTS
+           ============================================ */
+
+        /* Glow line that follows the cursor position */
+        .list-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(139, 92, 246, 0.15) 0%, rgba(139, 92, 246, 0.05) 50%, transparent 100%);
+            transition: width 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .list-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--purple), var(--purple-light), transparent);
+            transition: width 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .list-item:hover::before {
+            width: 100%;
+        }
+
+        .list-item:hover::after {
+            width: 100%;
+        }
+
+        .list-item:hover {
+            padding-left: 20px;
+            padding-right: 10px;
+        }
+
+        .list-item:hover .list-image-wrap {
+            width: 160px;
+            height: 115px;
+            box-shadow: 0 0 40px rgba(139, 92, 246, 0.4), 0 10px 30px rgba(0,0,0,0.3);
+            border-color: var(--purple);
+            transform: translateX(10px);
+        }
+
+        .list-item:hover .list-image-wrap img {
+            transform: scale(1.15);
+            filter: brightness(1.2);
+        }
+
+        .list-item:hover .list-title {
+            color: var(--purple-light);
+            transform: translateX(5px);
+        }
+
+        .list-item:hover .list-desc {
+            color: rgba(255,255,255,0.85);
+            transform: translateX(5px);
+        }
+
+        .list-item:hover .list-number {
+            color: var(--text);
+            transform: scale(1.1);
+        }
+
+        .list-item:hover .list-tag {
+            color: var(--text);
+            letter-spacing: 5px;
+        }
+
+        /* Dim other items when one is hovered */
+        .list-gallery:has(.list-item:hover) .list-item:not(:hover) {
+            opacity: 0.3;
+            filter: grayscale(60%);
+            transition: all 0.5s ease;
+        }
+
+        /* Entrance animation initial state */
+        .list-item {
+            opacity: 0;
+            transform: translateX(-80px);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body { cursor: auto; }
+            .cursor, .cursor-dot { display: none; }
+
+            .list-item {
+                gap: 15px;
+                padding: 20px 0;
+            }
+
+            .list-image-wrap {
+                width: 90px;
+                height: 70px;
+            }
+
+            .list-item:hover .list-image-wrap {
+                width: 100px;
+                height: 80px;
+            }
+
+            .list-title {
+                font-size: 18px;
+            }
+
+            .list-desc {
+                font-size: 12px;
+            }
+
+            .list-number {
+                font-size: 12px;
+                min-width: 35px;
+            }
+
+            .list-tag {
+                display: none;
+            }
+
+            .create-title {
+                font-size: clamp(28px, 8vw, 50px);
+                letter-spacing: -2px;
+            }
+
+            .nav-links { display: none; }
+        }
+
+        @media (max-width: 480px) {
+            .list-image-wrap {
+                width: 70px;
+                height: 55px;
+            }
+
+            .list-item:hover .list-image-wrap {
+                width: 80px;
+                height: 65px;
+            }
+
+            .list-title {
+                font-size: 16px;
+            }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--purple-dark); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--purple); }
+        ::selection { background: var(--purple); color: var(--text); }
+
+        /* Footer area */
+        .create-footer {
+            padding: 80px 5%;
+            text-align: center;
+            background: var(--bg-light);
+            border-top: 1px solid var(--border);
+        }
+        .create-footer h3 {
+            font-family: var(--font-display);
+            font-size: clamp(24px, 4vw, 40px);
+            font-weight: 700;
+            letter-spacing: -2px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+        .create-footer p {
+            color: var(--text-muted);
+            font-size: 16px;
+            max-width: 500px;
+            margin: 0 auto 30px;
+            line-height: 1.6;
+        }
+        .create-footer .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 32px;
+            background: var(--purple);
+            color: var(--text);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border-radius: 50px;
+            transition: all 0.4s ease;
+        }
+        .create-footer .cta-btn:hover {
+            background: var(--purple-light);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(139, 92, 246, 0.3);
+        }
+    </style>
+<base target="_blank">
+<base target="_blank">
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-dot" id="cursorDot"></div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <a href="index.html" class="logo-group">
+            <div class="logo-icon">T<span class="dot">.</span>A<span class="dot">.</span>P</div>
+            <div class="logo-text-group">
+                <div class="logo-main">WERBEAGENTUR<span class="wob">WOB</span></div>
+                <div class="logo-sub">WERBETECHNIK / DIGITALDRUCK</div>
+            </div>
+        </a>
+        <div class="nav-links">
+            <a href="index.html">Homepage</a>
+            <a href="index.html#services">Services</a>
+            <a href="index.html#about">About Us</a>
+            <a href="design.html">Shop</a>
+            <a href="create.html" class="active">Create</a>
+            <a href="index.html#contact">Contact</a>
+            <a href="customer.html" style="
+                background: var(--purple);
+                color: white;
+                padding: 7px 18px;
+                border-radius: 20px;
+                font-weight: 600;
+                font-size: 0.82rem;
+                letter-spacing: 0.06em;
+                text-decoration: none;
+                transition: background 0.2s;
+            " onmouseover="this.style.background='var(--purple-light)'"
+               onmouseout="this.style.background='var(--purple)'">
+                Kundenportal →
+            </a>
+        </div>
+        <div class="nav-social">
+            <a href="#" aria-label="Facebook">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </a>
+            <a href="#" aria-label="Instagram">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+            </a>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- CREATE HERO / LIST SECTION -->
+        <section class="create-hero" id="create">
+            <h1 class="create-title">
+                Wir erschaffen<br><span>deine Vision</span>
+            </h1>
+            <p class="create-subtitle">
+                Wähle eine unserer Kreationen und lass uns gemeinsam etwas Einzigartiges erschaffen.
+            </p>
+
+            <div class="list-gallery" id="listGallery">
+                <!-- Items will be generated by JS -->
+            </div>
+        </section>
+
+        <!-- Footer CTA -->
+        <section class="create-footer">
+            <h3>Bereit für dein<br> nächstes Projekt?</h3>
+            <p>Kontaktiere uns und lass uns gemeinsam deine Ideen in die Realität umsetzen.</p>
+            <a href="mailto:info@tap-werbetechnik.de" class="cta-btn">
+                Kontakt aufnehmen
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+            </a>
+        </section>
+    </main>
+
+    <script>
+        // ============================================
+        // CUSTOM CURSOR
+        // ============================================
+        const cursor = document.getElementById('cursor');
+        const cursorDot = document.getElementById('cursorDot');
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            cursorDot.style.left = mouseX + 'px';
+            cursorDot.style.top = mouseY + 'px';
+        });
+
+        function animateCursor() {
+            cursorX += (mouseX - cursorX) * 0.15;
+            cursorY += (mouseY - cursorY) * 0.15;
+            cursor.style.left = cursorX + 'px';
+            cursor.style.top = cursorY + 'px';
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        // ============================================
+        // NAVIGATION
+        // ============================================
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // ============================================
+        // LIST GALLERY - 8 SERVICES
+        // ============================================
+        const services = [
+            
+            {
+                name: 'Social Links',
+                sub: 'Alle Links auf einer Seite',
+                image: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=600&q=80',
+                link: 'linkes.html',
+                tag: 'LINKS'
+            },
+            {
+                name: 'Lebenslauf',
+                sub: 'Professioneller CV',
+                image: 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=600&q=80',
+                link: 'cv.html',
+                tag: 'CV'
+            },
+            {
+                name: 'Speisekarte',
+                sub: 'Menü für dein Restaurant',
+                image: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80',
+                link: 'menu-creator.html',
+                tag: 'MENU'
+            },
+            
+           
+            {
+                name: 'Visitenkarte',
+                sub: 'Digitale Business Card',
+                image: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?w=600&q=80',
+                link: 'card-index.html',
+                tag: 'CARD'
+            },
+            {
+                name: 'Landing Page',
+                sub: 'Conversion optimiert',
+                image: 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=600&q=80',
+                link: 'index3.html',
+                tag: 'LANDING'
+            }
+        ];
+
+        const listGallery = document.getElementById('listGallery');
+
+        // Create list items
+        services.forEach((service, i) => {
+            const item = document.createElement('a');
+            item.className = 'list-item';
+            item.href = service.link;
+            item.dataset.index = i;
+
+            const num = String(i + 1).padStart(2, '0');
+
+            item.innerHTML = `
+                <div class="list-number">(${num})</div>
+                <div class="list-image-wrap">
+                    <img src="${service.image}" alt="${service.name}" loading="lazy">
+                </div>
+                <div class="list-content">
+                    <div class="list-title">${service.name}</div>
+                    <div class="list-desc">${service.sub}</div>
+                </div>
+                <div class="list-tag">${service.tag}</div>
+            `;
+
+            listGallery.appendChild(item);
+        });
+
+        // ============================================
+        // ENTRANCE ANIMATION - Slide from left
+        // ============================================
+        function playEntranceAnimation() {
+            const items = document.querySelectorAll('.list-item');
+            items.forEach((item, i) => {
+                // Reset first
+                gsap.set(item, { opacity: 0, x: -80 });
+                // Animate in with stagger
+                gsap.to(item, {
+                    opacity: 1,
+                    x: 0,
+                    duration: 0.8,
+                    delay: 0.3 + (i * 0.12),
+                    ease: 'power3.out'
+                });
+            });
+        }
+
+        // Play on page load
+        window.addEventListener('load', playEntranceAnimation);
+
+        // Also replay on page refresh / visibility change
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) {
+                playEntranceAnimation();
+            }
+        });
+
+        // ============================================
+        // GSAP SCROLL REVEAL FOR FOOTER
+        // ============================================
+        gsap.registerPlugin(ScrollTrigger);
+
+        gsap.from('.create-footer h3', {
+            y: 60,
+            opacity: 0,
+            duration: 1,
+            scrollTrigger: {
+                trigger: '.create-footer',
+                start: 'top 80%',
+                toggleActions: 'play none none reverse'
+            }
+        });
+
+        gsap.from('.create-footer p', {
+            y: 40,
+            opacity: 0,
+            duration: 0.8,
+            delay: 0.2,
+            scrollTrigger: {
+                trigger: '.create-footer',
+                start: 'top 80%',
+                toggleActions: 'play none none reverse'
+            }
+        });
+
+        gsap.from('.create-footer .cta-btn', {
+            y: 30,
+            opacity: 0,
+            duration: 0.8,
+            delay: 0.4,
+            scrollTrigger: {
+                trigger: '.create-footer',
+                start: 'top 80%',
+                toggleActions: 'play none none reverse'
+            }
+        });
+
+        // Title entrance
+        gsap.from('.create-title', {
+            y: 80,
+            opacity: 0,
+            duration: 1.2,
+            ease: 'power4.out',
+            delay: 0.2
+        });
+
+        gsap.from('.create-subtitle', {
+            y: 40,
+            opacity: 0,
+            duration: 1,
+            ease: 'power4.out',
+            delay: 0.5
+        });
+
+        // Cursor hover on all interactive elements
+        document.querySelectorAll('a, button, .list-item').forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+        });
+    </script>
+</body>
+</html>

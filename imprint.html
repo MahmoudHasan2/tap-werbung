@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impressum | TAP Werbeagentur WOB</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: #1a1a24;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+            --text-muted: #6b6b7b;
+            --accent-blue: #3b82f6;
+            --accent-purple: #8b5cf6;
+            --accent-orange: #f97316;
+            --border: rgba(255,255,255,0.06);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            padding: 1.25rem 2rem;
+            background: rgba(10, 10, 15, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* ===== NEW LOGO ===== */
+        .logo-group {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: #e8e8e8;
+            letter-spacing: 1px;
+            line-height: 1;
+        }
+
+        .logo-icon .dot {
+            color: var(--accent-purple);
+        }
+
+        .logo-text-group {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.05;
+        }
+
+        .logo-main {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #e8e8e8;
+            letter-spacing: 1.5px;
+        }
+
+        .logo-main .wob {
+            color: var(--accent-purple);
+            margin-left: 3px;
+        }
+
+        .logo-sub {
+            font-size: 0.58rem;
+            font-weight: 500;
+            color: var(--accent-purple);
+            letter-spacing: 2.2px;
+            margin-top: 3px;
+            opacity: 0.85;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover { color: var(--text-primary); }
+
+        .hero {
+            padding: 10rem 2rem 5rem;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(59,130,246,0.08) 0%, transparent 60%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: 50%;
+            transform: translateX(-50%);
+            width: 800px; height: 800px;
+            background: radial-gradient(circle, rgba(139,92,246,0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: -2px;
+            position: relative;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple), var(--accent-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem 6rem;
+        }
+
+        .section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .section:hover { border-color: rgba(139,92,246,0.2); }
+
+        .section h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section h2::before {
+            content: '';
+            display: inline-block;
+            width: 4px; height: 24px;
+            background: linear-gradient(180deg, var(--accent-blue), var(--accent-purple));
+            border-radius: 2px;
+        }
+
+        .section p, .section address {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            font-style: normal;
+            line-height: 1.8;
+        }
+
+        .section a {
+            color: var(--accent-blue);
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .section a:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+
+        .section strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .footer-content { max-width: 1200px; margin: 0 auto; }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover { color: var(--text-primary); }
+        .footer-links a.active { color: var(--accent-purple); }
+
+        .footer p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero h1 { font-size: 2.2rem; }
+            .section { padding: 1.5rem; }
+            .logo-sub { display: none; }
+            .logo-icon { font-size: 1.4rem; }
+            .logo-main { font-size: 0.95rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo-group">
+                <div class="logo-icon">T<span class="dot">.</span>A<span class="dot">.</span>P</div>
+                <div class="logo-text-group">
+                    <div class="logo-main">WERBEAGENTUR<span class="wob">WOB</span></div>
+                    <div class="logo-sub">WERBETECHNIK / DIGITALDRUCK</div>
+                </div>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Startseite</a></li>
+                <li><a href="index.html#services">Leistungen</a></li>
+                <li><a href="index.html#portfolio">Portfolio</a></li>
+                <li><a href="index.html#contact">Kontakt</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1><span>Impressum</span></h1>
+        <p>Rechtliche Angaben gemäß § 5 TMG</p>
+    </section>
+
+    <main class="content">
+        <div class="section">
+            <h2>Angaben zum Unternehmen</h2>
+            <address>
+                <strong>TAP Werbeagentur WOB</strong><br>
+                Inhaber: Max Mustermann<br>
+                Musterstraße 1<br>
+                38440 Wolfsburg<br>
+                Deutschland
+            </address>
+        </div>
+
+        <div class="section">
+            <h2>Kontakt</h2>
+            <p>
+                <strong>Telefon:</strong> <a href="tel:+49 151 00000000">+49 151 00000000</a><br>
+                <strong>E-Mail:</strong> <a href="mailto:info@tap-werbung.de">info@tap-werbung.de</a><br>
+                <strong>Website:</strong> <a href="https://tap-werbung.de">www.tap-werbung.de</a>
+            </p>
+        </div>
+
+        <div class="section">
+            <h2>Umsatzsteuer-ID</h2>
+            <p>
+                Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:<br>
+                <strong>DE451379108</strong>
+            </p>
+        </div>
+
+        <div class="section">
+            <h2>Verantwortlich für den Inhalt</h2>
+            <p>
+               Max Mustermann<br>
+                Musterstraße 1<br>
+                38440 Wolfsburg
+            </p>
+        </div>
+
+        <div class="section">
+            <h2>Streitschlichtung</h2>
+            <p>
+                Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: 
+                <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener">https://ec.europa.eu/consumers/odr</a>
+            </p>
+            <p>
+                Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.
+            </p>
+        </div>
+
+        <div class="section">
+            <h2>Haftung für Inhalte</h2>
+            <p>
+                Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. 
+                Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen 
+                oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.
+            </p>
+        </div>
+
+        <div class="section">
+            <h2>Haftung für Links</h2>
+            <p>
+                Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. 
+                Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten 
+                ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich.
+            </p>
+        </div>
+
+        <div class="section">
+            <h2>Urheberrecht</h2>
+            <p>
+                Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. 
+                Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes 
+                bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers.
+            </p>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="index.html">Startseite</a>
+                <a href="imprint.html" class="active">Impressum</a>
+                <a href="datenschutz.html">Datenschutz</a>
+            </div>
+            <p>&copy; 2026 TAP Werbeagentur WOB. Alle Rechte vorbehalten.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

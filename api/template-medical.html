@@ -1,0 +1,1688 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-editable="siteTitle">Nuvica Medical | World-Class Healthcare</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0f4c81;
+            --primary-light: #1a6db5;
+            --accent: #00c896;
+            --accent-light: #00e0a8;
+            --sky: #e8f4fc;
+            --sky-dark: #b8ddf0;
+            --dark: #0a1628;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --text-muted: #94a3b8;
+            --white: #ffffff;
+            --glass: rgba(255,255,255,0.85);
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+            --shadow: 0 8px 30px rgba(0,0,0,0.08);
+            --shadow-lg: 0 20px 60px rgba(0,0,0,0.12);
+            --radius-sm: 12px;
+            --radius: 20px;
+            --radius-lg: 32px;
+            --radius-xl: 48px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background: var(--white);
+        }
+
+        h1, h2, h3, h4 { font-family: 'Playfair Display', serif; }
+
+        /* ===== HEADER ===== */
+        .header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0,0,0,0.04);
+            transition: all 0.3s ease;
+        }
+
+        .header.scrolled {
+            box-shadow: var(--shadow-sm);
+            background: rgba(255,255,255,0.95);
+        }
+
+        .header-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 16px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+        }
+
+        .logo-text {
+            font-family: 'Inter', sans-serif;
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: -0.5px;
+        }
+
+        .logo-text span {
+            color: var(--accent);
+        }
+
+        .nav {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav a:hover {
+            color: var(--primary);
+        }
+
+        .nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .nav a:hover::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white !important;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 600 !important;
+            box-shadow: 0 4px 15px rgba(15,76,129,0.3);
+            transition: all 0.3s ease !important;
+        }
+
+        .nav-cta::after { display: none !important; }
+
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(15,76,129,0.4);
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(180deg, var(--sky) 0%, var(--white) 100%);
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 90px;
+        }
+
+        .hero-bg-pattern {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(0,200,150,0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(15,76,129,0.06) 0%, transparent 50%),
+                radial-gradient(circle at 60% 80%, rgba(0,200,150,0.05) 0%, transparent 40%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 40px;
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0,200,150,0.1);
+            color: var(--accent);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            border: 1px solid rgba(0,200,150,0.2);
+        }
+
+        .hero-badge i {
+            font-size: 12px;
+        }
+
+        .hero-text h1 {
+            font-size: 64px;
+            font-weight: 900;
+            color: var(--primary);
+            line-height: 1.1;
+            margin-bottom: 24px;
+            letter-spacing: -1px;
+        }
+
+        .hero-text h1 .highlight {
+            color: var(--accent);
+            position: relative;
+        }
+
+        .hero-text p {
+            font-size: 18px;
+            color: var(--text-light);
+            margin-bottom: 40px;
+            max-width: 480px;
+            line-height: 1.8;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 16px 36px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(15,76,129,0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(15,76,129,0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            padding: 16px 36px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border: 2px solid var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,200,150,0.3);
+        }
+
+        .btn-icon:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,200,150,0.4);
+        }
+
+        .hero-image-wrapper {
+            position: relative;
+        }
+
+        .hero-image {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-image img {
+            width: 100%;
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .hero-float-card {
+            position: absolute;
+            background: white;
+            border-radius: var(--radius);
+            padding: 16px 20px;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 10;
+        }
+
+        .hero-float-card.top-right {
+            top: 20px;
+            right: -20px;
+        }
+
+        .hero-float-card.bottom-left {
+            bottom: 40px;
+            left: -30px;
+        }
+
+        .hero-float-card .icon {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+        }
+
+        .hero-float-card .info h4 {
+            font-family: 'Inter', sans-serif;
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 2px;
+        }
+
+        .hero-float-card .info span {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 50px;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(0,0,0,0.06);
+        }
+
+        .hero-stat h3 {
+            font-family: 'Inter', sans-serif;
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        .hero-stat span {
+            color: var(--text-muted);
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        /* ===== SERVICES CARDS ===== */
+        .services-strip {
+            padding: 40px 40px 0;
+            position: relative;
+            z-index: 5;
+            margin-top: -60px;
+        }
+
+        .services-strip-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 32px;
+            box-shadow: var(--shadow);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .service-card .card-img {
+            width: 100%;
+            height: 180px;
+            border-radius: var(--radius-sm);
+            object-fit: cover;
+            margin-bottom: 20px;
+        }
+
+        .service-card .card-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--sky) 0%, var(--sky-dark) 100%);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 20px;
+            margin-bottom: 16px;
+        }
+
+        .service-card h3 {
+            font-family: 'Inter', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .service-card p {
+            font-size: 14px;
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        .service-card .card-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--accent);
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            margin-top: 16px;
+            transition: gap 0.3s ease;
+        }
+
+        .service-card .card-link:hover {
+            gap: 10px;
+        }
+
+        /* ===== ABOUT ===== */
+        .about {
+            padding: 120px 40px;
+            background: var(--white);
+        }
+
+        .about-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .about-images {
+            position: relative;
+        }
+
+        .about-img-main {
+            width: 100%;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .about-float-card {
+            position: absolute;
+            background: white;
+            border-radius: var(--radius);
+            padding: 20px 24px;
+            box-shadow: var(--shadow-lg);
+            z-index: 10;
+        }
+
+        .about-float-card.top {
+            top: -20px;
+            right: -20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .about-float-card.bottom {
+            bottom: 30px;
+            left: -30px;
+        }
+
+        .about-float-card .plus-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+        }
+
+        .about-float-card h4 {
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        .about-float-card .date {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .about-float-card .commitment {
+            font-size: 14px;
+            color: var(--text);
+            font-weight: 500;
+            line-height: 1.6;
+        }
+
+        .about-text .section-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0,200,150,0.1);
+            color: var(--accent);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .about-text h2 {
+            font-size: 42px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 24px;
+            line-height: 1.2;
+        }
+
+        .about-text p {
+            color: var(--text-light);
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .about-text .btn-primary {
+            margin-top: 10px;
+        }
+
+        .contact-mini {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(0,0,0,0.06);
+        }
+
+        .contact-mini .icon-circle {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--sky) 0%, var(--sky-dark) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 18px;
+        }
+
+        .contact-mini .info h4 {
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 2px;
+        }
+
+        .contact-mini .info a {
+            font-size: 14px;
+            color: var(--primary);
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        /* ===== STATS ===== */
+        .stats {
+            padding: 80px 40px;
+            background: linear-gradient(135deg, var(--primary) 0%, #0a3a6b 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stats::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=1920&q=80') center/cover;
+            opacity: 0.08;
+        }
+
+        .stats-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-family: 'Inter', sans-serif;
+            font-size: 42px;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 8px;
+        }
+
+        .stat-item h3 span {
+            color: var(--accent);
+        }
+
+        .stat-item p {
+            color: rgba(255,255,255,0.7);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* ===== SERVICES GRID ===== */
+        .services-grid {
+            padding: 120px 40px;
+            background: var(--white);
+        }
+
+        .services-grid-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header .section-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0,200,150,0.1);
+            color: var(--accent);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .section-header h2 {
+            font-size: 42px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 16px;
+        }
+
+        .section-header p {
+            color: var(--text-light);
+            font-size: 17px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .services-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .service-grid-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 36px;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.4s ease;
+            border: 1px solid rgba(0,0,0,0.04);
+        }
+
+        .service-grid-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-lg);
+            border-color: transparent;
+        }
+
+        .service-grid-card .icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--sky) 0%, var(--sky-dark) 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 24px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .service-grid-card:hover .icon {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: white;
+        }
+
+        .service-grid-card h3 {
+            font-family: 'Inter', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+
+        .service-grid-card p {
+            font-size: 15px;
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        /* ===== DOCTORS ===== */
+        .doctors {
+            padding: 120px 40px;
+            background: linear-gradient(180deg, var(--sky) 0%, var(--white) 100%);
+        }
+
+        .doctors-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .doctors-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-top: 50px;
+        }
+
+        .doctor-card {
+            background: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.4s ease;
+        }
+
+        .doctor-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .doctor-card .doctor-img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+        }
+
+        .doctor-card .doctor-info {
+            padding: 24px;
+            text-align: center;
+        }
+
+        .doctor-card h4 {
+            font-family: 'Inter', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        .doctor-card span {
+            font-size: 14px;
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .doctor-social {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .doctor-social a {
+            width: 36px;
+            height: 36px;
+            background: var(--sky);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .doctor-social a:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* ===== TESTIMONIALS ===== */
+        .testimonials {
+            padding: 120px 40px;
+            background: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .testimonials::before {
+            content: '"';
+            position: absolute;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Playfair Display', serif;
+            font-size: 300px;
+            color: var(--sky);
+            line-height: 1;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .testimonials-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .testimonial-card {
+            background: white;
+            border: 1px solid rgba(0,0,0,0.06);
+            border-radius: var(--radius);
+            padding: 40px;
+            transition: all 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: transparent;
+        }
+
+        .testimonial-stars {
+            color: #f59e0b;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .testimonial-text {
+            color: var(--text-light);
+            font-size: 15px;
+            line-height: 1.8;
+            margin-bottom: 24px;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .testimonial-author img {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--accent);
+        }
+
+        .testimonial-author-info h4 {
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        .testimonial-author-info span {
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        /* ===== CONTACT / BOOKING ===== */
+        .contact {
+            padding: 120px 40px;
+            background: linear-gradient(180deg, var(--white) 0%, var(--sky) 100%);
+        }
+
+        .contact-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        .contact-info h2 {
+            font-size: 42px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 24px;
+        }
+
+        .contact-info > p {
+            color: var(--text-light);
+            font-size: 17px;
+            line-height: 1.8;
+            margin-bottom: 40px;
+        }
+
+        .contact-details {
+            display: grid;
+            gap: 24px;
+        }
+
+        .contact-detail {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .contact-detail i {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--sky) 0%, var(--sky-dark) 100%);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: var(--primary);
+            flex-shrink: 0;
+        }
+
+        .contact-detail h4 {
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            color: var(--primary);
+            margin-bottom: 4px;
+            font-weight: 700;
+        }
+
+        .contact-detail p, .contact-detail a {
+            color: var(--text-light);
+            font-size: 15px;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            line-height: 1.6;
+        }
+
+        .contact-detail a:hover {
+            color: var(--accent);
+        }
+
+        .contact-form {
+            background: white;
+            padding: 50px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .contact-form h3 {
+            font-size: 28px;
+            color: var(--primary);
+            margin-bottom: 30px;
+            font-weight: 800;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            background: var(--sky);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: white;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .contact-form .btn-primary {
+            width: 100%;
+            justify-content: center;
+            padding: 18px;
+            font-size: 16px;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: var(--dark);
+            color: white;
+            padding: 80px 40px 40px;
+        }
+
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 60px;
+        }
+
+        .footer-brand .logo-text {
+            color: white;
+            margin-bottom: 20px;
+            display: block;
+            font-size: 24px;
+            font-weight: 800;
+        }
+
+        .footer-brand p {
+            color: rgba(255,255,255,0.6);
+            line-height: 1.8;
+            margin-bottom: 24px;
+            font-size: 15px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 12px;
+        }
+
+        .footer-social a {
+            width: 42px;
+            height: 42px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-social a:hover {
+            background: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .footer-column h4 {
+            font-size: 17px;
+            margin-bottom: 24px;
+            color: white;
+            font-weight: 700;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-column ul li a {
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-size: 15px;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--accent);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 60px auto 0;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: rgba(255,255,255,0.4);
+            font-size: 14px;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .hero-content { grid-template-columns: 1fr; text-align: center; }
+            .hero-text p { margin: 0 auto 40px; }
+            .hero-btns { justify-content: center; }
+            .hero-stats { justify-content: center; }
+            .hero-image-wrapper { display: none; }
+            .about-inner { grid-template-columns: 1fr; }
+            .contact-inner { grid-template-columns: 1fr; }
+            .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
+            .doctors-grid { grid-template-columns: repeat(2, 1fr); }
+            .services-cards { grid-template-columns: repeat(2, 1fr); }
+            .services-strip-inner { grid-template-columns: repeat(2, 1fr); }
+            .stats-inner { grid-template-columns: repeat(2, 1fr); }
+            .footer-inner { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .header-inner { padding: 15px 20px; }
+            .nav { display: none; }
+            .hero-text h1 { font-size: 40px; }
+            .about-text h2, .section-header h2, .contact-info h2 { font-size: 32px; }
+            .testimonials-grid { grid-template-columns: 1fr; }
+            .doctors-grid { grid-template-columns: 1fr; }
+            .services-cards { grid-template-columns: 1fr; }
+            .services-strip-inner { grid-template-columns: 1fr; }
+            .stats-inner { grid-template-columns: 1fr 1fr; }
+            .footer-inner { grid-template-columns: 1fr; gap: 40px; }
+            .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+            .about-float-card { display: none; }
+            .form-row { grid-template-columns: 1fr; }
+            .contact-form { padding: 30px; }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header" id="header">
+        <div class="header-inner">
+            <div class="logo">
+                <div class="logo-icon"><i class="fas fa-heart-pulse"></i></div>
+                <span class="logo-text" data-editable="logoText">Nuvica <span>Medical</span></span>
+            </div>
+            <nav class="nav">
+                <a href="#home" data-editable="navHome">Home</a>
+                <a href="#about" data-editable="navAbout">About</a>
+                <a href="#services" data-editable="navServices">Departments</a>
+                <a href="#doctors" data-editable="navDoctors">Doctors</a>
+                <a href="#contact" class="nav-cta" data-editable="navCta">Contact Us <i class="fas fa-arrow-right"></i></a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+        <div class="hero-bg-pattern"></div>
+        <div class="hero-content">
+            <div class="hero-text">
+                <div class="hero-badge" data-editable="heroBadge">
+                    <i class="fas fa-bolt"></i> Fast Treatment
+                </div>
+                <h1 data-editable="heroTitle">Quick <span class="highlight" data-editable="heroHighlight">Smart Medic</span></h1>
+                <p data-editable="heroDesc">Nuvica is your destination for world-class treatments, compassionate doctors, and precise diagnostics all under one roof.</p>
+                <div class="hero-btns">
+                    <a href="#services" class="btn-primary" data-editable="heroCta1">
+                        <i class="fas fa-compass"></i> Explore More
+                    </a>
+                    <a href="#contact" class="btn-icon" data-editable="heroCta2">
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <h3 data-editable="stat1Num">22</h3>
+                        <span data-editable="stat1Label">Years Medical Excellence</span>
+                    </div>
+                    <div class="hero-stat">
+                        <h3 data-editable="stat2Num">490</h3>
+                        <span data-editable="stat2Label">Medical Awards</span>
+                    </div>
+                    <div class="hero-stat">
+                        <h3 data-editable="stat3Num">6700</h3>
+                        <span data-editable="stat3Label">Healed Patients</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-image-wrapper">
+                <div class="hero-image">
+                    <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=800&q=80" alt="Doctor" data-editable="heroImage" data-type="image">
+                </div>
+                <div class="hero-float-card top-right">
+                    <div class="icon"><i class="fas fa-trophy"></i></div>
+                    <div class="info">
+                        <h4 data-editable="float1Num">490</h4>
+                        <span data-editable="float1Label">Awards</span>
+                    </div>
+                </div>
+                <div class="hero-float-card bottom-left">
+                    <div class="icon"><i class="fas fa-lungs"></i></div>
+                    <div class="info">
+                        <h4 data-editable="float2Num">6700</h4>
+                        <span data-editable="float2Label">Healed Lungs</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES STRIP -->
+    <section class="services-strip" id="services">
+        <div class="services-strip-inner">
+            <div class="service-card">
+                <img src="https://images.unsplash.com/photo-1559757175-5700dde675bc?w=600&q=80" alt="Brain" class="card-img" data-editable="svc1Img" data-type="image">
+                <div class="card-icon"><i class="fas fa-brain"></i></div>
+                <h3 data-editable="svc1Title">Brain Health Check</h3>
+                <p data-editable="svc1Desc">Advanced neurological diagnostics and brain health assessments using cutting-edge imaging technology.</p>
+                <a href="#" class="card-link" data-editable="svc1Link">Learn More <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="service-card">
+                <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=600&q=80" alt="Liver" class="card-img" data-editable="svc2Img" data-type="image">
+                <div class="card-icon"><i class="fas fa-liver"></i></div>
+                <h3 data-editable="svc2Title">Liver Function Test</h3>
+                <p data-editable="svc2Desc">Comprehensive liver function testing and hepatology consultations for optimal organ health.</p>
+                <a href="#" class="card-link" data-editable="svc2Link">Learn More <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="service-card">
+                <img src="https://images.unsplash.com/photo-1530497610245-94d3c16cda28?w=600&q=80" alt="Kidney" class="card-img" data-editable="svc3Img" data-type="image">
+                <div class="card-icon"><i class="fas fa-kidney"></i></div>
+                <h3 data-editable="svc3Title">Kidney Health Scan</h3>
+                <p data-editable="svc3Desc">State-of-the-art renal imaging and nephrology services for complete kidney care.</p>
+                <a href="#" class="card-link" data-editable="svc3Link">Learn More <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="about" id="about">
+        <div class="about-inner">
+            <div class="about-images">
+                <img src="https://images.unsplash.com/photo-1587351021759-3e566b6af7cc?w=600&q=80" alt="Hospital" class="about-img-main" data-editable="aboutImg" data-type="image">
+                <div class="about-float-card top">
+                    <div class="plus-icon"><i class="fas fa-plus"></i></div>
+                    <div>
+                        <h4 data-editable="aboutFloatTitle">NUVICA</h4>
+                        <div class="date" data-editable="aboutFloatDate">FROM 28/10/2003</div>
+                    </div>
+                </div>
+                <div class="about-float-card bottom">
+                    <p class="commitment" data-editable="aboutFloatText">Committed to your health and well-being.</p>
+                </div>
+            </div>
+            <div class="about-text">
+                <div class="section-tag" data-editable="aboutTag"><i class="fas fa-info-circle"></i> About Us</div>
+                <h2 data-editable="aboutTitle">Your Nuvica Medical Hospital</h2>
+                <p data-editable="aboutText1">We combine clinical expertise, innovative technology, and a patient-first approach to ensure accurate diagnosis and effective treatment.</p>
+                <p data-editable="aboutText2">Our team of over 200 medical professionals is dedicated to providing world-class healthcare services with compassion and precision.</p>
+                <a href="#services" class="btn-primary" data-editable="aboutCta">
+                    <i class="fas fa-arrow-right"></i> Learn More
+                </a>
+                <div class="contact-mini">
+                    <div class="icon-circle"><i class="fas fa-phone"></i></div>
+                    <div class="info">
+                        <h4 data-editable="aboutContactLabel">For Any Questions</h4>
+                        <a href="tel:+49 151 00000000" data-editable="aboutContactPhone">+880 1616 876080</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STATS -->
+    <section class="stats">
+        <div class="stats-inner">
+            <div class="stat-item">
+                <h3 data-editable="statA">$250<span>M</span></h3>
+                <p data-editable="statALabel">In Healthcare Funding</p>
+            </div>
+            <div class="stat-item">
+                <h3 data-editable="statB">20<span>M+</span></h3>
+                <p data-editable="statBLabel">Patients Served Globally</p>
+            </div>
+            <div class="stat-item">
+                <h3 data-editable="statC">95<span>%</span></h3>
+                <p data-editable="statCLabel">Patient Satisfaction Rate</p>
+            </div>
+            <div class="stat-item">
+                <h3 data-editable="statD">200<span>+</span></h3>
+                <p data-editable="statDLabel">Medical Professionals</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES GRID -->
+    <section class="services-grid" id="services-grid">
+        <div class="services-grid-inner">
+            <div class="section-header">
+                <div class="section-tag" data-editable="servicesTag"><i class="fas fa-stethoscope"></i> Our Services</div>
+                <h2 data-editable="servicesTitle">We Offer Pro DNA</h2>
+                <p data-editable="servicesDesc">Comprehensive medical services tailored to your unique health needs with precision and care.</p>
+            </div>
+            <div class="services-cards">
+                <div class="service-grid-card">
+                    <div class="icon"><i class="fas fa-dna"></i></div>
+                    <h3 data-editable="gridSvc1Title">Genetic Testing</h3>
+                    <p data-editable="gridSvc1Desc">Advanced DNA analysis for personalized treatment plans and hereditary condition screening.</p>
+                </div>
+                <div class="service-grid-card">
+                    <div class="icon"><i class="fas fa-heartbeat"></i></div>
+                    <h3 data-editable="gridSvc2Title">Cardiology</h3>
+                    <p data-editable="gridSvc2Desc">Comprehensive heart care from preventive screening to advanced cardiac procedures.</p>
+                </div>
+                <div class="service-grid-card">
+                    <div class="icon"><i class="fas fa-bone"></i></div>
+                    <h3 data-editable="gridSvc3Title">Orthopedics</h3>
+                    <p data-editable="gridSvc3Desc">Expert bone and joint care with minimally invasive surgical techniques.</p>
+                </div>
+                <div class="service-grid-card">
+                    <div class="icon"><i class="fas fa-eye"></i></div>
+                    <h3 data-editable="gridSvc4Title">Ophthalmology</h3>
+                    <p data-editable="gridSvc4Desc">Complete eye care services including LASIK, cataract surgery, and vision therapy.</p>
+                </div>
+                <div class="service-grid-card">
+                    <div class="icon"><i class="fas fa-baby"></i></div>
+                    <h3 data-editable="gridSvc5Title">Pediatrics</h3>
+                    <p data-editable="gridSvc5Desc">Specialized care for infants, children, and adolescents in a warm, friendly environment.</p>
+                </div>
+                <div class="service-grid-card">
+                    <div class="icon"><i class="fas fa-tooth"></i></div>
+                    <h3 data-editable="gridSvc6Title">Dental Care</h3>
+                    <p data-editable="gridSvc6Desc">Full-spectrum dental services from routine cleanings to cosmetic dentistry.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DOCTORS -->
+    <section class="doctors" id="doctors">
+        <div class="doctors-inner">
+            <div class="section-header">
+                <div class="section-tag" data-editable="doctorsTag"><i class="fas fa-user-md"></i> Our Team</div>
+                <h2 data-editable="doctorsTitle">Expert Medical Professionals</h2>
+                <p data-editable="doctorsDesc">Meet our team of dedicated specialists committed to your health and well-being.</p>
+            </div>
+            <div class="doctors-grid">
+                <div class="doctor-card">
+                    <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400&q=80" alt="Doctor" class="doctor-img" data-editable="doc1Img" data-type="image">
+                    <div class="doctor-info">
+                        <h4 data-editable="doc1Name">Dr. Sarah Mitchell</h4>
+                        <span data-editable="doc1Role">Cardiologist</span>
+                        <div class="doctor-social">
+                            <a href="#" data-editable="doc1Fb"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" data-editable="doc1Ig"><i class="fab fa-instagram"></i></a>
+                            <a href="#" data-editable="doc1Li"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="doctor-card">
+                    <img src="https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=400&q=80" alt="Doctor" class="doctor-img" data-editable="doc2Img" data-type="image">
+                    <div class="doctor-info">
+                        <h4 data-editable="doc2Name">Dr. James Wilson</h4>
+                        <span data-editable="doc2Role">Neurosurgeon</span>
+                        <div class="doctor-social">
+                            <a href="#" data-editable="doc2Fb"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" data-editable="doc2Ig"><i class="fab fa-instagram"></i></a>
+                            <a href="#" data-editable="doc2Li"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="doctor-card">
+                    <img src="https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=400&q=80" alt="Doctor" class="doctor-img" data-editable="doc3Img" data-type="image">
+                    <div class="doctor-info">
+                        <h4 data-editable="doc3Name">Dr. Emily Chen</h4>
+                        <span data-editable="doc3Role">Pediatrician</span>
+                        <div class="doctor-social">
+                            <a href="#" data-editable="doc3Fb"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" data-editable="doc3Ig"><i class="fab fa-instagram"></i></a>
+                            <a href="#" data-editable="doc3Li"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="doctor-card">
+                    <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=400&q=80" alt="Doctor" class="doctor-img" data-editable="doc4Img" data-type="image">
+                    <div class="doctor-info">
+                        <h4 data-editable="doc4Name">Dr. Michael Brown</h4>
+                        <span data-editable="doc4Role">Orthopedic Surgeon</span>
+                        <div class="doctor-social">
+                            <a href="#" data-editable="doc4Fb"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" data-editable="doc4Ig"><i class="fab fa-instagram"></i></a>
+                            <a href="#" data-editable="doc4Li"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="testimonials" id="testimonials">
+        <div class="testimonials-inner">
+            <div class="section-header">
+                <div class="section-tag" data-editable="testTag"><i class="fas fa-comments"></i> Testimonials</div>
+                <h2 data-editable="testTitle">What Our Patients Say</h2>
+                <p data-editable="testDesc">Real stories from patients who experienced our exceptional care.</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text" data-editable="test1Text">The care I received at Nuvica was exceptional. The doctors took time to explain everything and the facilities are world-class. I highly recommend their cardiology department.</p>
+                    <div class="testimonial-author">
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80" alt="Patient" data-editable="test1Img" data-type="image">
+                        <div class="testimonial-author-info">
+                            <h4 data-editable="test1Name">Jennifer Adams</h4>
+                            <span data-editable="test1Role">Patient since 2022</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text" data-editable="test2Text">From the moment I walked in, I felt cared for. The staff is incredibly professional and the technology they use is cutting-edge. My surgery went perfectly thanks to Dr. Wilson.</p>
+                    <div class="testimonial-author">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80" alt="Patient" data-editable="test2Img" data-type="image">
+                        <div class="testimonial-author-info">
+                            <h4 data-editable="test2Name">Robert Martinez</h4>
+                            <span data-editable="test2Role">Patient since 2021</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text" data-editable="test3Text">Nuvica Medical has been our family's healthcare provider for years. Their pediatric team is amazing with children. My kids actually look forward to their check-ups now!</p>
+                    <div class="testimonial-author">
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&q=80" alt="Patient" data-editable="test3Img" data-type="image">
+                        <div class="testimonial-author-info">
+                            <h4 data-editable="test3Name">Amanda Foster</h4>
+                            <span data-editable="test3Role">Patient since 2023</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact" id="contact">
+        <div class="contact-inner">
+            <div class="contact-info">
+                <h2 data-editable="contactTitle">Book an Appointment</h2>
+                <p data-editable="contactDesc">Schedule your visit with our expert medical team. We are here to provide you with the best healthcare experience.</p>
+                <div class="contact-details">
+                    <div class="contact-detail">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h4 data-editable="addrLabel">Address</h4>
+                            <p data-editable="addrValue">123 Medical Center Drive<br>Healthcare City, HC 12345</p>
+                        </div>
+                    </div>
+                    <div class="contact-detail">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h4 data-editable="phoneLabel">Phone</h4>
+                            <a href="tel:+49 151 00000000" data-editable="phoneValue">+880 1616 876080</a>
+                        </div>
+                    </div>
+                    <div class="contact-detail">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <h4 data-editable="hoursLabel">Working Hours</h4>
+                            <p data-editable="hoursValue">Mon – Fri: 08:00 – 20:00<br>Sat: 09:00 – 17:00<br>Sun: Emergency Only</p>
+                        </div>
+                    </div>
+                    <div class="contact-detail">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4 data-editable="emailLabel">Email</h4>
+                            <a href="mailto:info@nuvica.com" data-editable="emailValue">info@nuvica.com</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="contact-form">
+                <h3 data-editable="formTitle">Schedule Your Visit</h3>
+                <form>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label data-editable="labelFirst">First Name</label>
+                            <input type="text" placeholder="Your first name" data-editable="phFirst">
+                        </div>
+                        <div class="form-group">
+                            <label data-editable="labelLast">Last Name</label>
+                            <input type="text" placeholder="Your last name" data-editable="phLast">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label data-editable="labelPhone">Phone</label>
+                        <input type="tel" placeholder="Your phone number" data-editable="phPhone">
+                    </div>
+                    <div class="form-group">
+                        <label data-editable="labelEmail">Email</label>
+                        <input type="email" placeholder="Your email address" data-editable="phEmail">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label data-editable="labelDate">Date</label>
+                            <input type="date">
+                        </div>
+                        <div class="form-group">
+                            <label data-editable="labelTime">Time</label>
+                            <input type="time">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label data-editable="labelDepartment">Department</label>
+                        <select data-editable="phDepartment">
+                            <option>Please select...</option>
+                            <option>Cardiology</option>
+                            <option>Neurology</option>
+                            <option>Orthopedics</option>
+                            <option>Pediatrics</option>
+                            <option>Dental Care</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label data-editable="labelNotes">Special Requests</label>
+                        <textarea placeholder="Any special requests or notes?" data-editable="phNotes"></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary" data-editable="formSubmit">
+                        <i class="fas fa-paper-plane"></i> Book Appointment
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <span class="logo-text" data-editable="footerLogo">Nuvica <span style="color:var(--accent);">Medical</span></span>
+                <p data-editable="footerDesc">Your destination for world-class treatments, compassionate doctors, and precise diagnostics all under one roof.</p>
+                <div class="footer-social">
+                    <a href="#" data-editable="socialFb"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" data-editable="socialIg"><i class="fab fa-instagram"></i></a>
+                    <a href="#" data-editable="socialWa"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#" data-editable="socialLi"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h4 data-editable="footerNav1">Navigation</h4>
+                <ul>
+                    <li><a href="#home" data-editable="fNavHome">Home</a></li>
+                    <li><a href="#about" data-editable="fNavAbout">About Us</a></li>
+                    <li><a href="#services" data-editable="fNavServices">Departments</a></li>
+                    <li><a href="#doctors" data-editable="fNavDoctors">Doctors</a></li>
+                    <li><a href="#contact" data-editable="fNavContact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4 data-editable="footerNav2">Departments</h4>
+                <ul>
+                    <li><a href="#" data-editable="fNavCardio">Cardiology</a></li>
+                    <li><a href="#" data-editable="fNavNeuro">Neurology</a></li>
+                    <li><a href="#" data-editable="fNavOrtho">Orthopedics</a></li>
+                    <li><a href="#" data-editable="fNavPeds">Pediatrics</a></li>
+                    <li><a href="#" data-editable="fNavDental">Dental Care</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4 data-editable="footerNav3">Legal</h4>
+                <ul>
+                    <li><a href="#" data-editable="fNavImprint">Imprint</a></li>
+                    <li><a href="#" data-editable="fNavPrivacy">Privacy Policy</a></li>
+                    <li><a href="#" data-editable="fNavTerms">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span data-editable="footerCopy">&copy; 2024 Nuvica Medical. All rights reserved.</span>
+            <span data-editable="footerMade">Made with <i class="fas fa-heart" style="color:var(--accent);"></i> for better health</span>
+        </div>
+    </footer>
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>'''
+
+# Save the template file
+with open('/mnt/agents/output/template-medical.html', 'w', encoding='utf-8') as f:
+    f.write(template_html)
+
+print("Template saved successfully!")
+print(f"File size: {len(template_html)} characters")

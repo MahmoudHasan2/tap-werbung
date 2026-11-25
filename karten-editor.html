@@ -1,0 +1,2290 @@
+<!DOCTYPE html>
+<html lang="de" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Taplify — Professioneller Visitenkarten Editor</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Syne:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+/* ------------------------------------------------------------
+   TAPLIFY — PROFESSIONAL BUSINESS CARD EDITOR
+   Colors taken from the reference website
+   Gold: #C9A96E | Dark background: #0A0A0A | Text: #FFFFFF
+------------------------------------------------------------ */
+:root {
+  --bg-main: #0a0a0a;
+  --bg-surface: #111111;
+  --bg-elevated: #1a1a1a;
+  --bg-card: #1a1a2e;
+  --border-light: rgba(255, 255, 255, 0.06);
+  --border-medium: rgba(255, 255, 255, 0.12);
+  --gold: #C9A96E;
+  --gold-light: #D4B87A;
+  --gold-dark: #B8944A;
+  --gold-glow: rgba(201, 169, 110, 0.12);
+  --text-primary: #ffffff;
+  --text-secondary: #888888;
+  --text-muted: #555555;
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --error: #ef4444;
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.5);
+  --shadow-gold: 0 0 20px rgba(201, 169, 110, 0.2);
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.25s ease;
+  --transition-slow: 0.4s ease;
+  --sidebar-width: 320px;
+  --right-panel-width: 240px;
+  --topbar-height: 64px;
+  --card-width: 360px;
+  --card-height: 233px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg-main);
+  color: var(--text-primary);
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ------------------------------------------------------------
+   SCROLLBAR
+------------------------------------------------------------ */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-surface);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--gold);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold-light);
+}
+
+/* ------------------------------------------------------------
+   TOPBAR
+------------------------------------------------------------ */
+.topbar {
+  height: var(--topbar-height);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border-light);
+  z-index: 100;
+  backdrop-filter: blur(10px);
+}
+
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 1.3rem;
+  text-decoration: none;
+  color: var(--text-primary);
+}
+
+.logo-icon {
+  width: 34px;
+  height: 34px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: #0a0a0a;
+}
+
+.logo-text {
+  letter-spacing: -0.5px;
+}
+
+.logo-text span {
+  color: var(--gold);
+}
+
+.divider-vertical {
+  width: 1px;
+  height: 30px;
+  background: var(--border-medium);
+}
+
+.template-badge {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.template-badge i {
+  color: var(--gold);
+  font-size: 12px;
+}
+
+.template-badge strong {
+  color: var(--gold);
+  font-weight: 700;
+}
+
+.view-controls {
+  display: flex;
+  gap: 10px;
+  background: var(--bg-elevated);
+  padding: 5px;
+  border-radius: 12px;
+  border: 1px solid var(--border-light);
+}
+
+.view-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.view-btn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--gold);
+}
+
+.view-btn.active {
+  background: rgba(201, 169, 110, 0.15);
+  color: var(--gold);
+  border: 1px solid rgba(201, 169, 110, 0.3);
+}
+
+.action-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  border-radius: 10px;
+  background: transparent;
+  border: 1px solid var(--border-light);
+  color: var(--text-secondary);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.action-btn:hover {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  border-color: var(--border-medium);
+}
+
+.action-btn.primary {
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  border: none;
+  color: #0a0a0a;
+  box-shadow: var(--shadow-gold);
+}
+
+.action-btn.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(201, 169, 110, 0.35);
+}
+
+.action-btn.export {
+  background: rgba(201, 169, 110, 0.08);
+  border-color: rgba(201, 169, 110, 0.25);
+  color: var(--gold);
+}
+
+.action-btn.export:hover {
+  background: rgba(201, 169, 110, 0.15);
+}
+
+/* ------------------------------------------------------------
+   MAIN LAYOUT
+------------------------------------------------------------ */
+.app-main {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+/* ------------------------------------------------------------
+   LEFT SIDEBAR
+------------------------------------------------------------ */
+.sidebar-left {
+  width: var(--sidebar-width);
+  flex-shrink: 0;
+  background: var(--bg-surface);
+  border-right: 1px solid var(--border-light);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.sidebar-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border-light);
+  padding: 0 8px;
+  background: var(--bg-surface);
+  flex-shrink: 0;
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 14px 8px;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--text-secondary);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.tab-btn i {
+  font-size: 12px;
+}
+
+.tab-btn.active {
+  color: var(--gold);
+  border-bottom-color: var(--gold);
+}
+
+.tab-btn:hover:not(.active) {
+  color: var(--text-primary);
+}
+
+.tab-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.tab-pane {
+  display: none;
+}
+
+.tab-pane.active {
+  display: block;
+}
+
+/* ------------------------------------------------------------
+   FORM STYLES
+------------------------------------------------------------ */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.form-label i {
+  margin-right: 6px;
+  color: var(--gold);
+  font-size: 11px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 12px 14px;
+  background: var(--bg-main);
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  transition: all var(--transition-fast);
+  outline: none;
+}
+
+.form-input:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(201, 169, 110, 0.1);
+}
+
+.form-input::placeholder {
+  color: var(--text-muted);
+}
+
+textarea.form-input {
+  resize: vertical;
+  min-height: 70px;
+}
+
+/* Logo Upload */
+.logo-upload-area {
+  border: 1.5px dashed var(--border-medium);
+  border-radius: 12px;
+  padding: 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.logo-upload-area:hover {
+  border-color: var(--gold);
+  background: rgba(201, 169, 110, 0.05);
+}
+
+.logo-upload-area i {
+  font-size: 28px;
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+  display: block;
+}
+
+.logo-upload-area span {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+}
+
+.logo-preview {
+  display: none;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+  padding: 10px;
+  background: var(--bg-elevated);
+  border-radius: 10px;
+}
+
+.logo-preview img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  border-radius: 8px;
+  background: var(--bg-main);
+  padding: 5px;
+}
+
+.logo-preview button {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 12px;
+  transition: color var(--transition-fast);
+}
+
+.logo-preview button:hover {
+  color: var(--error);
+}
+
+/* Field limit indicator */
+.field-limit {
+  background: var(--bg-elevated);
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 16px;
+  border: 1px solid var(--border-light);
+}
+
+.field-limit-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.field-limit-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.field-limit-count {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--gold);
+}
+
+.field-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.field-dot {
+  flex: 1;
+  height: 5px;
+  border-radius: 3px;
+  background: var(--bg-main);
+  transition: all var(--transition-base);
+}
+
+.field-dot.active {
+  background: linear-gradient(90deg, var(--gold), var(--gold-light));
+}
+
+.limit-warning {
+  display: none;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 0.7rem;
+  color: #f87171;
+  margin-bottom: 16px;
+}
+
+.limit-warning.show {
+  display: block;
+}
+
+/* Field rows */
+.fields-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.field-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: var(--bg-main);
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  transition: all var(--transition-fast);
+}
+
+.field-row.active {
+  border-color: rgba(201, 169, 110, 0.35);
+  background: rgba(201, 169, 110, 0.03);
+}
+
+.field-row-icon {
+  width: 34px;
+  height: 34px;
+  background: var(--bg-elevated);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.field-row.active .field-row-icon {
+  background: rgba(201, 169, 110, 0.12);
+  color: var(--gold);
+}
+
+.field-row-input {
+  flex: 1;
+}
+
+.field-row-label {
+  font-size: 0.6rem;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  margin-bottom: 3px;
+}
+
+.field-row-input input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-size: 0.8rem;
+  outline: none;
+  padding: 0;
+}
+
+.field-row-input input:disabled {
+  opacity: 0.4;
+}
+
+.field-row-input input::placeholder {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+.field-toggle {
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  background: transparent;
+  border: 1px solid var(--border-light);
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+
+.field-toggle:hover {
+  background: var(--bg-elevated);
+  color: var(--gold);
+}
+
+.field-toggle.active {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #f87171;
+}
+
+/* ------------------------------------------------------------
+   COLOR PICKER
+------------------------------------------------------------ */
+.zone-selector-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.zone-btn {
+  padding: 10px;
+  background: var(--bg-main);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  color: var(--text-secondary);
+  font-size: 0.7rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-align: center;
+}
+
+.zone-btn.active {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: var(--gold-glow);
+}
+
+.side-selector {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.side-chip {
+  flex: 1;
+  padding: 8px;
+  background: var(--bg-main);
+  border: 1px solid var(--border-light);
+  border-radius: 20px;
+  color: var(--text-secondary);
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.side-chip.active {
+  background: var(--gold-glow);
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.color-palette {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.palette-swatch {
+  aspect-ratio: 1;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all var(--transition-fast);
+}
+
+.palette-swatch:hover {
+  transform: scale(1.15);
+  z-index: 2;
+}
+
+.palette-swatch.selected {
+  border-color: var(--text-primary);
+  transform: scale(1.1);
+}
+
+.custom-color-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.custom-color-row label {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+}
+
+.custom-color-row input {
+  width: 42px;
+  height: 42px;
+  border: none;
+  background: var(--bg-elevated);
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 4px;
+}
+
+/* ------------------------------------------------------------
+   DESIGN TAB
+------------------------------------------------------------ */
+.design-slider {
+  width: 100%;
+  margin: 10px 0;
+}
+
+.design-slider input {
+  width: 100%;
+  height: 4px;
+  -webkit-appearance: none;
+  background: var(--border-medium);
+  border-radius: 2px;
+  outline: none;
+}
+
+.design-slider input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  background: var(--gold);
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 5px rgba(201, 169, 110, 0.5);
+}
+
+.slider-value {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  margin-top: 5px;
+  display: inline-block;
+}
+
+/* ------------------------------------------------------------
+   PREVIEW AREA
+------------------------------------------------------------ */
+.preview-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-main);
+  overflow: hidden;
+  position: relative;
+}
+
+.preview-background {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  overflow: auto;
+  background-image: 
+    linear-gradient(rgba(201, 169, 110, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201, 169, 110, 0.02) 1px, transparent 1px);
+  background-size: 30px 30px;
+}
+
+.cards-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 35px;
+  transition: transform 0.3s var(--transition-base);
+}
+
+.card-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card-side-label {
+  font-size: 0.65rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+/* Business Card */
+.business-card {
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-lg), 0 0 0 1px rgba(201, 169, 110, 0.1);
+  transition: transform 0.35s var(--transition-base), box-shadow 0.35s;
+  cursor: default;
+  flex-shrink: 0;
+}
+
+.business-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg), 0 0 0 1px rgba(201, 169, 110, 0.2);
+}
+
+/* Color Zones */
+.color-zone {
+  position: absolute;
+  transition: background 0.3s var(--transition-base);
+}
+
+.zone-top {
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 33.33%;
+}
+
+.zone-middle {
+  top: 33.33%;
+  left: 0;
+  right: 0;
+  height: 33.33%;
+}
+
+.zone-bottom {
+  top: 66.66%;
+  left: 0;
+  right: 0;
+  height: 33.34%;
+}
+
+.zone-left {
+  top: 0;
+  left: 0;
+  width: 33.33%;
+  height: 100%;
+  mix-blend-mode: multiply;
+  opacity: 0;
+}
+
+.zone-center {
+  top: 0;
+  left: 33.33%;
+  width: 33.34%;
+  height: 100%;
+  mix-blend-mode: multiply;
+  opacity: 0;
+}
+
+.zone-right {
+  top: 0;
+  left: 66.66%;
+  width: 33.33%;
+  height: 100%;
+  mix-blend-mode: multiply;
+  opacity: 0;
+}
+
+/* Front Card Content */
+.front-card-content {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  padding: 22px 24px;
+}
+
+.front-logo-area {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: auto;
+}
+
+.front-logo-box {
+  width: 44px;
+  height: 44px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: 800;
+  font-family: 'Syne', sans-serif;
+  color: var(--text-primary);
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.front-logo-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: none;
+}
+
+.front-company-name {
+  font-size: 14px;
+  font-weight: 800;
+  font-family: 'Syne', sans-serif;
+  color: var(--text-primary);
+  letter-spacing: -0.3px;
+  line-height: 1.2;
+}
+
+.front-tagline {
+  font-size: 7px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+  margin-top: 4px;
+}
+
+.front-bottom-area {
+  margin-top: auto;
+}
+
+.front-person-name {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.front-person-title {
+  font-size: 7.5px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.accent-line {
+  position: absolute;
+  transition: background 0.3s;
+}
+
+/* Back Card Content */
+.back-card-content {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  padding: 18px 22px;
+  display: flex;
+  flex-direction: column;
+}
+
+.back-company-title {
+  font-size: 7px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.35);
+  margin-bottom: 14px;
+}
+
+.back-fields-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.back-field-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: all 0.3s var(--transition-base);
+}
+
+.back-field-item.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.back-field-icon {
+  width: 20px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+  color: rgba(255, 255, 255, 0.5);
+  flex-shrink: 0;
+}
+
+.back-field-value {
+  font-size: 8.5px;
+  color: rgba(255, 255, 255, 0.85);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 170px;
+}
+
+/* Dual QR Zone */
+.qr-dual-container {
+  position: absolute;
+  bottom: 14px;
+  right: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-end;
+}
+
+.qr-item {
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+  padding: 6px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  transition: all var(--transition-fast);
+}
+
+.qr-item:hover {
+  background: rgba(0, 0, 0, 0.7);
+  transform: scale(1.02);
+}
+
+.qr-label {
+  font-size: 5px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.qr-label i {
+  font-size: 6px;
+  color: var(--gold);
+}
+
+.qr-box {
+  width: 46px;
+  height: 46px;
+  background: #ffffff;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.qr-box canvas {
+  width: 46px !important;
+  height: 46px !important;
+}
+
+/* ------------------------------------------------------------
+   RIGHT PANEL
+------------------------------------------------------------ */
+.sidebar-right {
+  width: var(--right-panel-width);
+  flex-shrink: 0;
+  background: var(--bg-surface);
+  border-left: 1px solid var(--border-light);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.right-panel-header {
+  padding: 18px 16px;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 700;
+}
+
+.right-panel-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+}
+
+.info-card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-light);
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.info-label {
+  font-size: 0.6rem;
+  letter-spacing: 2px;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 0.7rem;
+}
+
+.info-row:last-child {
+  margin-bottom: 0;
+}
+
+.info-key {
+  color: var(--text-secondary);
+}
+
+.info-value {
+  color: var(--gold);
+  font-weight: 600;
+}
+
+.zone-mini-map {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 4px;
+  width: 100%;
+  aspect-ratio: 1;
+  margin: 8px 0;
+}
+
+.mini-zone-cell {
+  border-radius: 4px;
+  border: 1px solid var(--border-light);
+  background: var(--bg-main);
+  transition: background 0.2s;
+}
+
+/* ------------------------------------------------------------
+   MODAL & TOAST
+------------------------------------------------------------ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.92);
+  backdrop-filter: blur(12px);
+  z-index: 1000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.modal-overlay.show {
+  display: flex;
+  animation: fadeIn 0.25s var(--transition-base);
+}
+
+.modal-container {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-medium);
+  border-radius: 24px;
+  width: 100%;
+  max-width: 480px;
+  padding: 36px;
+  text-align: center;
+  animation: slideUp 0.35s var(--transition-base);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-icon {
+  width: 70px;
+  height: 70px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  border-radius: 20px;
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  color: #0a0a0a;
+}
+
+.modal-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+
+.modal-text {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+
+.modal-qr {
+  background: #ffffff;
+  padding: 16px;
+  border-radius: 16px;
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.modal-url {
+  background: var(--bg-main);
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--gold);
+  word-break: break-all;
+  margin-bottom: 24px;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.modal-btn {
+  flex: 1;
+  padding: 14px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border: none;
+}
+
+.modal-btn.primary {
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  color: #0a0a0a;
+}
+
+.modal-btn.secondary {
+  background: transparent;
+  border: 1px solid var(--border-medium);
+  color: var(--text-primary);
+}
+
+.modal-btn.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-gold);
+}
+
+.modal-btn.secondary:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.toast-notification {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-medium);
+  padding: 12px 24px;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 1100;
+  opacity: 0;
+  transition: all 0.3s var(--transition-base);
+  pointer-events: none;
+  white-space: nowrap;
+  font-size: 0.85rem;
+  font-weight: 500;
+  box-shadow: var(--shadow-lg);
+}
+
+.toast-notification.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+.toast-notification.success {
+  border-color: rgba(34, 197, 94, 0.3);
+}
+
+.toast-notification.success i {
+  color: var(--success);
+}
+
+.toast-notification.error {
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.toast-notification.error i {
+  color: var(--error);
+}
+
+/* ------------------------------------------------------------
+   LOADING SCREEN
+------------------------------------------------------------ */
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  background: var(--bg-main);
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  transition: opacity 0.4s;
+}
+
+.loading-screen.hide {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 2px solid rgba(201, 169, 110, 0.2);
+  border-top-color: var(--gold);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-text {
+  font-size: 0.85rem;
+  color: var(--gold);
+  letter-spacing: 2px;
+}
+
+/* ------------------------------------------------------------
+   RESPONSIVE
+------------------------------------------------------------ */
+@media (max-width: 1100px) {
+  :root {
+    --sidebar-width: 280px;
+  }
+}
+
+@media (max-width: 900px) {
+  .sidebar-right {
+    display: none;
+  }
+}
+
+@media (max-width: 700px) {
+  .sidebar-left {
+    display: none;
+  }
+  .action-btn span {
+    display: none;
+  }
+  .action-btn i {
+    margin: 0;
+  }
+  .action-btn {
+    padding: 8px 14px;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- Loading Screen -->
+<div class="loading-screen" id="loadingScreen">
+  <div class="loading-spinner"></div>
+  <div class="loading-text">TAPLIFY EDITOR WIRD GELADEN...</div>
+</div>
+
+<!-- Topbar -->
+<div class="topbar">
+  <div class="logo-area">
+    <a href="#" class="logo">
+      <div class="logo-icon"><i class="fas fa-bolt"></i></div>
+      <div class="logo-text">TAPLIFY<span>.</span></div>
+    </a>
+    <div class="divider-vertical"></div>
+    <div class="template-badge">
+      <i class="fas fa-id-card"></i>
+      <span>Visitenkarte · <strong id="templateName">Klassisch Elegant</strong></span>
+    </div>
+  </div>
+  <div class="view-controls">
+    <button class="view-btn" onclick="setCardScale(0.7, this)" title="Klein"><i class="fas fa-compress"></i></button>
+    <button class="view-btn active" onclick="setCardScale(1, this)" title="Normal"><i class="fas fa-expand"></i></button>
+    <button class="view-btn" onclick="setCardScale(1.35, this)" title="Groß"><i class="fas fa-search-plus"></i></button>
+  </div>
+  <div class="action-buttons">
+    <button class="action-btn" onclick="resetAllData()"><i class="fas fa-undo-alt"></i><span>Zurücksetzen</span></button>
+    <button class="action-btn export" onclick="exportToPDF()"><i class="fas fa-download"></i><span>PDF Export</span></button>
+    <button class="action-btn primary" onclick="publishCard()"><i class="fas fa-rocket"></i><span>Veröffentlichen</span></button>
+  </div>
+</div>
+
+<!-- Main App -->
+<div class="app-main">
+
+  <!-- Left Sidebar -->
+  <aside class="sidebar-left">
+    <div class="sidebar-tabs">
+      <button class="tab-btn active" onclick="switchTab('fields', this)"><i class="fas fa-pen-fancy"></i> Felder</button>
+      <button class="tab-btn" onclick="switchTab('colors', this)"><i class="fas fa-palette"></i> Farben</button>
+      <button class="tab-btn" onclick="switchTab('design', this)"><i class="fas fa-sliders-h"></i> Design</button>
+    </div>
+
+    <!-- Tab: Fields -->
+    <div class="tab-content">
+      <div class="tab-pane active" id="tabFields">
+        
+        <!-- Basic Information -->
+        <div class="form-group">
+          <div class="form-label"><i class="fas fa-building"></i> Firmenname</div>
+          <input type="text" class="form-input" id="companyName" placeholder="Dein Unternehmen" value="TAPLIFY" oninput="updateAllCards()">
+        </div>
+        <div class="form-group">
+          <div class="form-label"><i class="fas fa-tag"></i> Slogan / Branche</div>
+          <input type="text" class="form-input" id="companyTagline" placeholder="Design · Entwicklung · Beratung" value="DESIGN · STUDIO" oninput="updateAllCards()">
+        </div>
+        <div class="form-group">
+          <div class="form-label"><i class="fas fa-user"></i> Vollständiger Name</div>
+          <input type="text" class="form-input" id="personName" placeholder="Max Mustermann" value="Max Mustermann" oninput="updateAllCards()">
+        </div>
+        <div class="form-group">
+          <div class="form-label"><i class="fas fa-briefcase"></i> Position / Titel</div>
+          <input type="text" class="form-input" id="personTitle" placeholder="Geschäftsführer" value="GESCHÄFTSFÜHRER" oninput="updateAllCards()">
+        </div>
+
+        <!-- Logo Upload -->
+        <div class="form-group">
+          <div class="form-label"><i class="fas fa-image"></i> Logo</div>
+          <div class="logo-upload-area" onclick="document.getElementById('logoFileInput').click()">
+            <i class="fas fa-cloud-upload-alt"></i>
+            <span>Logo hochladen (PNG, JPG, SVG, max. 2MB)</span>
+          </div>
+          <input type="file" id="logoFileInput" accept="image/*" style="display: none" onchange="handleLogoUpload(this)">
+          <div class="logo-preview" id="logoPreview">
+            <img id="logoPreviewImg" src="">
+            <button onclick="clearLogo()"><i class="fas fa-trash-alt"></i> Entfernen</button>
+          </div>
+        </div>
+
+        <!-- Contact Fields (max 4) -->
+        <div class="form-group">
+          <div class="form-label"><i class="fas fa-address-card"></i> Kontaktfelder <span style="color: var(--text-muted);">(max. 4 aktiv)</span></div>
+          <div class="field-limit">
+            <div class="field-limit-header">
+              <span class="field-limit-label">AKTIVE FELDER</span>
+              <span class="field-limit-count" id="activeFieldsCount">0 / 4</span>
+            </div>
+            <div class="field-dots" id="fieldDotsContainer">
+              <div class="field-dot"></div><div class="field-dot"></div><div class="field-dot"></div><div class="field-dot"></div>
+            </div>
+          </div>
+          <div class="limit-warning" id="limitWarning">
+            <i class="fas fa-exclamation-triangle"></i> Maximum 4 Felder erreicht! Bitte entfernen Sie ein Feld, bevor Sie ein neues hinzufügen.
+          </div>
+          <div class="fields-container" id="fieldsContainer"></div>
+        </div>
+
+      </div>
+
+      <!-- Tab: Colors -->
+      <div class="tab-pane" id="tabColors">
+        <div class="form-group">
+          <div class="form-label"><i class="fas fa-arrows-alt-v"></i> Horizontale Zonen</div>
+          <div class="zone-selector-row">
+            <button class="zone-btn" data-zone="top" onclick="selectHorizontalZone('top', this)">OBEN</button>
+            <button class="zone-btn active" data-zone="middle" onclick="selectHorizontalZone('middle', this)">MITTE</button>
+            <button class="zone-btn" data-zone="bottom" onclick="selectHorizontalZone('bottom', this)">UNTEN</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="form-label"><i class="fas fa-arrows-alt-h"></i> Vertikale Zonen</div>
+          <div class="zone-selector-row">
+            <button class="zone-btn" data-zone="left" onclick="selectVerticalZone('left', this)">LINKS</button>
+            <button class="zone-btn" data-zone="center" onclick="selectVerticalZone('center', this)">MITTE</button>
+            <button class="zone-btn" data-zone="right" onclick="selectVerticalZone('right', this)">RECHTS</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="form-label"><i class="fas fa-layer-group"></i> Anwenden auf</div>
+          <div class="side-selector">
+            <button class="side-chip active" data-side="both" onclick="selectColorTarget('both', this)">BEIDE SEITEN</button>
+            <button class="side-chip" data-side="front" onclick="selectColorTarget('front', this)">VORDERSEITE</button>
+            <button class="side-chip" data-side="back" onclick="selectColorTarget('back', this)">RÜCKSEITE</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="form-label"><i class="fas fa-palette"></i> Farbpalette</div>
+          <div class="color-palette" id="colorPalette"></div>
+          <div class="custom-color-row">
+            <label><i class="fas fa-eyedropper"></i> Eigene Farbe:</label>
+            <input type="color" id="customColorPicker" value="#C9A96E" onchange="applyCustomColor(this.value)">
+            <span id="customColorHex" style="font-size: 0.7rem; color: var(--text-secondary);">#C9A96E</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab: Design -->
+      <div class="tab-pane" id="tabDesign">
+        <div class="form-group">
+          <div class="form-label"><i class="fas fa-font"></i> Schriftart</div>
+          <select class="form-input" id="fontFamily" onchange="updateAllCards()">
+            <option value="Inter">Inter (Modern Sans)</option>
+            <option value="Syne">Syne (Fett & Edgy)</option>
+            <option value="Georgia">Georgia (Klassisch)</option>
+            <option value="'Space Mono', monospace">Space Mono (Tech)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <div class="form-label"><i class="fas fa-border-all"></i> Kartenradius</div>
+          <div class="design-slider">
+            <input type="range" id="cardBorderRadius" min="0" max="24" value="12" oninput="updateCardRadius(this.value)">
+            <span class="slider-value" id="radiusValue">12px</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="form-label"><i class="fas fa-ruler"></i> Akzentlinie (Vorderseite)</div>
+          <select class="form-input" id="accentLinePosition" onchange="updateAllCards()">
+            <option value="left">Links (Vertikal)</option>
+            <option value="top">Oben (Horizontal)</option>
+            <option value="bottom">Unten (Horizontal)</option>
+            <option value="none">Keine Linie</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <div class="form-label"><i class="fas fa-paint-bucket"></i> Akzentfarbe</div>
+          <input type="color" class="form-input" id="accentLineColor" value="#C9A96E" onchange="updateAllCards()" style="height: 45px; padding: 5px;">
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Preview Area -->
+  <main class="preview-area">
+    <div class="preview-background">
+      <div class="cards-stack" id="cardsStack">
+        <!-- Front Card -->
+        <div class="card-container">
+          <div class="card-side-label"><i class="fas fa-mobile-alt"></i> VORDERSEITE</div>
+          <div class="business-card" id="frontCard">
+            <div class="color-zone zone-top" id="frontZoneTop" style="background: #1a1a2e;"></div>
+            <div class="color-zone zone-middle" id="frontZoneMiddle" style="background: #16213e;"></div>
+            <div class="color-zone zone-bottom" id="frontZoneBottom" style="background: #0f0f1a;"></div>
+            <div class="color-zone zone-left" id="frontZoneLeft"></div>
+            <div class="color-zone zone-center" id="frontZoneCenter"></div>
+            <div class="color-zone zone-right" id="frontZoneRight"></div>
+            <div class="front-card-content">
+              <div class="accent-line" id="accentLineElement" style="position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: #C9A96E; border-radius: 0;"></div>
+              <div class="front-logo-area">
+                <div class="front-logo-box" id="logoDisplay">T</div>
+                <div>
+                  <div class="front-company-name" id="displayCompany">TAPLIFY</div>
+                  <div class="front-tagline" id="displayTagline">DESIGN · STUDIO</div>
+                </div>
+              </div>
+              <div class="front-bottom-area">
+                <div class="front-person-name" id="displayName">Max Mustermann</div>
+                <div class="front-person-title" id="displayTitle">GESCHÄFTSFÜHRER</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Back Card -->
+        <div class="card-container">
+          <div class="card-side-label"><i class="fas fa-qrcode"></i> RÜCKSEITE</div>
+          <div class="business-card" id="backCard">
+            <div class="color-zone zone-top" id="backZoneTop" style="background: #111118;"></div>
+            <div class="color-zone zone-middle" id="backZoneMiddle" style="background: #0d0d15;"></div>
+            <div class="color-zone zone-bottom" id="backZoneBottom" style="background: #0a0a12;"></div>
+            <div class="color-zone zone-left" id="backZoneLeft"></div>
+            <div class="color-zone zone-center" id="backZoneCenter"></div>
+            <div class="color-zone zone-right" id="backZoneRight"></div>
+            <div class="back-card-content">
+              <div class="back-company-title" id="backCompanyDisplay">TAPLIFY</div>
+              <div class="back-fields-list" id="backFieldsList"></div>
+              <div class="qr-dual-container" id="qrDualContainer"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Right Panel -->
+  <aside class="sidebar-right">
+    <div class="right-panel-header">
+      <i class="fas fa-chart-simple"></i> LIVE INFO
+    </div>
+    <div class="right-panel-content">
+      <div class="info-card">
+        <div class="info-label">ABMESSUNGEN</div>
+        <div class="info-row"><span class="info-key">Breite</span><span class="info-value">85 mm</span></div>
+        <div class="info-row"><span class="info-key">Höhe</span><span class="info-value">55 mm</span></div>
+        <div class="info-row"><span class="info-key">Seiten</span><span class="info-value">2 / 2</span></div>
+        <div class="info-row"><span class="info-key">Aktive Felder</span><span class="info-value" id="rightPanelFieldCount">0/4</span></div>
+      </div>
+      <div class="info-card">
+        <div class="info-label">FARBZONEN VORSCHAU</div>
+        <div class="zone-mini-map" id="zoneMiniMap"></div>
+        <div style="font-size: 0.6rem; color: var(--text-secondary); text-align: center; margin-top: 8px;">Klicke → ändere Farben links</div>
+      </div>
+      <div class="info-card">
+        <div class="info-label">QR STATISTIK</div>
+        <div class="info-row"><span class="info-key">Instagram QR</span><span class="info-value" id="qrInstaStatus">—</span></div>
+        <div class="info-row"><span class="info-key">TikTok QR</span><span class="info-value" id="qrTikStatus">—</span></div>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<!-- Modals -->
+<div class="modal-overlay" id="publishModal">
+  <div class="modal-container">
+    <div class="modal-icon"><i class="fas fa-check-circle"></i></div>
+    <div class="modal-title">Visitenkarte gespeichert!</div>
+    <div class="modal-text">Deine digitale Visitenkarte wurde erfolgreich erstellt. Teile den Link oder den QR-Code mit deinen Kunden.</div>
+    <div class="modal-qr" id="modalQRContainer"></div>
+    <div class="modal-url" id="modalUrlDisplay">taplify.com/k/...</div>
+    <div class="modal-buttons">
+      <button class="modal-btn primary" onclick="copyModalUrl()"><i class="fas fa-copy"></i> Link kopieren</button>
+      <button class="modal-btn secondary" onclick="closePublishModal()"><i class="fas fa-times"></i> Schließen</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-notification" id="toastMessage">
+  <i class="fas fa-check-circle"></i>
+  <span id="toastText">Erfolgreich!</span>
+</div>
+
+<script>
+// ============================================================
+//  FULLY FUNCTIONAL BUSINESS CARD EDITOR
+//  + Working zoom buttons
+//  + Dual QR codes (Instagram + TikTok) on back card
+//  + High-quality PDF export with html2pdf
+//  + 50-color palette + custom color picker
+//  + All fields editable, max 4 active limit
+//  + Professional design matching reference website
+// ============================================================
+
+// ---------------------------- STATE ----------------------------
+let activeFieldsCount = 0;
+let currentScale = 1;
+let selectedHorizontalZone = 'middle';
+let selectedVerticalZone = 'center';
+let colorTargetSide = 'both';
+let logoDataURL = null;
+let currentCardRadius = 12;
+
+// Field definitions with icons and placeholders
+const fieldDefinitions = {
+  phone: { label: 'Telefon', icon: 'fas fa-phone', placeholder: '+49 151 00000000', value: '', active: false, isSocial: false },
+  email: { label: 'E-Mail', icon: 'fas fa-envelope', placeholder: 'info@beispiel.de', value: '', active: false, isSocial: false },
+  website: { label: 'Website', icon: 'fas fa-globe', placeholder: 'www.beispiel.de', value: '', active: false, isSocial: false },
+  address: { label: 'Adresse', icon: 'fas fa-map-marker-alt', placeholder: 'Musterstr. 1, 10115 Berlin', value: '', active: false, isSocial: false },
+  instagram: { label: 'Instagram', icon: 'fab fa-instagram', placeholder: '@benutzername', value: '', active: false, isSocial: true, socialName: 'instagram' },
+  tiktok: { label: 'TikTok', icon: 'fab fa-tiktok', placeholder: '@benutzername', value: '', active: false, isSocial: true, socialName: 'tiktok' }
+};
+
+// Color state for front and back cards
+const colorState = {
+  front: { top: '#1a1a2e', middle: '#16213e', bottom: '#0f0f1a', left: null, center: null, right: null },
+  back: { top: '#111118', middle: '#0d0d15', bottom: '#0a0a12', left: null, center: null, right: null }
+};
+
+// 50 professional colors
+const colorPalette = [
+  '#0d0d0d', '#1a1a2e', '#242424', '#3a3a3a', '#555555', '#888888', '#aaaaaa', '#cccccc', '#e8e8e8', '#ffffff',
+  '#001233', '#023e8a', '#0077b6', '#0096c7', '#00b4d8', '#48cae4', '#90e0ef', '#ade8f4', '#caf0f8', '#03045e',
+  '#004b23', '#006400', '#007200', '#38b000', '#70e000', '#9ef01a', '#ccff33', '#2d6a4f', '#40916c', '#52b788',
+  '#7f4f24', '#936639', '#a68a64', '#C9A96E', '#e8b86d', '#f4d03f', '#f39c12', '#e67e22', '#d35400', '#a04000',
+  '#641220', '#85182a', '#a11d33', '#c9184a', '#e94560', '#ff477e', '#ff85a1', '#10002b', '#240046', '#3c096c',
+  '#5a189a', '#7b2d8b', '#9d4edd', '#c77dff', '#e0aaff', '#6a0572', '#b5179e'
+];
+
+// ---------------------------- INITIALIZATION ----------------------------
+window.addEventListener('DOMContentLoaded', () => {
+  buildFieldsUI();
+  updateFieldCounter();
+  renderColorPalette();
+  updateAllCards();
+  updateZoneMiniMap();
+  setTimeout(() => {
+    const loader = document.getElementById('loadingScreen');
+    if (loader) loader.classList.add('hide');
+  }, 800);
+});
+
+// ---------------------------- UI: FIELDS ----------------------------
+function buildFieldsUI() {
+  const container = document.getElementById('fieldsContainer');
+  if (!container) return;
+  container.innerHTML = '';
+  for (const [key, field] of Object.entries(fieldDefinitions)) {
+    const row = document.createElement('div');
+    row.className = `field-row ${field.active ? 'active' : ''}`;
+    row.innerHTML = `
+      <div class="field-row-icon"><i class="${field.icon}"></i></div>
+      <div class="field-row-input">
+        <div class="field-row-label">${field.label}</div>
+        <input type="text" id="field_${key}" placeholder="${field.placeholder}" value="${escapeHtml(field.value)}" ${field.active ? '' : 'disabled'} oninput="onFieldValueChange('${key}', this.value)">
+      </div>
+      <button class="field-toggle ${field.active ? 'active' : ''}" onclick="toggleField('${key}')">
+        <i class="fas ${field.active ? 'fa-minus' : 'fa-plus'}"></i>
+      </button>
+    `;
+    container.appendChild(row);
+  }
+}
+
+function updateFieldCounter() {
+  activeFieldsCount = Object.values(fieldDefinitions).filter(f => f.active).length;
+  document.getElementById('activeFieldsCount').innerText = `${activeFieldsCount} / 4`;
+  document.getElementById('rightPanelFieldCount').innerText = `${activeFieldsCount}/4`;
+  
+  // Update dots
+  const dots = document.querySelectorAll('.field-dot');
+  dots.forEach((dot, i) => {
+    if (i < activeFieldsCount) dot.classList.add('active');
+    else dot.classList.remove('active');
+  });
+  
+  // Show/hide limit warning
+  const warning = document.getElementById('limitWarning');
+  if (activeFieldsCount >= 4) warning.classList.add('show');
+  else warning.classList.remove('show');
+}
+
+function toggleField(key) {
+  const field = fieldDefinitions[key];
+  if (!field.active) {
+    if (activeFieldsCount >= 4) {
+      showToast('Maximum 4 Felder erreicht!', 'error');
+      return;
+    }
+    field.active = true;
+  } else {
+    field.active = false;
+  }
+  buildFieldsUI();
+  updateFieldCounter();
+  updateBackCardFields();
+  updateDualQRs();
+  updateRightPanelStatus();
+}
+
+function onFieldValueChange(key, value) {
+  fieldDefinitions[key].value = value;
+  if (key === 'instagram' || key === 'tiktok') {
+    updateDualQRs();
+  }
+  updateBackCardFields();
+  updateRightPanelStatus();
+}
+
+function updateBackCardFields() {
+  const container = document.getElementById('backFieldsList');
+  if (!container) return;
+  container.innerHTML = '';
+  const activeNonSocial = Object.entries(fieldDefinitions).filter(([k, f]) => f.active && !f.isSocial);
+  activeNonSocial.forEach(([key, field], idx) => {
+    const displayValue = field.value || field.placeholder;
+    const div = document.createElement('div');
+    div.className = 'back-field-item visible';
+    div.style.transitionDelay = `${idx * 0.05}s`;
+    div.innerHTML = `
+      <div class="back-field-icon"><i class="${field.icon}"></i></div>
+      <div class="back-field-value">${escapeHtml(displayValue)}</div>
+    `;
+    container.appendChild(div);
+  });
+}
+
+// ---------------------------- DUAL QR CODES ----------------------------
+function updateDualQRs() {
+  const container = document.getElementById('qrDualContainer');
+  if (!container) return;
+  container.innerHTML = '';
+  
+  let instaActive = false;
+  let tiktokActive = false;
+  
+  // Instagram QR
+  if (fieldDefinitions.instagram.active && fieldDefinitions.instagram.value) {
+    instaActive = true;
+    const instaUsername = fieldDefinitions.instagram.value.replace(/^@/, '');
+    const instaUrl = `https://instagram.com/${instaUsername}`;
+    const qrItem = createQRItem('Instagram', 'fab fa-instagram', instaUrl, 'qrInstaBox');
+    container.appendChild(qrItem);
+    setTimeout(() => {
+      const box = document.getElementById('qrInstaBox');
+      if (box) {
+        try {
+          new QRCode(box, { text: instaUrl, width: 46, height: 46, colorDark: '#1a1a2e', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.M });
+        } catch(e) { console.warn('QR error:', e); }
+      }
+    }, 50);
+  }
+  
+  // TikTok QR
+  if (fieldDefinitions.tiktok.active && fieldDefinitions.tiktok.value) {
+    tiktokActive = true;
+    const ttUsername = fieldDefinitions.tiktok.value.replace(/^@/, '');
+    const ttUrl = `https://tiktok.com/@${ttUsername}`;
+    const qrItem = createQRItem('TikTok', 'fab fa-tiktok', ttUrl, 'qrTikBox');
+    container.appendChild(qrItem);
+    setTimeout(() => {
+      const box = document.getElementById('qrTikBox');
+      if (box) {
+        try {
+          new QRCode(box, { text: ttUrl, width: 46, height: 46, colorDark: '#1a1a2e', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.M });
+        } catch(e) { console.warn('QR error:', e); }
+      }
+    }, 100);
+  }
+  
+  // Update right panel status
+  document.getElementById('qrInstaStatus').innerText = instaActive ? '✅ Aktiv' : '—';
+  document.getElementById('qrTikStatus').innerText = tiktokActive ? '✅ Aktiv' : '—';
+}
+
+function createQRItem(label, iconClass, url, boxId) {
+  const div = document.createElement('div');
+  div.className = 'qr-item';
+  div.innerHTML = `
+    <div class="qr-label"><i class="${iconClass}"></i> ${label}</div>
+    <div class="qr-box" id="${boxId}"></div>
+  `;
+  return div;
+}
+
+// ---------------------------- CARD UPDATE ----------------------------
+function updateAllCards() {
+  // Get values from inputs
+  const company = document.getElementById('companyName')?.value || 'TAPLIFY';
+  const tagline = document.getElementById('companyTagline')?.value || 'DESIGN · STUDIO';
+  const name = document.getElementById('personName')?.value || 'Max Mustermann';
+  const title = document.getElementById('personTitle')?.value || 'GESCHÄFTSFÜHRER';
+  const font = document.getElementById('fontFamily')?.value || 'Inter';
+  const accentPos = document.getElementById('accentLinePosition')?.value || 'left';
+  const accentColor = document.getElementById('accentLineColor')?.value || '#C9A96E';
+  
+  // Update displays
+  document.getElementById('displayCompany').innerText = company.toUpperCase();
+  document.getElementById('displayTagline').innerText = tagline.toUpperCase();
+  document.getElementById('displayName').innerText = name;
+  document.getElementById('displayTitle').innerText = title.toUpperCase();
+  document.getElementById('backCompanyDisplay').innerText = company.toUpperCase();
+  
+  // Update fonts
+  document.getElementById('frontCard').style.fontFamily = font;
+  document.getElementById('backCard').style.fontFamily = font;
+  
+  // Update logo
+  const logoBox = document.getElementById('logoDisplay');
+  if (logoDataURL) {
+    logoBox.innerHTML = `<img src="${logoDataURL}" style="width:100%;height:100%;object-fit:cover;display:block;">`;
+  } else {
+    logoBox.innerHTML = company.charAt(0).toUpperCase() || 'T';
+  }
+  
+  // Update accent line
+  const accentLine = document.getElementById('accentLineElement');
+  if (accentPos === 'none') {
+    accentLine.style.display = 'none';
+  } else {
+    accentLine.style.display = 'block';
+    accentLine.style.background = accentColor;
+    if (accentPos === 'left') {
+      accentLine.style.left = '0';
+      accentLine.style.top = '0';
+      accentLine.style.bottom = '0';
+      accentLine.style.width = '4px';
+      accentLine.style.height = '100%';
+    } else if (accentPos === 'top') {
+      accentLine.style.left = '0';
+      accentLine.style.top = '0';
+      accentLine.style.right = '0';
+      accentLine.style.width = '100%';
+      accentLine.style.height = '4px';
+    } else if (accentPos === 'bottom') {
+      accentLine.style.left = '0';
+      accentLine.style.bottom = '0';
+      accentLine.style.right = '0';
+      accentLine.style.width = '100%';
+      accentLine.style.height = '4px';
+    }
+  }
+  
+  // Update back fields
+  updateBackCardFields();
+  
+  // Update QR codes
+  updateDualQRs();
+  
+  // Update color zones
+  applyColorZones();
+}
+
+function updateCardRadius(value) {
+  currentCardRadius = parseInt(value);
+  document.getElementById('radiusValue').innerText = currentCardRadius + 'px';
+  document.getElementById('frontCard').style.borderRadius = currentCardRadius + 'px';
+  document.getElementById('backCard').style.borderRadius = currentCardRadius + 'px';
+}
+
+// ---------------------------- COLOR SYSTEM ----------------------------
+function renderColorPalette() {
+  const container = document.getElementById('colorPalette');
+  if (!container) return;
+  container.innerHTML = '';
+  colorPalette.forEach(hex => {
+    const swatch = document.createElement('div');
+    swatch.className = 'palette-swatch';
+    swatch.style.backgroundColor = hex;
+    swatch.setAttribute('data-hex', hex);
+    swatch.onclick = () => applyColorToZone(hex);
+    container.appendChild(swatch);
+  });
+}
+
+function selectHorizontalZone(zone, btn) {
+  selectedHorizontalZone = zone;
+  document.querySelectorAll('[data-zone]').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+}
+
+function selectVerticalZone(zone, btn) {
+  selectedVerticalZone = zone;
+  document.querySelectorAll('.zone-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+}
+
+function selectColorTarget(target, btn) {
+  colorTargetSide = target;
+  document.querySelectorAll('.side-chip').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+}
+
+function applyColorToZone(hex) {
+  let zoneName = selectedHorizontalZone;
+  if (selectedVerticalZone !== 'center') zoneName = selectedVerticalZone;
+  
+  if (colorTargetSide === 'both' || colorTargetSide === 'front') {
+    if (colorState.front.hasOwnProperty(zoneName)) {
+      colorState.front[zoneName] = hex;
+    }
+  }
+  if (colorTargetSide === 'both' || colorTargetSide === 'back') {
+    if (colorState.back.hasOwnProperty(zoneName)) {
+      colorState.back[zoneName] = hex;
+    }
+  }
+  
+  applyColorZones();
+  updateZoneMiniMap();
+  
+  // Highlight selected swatch
+  document.querySelectorAll('.palette-swatch').forEach(s => s.classList.remove('selected'));
+  const selected = document.querySelector(`.palette-swatch[data-hex="${hex}"]`);
+  if (selected) selected.classList.add('selected');
+}
+
+function applyCustomColor(hex) {
+  document.getElementById('customColorHex').innerText = hex;
+  applyColorToZone(hex);
+}
+
+function applyColorZones() {
+  // Front card
+  document.getElementById('frontZoneTop').style.background = colorState.front.top;
+  document.getElementById('frontZoneMiddle').style.background = colorState.front.middle;
+  document.getElementById('frontZoneBottom').style.background = colorState.front.bottom;
+  document.getElementById('frontZoneLeft').style.background = colorState.front.left || 'transparent';
+  document.getElementById('frontZoneLeft').style.opacity = colorState.front.left ? '0.35' : '0';
+  document.getElementById('frontZoneCenter').style.background = colorState.front.center || 'transparent';
+  document.getElementById('frontZoneCenter').style.opacity = colorState.front.center ? '0.35' : '0';
+  document.getElementById('frontZoneRight').style.background = colorState.front.right || 'transparent';
+  document.getElementById('frontZoneRight').style.opacity = colorState.front.right ? '0.35' : '0';
+  
+  // Back card
+  document.getElementById('backZoneTop').style.background = colorState.back.top;
+  document.getElementById('backZoneMiddle').style.background = colorState.back.middle;
+  document.getElementById('backZoneBottom').style.background = colorState.back.bottom;
+  document.getElementById('backZoneLeft').style.background = colorState.back.left || 'transparent';
+  document.getElementById('backZoneLeft').style.opacity = colorState.back.left ? '0.35' : '0';
+  document.getElementById('backZoneCenter').style.background = colorState.back.center || 'transparent';
+  document.getElementById('backZoneCenter').style.opacity = colorState.back.center ? '0.35' : '0';
+  document.getElementById('backZoneRight').style.background = colorState.back.right || 'transparent';
+  document.getElementById('backZoneRight').style.opacity = colorState.back.right ? '0.35' : '0';
+}
+
+function updateZoneMiniMap() {
+  const mapContainer = document.getElementById('zoneMiniMap');
+  if (!mapContainer) return;
+  const zones = ['top-left', 'top-center', 'top-right', 'middle-left', 'middle-center', 'middle-right', 'bottom-left', 'bottom-center', 'bottom-right'];
+  mapContainer.innerHTML = '';
+  zones.forEach(zone => {
+    const cell = document.createElement('div');
+    cell.className = 'mini-zone-cell';
+    let color = colorState.front.middle;
+    if (zone.includes('top')) color = colorState.front.top;
+    if (zone.includes('bottom')) color = colorState.front.bottom;
+    cell.style.background = color;
+    mapContainer.appendChild(cell);
+  });
+}
+
+// ---------------------------- LOGO HANDLING ----------------------------
+function handleLogoUpload(input) {
+  const file = input.files[0];
+  if (!file) return;
+  if (file.size > 2 * 1024 * 1024) {
+    showToast('Logo zu groß! Maximal 2MB.', 'error');
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    logoDataURL = e.target.result;
+    const preview = document.getElementById('logoPreview');
+    const previewImg = document.getElementById('logoPreviewImg');
+    previewImg.src = logoDataURL;
+    preview.style.display = 'flex';
+    updateAllCards();
+    showToast('Logo erfolgreich hochgeladen!', 'success');
+  };
+  reader.readAsDataURL(file);
+}
+
+function clearLogo() {
+  logoDataURL = null;
+  document.getElementById('logoPreview').style.display = 'none';
+  updateAllCards();
+  showToast('Logo entfernt', 'success');
+}
+
+// ---------------------------- ZOOM & SCALE ----------------------------
+function setCardScale(scale, btn) {
+  currentScale = scale;
+  const stack = document.getElementById('cardsStack');
+  if (stack) stack.style.transform = `scale(${scale})`;
+  document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+}
+
+// ---------------------------- EXPORT PDF ----------------------------
+async function exportToPDF() {
+  showToast('Exportiere PDF, bitte warten...', 'success');
+  const stack = document.getElementById('cardsStack');
+  if (!stack) return;
+  
+  const originalTransform = stack.style.transform;
+  stack.style.transform = 'scale(1)';
+  
+  const opt = {
+    margin: [0.3, 0.3, 0.3, 0.3],
+    filename: `Visitenkarte_${document.getElementById('companyName')?.value || 'Karte'}.pdf`,
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 3, useCORS: true, backgroundColor: null, logging: false },
+    jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+  };
+  
+  try {
+    await html2pdf().set(opt).from(stack).save();
+    showToast('PDF erfolgreich exportiert!', 'success');
+  } catch (err) {
+    console.error('PDF error:', err);
+    showToast('Fehler beim PDF-Export', 'error');
+  }
+  
+  stack.style.transform = originalTransform;
+}
+
+// ---------------------------- PUBLISH ----------------------------
+function publishCard() {
+  const randomId = Math.random().toString(36).substring(2, 10);
+  const url = `https://taplify.com/k/${randomId}`;
+  document.getElementById('modalUrlDisplay').innerText = url;
+  
+  const qrContainer = document.getElementById('modalQRContainer');
+  qrContainer.innerHTML = '';
+  try {
+    new QRCode(qrContainer, { text: url, width: 140, height: 140, colorDark: '#1a1a2e', colorLight: '#ffffff' });
+  } catch(e) {}
+  
+  document.getElementById('publishModal').classList.add('show');
+}
+
+function closePublishModal() {
+  document.getElementById('publishModal').classList.remove('show');
+}
+
+function copyModalUrl() {
+  const url = document.getElementById('modalUrlDisplay').innerText;
+  navigator.clipboard.writeText(url).then(() => {
+    showToast('Link in Zwischenablage kopiert!', 'success');
+  }).catch(() => {
+    showToast('Konnte nicht kopieren', 'error');
+  });
+}
+
+// ---------------------------- RESET ----------------------------
+function resetAllData() {
+  // Reset fields
+  for (const key in fieldDefinitions) {
+    fieldDefinitions[key].value = '';
+    fieldDefinitions[key].active = false;
+  }
+  // Reset form inputs
+  document.getElementById('companyName').value = 'TAPLIFY';
+  document.getElementById('companyTagline').value = 'DESIGN · STUDIO';
+  document.getElementById('personName').value = 'Max Mustermann';
+  document.getElementById('personTitle').value = 'GESCHÄFTSFÜHRER';
+  
+  // Reset colors
+  colorState.front = { top: '#1a1a2e', middle: '#16213e', bottom: '#0f0f1a', left: null, center: null, right: null };
+  colorState.back = { top: '#111118', middle: '#0d0d15', bottom: '#0a0a12', left: null, center: null, right: null };
+  
+  // Reset logo
+  clearLogo();
+  
+  // Reset design
+  document.getElementById('fontFamily').value = 'Inter';
+  document.getElementById('cardBorderRadius').value = '12';
+  document.getElementById('accentLinePosition').value = 'left';
+  document.getElementById('accentLineColor').value = '#C9A96E';
+  currentCardRadius = 12;
+  document.getElementById('frontCard').style.borderRadius = '12px';
+  document.getElementById('backCard').style.borderRadius = '12px';
+  document.getElementById('radiusValue').innerText = '12px';
+  
+  // Rebuild UI
+  buildFieldsUI();
+  updateFieldCounter();
+  applyColorZones();
+  updateAllCards();
+  updateZoneMiniMap();
+  updateRightPanelStatus();
+  
+  showToast('Alle Daten wurden zurückgesetzt!', 'success');
+}
+
+function updateRightPanelStatus() {
+  const active = Object.values(fieldDefinitions).filter(f => f.active && !f.isSocial).length;
+  document.getElementById('rightPanelFieldCount').innerText = `${activeFieldsCount}/4`;
+  document.getElementById('qrInstaStatus').innerText = fieldDefinitions.instagram.active && fieldDefinitions.instagram.value ? '✅ Aktiv' : '—';
+  document.getElementById('qrTikStatus').innerText = fieldDefinitions.tiktok.active && fieldDefinitions.tiktok.value ? '✅ Aktiv' : '—';
+}
+
+// ---------------------------- UTILITIES ----------------------------
+function switchTab(tabId, btn) {
+  document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
+  document.getElementById(`tab${tabId.charAt(0).toUpperCase() + tabId.slice(1)}`).classList.add('active');
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+}
+
+function showToast(message, type = 'success') {
+  const toast = document.getElementById('toastMessage');
+  const textSpan = document.getElementById('toastText');
+  const icon = toast.querySelector('i');
+  
+  textSpan.innerText = message;
+  toast.className = `toast-notification ${type}`;
+  if (type === 'success') icon.className = 'fas fa-check-circle';
+  else if (type === 'error') icon.className = 'fas fa-exclamation-triangle';
+  else icon.className = 'fas fa-info-circle';
+  
+  toast.classList.add('show');
+  setTimeout(() => {
+    toast.classList.remove('show');
+  }, 3000);
+}
+
+function escapeHtml(str) {
+  if (!str) return '';
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+// ---------------------------- INITIAL CALLS ----------------------------
+updateBackCardFields();
+updateDualQRs();
+applyColorZones();
+updateZoneMiniMap();
+
+
+function loadTemplateFromURL() {
+  const params = new URLSearchParams(window.location.search);
+  const tpl = params.get('template');
+  
+  const templates = {
+    klassisch: {
+      name: 'Klassisch Elegant',
+      colors: {
+        front: { top: '#1a1a2e', middle: '#16213e', bottom: '#0f0f1a' },
+        back:  { top: '#111118', middle: '#0d0d15', bottom: '#0a0a12' }
+      },
+      accentColor: '#C9A96E',
+      accentPos: 'left',
+      font: 'Georgia'
+    },
+    minimal: {
+      name: 'Minimal Weiß',
+      colors: {
+        front: { top: '#f8f8f6', middle: '#f0f0ee', bottom: '#e8e8e6' },
+        back:  { top: '#f8f8f6', middle: '#f0f0ee', bottom: '#e8e8e6' }
+      },
+      accentColor: '#111111',
+      accentPos: 'top',
+      font: 'Inter'
+    },
+    bold: {
+      name: 'Bold Modern',
+      colors: {
+        front: { top: '#16213e', middle: '#1a1a2e', bottom: '#0f0f1a' },
+        back:  { top: '#0f0f1a', middle: '#0d0d15', bottom: '#0a0a12' }
+      },
+      accentColor: '#e94560',
+      accentPos: 'bottom',
+      font: 'Inter'
+    },
+    natur: {
+      name: 'Natur Craft',
+      colors: {
+        front: { top: '#f5ede0', middle: '#ede0c8', bottom: '#e0cdb0' },
+        back:  { top: '#f5ede0', middle: '#ede0c8', bottom: '#e0cdb0' }
+      },
+      accentColor: '#8b6543',
+      accentPos: 'left',
+      font: 'Georgia'
+    },
+    salon: {
+      name: 'Salon Style',
+      colors: {
+        front: { top: '#1a1512', middle: '#1a1512', bottom: '#111' },
+        back:  { top: '#1a1512', middle: '#1a1512', bottom: '#111' }
+      },
+      accentColor: '#c97a5a',
+      accentPos: 'top',
+      font: 'Inter'
+    },
+    techblue: {
+      name: 'Tech Blue',
+      colors: {
+        front: { top: '#2e3340', middle: '#1a1e27', bottom: '#111418' },
+        back:  { top: '#29abe2', middle: '#1a9fd6', bottom: '#0e8bbf' }
+      },
+      accentColor: '#29abe2',
+      accentPos: 'bottom',
+      font: 'Inter'
+    }
+  };
+
+  if (tpl && templates[tpl]) {
+    const cfg = templates[tpl];
+    
+    // اسم القالب في الـ topbar
+    document.getElementById('templateName').innerText = cfg.name;
+    
+    // تطبيق الألوان
+    Object.assign(colorState.front, cfg.colors.front);
+    Object.assign(colorState.back, cfg.colors.back);
+    
+    // تطبيق الخط واللون
+    document.getElementById('fontFamily').value = cfg.font;
+    document.getElementById('accentLineColor').value = cfg.accentColor;
+    document.getElementById('accentLinePosition').value = cfg.accentPos;
+    
+    // تحديث كل شيء
+    applyColorZones();
+    updateAllCards();
+    updateZoneMiniMap();
+    
+    showToast(`Vorlage "${cfg.name}" geladen ✓`, 'success');
+  }
+}
+</script>
+</body>
+</html>

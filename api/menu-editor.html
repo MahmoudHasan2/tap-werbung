@@ -1,0 +1,1757 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    
+    
+       <meta charset="UTF-8">
+    <title>TAP Werbeagentur WOB | Werbetechnik / Digitaldruck</title>
+    
+    <!-- Favicon — TAP Logo -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0iIzBmMGYwZiIvPjx0ZXh0IHg9IjE2IiB5PSIyMiIgZm9udC1mYW1pbHk9IkFyaWFsIEJsYWNrLEltcGFjdCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjIwIiBmb250LXdlaWdodD0iOTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjZmZmZmZmIj5UPC90ZXh0PjxjaXJjbGUgY3g9IjIzIiBjeT0iOSIgcj0iMi41IiBmaWxsPSIjOEI1Q0Y2Ii8+PC9zdmc+">
+    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0iIzBmMGYwZiIvPjx0ZXh0IHg9IjE2IiB5PSIyMiIgZm9udC1mYW1pbHk9IkFyaWFsIEJsYWNrLEltcGFjdCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjIwIiBmb250LXdlaWdodD0iOTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjZmZmZmZmIj5UPC90ZXh0PjxjaXJjbGUgY3g9IjIzIiBjeT0iOSIgcj0iMi41IiBmaWxsPSIjOEI1Q0Y2Ii8+PC9zdmc+">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/..." rel="stylesheet">
+    
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menü Manuell Erstellen | TAP Werbeagentur WOB</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js"></script>
+    <style>
+        :root {
+            --bg: #0f0f0f; --bg-light: #1a1a1a; --bg-card: #16161f;
+            --text: #ffffff; --text-muted: rgba(255,255,255,0.6);
+            --purple: #8B5CF6; --purple-light: #A78BFA; --purple-dark: #6D28D9;
+            --purple-glow: rgba(139,92,246,0.3);
+            --gray: #2a2a2a; --border: rgba(255,255,255,0.1);
+            --accent: #F59E0B; --success: #10B981; --danger: #EF4444;
+            --font-main: 'Plus Jakarta Sans', sans-serif;
+            --font-display: 'Oswald', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+        body { background: var(--bg); color: var(--text); font-family: var(--font-main); overflow-x: hidden; min-height: 100vh; }
+
+        /* Cursor */
+        .cursor { width: 20px; height: 20px; border: 2px solid var(--purple); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); mix-blend-mode: difference; transition: width 0.3s, height 0.3s; }
+        .cursor.hover { width: 50px; height: 50px; background: rgba(139,92,246,0.1); }
+        .cursor-dot { width: 4px; height: 4px; background: var(--purple); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); }
+        @media (max-width: 768px) { .cursor, .cursor-dot { display: none; } }
+
+        /* Nav */
+        nav { position: fixed; top: 0; width: 100%; padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: rgba(15,15,15,0.8); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); transition: all 0.4s; }
+        nav.scrolled { padding: 15px 5%; background: rgba(15,15,15,0.95); }
+        .logo-group { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+        .logo-icon { font-family: var(--font-display); font-size: 42px; font-weight: 700; color: var(--text); letter-spacing: 2px; }
+        .logo-icon .dot { color: var(--purple); font-size: 48px; line-height: 0.5; }
+        .logo-text-group { display: flex; flex-direction: column; }
+        .logo-main { font-family: var(--font-display); font-weight: 700; font-size: 24px; letter-spacing: 3px; color: var(--text); }
+        .logo-main .wob { color: var(--purple); font-size: 16px; vertical-align: super; }
+        .logo-sub { font-size: 9px; text-transform: uppercase; letter-spacing: 3px; color: var(--purple); font-weight: 600; margin-top: 2px; }
+        .nav-links { display: flex; gap: 40px; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--text-muted); font-weight: 500; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; transition: all 0.4s; position: relative; }
+        .nav-links a::after { content: ''; position: absolute; bottom: -6px; left: 0; width: 0; height: 1px; background: var(--purple); transition: width 0.4s; }
+        .nav-links a:hover { color: var(--text); }
+        .nav-links a:hover::after { width: 100%; }
+        .nav-social { display: flex; gap: 20px; align-items: center; }
+        .nav-social a { color: var(--text-muted); transition: color 0.3s; font-size: 18px; }
+        .nav-social a:hover { color: var(--purple); }
+        .hamburger { width: 30px; height: 20px; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; }
+        .hamburger span { width: 100%; height: 2px; background: var(--text); transition: all 0.3s; }
+        @media (max-width: 768px) { .nav-links { display: none; } }
+
+        /* Main Layout */
+        .main-container { padding-top: 100px; min-height: 100vh; }
+
+        /* Steps */
+        .step { display: none; animation: fadeIn 0.5s ease; }
+        .step.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .step-header { text-align: center; padding: 60px 20px 40px; }
+        .step-header h1 { font-family: var(--font-display); font-size: clamp(32px, 6vw, 64px); font-weight: 700; letter-spacing: -2px; text-transform: uppercase; margin-bottom: 16px; }
+        .step-header h1 span { color: var(--purple); }
+        .step-header p { color: var(--text-muted); font-size: clamp(14px, 2vw, 17px); max-width: 600px; margin: 0 auto; line-height: 1.7; }
+
+        .step-label { display: block; text-align: center; font-size: 11px; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: var(--purple); margin-bottom: 30px; }
+
+        /* Progress Bar */
+        .progress-bar { display: flex; justify-content: center; gap: 12px; margin-bottom: 50px; }
+        .progress-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--gray); border: 2px solid var(--border); transition: all 0.4s; }
+        .progress-dot.active { background: var(--purple); border-color: var(--purple); box-shadow: 0 0 15px rgba(139,92,246,0.6); }
+        .progress-dot.completed { background: var(--purple-light); border-color: var(--purple-light); }
+
+        /* Upload Section */
+        .upload-section { max-width: 800px; margin: 0 auto; padding: 0 20px; }
+        .upload-area { border: 2px dashed rgba(139,92,246,0.3); border-radius: 24px; padding: 60px 40px; text-align: center; cursor: pointer; transition: all 0.4s; background: linear-gradient(135deg, rgba(139,92,246,0.03) 0%, transparent 100%); position: relative; overflow: hidden; }
+        .upload-area:hover { border-color: var(--purple); background: linear-gradient(135deg, rgba(139,92,246,0.08) 0%, rgba(139,92,246,0.03) 100%); }
+        .upload-area.dragover { border-color: var(--purple); background: linear-gradient(135deg, rgba(139,92,246,0.12) 0%, rgba(139,92,246,0.06) 100%); transform: scale(1.02); }
+        .upload-area input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+        .upload-icon { font-size: 56px; margin-bottom: 20px; display: block; }
+        .upload-area h3 { font-family: var(--font-display); font-size: 24px; font-weight: 600; text-transform: uppercase; margin-bottom: 12px; }
+        .upload-area p { color: var(--text-muted); font-size: 15px; margin-bottom: 8px; }
+        .upload-area .hint { font-size: 13px; color: rgba(255,255,255,0.4); }
+
+        /* Image Preview Grid */
+        .image-preview-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; margin-top: 30px; }
+        .preview-card { background: var(--bg-card); border: 2px solid var(--border); border-radius: 16px; overflow: hidden; position: relative; transition: all 0.3s; }
+        .preview-card:hover { border-color: var(--purple); transform: translateY(-4px); }
+        .preview-card img { width: 100%; height: 140px; object-fit: cover; }
+        .preview-card .preview-info { padding: 12px; }
+        .preview-card .preview-name { font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .preview-card .preview-status { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+        .preview-card .preview-status.processing { color: var(--accent); }
+        .preview-card .preview-status.done { color: var(--success); }
+        .preview-card .preview-status.error { color: var(--danger); }
+        .preview-card .remove-btn { position: absolute; top: 8px; right: 8px; width: 28px; height: 28px; background: rgba(239,68,68,0.9); border: none; border-radius: 50%; color: white; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
+        .preview-card .remove-btn:hover { background: var(--danger); transform: scale(1.1); }
+
+        /* Buttons */
+        .btn-group { display: flex; gap: 16px; justify-content: center; margin-top: 40px; flex-wrap: wrap; }
+        .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 32px; border-radius: 50px; font-size: 13px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: all 0.4s; border: none; font-family: var(--font-main); text-decoration: none; }
+        .btn-primary { background: var(--purple); color: white; }
+        .btn-primary:hover { background: var(--purple-light); transform: translateY(-2px); box-shadow: 0 10px 40px rgba(139,92,246,0.3); }
+        .btn-secondary { background: transparent; color: var(--text-muted); border: 1px solid var(--border); }
+        .btn-secondary:hover { border-color: var(--purple); color: var(--text); }
+        .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none !important; }
+        .btn-success { background: var(--success); color: white; }
+        .btn-success:hover { background: #34D399; transform: translateY(-2px); box-shadow: 0 10px 40px rgba(16,185,129,0.3); }
+
+        /* Loading Overlay */
+        .loading-overlay { position: fixed; inset: 0; background: rgba(15,15,15,0.97); z-index: 9998; display: none; align-items: center; justify-content: center; flex-direction: column; gap: 24px; }
+        .loading-overlay.active { display: flex; }
+        .loading-overlay .spinner { width: 60px; height: 60px; border: 3px solid var(--border); border-top-color: var(--purple); border-radius: 50%; animation: spin 1s linear infinite; }
+        .loading-overlay h3 { font-family: var(--font-display); font-size: 28px; text-transform: uppercase; }
+        .loading-overlay p { color: var(--text-muted); font-size: 15px; max-width: 400px; text-align: center; line-height: 1.6; }
+        .loading-overlay .progress-bar-loading { width: 300px; height: 4px; background: var(--gray); border-radius: 2px; overflow: hidden; }
+        .loading-overlay .progress-bar-loading .fill { height: 100%; background: var(--purple); border-radius: 2px; transition: width 0.3s; width: 0%; }
+        .loading-overlay .progress-text { color: var(--purple-light); font-size: 14px; font-weight: 600; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* OCR Review Section */
+        .ocr-review { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+        .ocr-textarea { width: 100%; min-height: 300px; background: linear-gradient(135deg, #1a1a2e 0%, #252540 100%); border: 2px solid rgba(139,92,246,0.3); border-radius: 16px; padding: 20px; color: var(--text); font-family: var(--font-main); font-size: 14px; line-height: 1.8; resize: vertical; outline: none; transition: all 0.3s; }
+        .ocr-textarea:focus { border-color: var(--purple); box-shadow: 0 0 30px rgba(139,92,246,0.1); }
+        .ocr-hint { display: flex; align-items: center; gap: 10px; margin-top: 16px; padding: 16px; background: rgba(139,92,246,0.08); border-radius: 12px; border-left: 3px solid var(--purple); }
+        .ocr-hint p { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+        .ocr-hint strong { color: var(--purple-light); }
+
+        /* API Key Input */
+        .api-key-section { max-width: 600px; margin: 0 auto 40px; padding: 0 20px; }
+        .api-key-input { width: 100%; background: linear-gradient(135deg, #1a1a2e 0%, #252540 100%); border: 2px solid rgba(139,92,246,0.3); border-radius: 12px; padding: 14px 18px; color: var(--text); font-family: var(--font-main); font-size: 14px; outline: none; transition: all 0.3s; }
+        .api-key-input:focus { border-color: var(--purple); box-shadow: 0 0 25px rgba(139,92,246,0.15); }
+        .api-key-input.valid { border-color: var(--success); box-shadow: 0 0 25px rgba(16,185,129,0.15); }
+        .api-key-input.invalid { border-color: var(--danger); box-shadow: 0 0 25px rgba(239,68,68,0.15); }
+        .api-key-status { font-size: 12px; margin-top: 8px; font-weight: 600; }
+        .api-key-status.valid { color: var(--success); }
+        .api-key-status.invalid { color: var(--danger); }
+
+        .api-key-input::placeholder { color: rgba(255,255,255,0.3); }
+        .api-key-label { display: block; font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; }
+        .api-key-hint { font-size: 13px; color: rgba(255,255,255,0.4); margin-top: 8px; line-height: 1.5; }
+        .api-key-hint a { color: var(--purple-light); text-decoration: none; }
+        .api-key-hint a:hover { text-decoration: underline; }
+
+        /* ============================================
+           MENU DISPLAY - Smash Burger Style
+           ============================================ */
+
+        .menu-display { max-width: 1000px; margin: 0 auto; padding: 0 20px 100px; position: relative; }
+
+        .menu-header { text-align: center; margin-bottom: 50px; padding-top: 40px; }
+        .menu-header h2 { font-family: var(--font-display); font-size: clamp(28px, 5vw, 48px); font-weight: 700; text-transform: uppercase; letter-spacing: -1px; }
+        .menu-header h2 span { color: var(--purple); }
+        .menu-header .business-name { font-size: 18px; color: var(--text-muted); margin-top: 8px; }
+
+        /* Info Bar */
+        .info-bar { background: var(--bg-light); border: 1px solid var(--border); border-radius: 16px; padding: 24px 32px; margin-bottom: 40px; text-align: center; }
+        .info-bar p { color: var(--text-muted); font-size: 14px; line-height: 1.8; }
+        .info-bar strong { color: var(--text); }
+        .info-bar .highlight { color: var(--purple); font-weight: 600; }
+
+        /* Menu Category */
+        .menu-category { margin-bottom: 50px; }
+        .category-title { 
+            font-family: var(--font-display); 
+            font-size: clamp(24px, 4vw, 36px); 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            letter-spacing: -1px; 
+            margin-bottom: 24px; 
+            padding-bottom: 12px; 
+            border-bottom: 2px solid var(--purple); 
+            display: inline-block; 
+        }
+        .category-subtitle { 
+            color: var(--text-muted); 
+            font-size: 14px; 
+            margin-bottom: 20px; 
+            margin-top: -10px; 
+        }
+        .category-items { display: grid; gap: 16px; }
+
+        /* Menu Item Card */
+        .menu-item { 
+            background: linear-gradient(135deg, #1a1a2e 0%, #252540 100%); 
+            border: 2px solid rgba(139,92,246,0.15); 
+            border-radius: 20px; 
+            padding: 24px 28px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            cursor: pointer; 
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); 
+            position: relative; 
+            overflow: hidden; 
+        }
+        .menu-item:hover { 
+            border-color: var(--purple); 
+            transform: translateX(8px); 
+            box-shadow: 0 10px 40px rgba(139,92,246,0.2); 
+        }
+        .menu-item.selected { 
+            border-color: var(--success); 
+            background: linear-gradient(135deg, rgba(16,185,129,0.15) 0%, rgba(16,185,129,0.08) 100%); 
+            box-shadow: 0 0 30px rgba(16,185,129,0.2); 
+        }
+        .menu-item .item-info { flex: 1; }
+        .menu-item .item-name { 
+            font-family: var(--font-display); 
+            font-size: 20px; 
+            font-weight: 600; 
+            text-transform: uppercase; 
+            letter-spacing: -0.5px; 
+            margin-bottom: 6px; 
+            transition: color 0.3s; 
+        }
+        .menu-item.selected .item-name { color: var(--success); }
+        .menu-item .item-desc { 
+            font-size: 13px; 
+            color: var(--text-muted); 
+            line-height: 1.5; 
+        }
+        .menu-item .item-price { 
+            font-family: var(--font-display); 
+            font-size: 28px; 
+            font-weight: 700; 
+            color: var(--purple); 
+            margin-left: 20px; 
+            transition: all 0.3s; 
+            white-space: nowrap; 
+        }
+        .menu-item.selected .item-price { color: var(--success); }
+        .menu-item:hover .item-price { 
+            color: var(--purple-light); 
+            transform: scale(1.1); 
+        }
+        .menu-item.selected:hover .item-price { color: var(--success); }
+
+        /* Checkmark Button */
+        .menu-item .check-btn { 
+            width: 44px; 
+            height: 44px; 
+            border-radius: 50%; 
+            background: var(--purple); 
+            border: none; 
+            color: white; 
+            font-size: 20px; 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            margin-left: 16px; 
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); 
+            opacity: 0; 
+            transform: scale(0.5); 
+            flex-shrink: 0; 
+        }
+        .menu-item:hover .check-btn { 
+            opacity: 1; 
+            transform: scale(1); 
+        }
+        .menu-item .check-btn:hover { 
+            background: var(--purple-light); 
+            transform: scale(1.15) !important; 
+            box-shadow: 0 0 20px rgba(139,92,246,0.5); 
+        }
+        .menu-item.selected .check-btn { 
+            background: var(--success); 
+            opacity: 1; 
+            transform: scale(1); 
+        }
+        .menu-item.selected .check-btn:hover { 
+            background: var(--danger); 
+            transform: scale(1.15) !important; 
+        }
+        .menu-item .check-btn::before { content: '+'; font-weight: 700; }
+        .menu-item.selected .check-btn::before { content: '✓'; font-size: 18px; }
+
+        /* Price Bubble (Hover) */
+        .price-bubble { 
+            position: absolute; 
+            right: 80px; 
+            top: 50%; 
+            transform: translateY(-50%) scale(0); 
+            background: var(--purple); 
+            color: white; 
+            padding: 8px 16px; 
+            border-radius: 12px; 
+            font-family: var(--font-display); 
+            font-size: 18px; 
+            font-weight: 700; 
+            white-space: nowrap; 
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55); 
+            pointer-events: none; 
+            z-index: 10; 
+        }
+        .price-bubble::after { 
+            content: ''; 
+            position: absolute; 
+            right: -8px; 
+            top: 50%; 
+            transform: translateY(-50%); 
+            border: 8px solid transparent; 
+            border-left-color: var(--purple); 
+        }
+        .menu-item:hover .price-bubble { 
+            transform: translateY(-50%) scale(1); 
+        }
+        .menu-item.selected .price-bubble { 
+            background: var(--success); 
+        }
+        .menu-item.selected .price-bubble::after { 
+            border-left-color: var(--success); 
+        }
+
+        /* ============================================
+           CARTOON CHEF CHARACTER
+           ============================================ */
+
+        .chef-container { 
+            position: fixed; 
+            bottom: 30px; 
+            left: 30px; 
+            z-index: 9997; 
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); 
+        }
+        .chef-container.hidden { 
+            opacity: 0; 
+            transform: translateY(100px) scale(0.8); 
+            pointer-events: none;
+        }
+        .chef-container.visible { 
+            opacity: 1; 
+            transform: translateY(0) scale(1); 
+        }
+        .chef-character {
+            animation: float 3s ease infinite;
+        }
+
+        @keyframes float { 
+            0%, 100% { transform: translateY(0); } 
+            50% { transform: translateY(-10px); } 
+        }
+
+        @keyframes chefBounce { 
+            0%, 100% { transform: translateY(0) rotate(0deg); } 
+            25% { transform: translateY(-15px) rotate(-5deg); } 
+            50% { transform: translateY(-5px) rotate(0deg); } 
+            75% { transform: translateY(-20px) rotate(5deg); } 
+        }
+
+        @keyframes chefSpin { 
+            0% { transform: rotate(0deg) scale(1); } 
+            50% { transform: rotate(180deg) scale(1.1); } 
+            100% { transform: rotate(360deg) scale(1); } 
+        }
+
+        @keyframes chefJump { 
+            0% { transform: translateY(0) scale(1); } 
+            30% { transform: translateY(-40px) scale(1.1, 0.9); } 
+            50% { transform: translateY(-40px) scale(0.9, 1.1); } 
+            70% { transform: translateY(-10px) scale(1.05, 0.95); } 
+            100% { transform: translateY(0) scale(1); } 
+        }
+
+        .chef-container.visible.animating { 
+            animation: chefBounce 0.6s ease; 
+        }
+        .chef-container.visible.spinning { 
+            animation: chefSpin 0.8s ease; 
+        }
+        .chef-container.visible.jumping { 
+            animation: chefJump 0.7s ease; 
+        }
+
+        .chef-character { 
+            width: 90px; 
+            height: 130px; 
+            position: relative; 
+        }
+
+        /* Chef Hat */
+        .chef-hat { 
+            position: absolute; 
+            top: -10px; 
+            left: 15px; 
+            width: 60px; 
+            height: 45px; 
+            background: #fff; 
+            border-radius: 10px 10px 0 0; 
+            border: 2px solid #ddd; 
+            z-index: 5; 
+        }
+        .chef-hat::before { 
+            content: ''; 
+            position: absolute; 
+            top: -15px; 
+            left: 5px; 
+            width: 18px; 
+            height: 18px; 
+            background: #fff; 
+            border: 2px solid #ddd; 
+            border-radius: 50% 50% 0 0; 
+        }
+        .chef-hat::after { 
+            content: ''; 
+            position: absolute; 
+            top: -15px; 
+            right: 5px; 
+            width: 18px; 
+            height: 18px; 
+            background: #fff; 
+            border: 2px solid #ddd; 
+            border-radius: 50% 50% 0 0; 
+        }
+
+        /* Chef Head */
+        .chef-head { 
+            width: 50px; 
+            height: 50px; 
+            background: #F5D0C5; 
+            border-radius: 50%; 
+            position: absolute; 
+            top: 25px; 
+            left: 20px; 
+            border: 2px solid #E8B4A0; 
+            z-index: 4; 
+        }
+
+        /* Chef Eyes */
+        .chef-eyes { 
+            position: absolute; 
+            top: 14px; 
+            left: 10px; 
+            width: 30px; 
+            height: 10px; 
+        }
+        .chef-eyes::before, .chef-eyes::after { 
+            content: ''; 
+            position: absolute; 
+            width: 8px; 
+            height: 8px; 
+            background: #333; 
+            border-radius: 50%; 
+            top: 0; 
+        }
+        .chef-eyes::before { left: 4px; }
+        .chef-eyes::after { right: 4px; }
+
+        /* Chef Mustache */
+        .chef-mustache { 
+            position: absolute; 
+            top: 28px; 
+            left: 8px; 
+            width: 34px; 
+            height: 10px; 
+        }
+        .chef-mustache::before { 
+            content: ''; 
+            position: absolute; 
+            left: 0; 
+            width: 18px; 
+            height: 10px; 
+            background: #2C1810; 
+            border-radius: 0 0 50% 50%; 
+            transform: rotate(-10deg); 
+        }
+        .chef-mustache::after { 
+            content: ''; 
+            position: absolute; 
+            right: 0; 
+            width: 18px; 
+            height: 10px; 
+            background: #2C1810; 
+            border-radius: 0 0 50% 50%; 
+            transform: rotate(10deg); 
+        }
+
+        /* Chef Smile */
+        .chef-smile { 
+            position: absolute; 
+            top: 36px; 
+            left: 18px; 
+            width: 14px; 
+            height: 8px; 
+            border-bottom: 2px solid #C0392B; 
+            border-radius: 0 0 50% 50%; 
+        }
+
+        /* Chef Body / Apron */
+        .chef-body { 
+            width: 56px; 
+            height: 55px; 
+            background: linear-gradient(180deg, #fff 0%, #f0f0f0 100%); 
+            border-radius: 20px 20px 10px 10px; 
+            position: absolute; 
+            bottom: 0; 
+            left: 17px; 
+            border: 2px solid #ddd; 
+            z-index: 3; 
+        }
+        .chef-apron { 
+            position: absolute; 
+            bottom: 0; 
+            left: 22px; 
+            width: 46px; 
+            height: 40px; 
+            background: linear-gradient(180deg, #C0392B 0%, #A93226 100%); 
+            border-radius: 8px 8px 5px 5px; 
+            border: 2px solid #922B21; 
+            z-index: 4; 
+        }
+        .chef-apron::before { 
+            content: ''; 
+            position: absolute; 
+            top: -8px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            width: 30px; 
+            height: 10px; 
+            background: #C0392B; 
+            border: 2px solid #922B21; 
+            border-bottom: none; 
+            border-radius: 5px 5px 0 0; 
+        }
+
+        /* Chef Arms */
+        .chef-arm-left { 
+            position: absolute; 
+            top: 55px; 
+            left: 5px; 
+            width: 18px; 
+            height: 30px; 
+            background: #fff; 
+            border: 2px solid #ddd; 
+            border-radius: 10px; 
+            transform: rotate(20deg); 
+            z-index: 2; 
+        }
+        .chef-arm-right { 
+            position: absolute; 
+            top: 55px; 
+            right: 5px; 
+            width: 18px; 
+            height: 30px; 
+            background: #fff; 
+            border: 2px solid #ddd; 
+            border-radius: 10px; 
+            transform: rotate(-20deg); 
+            z-index: 2; 
+        }
+
+        /* Chef Spoon */
+        .chef-spoon { 
+            position: absolute; 
+            top: 45px; 
+            right: -5px; 
+            width: 6px; 
+            height: 35px; 
+            background: #8B4513; 
+            border-radius: 3px; 
+            transform: rotate(-30deg); 
+            z-index: 6; 
+        }
+        .chef-spoon::after { 
+            content: ''; 
+            position: absolute; 
+            top: -8px; 
+            left: -4px; 
+            width: 14px; 
+            height: 14px; 
+            background: #A0A0A0; 
+            border-radius: 50% 50% 40% 40%; 
+            border: 1px solid #888; 
+        }
+
+        /* Chef Shoes */
+        .chef-shoe-left { 
+            position: absolute; 
+            bottom: -5px; 
+            left: 22px; 
+            width: 20px; 
+            height: 12px; 
+            background: #333; 
+            border-radius: 5px 5px 2px 2px; 
+            z-index: 1; 
+        }
+        .chef-shoe-right { 
+            position: absolute; 
+            bottom: -5px; 
+            right: 22px; 
+            width: 20px; 
+            height: 12px; 
+            background: #333; 
+            border-radius: 5px 5px 2px 2px; 
+            z-index: 1; 
+        }
+
+        /* Total Cloud (Above Chef) */
+        .total-cloud { 
+            position: absolute; 
+            top: -80px; 
+            left: 50%; 
+            transform: translateX(-50%) scale(0); 
+            background: linear-gradient(135deg, var(--success) 0%, #059669 100%); 
+            padding: 14px 28px; 
+            border-radius: 20px; 
+            white-space: nowrap; 
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); 
+            box-shadow: 0 10px 30px rgba(16,185,129,0.4); 
+            z-index: 10; 
+        }
+        .total-cloud.visible { 
+            transform: translateX(-50%) scale(1); 
+        }
+        .total-cloud::after { 
+            content: ''; 
+            position: absolute; 
+            bottom: -10px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            border: 10px solid transparent; 
+            border-top-color: #059669; 
+        }
+        .total-cloud .cloud-label { 
+            font-size: 11px; 
+            text-transform: uppercase; 
+            letter-spacing: 2px; 
+            opacity: 0.8; 
+            color: rgba(255,255,255,0.9); 
+        }
+        .total-cloud .cloud-amount { 
+            font-family: var(--font-display); 
+            font-size: 26px; 
+            font-weight: 700; 
+            color: white; 
+        }
+        .total-cloud .cloud-count { 
+            font-size: 12px; 
+            opacity: 0.8; 
+            margin-top: 2px; 
+            color: rgba(255,255,255,0.9); 
+        }
+
+        /* Cart Sidebar */
+        .cart-sidebar { 
+            position: fixed; 
+            top: 0; 
+            right: -400px; 
+            width: 380px; 
+            height: 100vh; 
+            background: linear-gradient(180deg, #16161f 0%, #0f0f0f 100%); 
+            border-left: 2px solid var(--purple); 
+            z-index: 9996; 
+            transition: right 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); 
+            padding: 100px 24px 24px; 
+            overflow-y: auto; 
+        }
+        .cart-sidebar.open { right: 0; }
+        .cart-sidebar h3 { 
+            font-family: var(--font-display); 
+            font-size: 24px; 
+            text-transform: uppercase; 
+            margin-bottom: 24px; 
+            display: flex; 
+            align-items: center; 
+            gap: 12px; 
+        }
+        .cart-sidebar h3 .cart-count { 
+            background: var(--purple); 
+            color: white; 
+            width: 28px; 
+            height: 28px; 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 14px; 
+        }
+        .cart-item { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 14px 0; 
+            border-bottom: 1px solid var(--border); 
+        }
+        .cart-item-name { font-size: 15px; font-weight: 600; }
+        .cart-item-price { 
+            font-family: var(--font-display); 
+            font-size: 18px; 
+            color: var(--purple); 
+        }
+        .cart-item-remove { 
+            background: none; 
+            border: none; 
+            color: var(--danger); 
+            font-size: 18px; 
+            cursor: pointer; 
+            margin-left: 10px; 
+            transition: transform 0.2s; 
+        }
+        .cart-item-remove:hover { transform: scale(1.2); }
+        .cart-total { 
+            margin-top: 24px; 
+            padding-top: 20px; 
+            border-top: 2px solid var(--purple); 
+        }
+        .cart-total-row { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-bottom: 8px; 
+        }
+        .cart-total-row.total { 
+            font-family: var(--font-display); 
+            font-size: 24px; 
+            font-weight: 700; 
+        }
+        .cart-total-row.total .amount { 
+            color: var(--success); 
+            font-size: 32px; 
+        }
+        .cart-empty { 
+            text-align: center; 
+            padding: 40px 0; 
+            color: var(--text-muted); 
+        }
+        .cart-empty .empty-icon { 
+            font-size: 48px; 
+            margin-bottom: 16px; 
+            display: block; 
+        }
+        .cart-close { 
+            position: absolute; 
+            top: 20px; 
+            right: 20px; 
+            width: 40px; 
+            height: 40px; 
+            background: var(--gray); 
+            border: none; 
+            border-radius: 50%; 
+            color: var(--text); 
+            font-size: 20px; 
+            cursor: pointer; 
+            transition: all 0.3s; 
+        }
+        .cart-close:hover { 
+            background: var(--danger); 
+            transform: rotate(90deg); 
+        }
+        .cart-toggle { 
+            position: fixed; 
+            bottom: 30px; 
+            right: 30px; 
+            width: 60px; 
+            height: 60px; 
+            background: var(--purple); 
+            border: none; 
+            border-radius: 50%; 
+            color: white; 
+            font-size: 24px; 
+            cursor: pointer; 
+            z-index: 9995; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            box-shadow: 0 10px 30px rgba(139,92,246,0.4); 
+            transition: all 0.3s; 
+        }
+        .cart-toggle:hover { 
+            transform: scale(1.1); 
+            box-shadow: 0 15px 40px rgba(139,92,246,0.5); 
+        }
+        .cart-toggle .cart-badge { 
+            position: absolute; 
+            top: -5px; 
+            right: -5px; 
+            width: 24px; 
+            height: 24px; 
+            background: var(--danger); 
+            border-radius: 50%; 
+            font-size: 12px; 
+            font-weight: 700; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+        }
+
+        /* Action Bar (Bottom Fixed) */
+        .action-bar { 
+            position: fixed; 
+            bottom: 0; 
+            left: 0; 
+            right: 0; 
+            background: rgba(15,15,15,0.95); 
+            backdrop-filter: blur(20px); 
+            border-top: 1px solid var(--border); 
+            padding: 20px 5%; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            z-index: 100; 
+        }
+        .action-bar .btn { 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 10px; 
+            padding: 14px 32px; 
+            border-radius: 50px; 
+            font-size: 13px; 
+            font-weight: 600; 
+            letter-spacing: 2px; 
+            text-transform: uppercase; 
+            cursor: pointer; 
+            transition: all 0.4s; 
+            border: none; 
+            font-family: var(--font-main); 
+            text-decoration: none; 
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .menu-item { flex-direction: column; align-items: flex-start; gap: 12px; }
+            .menu-item .item-price { margin-left: 0; }
+            .menu-item .check-btn { opacity: 1; transform: scale(1); margin-left: 0; }
+            .price-bubble { display: none; }
+            .chef-container { bottom: 80px; left: 10px; }
+            .chef-character { transform: scale(0.8); }
+            .cart-sidebar { width: 100%; right: -100%; }
+            .cart-toggle { bottom: 20px; right: 20px; }
+            .action-bar { flex-direction: column; gap: 12px; }
+            .action-bar .btn { width: 100%; justify-content: center; }
+        }
+        @media (max-width: 480px) {
+            .image-preview-grid { grid-template-columns: repeat(2, 1fr); }
+            .upload-area { padding: 40px 20px; }
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--purple-dark); border-radius: 3px; }
+    </style>
+    <base target="_blank">
+<base target="_blank">
+</head>
+<body>
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-dot" id="cursorDot"></div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+        <h3>Menü wird analysiert...</h3>
+        <p id="loadingText">Bilder werden hochgeladen und Text erkannt</p>
+        <div class="progress-bar-loading"><div class="fill" id="loadingProgress"></div></div>
+        <span class="progress-text" id="loadingProgressText">0%</span>
+    </div>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <button class="cart-close" onclick="toggleCart()">✕</button>
+        <h3>🛒 Bestellung <span class="cart-count" id="cartCount">0</span></h3>
+        <div id="cartItems">
+            <div class="cart-empty">
+                <span class="empty-icon">🍽️</span>
+                <p>Noch keine Gerichte ausgewählt</p>
+            </div>
+        </div>
+        <div class="cart-total" id="cartTotal" style="display:none;">
+            <div class="cart-total-row total">
+                <span>Gesamt</span>
+                <span class="amount" id="cartTotalAmount">0,00 €</span>
+            </div>
+        </div>
+    </div>
+    <button class="cart-toggle" id="cartToggle" onclick="toggleCart()">
+        🛒
+        <span class="cart-badge" id="cartBadge" style="display:none;">0</span>
+    </button>
+
+    <!-- ============================================
+         CARTOON CHEF CHARACTER
+         ============================================ -->
+    <div class="chef-container hidden" id="chefContainer">
+        <div class="total-cloud" id="totalCloud">
+            <div class="cloud-label">Gesamt</div>
+            <div class="cloud-amount" id="cloudAmount">0,00 €</div>
+            <div class="cloud-count" id="cloudCount">0 Gerichte</div>
+        </div>
+        <div class="chef-character" id="chefCharacter">
+            <div class="chef-hat"></div>
+            <div class="chef-head">
+                <div class="chef-eyes"></div>
+                <div class="chef-mustache"></div>
+                <div class="chef-smile"></div>
+            </div>
+            <div class="chef-arm-left"></div>
+            <div class="chef-arm-right"></div>
+            <div class="chef-body"></div>
+            <div class="chef-apron"></div>
+            <div class="chef-spoon"></div>
+            <div class="chef-shoe-left"></div>
+            <div class="chef-shoe-right"></div>
+        </div>
+    </div>
+
+    <!-- Nav -->
+    <nav id="navbar">
+        <a href="index.html" class="logo-group">
+            <div class="logo-icon">T<span class="dot">.</span>A<span class="dot">.</span>P</div>
+            <div class="logo-text-group">
+                <div class="logo-main">WERBEAGENTUR<span class="wob">WOB</span></div>
+                <div class="logo-sub">WERBETECHNIK / DIGITALDRUCK</div>
+            </div>
+        </a>
+        <div class="nav-links">
+            <a href="index.html">Homepage</a>
+            <a href="index.html#services">Services</a>
+            <a href="index.html#about">About Us</a>
+            <a href="design.html">Shop</a>
+            <a href="create.html">Create</a>
+            <a href="index.html#contact">Contact</a>
+            <a href="customer.html" style="background:var(--purple);color:white;padding:7px 18px;border-radius:20px;font-weight:600;font-size:0.82rem;letter-spacing:0.06em;text-decoration:none;">Kundenportal →</a>
+        </div>
+        <div class="nav-social">
+            <a href="#" aria-label="Facebook">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </a>
+            <div class="hamburger"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <main class="main-container">
+
+        <!-- STEP 1: Upload Images -->
+        <div class="step active" id="step1">
+            <div class="step-header">
+                <h1>Menü <span>Manuell</span><br>Erstellen</h1>
+                <p>Lade Bilder deiner Speisekarte hoch. Wir erkennen automatisch alle Gerichte, Preise und Kategorien.</p>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-dot active" id="dot1"></div>
+                <div class="progress-dot" id="dot2"></div>
+                <div class="progress-dot" id="dot3"></div>
+            </div>
+            <div class="upload-section">
+                <span class="step-label">Schritt 1 — Bilder hochladen</span>
+                <div style="text-align:center; margin-bottom:20px; padding:16px; background:rgba(139,92,246,0.08); border-radius:12px; border:1px dashed var(--purple);">
+                    <p style="color:var(--text-muted); font-size:14px; line-height:1.6;">
+                        💡 <strong>Option 1:</strong> Lade Bilder hoch für automatische Texterkennung<br>
+                        💡 <strong>Option 2:</strong> Klicke "Manuell eingeben" um direkt Text einzugeben
+                    </p>
+                </div>
+                <div class="upload-area" id="uploadArea">
+                    <input type="file" id="imageInput" accept="image/*" multiple onchange="handleImageUpload(this)">
+                    <span class="upload-icon">📷</span>
+                    <h3>Bilder hier ablegen</h3>
+                    <p>oder klicke zum Durchsuchen</p>
+                    <p class="hint">JPG, PNG, WEBP (mehrere Bilder möglich)</p>
+                </div>
+                <div class="image-preview-grid" id="imagePreviewGrid"></div>
+                <div class="btn-group">
+                    <button class="btn btn-secondary" onclick="window.location.href='create.html'">← Zurück</button>
+                    <button class="btn btn-primary" id="btnStep1" disabled onclick="processImages()">
+                        <span>Text erkennen</span> 🔍
+                    </button>
+                    <button class="btn btn-success" onclick="goToStep(2)">
+                        <span>Manuell eingeben</span> ✏️
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- STEP 2: Review OCR Text -->
+        <div class="step" id="step2">
+            <div class="step-header">
+                <h1>Text <span>Überprüfen</span></h1>
+                <p>Überprüfe den erkannten Text und korrigiere ihn bei Bedarf, bevor wir das Menü erstellen.</p>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-dot completed" id="dot1"></div>
+                <div class="progress-dot active" id="dot2"></div>
+                <div class="progress-dot" id="dot3"></div>
+            </div>
+            <div class="ocr-review">
+                <span class="step-label">Schritt 2 — Erkannten Text prüfen</span>
+                <div id="textStatus" style="text-align:center; margin-bottom:16px; padding:12px; border-radius:8px; font-size:14px; font-weight:600;"></div>
+                <div class="api-key-section">
+                    <label class="api-key-label">🔑 OpenAI API Key (für OCR + KI-Strukturierung)</label>
+                    <input type="password" class="api-key-input" id="apiKey" placeholder="sk-..." oninput="validateApiKey(this)">
+                    <p class="api-key-hint">
+                        <strong>Ein Key = Alles!</strong> Wird für beides verwendet:<br>
+                        1. 🖼️ <strong>GPT-4o Vision OCR</strong> - Extrahiert Text aus Bildern mit hoher Genauigkeit<br>
+                        2. 🤖 <strong>KI-Strukturierung</strong> - Organisiert das Menü automatisch<br>
+                        <a href="https://platform.openai.com/api-keys" target="_blank">Hier erstellen →</a><br>
+                        <small style="color:var(--text-muted);">Kosten: ~$0.005 pro Bild (sehr günstig!)</small>
+                    </p>
+                    <div class="api-key-status" id="apiKeyStatus"></div>
+                </div>
+                <textarea class="ocr-textarea" id="ocrText" oninput="updateTextStatus()" placeholder="Hier erscheint der erkannte Text... Du kannst ihn auch manuell eingeben:
+
+BURGER
+Classic Burger ............ 12,50 €
+Cheese Burger ............. 13,90 €
+Bacon Burger .............. 14,90 €
+
+GETRÄNKE
+Cola ...................... 3,50 €
+Wasser .................... 2,50 €
+"></textarea>
+                <div class="ocr-hint">
+                    <p>
+                        <strong>💡 Tipp:</strong> Falls der automatische Text nicht perfekt ist, kannst du ihn hier direkt korrigieren. 
+                        Oder gib das Menü manuell ein - unser System erkennt automatisch Kategorien, Gerichte und Preise!
+                    </p>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-secondary" onclick="goToStep(1)">← Zurück</button>
+                    <button class="btn btn-primary" id="btnStep2" onclick="structureMenu()">
+                        <span>Mit KI strukturieren</span> 🤖
+                    </button>
+                    <button class="btn btn-success" onclick="manualStructure()">
+                        <span>Manuell strukturieren</span> ✏️
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- STEP 3: Interactive Menu -->
+        <div class="step" id="step3">
+            <div class="menu-display" id="menuDisplay">
+                <div class="menu-header">
+                    <h2>Deine <span>Speisekarte</span></h2>
+                    <div class="business-name" id="businessNameDisplay">Restaurant Name</div>
+                </div>
+                <div class="info-bar" id="infoBar" style="display:none;">
+                    <p id="infoBarContent"></p>
+                </div>
+                <div id="menuCategories"></div>
+            </div>
+
+            <!-- Action Bar for Step 3 -->
+            <div class="action-bar" id="step3ActionBar" style="display:none;">
+                <button class="btn btn-secondary" onclick="goToStep(2)">← Zurück</button>
+                <div style="display:flex; gap:12px;">
+                    <button class="btn btn-secondary" onclick="toggleCart()">🛒 Warenkorb</button>
+                    <button class="btn btn-success" onclick="saveMenu()">✓ Bestellung speichern</button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+
+    <script>
+        // ── Firebase ──
+        firebase.initializeApp({
+            databaseURL: "https://your-firebase-project-default-rtdb.europe-west1.firebasedatabase.app"
+        });
+        var db = firebase.database();
+
+        // ── State ──
+        var uploadedImages = [];
+        var ocrResults = [];
+        var structuredMenu = null;
+        var cart = [];
+        var currentStep = 1;
+        var businessName = '';
+
+        // ── Cursor ──
+        var cursor = document.getElementById('cursor');
+        var cursorDot = document.getElementById('cursorDot');
+        var mx = 0, my = 0, cx = 0, cy = 0;
+        document.addEventListener('mousemove', function(e) {
+            mx = e.clientX; my = e.clientY;
+            cursorDot.style.left = mx + 'px';
+            cursorDot.style.top = my + 'px';
+        });
+        (function ani() {
+            cx += (mx - cx) * 0.15;
+            cy += (my - cy) * 0.15;
+            cursor.style.left = cx + 'px';
+            cursor.style.top = cy + 'px';
+            requestAnimationFrame(ani);
+        })();
+        document.querySelectorAll('a, button, .menu-item, .upload-area, .preview-card, .cart-toggle').forEach(function(el) {
+            el.addEventListener('mouseenter', function(){ cursor.classList.add('hover'); });
+            el.addEventListener('mouseleave', function(){ cursor.classList.remove('hover'); });
+        });
+
+        // ── Scroll Nav ──
+        window.addEventListener('scroll', function() {
+            document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // ── Drag & Drop ──
+        var uploadArea = document.getElementById('uploadArea');
+        uploadArea.addEventListener('dragover', function(e) { e.preventDefault(); this.classList.add('dragover'); });
+        uploadArea.addEventListener('dragleave', function() { this.classList.remove('dragover'); });
+        uploadArea.addEventListener('drop', function(e) {
+            e.preventDefault();
+            this.classList.remove('dragover');
+            var files = Array.from(e.dataTransfer.files).filter(function(f) { return f.type.startsWith('image/'); });
+            handleFiles(files);
+        });
+
+        // ── Image Upload ──
+        function handleImageUpload(input) {
+            if (input.files && input.files.length > 0) {
+                handleFiles(Array.from(input.files));
+            }
+        }
+
+        function handleFiles(files) {
+            files.forEach(function(file) {
+                if (!file.type.startsWith('image/')) return;
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    var img = {
+                        id: Date.now() + Math.random().toString(36).substr(2, 9),
+                        file: file,
+                        dataUrl: e.target.result,
+                        name: file.name,
+                        status: 'ready'
+                    };
+                    uploadedImages.push(img);
+                    renderImagePreviews();
+                    document.getElementById('btnStep1').disabled = uploadedImages.length === 0;
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function renderImagePreviews() {
+            var grid = document.getElementById('imagePreviewGrid');
+            grid.innerHTML = uploadedImages.map(function(img, i) {
+                var statusClass = img.status === 'processing' ? 'processing' : img.status === 'done' ? 'done' : img.status === 'error' ? 'error' : '';
+                var statusText = img.status === 'processing' ? 'Wird verarbeitet...' : img.status === 'done' ? '✓ Fertig' : img.status === 'error' ? '✗ Fehler' : 'Bereit';
+                return `
+                    <div class="preview-card" data-id="${img.id}">
+                        <button class="remove-btn" onclick="removeImage('${img.id}')">×</button>
+                        <img src="${img.dataUrl}" alt="${img.name}">
+                        <div class="preview-info">
+                            <div class="preview-name">${img.name}</div>
+                            <div class="preview-status ${statusClass}">${statusText}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function removeImage(id) {
+            uploadedImages = uploadedImages.filter(function(img) { return img.id !== id; });
+            renderImagePreviews();
+            document.getElementById('btnStep1').disabled = uploadedImages.length === 0;
+        }
+
+        // ── Process Images with GPT-4o Vision or Tesseract.js ──
+        async function processImages() {
+            if (uploadedImages.length === 0) return;
+
+            var overlay = document.getElementById('loadingOverlay');
+            var progress = document.getElementById('loadingProgress');
+            var progressText = document.getElementById('loadingProgressText');
+            var loadingText = document.getElementById('loadingText');
+            var apiKey = document.getElementById('apiKey').value.trim();
+            var useGpt4o = apiKey && apiKey.startsWith('sk-') && apiKey.length >= 20;
+
+            overlay.classList.add('active');
+            ocrResults = [];
+
+            for (var i = 0; i < uploadedImages.length; i++) {
+                var img = uploadedImages[i];
+                img.status = 'processing';
+                renderImagePreviews();
+
+                var percent = Math.round((i / uploadedImages.length) * 100);
+                progress.style.width = percent + '%';
+                progressText.textContent = percent + '%';
+                loadingText.textContent = 'Bild ' + (i + 1) + ' von ' + uploadedImages.length + ' wird analysiert...';
+
+                var extractedText = '';
+                var ocrSuccess = false;
+
+                // Try GPT-4o Vision if API key is valid
+                if (useGpt4o) {
+                    try {
+                        loadingText.textContent = 'Bild ' + (i + 1) + ' wird mit GPT-4o Vision analysiert...';
+
+                        var response = await fetch('https://api.openai.com/v1/chat/completions', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': 'Bearer ' + apiKey
+                            },
+                            body: JSON.stringify({
+                                model: 'gpt-4o',
+                                messages: [{
+                                    role: 'user',
+                                    content: [
+                                        {
+                                            type: 'text',
+                                            text: 'Extrahiere ALLE Texte aus diesem Bild einer Speisekarte. WICHTIG: Erhalte die ORIGINALE Formatierung, behalte alle Preise bei, behalte alle Kategorienüberschriften bei, behalte alle Beschreibungen bei. Gib den Text EXAKT so wieder, wie er im Bild steht. Gib NUR den extrahierten Text zurück.'
+                                        },
+                                        {
+                                            type: 'image_url',
+                                            image_url: {
+                                                url: img.dataUrl
+                                            }
+                                        }
+                                    ]
+                                }],
+                                max_tokens: 4096
+                            })
+                        });
+
+                        if (!response.ok) {
+                            throw new Error('API-Fehler: ' + response.status);
+                        }
+
+                        var data = await response.json();
+
+                        if (data.choices && data.choices[0] && data.choices[0].message) {
+                            extractedText = data.choices[0].message.content;
+                            ocrSuccess = true;
+                            console.log('GPT-4o Vision OCR success for', img.name);
+                        }
+                    } catch (err) {
+                        console.error('GPT-4o Vision OCR Fehler:', err);
+                        useGpt4o = false;
+                    }
+                }
+
+                // Fallback to Tesseract.js
+                if (!ocrSuccess) {
+                    try {
+                        loadingText.textContent = 'Bild ' + (i + 1) + ' wird mit Tesseract analysiert...';
+                        var result = await Tesseract.recognize(
+                            img.dataUrl,
+                            'deu',
+                            { logger: function(m) { console.log(m); } }
+                        );
+                        extractedText = result.data.text;
+                        ocrSuccess = true;
+                    } catch (err) {
+                        console.error('Tesseract OCR Fehler:', err);
+                    }
+                }
+
+                if (ocrSuccess && extractedText.trim()) {
+                    img.status = 'done';
+                    ocrResults.push({
+                        image: img.name,
+                        text: extractedText,
+                        engine: useGpt4o ? 'GPT-4o Vision' : 'Tesseract'
+                    });
+                } else {
+                    img.status = 'error';
+                }
+
+                renderImagePreviews();
+            }
+
+            progress.style.width = '100%';
+            progressText.textContent = '100%';
+            loadingText.textContent = 'Fertig! ' + ocrResults.length + ' Bilder analysiert.';
+
+            setTimeout(function() {
+                overlay.classList.remove('active');
+
+                var combinedText = ocrResults.map(function(r) {
+                    return '--- ' + r.image + ' [' + r.engine + '] ---\n' + r.text;
+                }).join('\n\n');
+
+                document.getElementById('ocrText').value = combinedText || 'Kein Text erkannt. Bitte gib das Menü manuell ein.';
+                goToStep(2);
+            }, 800);
+        }
+
+        // ── Navigation ──
+        function goToStep(step) {
+            currentStep = step;
+            document.querySelectorAll('.step').forEach(function(s) { s.classList.remove('active'); });
+            document.getElementById('step' + step).classList.add('active');
+
+            document.querySelectorAll('.progress-dot').forEach(function(d, i) {
+                d.classList.remove('active', 'completed');
+                if (i + 1 < step) d.classList.add('completed');
+                else if (i + 1 === step) d.classList.add('active');
+            });
+
+            // Update text status when entering step 2
+            if (step === 2) {
+                setTimeout(updateTextStatus, 100);
+            }
+
+            // Show/hide action bar for step 3
+            var actionBar = document.getElementById('step3ActionBar');
+            if (actionBar) {
+                actionBar.style.display = (step === 3) ? 'flex' : 'none';
+            }
+
+            // Show/hide chef character
+            var chefContainer = document.getElementById('chefContainer');
+            if (chefContainer) {
+                if (step === 3) {
+                    chefContainer.classList.remove('hidden');
+                    chefContainer.classList.add('visible');
+                    // Force visibility after a short delay to ensure transition works
+                    setTimeout(function() {
+                        chefContainer.style.opacity = '1';
+                        chefContainer.style.transform = 'translateY(0) scale(1)';
+                    }, 100);
+                } else {
+                    chefContainer.classList.remove('visible');
+                    chefContainer.classList.add('hidden');
+                    chefContainer.style.opacity = '0';
+                    chefContainer.style.transform = 'translateY(100px) scale(0.8)';
+                }
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+
+// ── API Key Validation ──
+        function validateApiKey(input) {
+            var value = input.value.trim();
+            var statusDiv = document.getElementById('apiKeyStatus');
+
+            if (!statusDiv) {
+                statusDiv = document.createElement('div');
+                statusDiv.id = 'apiKeyStatus';
+                statusDiv.className = 'api-key-status';
+                input.parentNode.appendChild(statusDiv);
+            }
+
+            if (value === '') {
+                input.classList.remove('valid', 'invalid');
+                statusDiv.textContent = '';
+                statusDiv.className = 'api-key-status';
+                return;
+            }
+
+            if (value.startsWith('sk-') && value.length >= 20) {
+                input.classList.add('valid');
+                input.classList.remove('invalid');
+                statusDiv.textContent = '✓ Gültiges Format';
+                statusDiv.className = 'api-key-status valid';
+            } else {
+                input.classList.add('invalid');
+                input.classList.remove('valid');
+                statusDiv.textContent = '✗ Muss mit "sk-" beginnen und mindestens 20 Zeichen lang sein';
+                statusDiv.className = 'api-key-status invalid';
+            }
+        }
+
+        // ── Structure Menu with ChatGPT ──
+        async function structureMenu() {
+            var apiKey = document.getElementById('apiKey').value.trim();
+            var ocrText = document.getElementById('ocrText').value.trim();
+
+            if (!ocrText || ocrText === 'Kein Text erkannt. Bitte gib das Menü manuell ein.') {
+                alert('⚠️ Kein Menü-Text vorhanden!\n\nBitte:\n1. Lade Bilder hoch und klicke "Text erkennen"\n2. Oder gib das Menü manuell ein\n3. Oder klicke "Manuell strukturieren" für einfache Eingabe');
+                return;
+            }
+
+            if (!apiKey) {
+                alert('Bitte gib einen OpenAI API Key ein, oder verwende die manuelle Strukturierung.');
+                return;
+            }
+
+            // Validate API key format
+            if (!apiKey.startsWith('sk-') || apiKey.length < 20) {
+                alert('Ungültiger API Key!\n\nDer API Key muss mit "sk-" beginnen und mindestens 20 Zeichen lang sein.\n\nHinweis: Stelle sicher, dass du den vollständigen Key von OpenAI kopiert hast.');
+                return;
+            }
+
+            var overlay = document.getElementById('loadingOverlay');
+            var loadingText = document.getElementById('loadingText');
+            overlay.classList.add('active');
+            loadingText.textContent = 'KI analysiert das Menü...';
+
+            try {
+                var response = await fetch('https://api.openai.com/v1/chat/completions', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + apiKey
+                    },
+                    body: JSON.stringify({
+                        model: 'gpt-3.5-turbo',
+                        messages: [{
+                            role: 'system',
+                            content: 'Du bist ein Restaurant-Menü-Parser. Analysiere den folgenden Text und extrahiere:\n1. Kategorien (z.B. Burger, Getränke, Desserts)\n2. Jedes Gericht: Name, Preis (als Zahl), optionale Beschreibung\n3. Ignoriere Allergene, Öffnungszeiten und andere nicht-Menü-Informationen\n\nGib das Ergebnis als JSON zurück:\n{\n  "businessName": "Name des Restaurants",\n  "categories": [\n    {\n      "name": "Kategoriename",\n      "items": [\n        {"name": "Gerichtsname", "price": 12.50, "description": "Beschreibung"}\n      ]\n    }\n  ]\n}'
+                        }, {
+                            role: 'user',
+                            content: ocrText
+                        }],
+                        temperature: 0.3
+                    })
+                });
+
+                // Check HTTP status first
+                if (!response.ok) {
+                    var errorData = await response.json().catch(function() { return {}; });
+                    var errorMsg = errorData.error && errorData.error.message ? errorData.error.message : 'HTTP ' + response.status;
+
+                    if (response.status === 401) {
+                        throw new Error('Falscher API Key!\n\nDer eingegebene API Key ist ungültig oder abgelaufen.\n\n1. Gehe zu https://platform.openai.com/api-keys\n2. Erstelle einen neuen API Key\n3. Kopiere den vollständigen Key (beginnt mit "sk-")');
+                    } else if (response.status === 429) {
+                        throw new Error('Zu viele Anfragen!\n\nDein API Key hat das Rate-Limit erreicht. Bitte warte einen Moment und versuche es erneut.');
+                    } else if (response.status === 500 || response.status === 502 || response.status === 503) {
+                        throw new Error('OpenAI Server-Fehler!\n\nDie OpenAI-Server sind momentan überlastet. Bitte versuche es in wenigen Minuten erneut.\n\nAlternativ kannst du die manuelle Strukturierung verwenden.');
+                    } else {
+                        throw new Error('API-Fehler: ' + errorMsg);
+                    }
+                }
+
+                var data = await response.json();
+
+                if (data.error) {
+                    throw new Error(data.error.message);
+                }
+
+                if (!data.choices || !data.choices[0] || !data.choices[0].message) {
+                    throw new Error('Ungültige Antwort von der KI. Bitte versuche es erneut.');
+                }
+
+                var responseContent = data.choices[0].message.content;
+
+                // Extract JSON from response
+                var jsonMatch = responseContent.match(/\{[\s\S]*\}/);
+                if (jsonMatch) {
+                    try {
+                        structuredMenu = JSON.parse(jsonMatch[0]);
+                    } catch (parseErr) {
+                        throw new Error('Die KI-Antwort konnte nicht als JSON geparst werden.\n\nVersuche die manuelle Strukturierung.');
+                    }
+                } else {
+                    throw new Error('Kein gültiges JSON in der KI-Antwort gefunden.\n\nVersuche die manuelle Strukturierung.');
+                }
+
+                // Validate parsed menu structure
+                if (!structuredMenu.categories || !Array.isArray(structuredMenu.categories) || structuredMenu.categories.length === 0) {
+                    throw new Error('Die KI konnte keine Kategorien im Menü finden.\n\nBitte überprüfe den Text und versuche es erneut, oder verwende die manuelle Strukturierung.');
+                }
+
+                overlay.classList.remove('active');
+                renderMenu();
+                goToStep(3);
+
+            } catch (err) {
+                console.error('KI-Fehler:', err);
+                overlay.classList.remove('active');
+
+                // Show user-friendly error
+                var errorMessage = err.message || 'Unbekannter Fehler';
+
+                // If it's a network error
+                if (err.name === 'TypeError' && err.message.includes('fetch')) {
+                    errorMessage = 'Netzwerk-Fehler!\n\nEs konnte keine Verbindung zu OpenAI hergestellt werden.\n\nMögliche Ursachen:\n- Keine Internetverbindung\n- OpenAI ist nicht erreichbar\n\nVersuche die manuelle Strukturierung.';
+                }
+
+                alert('❌ Fehler bei der KI-Analyse:\n\n' + errorMessage);
+            }
+        }
+
+        // ── Manual Structure (Simple Parser) ──
+        function manualStructure() {
+            var text = document.getElementById('ocrText').value.trim();
+            if (!text) {
+                alert('⚠️ Bitte gib zuerst den Menü-Text ein!\n\nTippe oder füge den Text der Speisekarte ein, bevor du auf "Manuell strukturieren" klickst.');
+                return;
+            }
+
+            var lines = text.split('\n').filter(function(l) { return l.trim(); });
+            var categories = [];
+            var currentCategory = null;
+            var bizName = '';
+
+            lines.forEach(function(line) {
+                line = line.trim();
+                if (!line) return;
+
+                var priceMatch = line.match(/(.+?)[\s.]*([0-9]+[,.][0-9]{2})\s*€?/);
+
+                if (priceMatch && currentCategory) {
+                    var name = priceMatch[1].trim().replace(/[.-]+$/, '').trim();
+                    var price = parseFloat(priceMatch[2].replace(',', '.'));
+                    currentCategory.items.push({
+                        name: name,
+                        price: price,
+                        description: ''
+                    });
+                } else if (line.length < 50 && !line.match(/[0-9]/) && line === line.toUpperCase()) {
+                    currentCategory = { name: line, items: [] };
+                    categories.push(currentCategory);
+                } else if (!bizName && line.length < 100 && !line.match(/€|[0-9]{2}:[0-9]{2}/)) {
+                    bizName = line;
+                }
+            });
+
+            if (categories.length === 0) {
+                currentCategory = { name: 'Menü', items: [] };
+                categories.push(currentCategory);
+
+                lines.forEach(function(line) {
+                    var priceMatch = line.match(/(.+?)[\s.]*([0-9]+[,.][0-9]{2})\s*€?/);
+                    if (priceMatch) {
+                        currentCategory.items.push({
+                            name: priceMatch[1].trim().replace(/[.-]+$/, '').trim(),
+                            price: parseFloat(priceMatch[2].replace(',', '.')),
+                            description: ''
+                        });
+                    }
+                });
+            }
+
+            structuredMenu = {
+                businessName: bizName || 'Restaurant',
+                categories: categories.filter(function(c) { return c.items.length > 0; })
+            };
+
+            renderMenu();
+            goToStep(3);
+        }
+
+        // ── Render Menu ──
+        function renderMenu() {
+            if (!structuredMenu) return;
+
+            document.getElementById('businessNameDisplay').textContent = structuredMenu.businessName || 'Restaurant';
+
+            var container = document.getElementById('menuCategories');
+            container.innerHTML = structuredMenu.categories.map(function(cat, catIdx) {
+                return `
+                    <div class="menu-category">
+                        <h3 class="category-title">${cat.name}</h3>
+                        <div class="category-items">
+                            ${cat.items.map(function(item, idx) {
+                                var itemId = 'cat' + catIdx + '_item' + idx;
+                                var priceStr = item.price.toFixed(2).replace('.', ',');
+                                return `
+                                    <div class="menu-item" id="item_${itemId}" onclick="toggleItem('${itemId}', '${escapeHtml(item.name)}', ${item.price})">
+                                        <div class="item-info">
+                                            <div class="item-name">${escapeHtml(item.name)}</div>
+                                            ${item.description ? `<div class="item-desc">${escapeHtml(item.description)}</div>` : ''}
+                                        </div>
+                                        <div class="item-price">${priceStr} €</div>
+                                        <div class="price-bubble">${priceStr} €</div>
+                                        <button class="check-btn" onclick="event.stopPropagation(); toggleItem('${itemId}', '${escapeHtml(item.name)}', ${item.price})"></button>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function escapeHtml(text) {
+            var div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // ── Cart Functions ──
+        function toggleItem(id, name, price) {
+            var existingIndex = -1;
+            for (var i = 0; i < cart.length; i++) {
+                if (cart[i].id === id) { existingIndex = i; break; }
+            }
+            var element = document.getElementById('item_' + id);
+            var chefContainer = document.getElementById('chefContainer');
+
+            // Debug: ensure chef is visible on step 3
+            if (chefContainer && currentStep === 3) {
+                chefContainer.classList.remove('hidden');
+                chefContainer.classList.add('visible');
+            }
+
+            if (existingIndex >= 0) {
+                // REMOVE from cart
+                cart.splice(existingIndex, 1);
+                if (element) element.classList.remove('selected');
+
+                // Chef animation - spin when removing
+                if (chefContainer) {
+                    chefContainer.classList.remove('animating', 'jumping');
+                    void chefContainer.offsetWidth;
+                    chefContainer.classList.add('spinning');
+                    setTimeout(function() {
+                        chefContainer.classList.remove('spinning');
+                    }, 800);
+                }
+            } else {
+                // ADD to cart
+                cart.push({ id: id, name: name, price: price });
+                if (element) element.classList.add('selected');
+
+                // Chef animation - jump when adding
+                if (chefContainer) {
+                    chefContainer.classList.remove('animating', 'spinning');
+                    void chefContainer.offsetWidth;
+                    chefContainer.classList.add('jumping');
+                    setTimeout(function() {
+                        chefContainer.classList.remove('jumping');
+                    }, 700);
+                }
+            }
+
+            updateCart();
+        }
+
+        function updateCart() {
+            var cartItems = document.getElementById('cartItems');
+            var cartTotal = document.getElementById('cartTotal');
+            var cartCount = document.getElementById('cartCount');
+            var cartBadge = document.getElementById('cartBadge');
+            var cloudAmount = document.getElementById('cloudAmount');
+            var cloudCount = document.getElementById('cloudCount');
+            var totalCloud = document.getElementById('totalCloud');
+
+            var total = 0;
+            for (var i = 0; i < cart.length; i++) {
+                total += cart[i].price;
+            }
+
+            cartCount.textContent = cart.length;
+            cloudAmount.textContent = total.toFixed(2).replace('.', ',') + ' €';
+            cloudCount.textContent = cart.length + ' Gericht' + (cart.length !== 1 ? 'e' : '');
+
+            if (cart.length > 0) {
+                totalCloud.classList.add('visible');
+                cartBadge.style.display = 'flex';
+                cartBadge.textContent = cart.length;
+                cartTotal.style.display = 'block';
+                document.getElementById('cartTotalAmount').textContent = total.toFixed(2).replace('.', ',') + ' €';
+
+                cartItems.innerHTML = cart.map(function(item) {
+                    var priceStr = item.price.toFixed(2).replace('.', ',');
+                    return `
+                        <div class="cart-item">
+                            <div>
+                                <div class="cart-item-name">${escapeHtml(item.name)}</div>
+                            </div>
+                            <div style="display:flex;align-items:center;">
+                                <span class="cart-item-price">${priceStr} €</span>
+                                <button class="cart-item-remove" onclick="removeFromCart('${item.id}')">×</button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            } else {
+                totalCloud.classList.remove('visible');
+                cartBadge.style.display = 'none';
+                cartTotal.style.display = 'none';
+                cartItems.innerHTML = `
+                    <div class="cart-empty">
+                        <span class="empty-icon">🍽️</span>
+                        <p>Noch keine Gerichte ausgewählt</p>
+                    </div>
+                `;
+            }
+        }
+
+        function removeFromCart(id) {
+            var newCart = [];
+            for (var i = 0; i < cart.length; i++) {
+                if (cart[i].id !== id) newCart.push(cart[i]);
+            }
+            cart = newCart;
+
+            var element = document.getElementById('item_' + id);
+            if (element) element.classList.remove('selected');
+
+            // Chef spin animation when removing from cart
+            var chefContainer = document.getElementById('chefContainer');
+            if (chefContainer) {
+                chefContainer.classList.remove('animating', 'jumping');
+                void chefContainer.offsetWidth;
+                chefContainer.classList.add('spinning');
+                setTimeout(function() {
+                    chefContainer.classList.remove('spinning');
+                }, 800);
+            }
+
+            updateCart();
+        }
+
+        function toggleCart() {
+            document.getElementById('cartSidebar').classList.toggle('open');
+        }
+
+        // ── Save to Firebase ──
+        async function saveMenu() {
+            if (!structuredMenu || cart.length === 0) {
+                alert('Bitte wähle mindestens ein Gericht aus.');
+                return;
+            }
+
+            var menuId = generateShortId();
+            var total = 0;
+            for (var i = 0; i < cart.length; i++) {
+                total += cart[i].price;
+            }
+
+            var overlay = document.getElementById('loadingOverlay');
+            var loadingText = document.getElementById('loadingText');
+            overlay.classList.add('active');
+            loadingText.textContent = 'Bestellung wird gespeichert...';
+
+            try {
+                await db.ref('menus/' + menuId).set({
+                    id: menuId,
+                    type: 'manual',
+                    businessName: structuredMenu.businessName,
+                    menu: structuredMenu,
+                    order: cart,
+                    total: total,
+                    createdAt: Date.now(),
+                    views: 0
+                });
+
+                localStorage.setItem('lastMenuId', menuId);
+                window.location.href = 'menu-success.html?id=' + menuId;
+            } catch (err) {
+                console.error(err);
+                overlay.classList.remove('active');
+                alert('Fehler beim Speichern: ' + err.message);
+            }
+        }
+
+        function generateShortId() {
+            var chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789';
+            var id = '';
+            for (var i = 0; i < 6; i++) id += chars.charAt(Math.floor(Math.random() * chars.length));
+            return id;
+        }
+    </script>
+</body>
+</html>

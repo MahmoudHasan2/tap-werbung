@@ -1,0 +1,1331 @@
+{
+    "texts": {
+        "de": [],
+        "en": {
+            "common.logo.sub": "SIGN MAKING / DIGITAL PRINTING",
+            "common.nav.home": "Home",
+            "common.nav.services": "Services",
+            "common.nav.about": "About Us",
+            "common.nav.shop": "Shop",
+            "common.nav.create": "Create",
+            "common.nav.contact": "Contact",
+            "common.nav.portal": "Customer Portal →",
+            "common.footer.cta_title": "Ready for your<br>next project?",
+            "common.footer.cta_btn": "Get in touch",
+            "common.footer.visit_title": "Visit Us",
+            "common.footer.call_title": "Call Us",
+            "common.footer.email_title": "E-Mail",
+            "common.footer.social_title": "Social Media",
+            "common.footer.quick_title": "Quick Links",
+            "common.footer.quick_about": "About",
+            "common.footer.quick_team": "Team",
+            "common.footer.quick_pricing": "Pricing",
+            "common.footer.quick_career": "Career",
+            "common.footer.nav_title": "Navigation",
+            "common.footer.nav_roadmap": "Roadmap",
+            "common.footer.nav_affiliate": "Affiliate",
+            "common.footer.nav_help": "Help Center",
+            "common.footer.hours_title": "Opening Hours",
+            "common.footer.hours_days": "Monday - Saturday",
+            "common.footer.copyright": "© 2026 Copyright",
+            "common.footer.imprint": "Imprint",
+            "common.footer.privacy": "Privacy",
+            "common.chat.status": "Online",
+            "common.chat.greeting": "Hello! I'm the virtual assistant of TAP Werbeagentur. How can I help you?",
+            "common.chat.placeholder": "Type your question...",
+            "common.chat.send": "Send",
+            "common.chat.reply": "Thank you! We're happy to help:\n📞 0151 00000000\n📧 info@tap-werbetechnik.de",
+            "common.gallery.label": "Our Work",
+            "common.cta.title": "Your project is<br>the <span>next one.</span>",
+            "common.cta.btn": "Contact us now",
+            "index.meta.title": "TAP Werbeagentur WOB | Sign Making / Digital Printing",
+            "index.hero.title_top": "We make<br><span class=\"highlight\">Advertising</span>",
+            "index.hero.title_bottom": "Make <span class=\"highlight\">your brand</span> shine",
+            "index.hero.portal_btn": "OPEN CUSTOMER PORTAL",
+            "index.hero.scroll": "Scroll",
+            "index.about.label": "About us",
+            "index.about.title": "<div class=\"u-letter\">A</div>bout u<div class=\"s-letter\">s</div>",
+            "index.about.p1": "Welcome to TAP Werbeagentur WOB – your creative partner for sign making and digital printing in Wolfsburg and the surrounding area. We combine innovative design solutions with the highest print quality to make your brand shine.",
+            "index.about.p2": "From the first idea to the final implementation, we accompany you with passion and expertise. Whether vehicle lettering, large-format printing, professional branding or individual textile printing – we turn your vision into impressive advertising that delights your customers and moves your business forward.",
+            "index.services.label": "What we do",
+            "index.services.title": "Our<br>Services",
+            "index.services.digitaldruck.title": "Digital Printing",
+            "index.services.digitaldruck.text": "High-quality digital printing for banners, posters, films and advertising banners in all formats.",
+            "index.services.digitaldruck.category": "Print",
+            "index.services.werbetechnik.title": "Sign Making & Lettering",
+            "index.services.werbetechnik.text": "Vehicle lettering, shop window graphics, illuminated signs and signage for your business.",
+            "index.services.werbetechnik.category": "Technology",
+            "index.services.grafikdesign.title": "Graphic Design & Branding",
+            "index.services.grafikdesign.text": "Logo design, corporate identity, flyers, brochures and complete brand appearances.",
+            "index.services.grafikdesign.category": "Design",
+            "index.services.webdesign.title": "Web Design & Digital",
+            "index.services.webdesign.text": "Modern websites, social media content and digital marketing strategies.",
+            "index.services.webdesign.category": "Digital",
+            "index.services.textildruck.title": "Textile Printing & Embroidery",
+            "index.services.textildruck.text": "Custom textile printing and embroidery for T-shirts, hoodies, caps and workwear. Perfect for company clothing, events and merchandise.",
+            "index.services.textildruck.category": "Textile",
+            "index.portfolio.title": "Our <span>Portfolio</span>",
+            "index.orbit.w1": "DIGITAL PRINT",
+            "index.orbit.w2": "LARGE FORMAT",
+            "index.orbit.w3": "LETTERING",
+            "index.orbit.w4": "SIGN MAKING",
+            "index.orbit.w5": "BRANDING",
+            "index.orbit.w6": "GRAPHIC DESIGN",
+            "index.orbit.w7": "WEB DESIGN",
+            "index.orbit.w8": "TEXTILE PRINT",
+            "digitaldruck.meta.title": "Digital Printing – TAP Werbeagentur WOB",
+            "digitaldruck.hero.label": "Portfolio · Digital Printing",
+            "digitaldruck.hero.title": "Digital<span>Printing</span>",
+            "digitaldruck.hero.sub": "High-quality printing solutions in large format and small series – from concept to finished product. Precise, brilliant in colour and professional.",
+            "digitaldruck.gallery.title": "What we<br><span>print</span>",
+            "digitaldruck.cta.text": "Ready for your professional print job? We bring your vision to life in colour.",
+            "werbetechnik.meta.title": "Sign Making & Lettering – TAP Werbeagentur WOB",
+            "werbetechnik.hero.label": "Portfolio · Sign Making",
+            "werbetechnik.hero.title": "Sign Making<br>& <span>Lettering</span>",
+            "werbetechnik.hero.sub": "Vehicle lettering, shop window graphics, illuminated signs and signage for your business – professional and durable.",
+            "werbetechnik.gallery.title": "What we<br><span>letter</span>",
+            "werbetechnik.cta.text": "Ready for your professional lettering? We give your vision shape.",
+            "grafikdesign.meta.title": "Graphic Design & Branding – TAP Werbeagentur WOB",
+            "grafikdesign.hero.label": "Portfolio · Design",
+            "grafikdesign.hero.title": "Graphic Design<br>& <span>Branding</span>",
+            "grafikdesign.hero.sub": "Logo design, corporate identity, flyers, brochures and complete brand appearances – creative and well thought out.",
+            "grafikdesign.gallery.title": "What we<br><span>design</span>",
+            "grafikdesign.cta.text": "Ready for your professional brand appearance? We design your vision.",
+            "textildruck.meta.title": "Textile Printing & Embroidery – TAP Werbeagentur WOB",
+            "textildruck.hero.label": "Portfolio · Textile Printing",
+            "textildruck.hero.title": "Textile Printing<br>& <span>Embroidery</span>",
+            "textildruck.hero.sub": "Custom textile printing and embroidery for T-shirts, hoodies, caps and workwear. Perfect for company clothing, events and merchandise.",
+            "textildruck.gallery.title": "What we<br><span>print</span>",
+            "textildruck.cta.text": "Ready for your custom textile printing? We print and embroider to your wishes.",
+            "webdesign.meta.title": "Web Design & Digital – TAP Werbeagentur WOB",
+            "webdesign.hero.label": "Portfolio · Web & Digital",
+            "webdesign.hero.title": "Web Design<br>& <span>Digital</span>",
+            "webdesign.hero.sub": "Professional websites and custom management systems for clinics, practices and pharmacies.",
+            "webdesign.websites.label": "Live Projects",
+            "webdesign.websites.title": "Websites<br><span>by us</span>",
+            "webdesign.systems.label": "Automation & Management",
+            "webdesign.systems.title": "Systems<br><span>& Software</span>",
+            "webdesign.cta.text": "Ready for your digital presence or a custom system? We develop it with you.",
+            "webdesign.btn.website": "Visit website",
+            "webdesign.btn.system": "Open system",
+            "webdesign.login_label": "Login:"
+        },
+        "ar": {
+            "common.logo.sub": "تقنيات إعلانية / طباعة رقمية",
+            "common.nav.home": "الرئيسية",
+            "common.nav.services": "خدماتنا",
+            "common.nav.about": "من نحن",
+            "common.nav.shop": "المتجر",
+            "common.nav.create": "صمّم",
+            "common.nav.contact": "تواصل معنا",
+            "common.nav.portal": "بوابة العملاء ←",
+            "common.footer.cta_title": "جاهز<br>لمشروعك القادم؟",
+            "common.footer.cta_btn": "تواصل معنا",
+            "common.footer.visit_title": "زورونا",
+            "common.footer.call_title": "اتصل بنا",
+            "common.footer.email_title": "البريد الإلكتروني",
+            "common.footer.social_title": "التواصل الاجتماعي",
+            "common.footer.quick_title": "روابط سريعة",
+            "common.footer.quick_about": "عنّا",
+            "common.footer.quick_team": "الفريق",
+            "common.footer.quick_pricing": "الأسعار",
+            "common.footer.quick_career": "الوظائف",
+            "common.footer.nav_title": "التنقل",
+            "common.footer.nav_roadmap": "خطة العمل",
+            "common.footer.nav_affiliate": "الشركاء",
+            "common.footer.nav_help": "مركز المساعدة",
+            "common.footer.hours_title": "ساعات العمل",
+            "common.footer.hours_days": "الاثنين - السبت",
+            "common.footer.copyright": "© 2026 جميع الحقوق محفوظة",
+            "common.footer.imprint": "بيانات الناشر",
+            "common.footer.privacy": "سياسة الخصوصية",
+            "common.chat.status": "متصل",
+            "common.chat.greeting": "مرحباً! أنا المساعد الافتراضي لوكالة TAP للإعلان. كيف يمكنني مساعدتك؟",
+            "common.chat.placeholder": "اكتب سؤالك...",
+            "common.chat.send": "إرسال",
+            "common.chat.reply": "شكراً لك! يسعدنا مساعدتك:\n📞 0151 00000000\n📧 info@tap-werbetechnik.de",
+            "common.gallery.label": "أعمالنا",
+            "common.cta.title": "مشروعك هو<br><span>التالي.</span>",
+            "common.cta.btn": "تواصل معنا الآن",
+            "index.meta.title": "TAP Werbeagentur WOB | تقنيات إعلانية وطباعة رقمية",
+            "index.hero.title_top": "نصنع<br><span class=\"highlight\">الإعلان</span>",
+            "index.hero.title_bottom": "اجعل <span class=\"highlight\">علامتك</span> تتألق",
+            "index.hero.portal_btn": "افتح بوابة العملاء",
+            "index.hero.scroll": "مرّر",
+            "index.about.label": "من نحن",
+            "index.about.title": "من نحن",
+            "index.about.p1": "مرحباً بكم في TAP Werbeagentur WOB – شريككم الإبداعي في التقنيات الإعلانية والطباعة الرقمية في فولفسبورغ وما حولها. نجمع بين حلول التصميم المبتكرة وأعلى جودة طباعة لنجعل علامتكم التجارية تتألق.",
+            "index.about.p2": "من الفكرة الأولى حتى التنفيذ النهائي نرافقكم بشغف وخبرة. سواء كتابة على السيارات، طباعة بأحجام كبيرة، هوية بصرية احترافية أو طباعة مخصصة على الملابس – نحوّل رؤيتكم إلى وسائل إعلانية مبهرة تُسعد عملاءكم وتدفع أعمالكم إلى الأمام.",
+            "index.services.label": "ماذا نقدّم",
+            "index.services.title": "خدماتنا",
+            "index.services.digitaldruck.title": "الطباعة الرقمية",
+            "index.services.digitaldruck.text": "طباعة رقمية عالية الجودة للبانرات والملصقات والفينيل واللافتات الإعلانية بجميع المقاسات.",
+            "index.services.digitaldruck.category": "طباعة",
+            "index.services.werbetechnik.title": "التقنيات الإعلانية والكتابة",
+            "index.services.werbetechnik.text": "كتابة على السيارات، تزيين الواجهات، لوحات مضيئة ولافتات لأعمالك.",
+            "index.services.werbetechnik.category": "تقنية",
+            "index.services.grafikdesign.title": "التصميم الجرافيكي والهوية",
+            "index.services.grafikdesign.text": "تصميم الشعارات، الهوية المؤسسية، الفلايرات، الكتيبات والهوية الكاملة للعلامة.",
+            "index.services.grafikdesign.category": "تصميم",
+            "index.services.webdesign.title": "تصميم المواقع والرقمي",
+            "index.services.webdesign.text": "مواقع حديثة، محتوى للتواصل الاجتماعي واستراتيجيات تسويق رقمي.",
+            "index.services.webdesign.category": "رقمي",
+            "index.services.textildruck.title": "الطباعة والتطريز على الملابس",
+            "index.services.textildruck.text": "طباعة وتطريز حسب الطلب على التيشرتات والهوديز والقبعات وملابس العمل. مثالية لملابس الشركات والفعاليات والمنتجات الترويجية.",
+            "index.services.textildruck.category": "ملابس",
+            "index.portfolio.title": "<span>أعمالنا</span>",
+            "index.orbit.w1": "طباعة رقمية",
+            "index.orbit.w2": "مقاسات كبيرة",
+            "index.orbit.w3": "كتابة",
+            "index.orbit.w4": "تقنيات إعلانية",
+            "index.orbit.w5": "هوية بصرية",
+            "index.orbit.w6": "تصميم جرافيك",
+            "index.orbit.w7": "تصميم مواقع",
+            "index.orbit.w8": "طباعة ملابس",
+            "digitaldruck.meta.title": "الطباعة الرقمية – TAP Werbeagentur WOB",
+            "digitaldruck.hero.label": "أعمالنا · الطباعة الرقمية",
+            "digitaldruck.hero.title": "الطباعة <span>الرقمية</span>",
+            "digitaldruck.hero.sub": "حلول طباعة عالية الجودة بالمقاسات الكبيرة والكميات الصغيرة – من الفكرة حتى المنتج النهائي. دقيقة، بألوان زاهية واحترافية.",
+            "digitaldruck.gallery.title": "ماذا<br><span>نطبع</span>",
+            "digitaldruck.cta.text": "جاهز لطلب طباعة احترافي؟ نحوّل رؤيتك إلى ألوان.",
+            "werbetechnik.meta.title": "التقنيات الإعلانية والكتابة – TAP Werbeagentur WOB",
+            "werbetechnik.hero.label": "أعمالنا · التقنيات الإعلانية",
+            "werbetechnik.hero.title": "التقنيات الإعلانية<br>و<span>الكتابة</span>",
+            "werbetechnik.hero.sub": "كتابة على السيارات، تزيين الواجهات، لوحات مضيئة ولافتات لأعمالك – باحترافية وجودة تدوم.",
+            "werbetechnik.gallery.title": "ماذا<br><span>نكتب</span>",
+            "werbetechnik.cta.text": "جاهز لكتابة احترافية؟ نعطي رؤيتك شكلاً.",
+            "grafikdesign.meta.title": "التصميم الجرافيكي والهوية – TAP Werbeagentur WOB",
+            "grafikdesign.hero.label": "أعمالنا · التصميم",
+            "grafikdesign.hero.title": "التصميم الجرافيكي<br>و<span>الهوية</span>",
+            "grafikdesign.hero.sub": "تصميم الشعارات، الهوية المؤسسية، الفلايرات، الكتيبات والهوية الكاملة – بإبداع وتفكير مدروس.",
+            "grafikdesign.gallery.title": "ماذا<br><span>نصمّم</span>",
+            "grafikdesign.cta.text": "جاهز لهوية احترافية لعلامتك؟ نحن نصمّم رؤيتك.",
+            "textildruck.meta.title": "الطباعة والتطريز على الملابس – TAP Werbeagentur WOB",
+            "textildruck.hero.label": "أعمالنا · طباعة الملابس",
+            "textildruck.hero.title": "طباعة الملابس<br>و<span>التطريز</span>",
+            "textildruck.hero.sub": "طباعة وتطريز حسب الطلب على التيشرتات والهوديز والقبعات وملابس العمل. مثالية لملابس الشركات والفعاليات والمنتجات الترويجية.",
+            "textildruck.gallery.title": "ماذا<br><span>نطبع</span>",
+            "textildruck.cta.text": "جاهز لطباعة ملابسك الخاصة؟ نطبع ونطرّز حسب رغبتك.",
+            "webdesign.meta.title": "تصميم المواقع والرقمي – TAP Werbeagentur WOB",
+            "webdesign.hero.label": "أعمالنا · الويب والرقمي",
+            "webdesign.hero.title": "تصميم المواقع<br>و<span>الرقمي</span>",
+            "webdesign.hero.sub": "مواقع احترافية وأنظمة إدارة مخصصة للعيادات والمراكز الطبية والصيدليات.",
+            "webdesign.websites.label": "مشاريع حيّة",
+            "webdesign.websites.title": "مواقع<br><span>من تصميمنا</span>",
+            "webdesign.systems.label": "الأتمتة والإدارة",
+            "webdesign.systems.title": "أنظمة<br><span>وبرمجيات</span>",
+            "webdesign.cta.text": "جاهز لحضورك الرقمي أو لنظام مخصص؟ نطوّره معك.",
+            "webdesign.btn.website": "زيارة الموقع",
+            "webdesign.btn.system": "فتح النظام",
+            "webdesign.login_label": "الدخول:"
+        }
+    },
+    "images": [],
+    "links": {
+        "common.link.email": "mailto:info@tap-werbetechnik.de",
+        "common.link.phone": "tel:+49 151 00000000",
+        "common.link.instagram": "#",
+        "common.link.facebook": "#"
+    },
+    "collections": {
+        "digitaldruck": [
+            {
+                "id": "digitaldruck-1",
+                "img": "https://i.ibb.co/5W6b85ys/photo-largescale-poster-printer.jpg",
+                "title": {
+                    "de": "",
+                    "en": "",
+                    "ar": ""
+                }
+            },
+            {
+                "id": "digitaldruck-2",
+                "img": "https://i.ibb.co/jvT4xxhH/modern-printing-big-size-manufacturing-equipment-working-print-typography-factory-ai.jpg",
+                "title": {
+                    "de": "",
+                    "en": "",
+                    "ar": ""
+                }
+            },
+            {
+                "id": "digitaldruck-3",
+                "img": "https://i.ibb.co/XrnhLNzD/large-format-printing-equipment-creates-bright-highquality-images-paper-commercial-use.jpg",
+                "title": {
+                    "de": "",
+                    "en": "",
+                    "ar": ""
+                }
+            },
+            {
+                "id": "digitaldruck-4",
+                "img": "https://i.ibb.co/KjCJCRwP/man-working-printing-house-with-paper-paints-5.jpg",
+                "title": {
+                    "de": "",
+                    "en": "",
+                    "ar": ""
+                }
+            },
+            {
+                "id": "digitaldruck-5",
+                "img": "https://i.ibb.co/DDH9pJcV/working-offset-printer.jpg",
+                "title": {
+                    "de": "",
+                    "en": "",
+                    "ar": ""
+                }
+            },
+            {
+                "id": "digitaldruck-6",
+                "img": "https://i.ibb.co/21XvRM8F/man-working-printing-house-with-paper-paints-4.jpg",
+                "title": {
+                    "de": "",
+                    "en": "",
+                    "ar": ""
+                }
+            },
+            {
+                "id": "digitaldruck-7",
+                "img": "https://i.ibb.co/ycfXHY5m/typographer-standing-with-color-swatches-printing-manufacturing.jpg",
+                "title": {
+                    "de": "",
+                    "en": "",
+                    "ar": ""
+                }
+            },
+            {
+                "id": "digitaldruck-8",
+                "img": "https://i.ibb.co/d0xDtG6X/man-working-printing-house-with-paper-paints-3.jpg",
+                "title": {
+                    "de": "",
+                    "en": "",
+                    "ar": ""
+                }
+            },
+            {
+                "id": "digitaldruck-9",
+                "img": "https://i.ibb.co/nMTWncbV/man-working-printing-house-with-paper-paints-2.jpg",
+                "title": {
+                    "de": "",
+                    "en": "",
+                    "ar": ""
+                }
+            },
+            {
+                "id": "digitaldruck-10",
+                "img": "https://i.ibb.co/MyYPDQyK/process-creating-reviewing-color-separation-proofs-complex-prints.jpg",
+                "title": {
+                    "de": "",
+                    "en": "",
+                    "ar": ""
+                }
+            },
+            {
+                "id": "digitaldruck-11",
+                "img": "https://i.ibb.co/JwYNGWn6/man-working-printing-house-with-paper-paints-1.jpg",
+                "title": {
+                    "de": "",
+                    "en": "",
+                    "ar": ""
+                }
+            },
+            {
+                "id": "digitaldruck-12",
+                "img": "https://i.ibb.co/fVYtTD4J/highperformance-plotter-delivering-superior-print-quality-fast-pace-print-shop.jpg",
+                "title": {
+                    "de": "",
+                    "en": "",
+                    "ar": ""
+                }
+            },
+            {
+                "id": "digitaldruck-13",
+                "img": "https://i.ibb.co/1tN8cmX5/man-working-printing-house-with-paper-paints.jpg",
+                "title": {
+                    "de": "",
+                    "en": "",
+                    "ar": ""
+                }
+            }
+        ],
+        "werbetechnik": [
+            {
+                "id": "werbetechnik-1",
+                "img": "https://i.ibb.co/DPz2HC50/large-digital-printer-action-modern-industrial-printing-technology-highquality-media-production.jpg",
+                "title": {
+                    "de": "",
+                    "en": "",
+                    "ar": ""
+                }
+            },
+            {
+                "id": "werbetechnik-2",
+                "img": "https://i.ibb.co/5W3VWjLT/female-hands-holding-yellow-printable-material-alarge-format-printing-plotter-graphic-design.jpg",
+                "title": {
+                    "de": "",
+                    "en": "",
+                    "ar": ""
+                }
+            },
+            {
+                "id": "werbetechnik-3",
+                "img": "https://i.ibb.co/chdvCzLR/print-house-worker-setting-parameters-modern-offset-printing-machine.jpg",
+                "title": {
+                    "de": "",
+                    "en": "",
+                    "ar": ""
+                }
+            },
+            {
+                "id": "werbetechnik-4",
+                "img": "https://i.ibb.co/v4qSDzP1/graphic-design-advertising-concept-large-format-plotter-close-up.jpg",
+                "title": {
+                    "de": "",
+                    "en": "",
+                    "ar": ""
+                }
+            },
+            {
+                "id": "werbetechnik-5",
+                "img": "https://i.ibb.co/23fSKGt4/man-is-working-machine-store.jpg",
+                "title": {
+                    "de": "",
+                    "en": "",
+                    "ar": ""
+                }
+            },
+            {
+                "id": "werbetechnik-6",
+                "img": "https://i.ibb.co/VpL9RmyB/man-with-tattoos-producing-craft-beer.jpg",
+                "title": {
+                    "de": "",
+                    "en": "",
+                    "ar": ""
+                }
+            },
+            {
+                "id": "werbetechnik-7",
+                "img": "https://i.ibb.co/234zvKmS/cutting-plywood.jpg",
+                "title": {
+                    "de": "",
+                    "en": "",
+                    "ar": ""
+                }
+            },
+            {
+                "id": "werbetechnik-8",
+                "img": "https://i.ibb.co/5W6b85ys/photo-largescale-poster-printer.jpg",
+                "title": {
+                    "de": "",
+                    "en": "",
+                    "ar": ""
+                }
+            },
+            {
+                "id": "werbetechnik-9",
+                "img": "https://i.ibb.co/jvT4xxhH/modern-printing-big-size-manufacturing-equipment-working-print-typography-factory-ai.jpg",
+                "title": {
+                    "de": "",
+                    "en": "",
+                    "ar": ""
+                }
+            },
+            {
+                "id": "werbetechnik-10",
+                "img": "https://i.ibb.co/XrnhLNzD/large-format-printing-equipment-creates-bright-highquality-images-paper-commercial-use.jpg",
+                "title": {
+                    "de": "",
+                    "en": "",
+                    "ar": ""
+                }
+            }
+        ],
+        "grafikdesign": [
+            {
+                "id": "grafikdesign-1",
+                "img": "https://i.ibb.co/gZ7JBSd5/colorful-stationery-mockup-with-abstract-patterns.jpg",
+                "title": {
+                    "de": "",
+                    "en": "",
+                    "ar": ""
+                }
+            },
+            {
+                "id": "grafikdesign-2",
+                "img": "https://i.ibb.co/jvwHYp9z/collection-business-cards-wooden-table-with-one-that-says-personal-business.jpg",
+                "title": {
+                    "de": "",
+                    "en": "",
+                    "ar": ""
+                }
+            },
+            {
+                "id": "grafikdesign-3",
+                "img": "https://i.ibb.co/1f2b8qmV/branding-identity-corporate-u-logo-vector-design-template.jpg",
+                "title": {
+                    "de": "",
+                    "en": "",
+                    "ar": ""
+                }
+            },
+            {
+                "id": "grafikdesign-4",
+                "img": "https://i.ibb.co/gZ6RKXNn/48893a70-5946-4603-9c1e-577ca15f9554.jpg",
+                "title": {
+                    "de": "",
+                    "en": "",
+                    "ar": ""
+                }
+            },
+            {
+                "id": "grafikdesign-5",
+                "img": "https://i.ibb.co/TxZFpgWD/7.jpg",
+                "title": {
+                    "de": "",
+                    "en": "",
+                    "ar": ""
+                }
+            },
+            {
+                "id": "grafikdesign-6",
+                "img": "https://i.ibb.co/zj6gSJM/3117717.jpg",
+                "title": {
+                    "de": "",
+                    "en": "",
+                    "ar": ""
+                }
+            },
+            {
+                "id": "grafikdesign-7",
+                "img": "https://i.ibb.co/HTbtbkwf/10312.jpg",
+                "title": {
+                    "de": "",
+                    "en": "",
+                    "ar": ""
+                }
+            },
+            {
+                "id": "grafikdesign-8",
+                "img": "https://i.ibb.co/m57vBsFJ/78220-1.jpg",
+                "title": {
+                    "de": "",
+                    "en": "",
+                    "ar": ""
+                }
+            }
+        ],
+        "textildruck": [
+            {
+                "id": "textildruck-1",
+                "img": "https://i.ibb.co/fVzMmpYM/female-business-owner.jpg",
+                "title": {
+                    "de": "",
+                    "en": "",
+                    "ar": ""
+                }
+            },
+            {
+                "id": "textildruck-2",
+                "img": "https://i.ibb.co/3mbxMbR1/tailor-creating-beautiful-decoration.jpg",
+                "title": {
+                    "de": "",
+                    "en": "",
+                    "ar": ""
+                }
+            },
+            {
+                "id": "textildruck-3",
+                "img": "https://i.ibb.co/H6QscfB/portrait-businesswoman-owner.jpg",
+                "title": {
+                    "de": "",
+                    "en": "",
+                    "ar": ""
+                }
+            },
+            {
+                "id": "textildruck-4",
+                "img": "https://i.ibb.co/MxQ25jr7/heat-transfer-t-shirt-printing.jpg",
+                "title": {
+                    "de": "",
+                    "en": "",
+                    "ar": ""
+                }
+            },
+            {
+                "id": "textildruck-5",
+                "img": "https://i.ibb.co/twrZ19md/female-business-owner-working-1.jpg",
+                "title": {
+                    "de": "",
+                    "en": "",
+                    "ar": ""
+                }
+            },
+            {
+                "id": "textildruck-6",
+                "img": "https://i.ibb.co/nMvK3q3V/close-up-hands-working-workshop.jpg",
+                "title": {
+                    "de": "",
+                    "en": "",
+                    "ar": ""
+                }
+            },
+            {
+                "id": "textildruck-7",
+                "img": "https://i.ibb.co/4RYd9YRt/female-business-owner-working.jpg",
+                "title": {
+                    "de": "",
+                    "en": "",
+                    "ar": ""
+                }
+            },
+            {
+                "id": "textildruck-8",
+                "img": "https://i.ibb.co/C3wXtw7T/young-man-screen-printing.jpg",
+                "title": {
+                    "de": "",
+                    "en": "",
+                    "ar": ""
+                }
+            },
+            {
+                "id": "textildruck-9",
+                "img": "https://i.ibb.co/ZzPrQDjj/embroidery-machine-embroidered-sport-cap-close-up-image.jpg",
+                "title": {
+                    "de": "",
+                    "en": "",
+                    "ar": ""
+                }
+            },
+            {
+                "id": "textildruck-10",
+                "img": "https://i.ibb.co/1f46Stdr/female-business-owner-working-portrait.jpg",
+                "title": {
+                    "de": "",
+                    "en": "",
+                    "ar": ""
+                }
+            }
+        ],
+        "websites": [
+            {
+                "id": "websites-1",
+                "url": "https://www.ams-krankentransfer.de/",
+                "name": "AMS Krankentransfer",
+                "tag": {
+                    "de": "Medizin",
+                    "en": "",
+                    "ar": ""
+                },
+                "desc": {
+                    "de": "Medizinischer Transportservice",
+                    "en": "",
+                    "ar": ""
+                },
+                "img": "https://i.ibb.co/QjFkmLNm/jon-tyson-O7ke8-N4k-Tp-Q-unsplash.jpg",
+                "user": "",
+                "pass": ""
+            },
+            {
+                "id": "websites-2",
+                "url": "https://www.lapela.de/",
+                "name": "La Pela",
+                "tag": {
+                    "de": "Apotheke",
+                    "en": "",
+                    "ar": ""
+                },
+                "desc": {
+                    "de": "Online-Apotheke & Gesundheit",
+                    "en": "",
+                    "ar": ""
+                },
+                "img": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=800&q=80",
+                "user": "",
+                "pass": ""
+            },
+            {
+                "id": "websites-3",
+                "url": "https://doraputzen.de/",
+                "name": "Dora Putzen",
+                "tag": {
+                    "de": "Reinigung",
+                    "en": "",
+                    "ar": ""
+                },
+                "desc": {
+                    "de": "Professioneller Reinigungsservice",
+                    "en": "",
+                    "ar": ""
+                },
+                "img": "https://images.unsplash.com/photo-1628177142898-93e36e4e3a50?w=800&q=80",
+                "user": "",
+                "pass": ""
+            },
+            {
+                "id": "websites-4",
+                "url": "https://lightblue-tarsier-368981.hostingersite.com/",
+                "name": "Lightblue Tarsier",
+                "tag": {
+                    "de": "Webdesign",
+                    "en": "",
+                    "ar": ""
+                },
+                "desc": {
+                    "de": "Modernes Webdesign-Projekt",
+                    "en": "",
+                    "ar": ""
+                },
+                "img": "https://images.unsplash.com/photo-1547658719-da2b51169166?w=800&q=80",
+                "user": "",
+                "pass": ""
+            },
+            {
+                "id": "websites-5",
+                "url": "https://chocolate-gorilla-887390.hostingersite.com/",
+                "name": "Chocolate Gorilla",
+                "tag": {
+                    "de": "Webdesign",
+                    "en": "",
+                    "ar": ""
+                },
+                "desc": {
+                    "de": "Kreative Website-Lösung",
+                    "en": "",
+                    "ar": ""
+                },
+                "img": "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=800&q=80",
+                "user": "",
+                "pass": ""
+            },
+            {
+                "id": "websites-6",
+                "url": "https://jan-montage.de/",
+                "name": "Jan Montage",
+                "tag": {
+                    "de": "Bau",
+                    "en": "",
+                    "ar": ""
+                },
+                "desc": {
+                    "de": "Montage & Bau-Service",
+                    "en": "",
+                    "ar": ""
+                },
+                "img": "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80",
+                "user": "",
+                "pass": ""
+            },
+            {
+                "id": "websites-7",
+                "url": "https://wolf-friseur.de/",
+                "name": "Wolf Friseur",
+                "tag": {
+                    "de": "Friseur",
+                    "en": "",
+                    "ar": ""
+                },
+                "desc": {
+                    "de": "Friseursalon in Wolfsburg",
+                    "en": "",
+                    "ar": ""
+                },
+                "img": "https://i.ibb.co/gbGtMF04/IMG-20261007-WA0101.jpg",
+                "user": "",
+                "pass": ""
+            },
+            {
+                "id": "websites-8",
+                "url": "https://ghostwhite-pig-827212.hostingersite.com/",
+                "name": "Ghostwhite Pig",
+                "tag": {
+                    "de": "Webdesign",
+                    "en": "",
+                    "ar": ""
+                },
+                "desc": {
+                    "de": "Professionelles Webprojekt",
+                    "en": "",
+                    "ar": ""
+                },
+                "img": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
+                "user": "",
+                "pass": ""
+            },
+            {
+                "id": "websites-9",
+                "url": "https://tap-market.de/",
+                "name": "TAP Market",
+                "tag": {
+                    "de": "E-Commerce",
+                    "en": "",
+                    "ar": ""
+                },
+                "desc": {
+                    "de": "Online-Marktplatz & Shop",
+                    "en": "",
+                    "ar": ""
+                },
+                "img": "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=80",
+                "user": "",
+                "pass": ""
+            },
+            {
+                "id": "websites-10",
+                "url": "https://happyearth-org.com/",
+                "name": "Happy Earth Org",
+                "tag": {
+                    "de": "NGO",
+                    "en": "",
+                    "ar": ""
+                },
+                "desc": {
+                    "de": "Umwelt & Nachhaltigkeit",
+                    "en": "",
+                    "ar": ""
+                },
+                "img": "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=800&q=80",
+                "user": "",
+                "pass": ""
+            },
+            {
+                "id": "websites-11",
+                "url": "https://blanchedalmond-panther-546483.hostingersite.com/",
+                "name": "Blanchedalmond Panther",
+                "tag": {
+                    "de": "Webdesign",
+                    "en": "",
+                    "ar": ""
+                },
+                "desc": {
+                    "de": "Individuelles Webdesign",
+                    "en": "",
+                    "ar": ""
+                },
+                "img": "https://images.unsplash.com/photo-1522542550221-31fd19575a2d?w=800&q=80",
+                "user": "",
+                "pass": ""
+            },
+            {
+                "id": "websites-12",
+                "url": "https://lightgrey-ant-515186.hostingersite.com/",
+                "name": "Lightgrey Ant",
+                "tag": {
+                    "de": "Webdesign",
+                    "en": "",
+                    "ar": ""
+                },
+                "desc": {
+                    "de": "Responsive Website",
+                    "en": "",
+                    "ar": ""
+                },
+                "img": "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&q=80",
+                "user": "",
+                "pass": ""
+            },
+            {
+                "id": "websites-13",
+                "url": "https://moccasin-trout-328927.hostingersite.com/",
+                "name": "Moccasin Trout",
+                "tag": {
+                    "de": "Webdesign",
+                    "en": "",
+                    "ar": ""
+                },
+                "desc": {
+                    "de": "Digitale Präsenz",
+                    "en": "",
+                    "ar": ""
+                },
+                "img": "https://images.unsplash.com/photo-1559028012-481c04fa702d?w=800&q=80",
+                "user": "",
+                "pass": ""
+            },
+            {
+                "id": "websites-14",
+                "url": "https://indigo-mantis-731754.hostingersite.com/",
+                "name": "Indigo Mantis",
+                "tag": {
+                    "de": "Webdesign",
+                    "en": "",
+                    "ar": ""
+                },
+                "desc": {
+                    "de": "Modernes Webprojekt",
+                    "en": "",
+                    "ar": ""
+                },
+                "img": "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=800&q=80",
+                "user": "",
+                "pass": ""
+            },
+            {
+                "id": "websites-15",
+                "url": "https://lightsteelblue-clam-311060.hostingersite.com/",
+                "name": "Lightsteelblue Clam",
+                "tag": {
+                    "de": "Webdesign",
+                    "en": "",
+                    "ar": ""
+                },
+                "desc": {
+                    "de": "Individuelle Unternehmenswebsite",
+                    "en": "",
+                    "ar": ""
+                },
+                "img": "https://images.unsplash.com/photo-1481487196290-c152efe083f5?w=800&q=80",
+                "user": "",
+                "pass": ""
+            },
+            {
+                "id": "websites-16",
+                "url": "https://khaki-hippopotamus-310299.hostingersite.com/",
+                "name": "Khaki Hippopotamus",
+                "tag": {
+                    "de": "Webdesign",
+                    "en": "",
+                    "ar": ""
+                },
+                "desc": {
+                    "de": "Responsive Webauftritt",
+                    "en": "",
+                    "ar": ""
+                },
+                "img": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&q=80",
+                "user": "",
+                "pass": ""
+            },
+            {
+                "id": "websites-17",
+                "url": "https://omo-zahnarzt.de/",
+                "name": "OMO Zahnarzt",
+                "tag": {
+                    "de": "Zahnarzt",
+                    "en": "",
+                    "ar": ""
+                },
+                "desc": {
+                    "de": "Website für Zahnarztpraxis",
+                    "en": "",
+                    "ar": ""
+                },
+                "img": "https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=800&q=80",
+                "user": "",
+                "pass": ""
+            }
+        ],
+        "systems": [
+            {
+                "id": "systems-1",
+                "url": "https://lightgray-shrew-986194.hostingersite.com/",
+                "name": "Restaurants Orders",
+                "tag": {
+                    "de": "Restaurant",
+                    "en": "",
+                    "ar": ""
+                },
+                "desc": {
+                    "de": "Restaurantmanagement und Essensbestellungen",
+                    "en": "",
+                    "ar": ""
+                },
+                "img": "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80",
+                "user": "",
+                "pass": ""
+            },
+            {
+                "id": "systems-2",
+                "url": "https://lightseagreen-kingfisher-320366.hostingersite.com/dashboard",
+                "name": "DentSys Pro",
+                "tag": {
+                    "de": "Zahnarzt",
+                    "en": "",
+                    "ar": ""
+                },
+                "desc": {
+                    "de": "Praxissoftware für Zahnärzte",
+                    "en": "",
+                    "ar": ""
+                },
+                "img": "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=800&q=80",
+                "user": "doctor",
+                "pass": ""
+            },
+            {
+                "id": "systems-3",
+                "url": "https://lavender-gnu-126731.hostingersite.com/dashboard",
+                "name": "Mini_Beauty",
+                "tag": {
+                    "de": "Salon",
+                    "en": "",
+                    "ar": ""
+                },
+                "desc": {
+                    "de": "Hair_style",
+                    "en": "",
+                    "ar": ""
+                },
+                "img": "https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?w=800&q=80",
+                "user": "owner",
+                "pass": ""
+            },
+            {
+                "id": "systems-4",
+                "url": "https://sandybrown-lapwing-592203.hostingersite.com/dashboard",
+                "name": "DocOffice",
+                "tag": {
+                    "de": "Arztpraxis",
+                    "en": "",
+                    "ar": ""
+                },
+                "desc": {
+                    "de": "Termin- & Patientenmanagement",
+                    "en": "",
+                    "ar": ""
+                },
+                "img": "https://images.unsplash.com/photo-1504813184591-01572f98c85f?w=800&q=80",
+                "user": "doctor",
+                "pass": ""
+            },
+            {
+                "id": "systems-5",
+                "url": "https://lavender-penguin-828942.hostingersite.com/login",
+                "name": "MediCare Portal",
+                "tag": {
+                    "de": "Krankenhaus",
+                    "en": "",
+                    "ar": ""
+                },
+                "desc": {
+                    "de": "Krankenhaus-Informationssystem",
+                    "en": "",
+                    "ar": ""
+                },
+                "img": "https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?w=800&q=80",
+                "user": "pharmacist",
+                "pass": ""
+            },
+            {
+                "id": "systems-6",
+                "url": "https://violet-heron-902462.hostingersite.com/",
+                "name": "LabSys",
+                "tag": {
+                    "de": "Labor",
+                    "en": "",
+                    "ar": ""
+                },
+                "desc": {
+                    "de": "Labor & Diagnostik Dashboard",
+                    "en": "",
+                    "ar": ""
+                },
+                "img": "https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?w=800&q=80",
+                "user": "",
+                "pass": ""
+            },
+            {
+                "id": "systems-7",
+                "url": "https://chocolate-guanaco-201608.hostingersite.com/",
+                "name": "HealthTrack",
+                "tag": {
+                    "de": "Medizin",
+                    "en": "",
+                    "ar": ""
+                },
+                "desc": {
+                    "de": "Gesundheitsmonitoring System",
+                    "en": "",
+                    "ar": ""
+                },
+                "img": "https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&q=80",
+                "user": "pharmacist",
+                "pass": ""
+            },
+            {
+                "id": "systems-8",
+                "url": "https://lightgrey-swan-826212.hostingersite.com/",
+                "name": "ClinicCloud",
+                "tag": {
+                    "de": "Praxis",
+                    "en": "",
+                    "ar": ""
+                },
+                "desc": {
+                    "de": "Cloud-basierte Praxislösung",
+                    "en": "",
+                    "ar": ""
+                },
+                "img": "https://images.unsplash.com/photo-1551076805-e1869033e561?w=800&q=80",
+                "user": "tap",
+                "pass": ""
+            },
+            {
+                "id": "systems-9",
+                "url": "https://blanchedalmond-panther-546483.hostingersite.com/dashboard.html",
+                "name": "Restaurant Manager",
+                "tag": {
+                    "de": "Restaurant",
+                    "en": "",
+                    "ar": ""
+                },
+                "desc": {
+                    "de": "Interne Restaurantverwaltung",
+                    "en": "",
+                    "ar": ""
+                },
+                "img": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&q=80",
+                "user": "",
+                "pass": ""
+            },
+            {
+                "id": "systems-10",
+                "url": "https://moccasin-trout-328927.hostingersite.com/admin/dashboard.php",
+                "name": "Salon Studio",
+                "tag": {
+                    "de": "Beauty & Hair",
+                    "en": "",
+                    "ar": ""
+                },
+                "desc": {
+                    "de": "Verwaltung für Kosmetik-, Make-up- & Frisursalons",
+                    "en": "",
+                    "ar": ""
+                },
+                "img": "https://images.unsplash.com/photo-1633681926022-84c23e8cb2d6?w=800&q=80",
+                "user": "admin",
+                "pass": ""
+            },
+            {
+                "id": "systems-11",
+                "url": "https://olivedrab-caterpillar-182491.hostingersite.com/login.html",
+                "name": "ClinicPro",
+                "tag": {
+                    "de": "doctor",
+                    "en": "",
+                    "ar": ""
+                },
+                "desc": {
+                    "de": "Doctor & Secretary",
+                    "en": "",
+                    "ar": ""
+                },
+                "img": "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=800&q=80",
+                "user": "tap",
+                "pass": ""
+            },
+            {
+                "id": "systems-12",
+                "url": "https://coral-salamander-784411.hostingersite.com/",
+                "name": "DentalCare Pro",
+                "tag": {
+                    "de": "Zahnarzt",
+                    "en": "",
+                    "ar": ""
+                },
+                "desc": {
+                    "de": "Zahnarztpraxis Management System",
+                    "en": "",
+                    "ar": ""
+                },
+                "img": "https://images.unsplash.com/photo-1606811971618-4486d14f3f99?w=800&q=80",
+                "user": "tap",
+                "pass": ""
+            },
+            {
+                "id": "systems-13",
+                "url": "https://darkgreen-shrew-509836.hostingersite.com/setup.php",
+                "name": "System Setup",
+                "tag": {
+                    "de": "Software",
+                    "en": "",
+                    "ar": ""
+                },
+                "desc": {
+                    "de": "Installation & Einrichtung des Systems",
+                    "en": "",
+                    "ar": ""
+                },
+                "img": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
+                "user": "",
+                "pass": ""
+            },
+            {
+                "id": "systems-14",
+                "url": "https://darkcyan-fly-245275.hostingersite.com/",
+                "name": "Darkcyan Fly",
+                "tag": {
+                    "de": "Verwaltung",
+                    "en": "",
+                    "ar": ""
+                },
+                "desc": {
+                    "de": "Business-Management-System",
+                    "en": "",
+                    "ar": ""
+                },
+                "img": "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&q=80",
+                "user": "",
+                "pass": ""
+            },
+            {
+                "id": "systems-15",
+                "url": "https://lightseagreen-anteater-228383.hostingersite.com/",
+                "name": "Lightseagreen Anteater",
+                "tag": {
+                    "de": "Verwaltung",
+                    "en": "",
+                    "ar": ""
+                },
+                "desc": {
+                    "de": "Maßgeschneiderte Verwaltungssoftware",
+                    "en": "",
+                    "ar": ""
+                },
+                "img": "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800&q=80",
+                "user": "",
+                "pass": ""
+            },
+            {
+                "id": "systems-16",
+                "url": "https://khaki-hippopotamus-310299.hostingersite.com/system/index.html",
+                "name": "Khaki System",
+                "tag": {
+                    "de": "Software",
+                    "en": "",
+                    "ar": ""
+                },
+                "desc": {
+                    "de": "Webbasiertes Management-System",
+                    "en": "",
+                    "ar": ""
+                },
+                "img": "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800&q=80",
+                "user": "",
+                "pass": ""
+            }
+        ],
+        "portfolio": [
+            {
+                "id": "portfolio-1",
+                "img": "https://kimi-web-img.moonshot.cn/img/img.magnific.com/624421b4e7f62c2bb9c219d079702fd2c97382e8.jpg",
+                "link": "",
+                "title": {
+                    "de": "Branding",
+                    "en": "Branding",
+                    "ar": "هوية بصرية"
+                },
+                "sub": {
+                    "de": "Corporate Identity",
+                    "en": "Corporate Identity",
+                    "ar": "هوية مؤسسية"
+                }
+            },
+            {
+                "id": "portfolio-2",
+                "img": "https://kimi-web-img.moonshot.cn/img/www.postermockup.com/d15bfc92e13b61d946a8ad7709f078dd27d8a12c.jpg",
+                "link": "",
+                "title": {
+                    "de": "Print",
+                    "en": "Print",
+                    "ar": "طباعة"
+                },
+                "sub": {
+                    "de": "Kampagne Design",
+                    "en": "Campaign Design",
+                    "ar": "تصميم حملات"
+                }
+            },
+            {
+                "id": "portfolio-3",
+                "img": "https://kimi-web-img.moonshot.cn/img/i.fbcd.co/f623e75110691842fd5c2c3df445b29aa86647c2.jpg",
+                "link": "websiten.html",
+                "title": {
+                    "de": "Web",
+                    "en": "Web",
+                    "ar": "ويب"
+                },
+                "sub": {
+                    "de": "Website Design",
+                    "en": "Website Design",
+                    "ar": "تصميم مواقع"
+                }
+            },
+            {
+                "id": "portfolio-4",
+                "img": "https://kimi-web-img.moonshot.cn/img/cdn.prod.website-files.com/2290024d6ec24e5b3e1ea1aca1eff7a251616a6e.jpg",
+                "link": "",
+                "title": {
+                    "de": "Technik",
+                    "en": "Technology",
+                    "ar": "تقنية"
+                },
+                "sub": {
+                    "de": "Fahrzeugbeschriftung",
+                    "en": "Vehicle Lettering",
+                    "ar": "كتابة على السيارات"
+                }
+            },
+            {
+                "id": "portfolio-5",
+                "img": "https://kimi-web-img.moonshot.cn/img/www.customproductpackaging.com/e2f7917b9349988c350a92a2acbbddef1f937c83.jpg",
+                "link": "",
+                "title": {
+                    "de": "Design",
+                    "en": "Design",
+                    "ar": "تصميم"
+                },
+                "sub": {
+                    "de": "Verpackungsdesign",
+                    "en": "Packaging Design",
+                    "ar": "تصميم التغليف"
+                }
+            },
+            {
+                "id": "portfolio-6",
+                "img": "https://images.unsplash.com/photo-1547658719-da2b51169166?w=600&q=80",
+                "link": "",
+                "title": {
+                    "de": "Digital",
+                    "en": "Digital",
+                    "ar": "رقمي"
+                },
+                "sub": {
+                    "de": "Social Media",
+                    "en": "Social Media",
+                    "ar": "التواصل الاجتماعي"
+                }
+            },
+            {
+                "id": "portfolio-7",
+                "img": "https://kimi-web-img.moonshot.cn/img/5.imimg.com/2e116fb6d8e83465c1aec4ef99fb4f52eab9f402.jpeg",
+                "link": "",
+                "title": {
+                    "de": "Druck",
+                    "en": "Print",
+                    "ar": "طباعة"
+                },
+                "sub": {
+                    "de": "Großformatdruck",
+                    "en": "Large Format Printing",
+                    "ar": "طباعة بمقاسات كبيرة"
+                }
+            },
+            {
+                "id": "portfolio-8",
+                "img": "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=600&q=80",
+                "link": "",
+                "title": {
+                    "de": "Technik",
+                    "en": "Technology",
+                    "ar": "تقنية"
+                },
+                "sub": {
+                    "de": "Leuchtreklame",
+                    "en": "Illuminated Signs",
+                    "ar": "لوحات مضيئة"
+                }
+            }
+        ]
+    },
+    "updatedAt": "2026-10-07T14:10:05+00:00",
+    "updatedBy": "admin"
+}

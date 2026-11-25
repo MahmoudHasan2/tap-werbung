@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="de" dir="ltr">
+<head>
+    
+    
+      <meta charset="UTF-8">
+    <title>TAP Werbeagentur WOB | Werbetechnik / Digitaldruck</title>
+    
+    <!-- Favicon — TAP Logo -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0iIzBmMGYwZiIvPjx0ZXh0IHg9IjE2IiB5PSIyMiIgZm9udC1mYW1pbHk9IkFyaWFsIEJsYWNrLEltcGFjdCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjIwIiBmb250LXdlaWdodD0iOTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjZmZmZmZmIj5UPC90ZXh0PjxjaXJjbGUgY3g9IjIzIiBjeT0iOSIgcj0iMi41IiBmaWxsPSIjOEI1Q0Y2Ii8+PC9zdmc+">
+    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0iIzBmMGYwZiIvPjx0ZXh0IHg9IjE2IiB5PSIyMiIgZm9udC1mYW1pbHk9IkFyaWFsIEJsYWNrLEltcGFjdCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjIwIiBmb250LXdlaWdodD0iOTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjZmZmZmZmIj5UPC90ZXh0PjxjaXJjbGUgY3g9IjIzIiBjeT0iOSIgcj0iMi41IiBmaWxsPSIjOEI1Q0Y2Ii8+PC9zdmc+">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/..." rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Taplify – Visitenkarten-Editor</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--p:#6366f1;--dark:#0f172a;--dl:#1e293b;--dli:#334155;--gray:#64748b;--w:#fff;--ok:#22c55e;--er:#ef4444;--grad:linear-gradient(135deg,#6366f1 0%,#8b5cf6 50%,#ec4899 100%);}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Tajawal',sans-serif;background:var(--dark);color:var(--w);height:100vh;overflow:hidden;}
+.layout{display:flex;height:100vh;}
+/* SIDEBAR */
+.sb{width:330px;min-width:330px;background:var(--dl);border-right:1px solid rgba(255,255,255,0.05);display:flex;flex-direction:column;}
+.sbh{padding:15px 17px;border-bottom:1px solid rgba(255,255,255,0.05);flex-shrink:0;}
+.sblogo{display:flex;align-items:center;gap:9px;font-size:17px;font-weight:900;}
+.sblogo .ic{width:30px;height:30px;background:var(--grad);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;color:white;}
+.sblogo .tx{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.sbsub{font-size:11px;color:var(--gray);margin-top:2px;}
+.tabs{display:flex;gap:3px;padding:9px 11px;border-bottom:1px solid rgba(255,255,255,0.05);flex-shrink:0;flex-wrap:wrap;}
+.tab{flex:1;min-width:60px;padding:8px 4px;background:transparent;border:1px solid rgba(255,255,255,0.08);color:var(--gray);border-radius:7px;font-family:'Tajawal',sans-serif;font-size:10px;font-weight:700;cursor:pointer;transition:all .2s;text-align:center;}
+.tab.active{background:var(--p);color:white;border-color:var(--p);}
+.tab:hover:not(.active){color:var(--w);background:rgba(255,255,255,0.05);}
+.sbb{flex:1;overflow-y:auto;padding:13px;}
+.sbb::-webkit-scrollbar{width:4px;}
+.sbb::-webkit-scrollbar-thumb{background:var(--dli);border-radius:2px;}
+.fs{margin-bottom:16px;}
+.ft{font-size:10px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:9px;display:flex;align-items:center;gap:5px;}
+.ft i{color:var(--p);}
+.fg{margin-bottom:9px;}
+.fl{display:block;font-size:11px;font-weight:600;color:var(--gray);margin-bottom:4px;}
+.fi{width:100%;padding:9px 11px;background:var(--dark);border:1px solid rgba(255,255,255,0.1);border-radius:7px;color:var(--w);font-family:'Tajawal',sans-serif;font-size:12px;transition:all .2s;}
+.fi:focus{outline:none;border-color:var(--p);box-shadow:0 0 0 3px rgba(99,102,241,0.12);}
+.fi::placeholder{color:var(--gray);opacity:.5;}
+textarea.fi{min-height:54px;resize:none;}
+/* color row */
+.crow{display:flex;align-items:center;gap:8px;}
+.cswatch{width:36px;height:36px;border-radius:7px;border:1px solid rgba(255,255,255,0.1);padding:2px;background:var(--dark);cursor:pointer;}
+.chex{font-size:11px;font-family:monospace;color:var(--gray);}
+/* image upload */
+.imgdrop{border:2px dashed rgba(255,255,255,0.12);border-radius:9px;padding:16px;text-align:center;cursor:pointer;transition:all .3s;position:relative;}
+.imgdrop:hover{border-color:var(--p);background:rgba(99,102,241,0.05);}
+.imgdrop i{font-size:22px;color:var(--gray);display:block;margin-bottom:6px;}
+.imgdrop p{font-size:11px;color:var(--gray);}
+.imgdrop input{position:absolute;inset:0;opacity:0;cursor:pointer;}
+.imgthumb{width:100%;border-radius:7px;margin-top:7px;display:none;max-height:80px;object-fit:cover;}
+.imgthumb.show{display:block;}
+/* slider */
+.srow{display:flex;align-items:center;gap:8px;margin-top:4px;}
+.srow input[type=range]{flex:1;-webkit-appearance:none;height:4px;background:var(--dli);border-radius:2px;outline:none;}
+.srow input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:15px;height:15px;background:var(--p);border-radius:50%;cursor:pointer;}
+.sval{font-size:11px;color:var(--gray);min-width:36px;text-align:right;font-family:monospace;}
+/* infobox */
+.ib{background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.2);border-radius:8px;padding:10px 12px;font-size:11px;color:var(--gray);line-height:1.7;}
+.ib i{color:var(--p);}
+/* footer */
+.sbf{padding:11px;border-top:1px solid rgba(255,255,255,0.05);flex-shrink:0;display:flex;gap:7px;}
+.btndl{flex:1;padding:11px;background:rgba(34,197,94,.1);color:var(--ok);border:1px solid rgba(34,197,94,.3);border-radius:9px;font-family:'Tajawal',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s;}
+.btndl:hover{background:var(--ok);color:white;}
+.btnpub{flex:1;padding:11px;background:var(--grad);color:white;border:none;border-radius:9px;font-family:'Tajawal',sans-serif;font-size:12px;font-weight:800;cursor:pointer;transition:all .2s;box-shadow:0 4px 14px rgba(99,102,241,.4);}
+.btnpub:hover{transform:translateY(-1px);box-shadow:0 8px 22px rgba(99,102,241,.5);}
+/* PREVIEW */
+.preview{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+.ptool{display:flex;justify-content:space-between;align-items:center;padding:11px 17px;background:var(--dl);border-bottom:1px solid rgba(255,255,255,0.05);flex-shrink:0;}
+.ptitle{font-size:13px;font-weight:700;}
+.ptitle span{color:var(--p);}
+.ptbtns{display:flex;gap:6px;}
+.tbtn{padding:7px 12px;background:var(--dark);border:1px solid rgba(255,255,255,.1);color:var(--gray);border-radius:7px;font-family:'Tajawal',sans-serif;font-size:12px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:4px;}
+.tbtn:hover{color:var(--w);background:rgba(255,255,255,.05);}
+.iframe-wrap{flex:1;overflow:hidden;}
+iframe{width:100%;height:100%;border:none;background:#111;}
+/* toast */
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(70px);background:var(--dl);border:1px solid rgba(255,255,255,.1);padding:11px 20px;border-radius:9px;display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;z-index:3000;opacity:0;transition:all .35s;white-space:nowrap;}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
+.toast.success{border-color:var(--ok);} .toast.success i{color:var(--ok);}
+.toast.error{border-color:var(--er);}   .toast.error   i{color:var(--er);}
+/* modal */
+.mbg{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:2000;display:none;align-items:center;justify-content:center;padding:20px;}
+.mbg.open{display:flex;}
+.modal{background:var(--dl);border-radius:18px;width:100%;max-width:420px;padding:28px;text-align:center;border:1px solid rgba(99,102,241,.2);}
+.mic{width:58px;height:58px;background:var(--grad);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;color:white;margin:0 auto 14px;}
+.modal h2{font-size:20px;font-weight:900;margin-bottom:8px;}
+.modal p{color:var(--gray);font-size:13px;line-height:1.7;margin-bottom:16px;}
+.murl{background:var(--dark);padding:10px 14px;border-radius:7px;font-family:monospace;font-size:12px;color:var(--p);margin-bottom:14px;word-break:break-all;}
+.mbtns{display:flex;gap:9px;}
+.mbtns button{flex:1;padding:11px;border-radius:9px;font-family:'Tajawal',sans-serif;font-size:13px;font-weight:700;cursor:pointer;border:none;transition:all .2s;}
+.mbp{background:var(--grad);color:white;}
+.mbs{background:rgba(255,255,255,.06);color:var(--w);border:1px solid rgba(255,255,255,.1)!important;}
+/* loading */
+.loading{position:fixed;inset:0;background:var(--dark);z-index:9000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;}
+.loading.hidden{display:none;}
+.spin{width:44px;height:44px;border:3px solid rgba(99,102,241,.2);border-top-color:var(--p);border-radius:50%;animation:spin 1s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+@media(max-width:860px){.layout{flex-direction:column;}.sb{width:100%;min-width:0;max-height:48vh;}}
+</style>
+</head>
+<body>
+<div class="loading" id="loader"><div class="spin"></div><div style="color:var(--gray);font-size:14px;">Wird geladen...</div></div>
+
+<div class="layout">
+  <aside class="sb">
+    <div class="sbh">
+      <div class="sblogo"><div class="ic"><i class="fas fa-pen-nib"></i></div><div class="tx">Taplify Editor</div></div>
+      <div class="sbsub" id="tplLabel">Vorlage wird geladen...</div>
+    </div>
+    <div class="tabs" id="tabsRow"></div>
+    <div class="sbb" id="sbBody"></div>
+    <div class="sbf">
+      <button class="btndl" onclick="showToast('PDF-Export (Produktionsversion)','success')"><i class="fas fa-download"></i> PDF</button>
+      <button class="btnpub" onclick="publish()"><i class="fas fa-rocket"></i> Veröffentlichen</button>
+    </div>
+  </aside>
+
+  <main class="preview">
+    <div class="ptool">
+      <div class="ptitle">Vorschau – <span id="ptitleName">Visitenkarte</span></div>
+      <div class="ptbtns">
+        <button class="tbtn" onclick="openLive()"><i class="fas fa-external-link-alt"></i> Vollansicht</button>
+        <button class="tbtn" onclick="reloadIframe()"><i class="fas fa-sync"></i></button>
+      </div>
+    </div>
+    <div class="iframe-wrap"><iframe id="pf" src="about:blank"></iframe></div>
+  </main>
+</div>
+
+<div class="mbg" id="modal">
+  <div class="modal">
+    <div class="mic"><i class="fas fa-check"></i></div>
+    <h2>Veröffentlicht!</h2>
+    <p>Ihre Visitenkarte ist jetzt online und bereit zum Teilen.</p>
+    <div class="murl" id="cardUrl"></div>
+    <div class="mbtns">
+      <button class="mbp" onclick="copyUrl()"><i class="fas fa-copy"></i> Kopieren</button>
+      <button class="mbs" onclick="closeModal()"><i class="fas fa-times"></i> Schließen</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"><i class="fas fa-check-circle"></i><span id="toastMsg"></span></div>
+
+<script>
+// ══════════════════════════════════════════
+// TEMPLATE DEFINITIONS
+// ══════════════════════════════════════════
+var TPLS = {
+  dark: {
+    label:'Dark Elegant', file:'card-template-dark.html', accent:'#6366f1',
+    tabs:[
+      { id:'info', icon:'fas fa-user', label:'Inhalt', fields:[
+        {k:'companyName', l:'Firmenname',        ph:'Mein Unternehmen GmbH'},
+        {k:'personName',  l:'Vollständiger Name', ph:'Max Mustermann'},
+        {k:'jobTitle',    l:'Position / Titel',   ph:'Geschäftsführer · CEO'},
+        {k:'phone1',      l:'Telefon',            ph:'+49 30 123 456 78'},
+        {k:'email',       l:'E-Mail',             ph:'info@firma.de'},
+        {k:'website',     l:'Website',            ph:'www.firma.de'}
+      ]},
+      { id:'logo',   icon:'fas fa-image',      label:'Logo',    logo:true },
+      { id:'design', icon:'fas fa-palette',    label:'Design',  design:true },
+      { id:'social', icon:'fab fa-instagram',  label:'Social',  social:true }
+    ],
+    def:{companyName:'Mein Unternehmen GmbH',personName:'Max Mustermann',jobTitle:'Geschäftsführer · CEO',phone1:'+49 30 123 456 78',email:'info@firma.de',website:'www.firma.de',primaryColor:'#6366f1',accentColor:'#8b5cf6',textColor:'#c4b5fd',bgImage:'',bgOpacity:0.7,logoImg:'',instagram:'',tiktok:''}
+  },
+  white: {
+    label:'White Minimal', file:'card-template-white.html', accent:'#6366f1',
+    tabs:[
+      { id:'info', icon:'fas fa-user', label:'Inhalt', fields:[
+        {k:'companyName', l:'Firmenname',        ph:'Mein Unternehmen GmbH'},
+        {k:'personName',  l:'Vollständiger Name', ph:'Max Mustermann'},
+        {k:'jobTitle',    l:'Position / Titel',   ph:'Geschäftsführer · CEO'},
+        {k:'phone1',      l:'Telefon',            ph:'+49 30 123 456 78'},
+        {k:'email',       l:'E-Mail',             ph:'info@firma.de'},
+        {k:'website',     l:'Website',            ph:'www.firma.de'}
+      ]},
+      { id:'logo',   icon:'fas fa-image',      label:'Logo',    logo:true },
+      { id:'design', icon:'fas fa-palette',    label:'Design',  design:true },
+      { id:'social', icon:'fab fa-instagram',  label:'Social',  social:true }
+    ],
+    def:{companyName:'Mein Unternehmen GmbH',personName:'Max Mustermann',jobTitle:'Geschäftsführer · CEO',phone1:'+49 30 123 456 78',email:'info@firma.de',website:'www.firma.de',primaryColor:'#6366f1',accentColor:'#ec4899',textColor:'#6366f1',bgImage:'',bgOpacity:0.7,logoImg:'',instagram:'',tiktok:''}
+  },
+  softcut: {
+    label:'Soft Cut – Hairstyle', file:'card-template-softcut.html', accent:'#d4836a',
+    tabs:[
+      { id:'vorder', icon:'fas fa-credit-card', label:'Vorderseite', fields:[
+        {k:'subTitle', l:'Untertitel (unter Logo)', ph:'Hairstyle'},
+        {k:'phone1',   l:'Telefonnummer',           ph:'0151 00000000'}
+      ]},
+      { id:'rueck', icon:'fas fa-rotate', label:'Rückseite', fields:[
+        {k:'appointmentLabel', l:'Titelfeld',          ph:'Ihr Soft Cut Termin'},
+        {k:'day1', l:'Tag 1', ph:'Montag'},    {k:'day2', l:'Tag 2', ph:'Dienstag'},
+        {k:'day3', l:'Tag 3', ph:'Mittwoch'},  {k:'day4', l:'Tag 4', ph:'Donnerstag'},
+        {k:'day5', l:'Tag 5', ph:'Freitag'},   {k:'day6', l:'Tag 6', ph:'Samstag'},
+        {k:'datumLabel',   l:'Label oben rechts',  ph:'Datum'},
+        {k:'uhrzeitLabel', l:'Label unten rechts', ph:'Uhrzeit'}
+      ]},
+      { id:'logo',   icon:'fas fa-image',     label:'Logo',   logo:true },
+      { id:'design', icon:'fas fa-palette',   label:'Design', design:true },
+      { id:'social', icon:'fab fa-instagram', label:'Social', social:true, singleQR:true }
+    ],
+    def:{subTitle:'Hairstyle',phone1:'0151 00000000',appointmentLabel:'Ihr Soft Cut Termin',day1:'Montag',day2:'Dienstag',day3:'Mittwoch',day4:'Donnerstag',day5:'Freitag',day6:'Samstag',datumLabel:'Datum',uhrzeitLabel:'Uhrzeit',primaryColor:'#d4836a',accentColor:'#c0736a',textColor:'#cccccc',bgImage:'',bgOpacity:0.7,logoImg:'',socialLink:''}
+  },
+  prince: {
+    label:'Prince Phone', file:'card-template-prince.html', accent:'#00b4d8',
+    tabs:[
+      { id:'kontakt', icon:'fas fa-user', label:'Kontakt', fields:[
+        {k:'personName',  l:'Name',          ph:'Moustafa Al Ali'},
+        {k:'phone1',      l:'Telefon',       ph:'0178 198 0573'},
+        {k:'address',     l:'Adresse',       ph:'Kaufhof 5\n38440 Wolfsburg', ta:true},
+        {k:'website',     l:'Website',       ph:'www.prince-phone.de'},
+        {k:'brandName',   l:'Markenname',    ph:'PRINCE'},
+        {k:'brandSmall',  l:'Label klein',   ph:'phone'},
+        {k:'sloganBrand', l:'Slogan-Endwort',ph:'Prince Phone'}
+      ]},
+      { id:'logo',   icon:'fas fa-image',     label:'Logo',   logo:true },
+      { id:'design', icon:'fas fa-palette',   label:'Design', design:true },
+      { id:'social', icon:'fab fa-instagram', label:'Social', social:true, singleQR:true }
+    ],
+    def:{personName:'Moustafa Al Ali',phone1:'0178 198 0573',address:'Kaufhof 5\n38440 Wolfsburg',website:'www.prince-phone.de',brandName:'PRINCE',brandSmall:'phone',sloganBrand:'Prince Phone',primaryColor:'#00b4d8',accentColor:'#0096b7',textColor:'#ffffff',bgImage:'',bgOpacity:0.7,logoImg:'',socialLink:''}
+  }
+};
+
+// ══ STATE ══
+var tplKey='dark', d={}, currentTab='';
+
+// ══ INIT ══
+window.addEventListener('DOMContentLoaded',function(){
+  var p=new URLSearchParams(window.location.search);
+  tplKey=p.get('template')||localStorage.getItem('selectedCard')||'dark';
+  if(!TPLS[tplKey]) tplKey='dark';
+  var tpl=TPLS[tplKey];
+  d=Object.assign({},tpl.def);
+  document.getElementById('tplLabel').textContent=tpl.label;
+  document.getElementById('ptitleName').textContent=tpl.label;
+  document.documentElement.style.setProperty('--p',tpl.accent);
+  buildTabs();
+  activateTab(tpl.tabs[0].id);
+  loadIframe();
+  setTimeout(function(){ document.getElementById('loader').classList.add('hidden'); },600);
+});
+
+// ══ TABS ══
+function buildTabs(){
+  var tpl=TPLS[tplKey];
+  document.getElementById('tabsRow').innerHTML=tpl.tabs.map(function(t){
+    return '<button class="tab" data-tid="'+t.id+'" onclick="activateTab(\''+t.id+'\')"><i class="'+t.icon+'"></i> '+t.label+'</button>';
+  }).join('');
+}
+
+function activateTab(tid){
+  currentTab=tid;
+  document.querySelectorAll('.tab').forEach(function(t){ t.classList.toggle('active',t.dataset.tid===tid); });
+  var tab=TPLS[tplKey].tabs.find(function(t){ return t.id===tid; });
+  renderTab(tab);
+}
+
+function renderTab(tab){
+  var body=document.getElementById('sbBody');
+  if(tab.fields){
+    var h='<div class="fs"><div class="ft"><i class="fas fa-edit"></i> Felder bearbeiten</div>';
+    tab.fields.forEach(function(f){
+      h+='<div class="fg"><label class="fl">'+f.l+'</label>';
+      if(f.ta) h+='<textarea class="fi" placeholder="'+f.ph+'" oninput="upd(\''+f.k+'\',this.value)">'+( d[f.k]||'')+'</textarea>';
+      else h+='<input class="fi" value="'+(d[f.k]||'')+'" placeholder="'+f.ph+'" oninput="upd(\''+f.k+'\',this.value)">';
+      h+='</div>';
+    });
+    h+='</div>';
+    body.innerHTML=h;
+  } else if(tab.logo){
+    body.innerHTML=`
+    <div class="fs">
+      <div class="ft"><i class="fas fa-image"></i> Logo hochladen</div>
+      <div class="ib" style="margin-bottom:12px;"><i class="fas fa-info-circle"></i> Laden Sie Ihr eigenes Logo hoch. Es ersetzt das Standard-Logo auf dem Karten-Design.</div>
+      <div class="fg">
+        <label class="fl">Logo-Datei (PNG, SVG empfohlen)</label>
+        <div class="imgdrop" onclick="this.querySelector('input').click()">
+          <i class="fas fa-image"></i><p>Logo hochladen</p>
+          <input type="file" accept="image/*" onchange="handleImg('logoImg',this,'logo-thumb')">
+        </div>
+        <img id="logo-thumb" class="imgthumb ${d.logoImg?'show':''}" src="${d.logoImg||''}">
+      </div>
+      ${d.logoImg?'<button onclick="removeImg(\'logoImg\',\'logo-thumb\')" style="width:100%;padding:9px;background:rgba(239,68,68,0.1);color:#ef4444;border:1px solid rgba(239,68,68,0.3);border-radius:8px;font-family:\'Tajawal\',sans-serif;font-size:12px;font-weight:700;cursor:pointer;margin-top:6px;"><i class="fas fa-trash"></i> Logo entfernen</button>':''}
+    </div>`;
+  } else if(tab.design){
+    body.innerHTML=`
+    <div class="fs">
+      <div class="ft"><i class="fas fa-image"></i> Hintergrundbild</div>
+      <div class="fg">
+        <label class="fl">Bild hochladen (automatisch angepasst)</label>
+        <div class="imgdrop" onclick="this.querySelector('input').click()">
+          <i class="fas fa-cloud-upload-alt"></i><p>Bild hochladen (JPG, PNG)</p>
+          <input type="file" accept="image/*" onchange="handleImg('bgImage',this,'bg-thumb')">
+        </div>
+        <img id="bg-thumb" class="imgthumb ${d.bgImage?'show':''}" src="${d.bgImage||''}">
+      </div>
+      <div class="fg">
+        <label class="fl">Transparenz des Designs über dem Bild</label>
+        <div class="srow">
+          <span style="font-size:10px;color:var(--gray);">Transparent</span>
+          <input type="range" min="0.2" max="1" step="0.05" value="${d.bgOpacity}" oninput="upd('bgOpacity',parseFloat(this.value));document.getElementById('op-val').textContent=Math.round(this.value*100)+'%'">
+          <span class="sval" id="op-val">${Math.round((d.bgOpacity||0.7)*100)}%</span>
+        </div>
+        <div class="ib" style="margin-top:8px;"><i class="fas fa-info-circle"></i> Je höher der Wert, desto mehr ist das Karten-Design sichtbar. Das Bild liegt darunter.</div>
+      </div>
+      ${d.bgImage?'<button onclick="removeImg(\'bgImage\',\'bg-thumb\')" style="width:100%;padding:9px;background:rgba(239,68,68,0.1);color:#ef4444;border:1px solid rgba(239,68,68,0.3);border-radius:8px;font-family:\'Tajawal\',sans-serif;font-size:12px;font-weight:700;cursor:pointer;margin-bottom:12px;"><i class="fas fa-trash"></i> Bild entfernen</button>':''}
+    </div>
+    <div class="fs">
+      <div class="ft"><i class="fas fa-palette"></i> Farben</div>
+      <div class="fg">
+        <label class="fl">Hauptfarbe</label>
+        <div class="crow">
+          <input type="color" class="cswatch" value="${d.primaryColor||'#6366f1'}" oninput="upd('primaryColor',this.value);document.getElementById('c1v').textContent=this.value">
+          <span class="chex" id="c1v">${d.primaryColor||'#6366f1'}</span>
+        </div>
+      </div>
+      <div class="fg">
+        <label class="fl">Akzentfarbe</label>
+        <div class="crow">
+          <input type="color" class="cswatch" value="${d.accentColor||'#8b5cf6'}" oninput="upd('accentColor',this.value);document.getElementById('c2v').textContent=this.value">
+          <span class="chex" id="c2v">${d.accentColor||'#8b5cf6'}</span>
+        </div>
+      </div>
+      <div class="fg">
+        <label class="fl">Textfarbe / Logo-Farbe</label>
+        <div class="crow">
+          <input type="color" class="cswatch" value="${d.textColor||'#ffffff'}" oninput="upd('textColor',this.value);document.getElementById('c3v').textContent=this.value">
+          <span class="chex" id="c3v">${d.textColor||'#ffffff'}</span>
+        </div>
+      </div>
+    </div>`;
+  } else if(tab.social){
+    var isSingle=tab.singleQR;
+    body.innerHTML=`
+    <div class="fs">
+      <div class="ft"><i class="fab fa-instagram"></i> Social Media</div>
+      <div class="ib" style="margin-bottom:12px;">
+        <i class="fas fa-magic"></i> ${isSingle
+          ? 'Ein Link → wird als QR-Code auf der Karte angezeigt.'
+          : 'Instagram & TikTok werden als separate QR-Codes auf beiden Seiten der Karte angezeigt.'}
+      </div>
+      ${isSingle ? `
+      <div class="fg">
+        <label class="fl"><i class="fab fa-instagram" style="color:#e1306c;"></i> / <i class="fab fa-tiktok"></i> Link (Instagram, TikTok, Website...)</label>
+        <input class="fi" value="${d.socialLink||''}" placeholder="https://instagram.com/meinprofil" oninput="upd('socialLink',this.value)">
+      </div>
+      <div class="ib"><i class="fas fa-info-circle"></i> Kein Link angegeben → QR zeigt auf Telefonnummer / Website.</div>
+      ` : `
+      <div class="fg">
+        <label class="fl"><i class="fab fa-instagram" style="color:#e1306c;"></i> Instagram-Link</label>
+        <input class="fi" value="${d.instagram||''}" placeholder="https://instagram.com/meinprofil" oninput="upd('instagram',this.value)">
+      </div>
+      <div class="fg">
+        <label class="fl"><i class="fab fa-tiktok"></i> TikTok-Link</label>
+        <input class="fi" value="${d.tiktok||''}" placeholder="https://tiktok.com/@meinprofil" oninput="upd('tiktok',this.value)">
+      </div>
+      <div class="ib"><i class="fas fa-info-circle"></i> Beide QR-Codes erscheinen sofort auf Vorder- und Rückseite der Karte.</div>
+      `}
+    </div>`;
+  }
+}
+
+// ══ UPDATE ══
+function upd(key,val){ d[key]=val; push(); }
+
+function handleImg(key,input,thumbId){
+  var f=input.files[0]; if(!f) return;
+  var r=new FileReader();
+  r.onload=function(e){
+    d[key]=e.target.result;
+    var th=document.getElementById(thumbId);
+    if(th){ th.src=e.target.result; th.classList.add('show'); }
+    push();
+    showToast('Bild hochgeladen!','success');
+    // re-render tab to show remove button
+    var tab=TPLS[tplKey].tabs.find(function(t){ return t.id===currentTab; });
+    renderTab(tab);
+  };
+  r.readAsDataURL(f);
+}
+
+function removeImg(key,thumbId){
+  d[key]='';
+  var th=document.getElementById(thumbId);
+  if(th){ th.src=''; th.classList.remove('show'); }
+  push();
+  var tab=TPLS[tplKey].tabs.find(function(t){ return t.id===currentTab; });
+  renderTab(tab);
+}
+
+// ══ IFRAME ══
+function loadIframe(){
+  var frame=document.getElementById('pf');
+  frame.src=TPLS[tplKey].file;
+  frame.onload=function(){ setTimeout(push,250); };
+}
+
+function push(){
+  var frame=document.getElementById('pf');
+  if(!frame.contentWindow) return;
+  frame.contentWindow.postMessage({type:'cardUpdate',data:d},'*');
+}
+
+function reloadIframe(){ loadIframe(); showToast('Vorschau aktualisiert','success'); }
+function openLive(){ window.open(TPLS[tplKey].file,'_blank'); }
+
+// ══ PUBLISH ══
+function publish(){
+  var url='https://taplify.com/c/'+tplKey+'-'+Math.random().toString(36).substr(2,7);
+  document.getElementById('cardUrl').textContent=url;
+  document.getElementById('modal').classList.add('open');
+}
+function copyUrl(){
+  navigator.clipboard.writeText(document.getElementById('cardUrl').textContent)
+    .then(function(){ showToast('Link kopiert!','success'); });
+}
+function closeModal(){ document.getElementById('modal').classList.remove('open'); }
+document.getElementById('modal').addEventListener('click',function(e){ if(e.target===this) closeModal(); });
+
+// ══ TOAST ══
+function showToast(msg,type){
+  var t=document.getElementById('toast');
+  document.getElementById('toastMsg').textContent=msg;
+  t.className='toast '+type;
+  t.querySelector('i').className=type==='success'?'fas fa-check-circle':'fas fa-exclamation-circle';
+  t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); },3000);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,1435 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-editable="siteTitle">Wolf Friseur | Luxus Friseursalon</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1e3a5f;
+            --primary-light: #2d5a8a;
+            --accent: #c41e3a;
+            --accent-light: #e63950;
+            --gold: #c9a227;
+            --dark: #0a1628;
+            --text: #333333;
+            --text-light: #666666;
+            --bg-light: #f8f9fa;
+            --white: #ffffff;
+            --shadow: 0 4px 20px rgba(0,0,0,0.08);
+            --shadow-lg: 0 10px 40px rgba(0,0,0,0.12);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 { font-family: 'Playfair Display', serif; }
+
+        /* ===== HEADER ===== */
+        .header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .header.scrolled {
+            box-shadow: var(--shadow);
+        }
+
+        .header-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-img {
+            width: 55px;
+            height: 55px;
+            object-fit: contain;
+        }
+
+        .logo-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: 2px;
+        }
+
+        .logo-text span {
+            color: var(--accent);
+        }
+
+        .nav {
+            display: flex;
+            gap: 35px;
+            align-items: center;
+        }
+
+        .nav a {
+            color: var(--text);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav a:hover {
+            color: var(--accent);
+        }
+
+        .nav a:hover::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            background: var(--accent);
+            color: white !important;
+            padding: 12px 28px;
+            border-radius: 30px;
+            font-weight: 600 !important;
+        }
+
+        .nav-cta::after { display: none !important; }
+
+        .nav-cta:hover {
+            background: var(--accent-light);
+            transform: translateY(-2px);
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 80px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url('https://images.unsplash.com/photo-1560066984-138dadb4c035?w=1920&q=80') center/cover;
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 40px;
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-size: 64px;
+            font-weight: 900;
+            color: white;
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+
+        .hero-text h1 .highlight {
+            color: var(--gold);
+        }
+
+        .hero-text p {
+            font-size: 20px;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 40px;
+            max-width: 500px;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 16px;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+            padding: 16px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-light);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(196,30,58,0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: white;
+            padding: 16px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border: 2px solid rgba(255,255,255,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline:hover {
+            background: white;
+            color: var(--primary);
+            border-color: white;
+        }
+
+        .hero-image {
+            position: relative;
+        }
+
+        .hero-image img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        .hero-stat {
+            text-align: center;
+        }
+
+        .hero-stat-number {
+            font-size: 36px;
+            font-weight: 900;
+            color: var(--gold);
+            font-family: 'Playfair Display', serif;
+        }
+
+        .hero-stat-label {
+            color: rgba(255,255,255,0.7);
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* ===== ABOUT ===== */
+        .about {
+            padding: 120px 40px;
+            background: var(--white);
+        }
+
+        .about-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .about-images {
+            position: relative;
+        }
+
+        .about-img-main {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .about-img-float {
+            position: absolute;
+            width: 250px;
+            border-radius: 15px;
+            box-shadow: var(--shadow-lg);
+            border: 5px solid white;
+        }
+
+        .about-img-float.top {
+            top: -30px;
+            right: -30px;
+        }
+
+        .about-img-float.bottom {
+            bottom: -30px;
+            left: -30px;
+        }
+
+        .about-text .section-tag {
+            display: inline-block;
+            background: rgba(196,30,58,0.1);
+            color: var(--accent);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        .about-text h2 {
+            font-size: 42px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 24px;
+            line-height: 1.2;
+        }
+
+        .about-text p {
+            color: var(--text-light);
+            font-size: 17px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .about-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .about-feature {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .about-feature i {
+            width: 45px;
+            height: 45px;
+            background: var(--accent);
+            color: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .about-feature span {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* ===== SERVICES / PRICING ===== */
+        .pricing {
+            padding: 120px 40px;
+            background: var(--bg-light);
+        }
+
+        .pricing-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header .section-tag {
+            display: inline-block;
+            background: rgba(196,30,58,0.1);
+            color: var(--accent);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        .section-header h2 {
+            font-size: 42px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 16px;
+        }
+
+        .section-header p {
+            color: var(--text-light);
+            font-size: 18px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .pricing-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 50px;
+        }
+
+        .pricing-tab {
+            padding: 14px 32px;
+            border: 2px solid var(--primary);
+            background: transparent;
+            color: var(--primary);
+            border-radius: 50px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .pricing-tab.active,
+        .pricing-tab:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .pricing-content {
+            display: none;
+        }
+
+        .pricing-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .pricing-table {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .pricing-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .pricing-table th {
+            background: var(--primary);
+            color: white;
+            padding: 20px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .pricing-table td {
+            padding: 18px 20px;
+            border-bottom: 1px solid #eee;
+            font-size: 15px;
+        }
+
+        .pricing-table tr:hover td {
+            background: var(--bg-light);
+        }
+
+        .pricing-table .price {
+            font-weight: 700;
+            color: var(--accent);
+            font-size: 16px;
+        }
+
+        .pricing-table .package-name {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* ===== GALLERY ===== */
+        .gallery {
+            padding: 120px 40px;
+            background: var(--white);
+        }
+
+        .gallery-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-top: 50px;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            aspect-ratio: 1;
+            cursor: pointer;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-item-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(to top, rgba(30,58,95,0.9) 0%, transparent 60%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-item-overlay {
+            opacity: 1;
+        }
+
+        .gallery-item-title {
+            color: white;
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .gallery-item-category {
+            color: var(--gold);
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* ===== TESTIMONIALS ===== */
+        .testimonials {
+            padding: 120px 40px;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .testimonials::before {
+            content: '"';
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Playfair Display', serif;
+            font-size: 400px;
+            color: rgba(255,255,255,0.03);
+            line-height: 1;
+        }
+
+        .testimonials-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .testimonial-card {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 40px;
+            transition: all 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255,255,255,0.08);
+        }
+
+        .testimonial-stars {
+            color: var(--gold);
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .testimonial-text {
+            color: rgba(255,255,255,0.9);
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 24px;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .testimonial-author img {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--accent);
+        }
+
+        .testimonial-author-info h4 {
+            color: white;
+            font-size: 17px;
+            margin-bottom: 4px;
+        }
+
+        .testimonial-author-info span {
+            color: rgba(255,255,255,0.6);
+            font-size: 13px;
+        }
+
+        /* ===== CONTACT / BOOKING ===== */
+        .contact {
+            padding: 120px 40px;
+            background: var(--bg-light);
+        }
+
+        .contact-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+        }
+
+        .contact-info h2 {
+            font-size: 42px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 24px;
+        }
+
+        .contact-info p {
+            color: var(--text-light);
+            font-size: 17px;
+            line-height: 1.8;
+            margin-bottom: 40px;
+        }
+
+        .contact-details {
+            display: grid;
+            gap: 24px;
+        }
+
+        .contact-detail {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .contact-detail i {
+            width: 50px;
+            height: 50px;
+            background: var(--accent);
+            color: white;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .contact-detail h4 {
+            font-size: 16px;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        .contact-detail p, .contact-detail a {
+            color: var(--text-light);
+            font-size: 15px;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-detail a:hover {
+            color: var(--accent);
+        }
+
+        .contact-form {
+            background: white;
+            padding: 50px;
+            border-radius: 24px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .contact-form h3 {
+            font-size: 28px;
+            color: var(--primary);
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            background: var(--bg-light);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: white;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .contact-form .btn-primary {
+            width: 100%;
+            justify-content: center;
+            padding: 18px;
+            font-size: 17px;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: var(--dark);
+            color: white;
+            padding: 80px 40px 40px;
+        }
+
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 60px;
+        }
+
+        .footer-brand .logo-text {
+            color: white;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .footer-brand p {
+            color: rgba(255,255,255,0.6);
+            line-height: 1.8;
+            margin-bottom: 24px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 12px;
+        }
+
+        .footer-social a {
+            width: 42px;
+            height: 42px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-social a:hover {
+            background: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .footer-column h4 {
+            font-size: 18px;
+            margin-bottom: 24px;
+            color: white;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-column ul li a {
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-size: 15px;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--accent);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 60px auto 0;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: rgba(255,255,255,0.5);
+            font-size: 14px;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .hero-content { grid-template-columns: 1fr; text-align: center; }
+            .hero-text p { margin: 0 auto 40px; }
+            .hero-btns { justify-content: center; }
+            .hero-stats { justify-content: center; }
+            .about-inner { grid-template-columns: 1fr; }
+            .contact-inner { grid-template-columns: 1fr; }
+            .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-inner { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .header-inner { padding: 15px 20px; }
+            .nav { display: none; }
+            .hero-text h1 { font-size: 40px; }
+            .about-text h2, .section-header h2, .contact-info h2 { font-size: 32px; }
+            .testimonials-grid { grid-template-columns: 1fr; }
+            .gallery-grid { grid-template-columns: 1fr 1fr; }
+            .footer-inner { grid-template-columns: 1fr; gap: 40px; }
+            .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+            .about-img-float { display: none; }
+            .form-row { grid-template-columns: 1fr; }
+            .pricing-tabs { flex-wrap: wrap; }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header" id="header">
+        <div class="header-inner">
+            <div class="logo">
+                <img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=200&q=80" alt="Logo" class="logo-img" data-editable="logo" data-type="image">
+                <span class="logo-text" data-editable="logoText">WOLF <span>FRISEUR</span></span>
+            </div>
+            <nav class="nav">
+                <a href="#home" data-editable="navHome">Startseite</a>
+                <a href="#about" data-editable="navAbout">Über uns</a>
+                <a href="#pricing" data-editable="navServices">Leistungen</a>
+                <a href="#gallery" data-editable="navGallery">Galerie</a>
+                <a href="#contact" data-editable="navContact">Standort</a>
+                <a href="#contact" class="nav-cta" data-editable="navCta">Termin</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 data-editable="heroTitle">Luxus <span class="highlight" data-editable="heroHighlight">Friseursalon</span></h1>
+                <p data-editable="heroDesc">Wo Stil auf Perfektion trifft. Ihr exklusiver Friseursalon in Wolfsburg.</p>
+                <div class="hero-btns">
+                    <a href="#contact" class="btn-primary" data-editable="heroCta1">
+                        <i class="fas fa-calendar-check"></i> Termin buchen
+                    </a>
+                    <a href="#pricing" class="btn-outline" data-editable="heroCta2">
+                        <i class="fas fa-list"></i> Preise ansehen
+                    </a>
+                </div>
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <div class="hero-stat-number" data-editable="stat1Num">10+</div>
+                        <div class="hero-stat-label" data-editable="stat1Label">Jahre Erfahrung</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="hero-stat-number" data-editable="stat2Num">5000+</div>
+                        <div class="hero-stat-label" data-editable="stat2Label">Zufriedene Kunden</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="hero-stat-number" data-editable="stat3Num">15+</div>
+                        <div class="hero-stat-label" data-editable="stat3Label">Dienstleistungen</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1633681926022-84c23e8cb2d6?w=800&q=80" alt="Salon" data-editable="heroImage" data-type="image">
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="about" id="about">
+        <div class="about-inner">
+            <div class="about-images">
+                <img src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?w=600&q=80" alt="About" class="about-img-main" data-editable="aboutImg1" data-type="image">
+                <img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?w=300&q=80" alt="About" class="about-img-float top" data-editable="aboutImg2" data-type="image">
+                <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=300&q=80" alt="About" class="about-img-float bottom" data-editable="aboutImg3" data-type="image">
+            </div>
+            <div class="about-text">
+                <span class="section-tag" data-editable="aboutTag">Über uns</span>
+                <h2 data-editable="aboutTitle">Exzellenz in jedem Schnitt</h2>
+                <p data-editable="aboutText1">Willkommen bei Wolf Friseur – Ihrem exklusiven Friseursalon im Herzen von Wolfsburg. Seit unserer Gründung stehen wir für höchste Qualität, kreative Haarstyling-Lösungen und erstklassigen Service.</p>
+                <p data-editable="aboutText2">Unser erfahrenes Team aus professionellen Friseuren vereint Leidenschaft mit technischer Meisterschaft. Wir verwenden ausschließlich Premium-Produkte und modernste Techniken.</p>
+                <p data-editable="aboutText3">Von klassischen Haarschnitten bis zu trendigen Farbtechniken – bei uns finden Sie die perfekte Lösung für Ihren individuellen Look.</p>
+                <div class="about-features">
+                    <div class="about-feature">
+                        <i class="fas fa-award"></i>
+                        <span data-editable="feature1">Zertifizierte Experten</span>
+                    </div>
+                    <div class="about-feature">
+                        <i class="fas fa-gem"></i>
+                        <span data-editable="feature2">Premium Produkte</span>
+                    </div>
+                    <div class="about-feature">
+                        <i class="fas fa-heart"></i>
+                        <span data-editable="feature3">Persönliche Beratung</span>
+                    </div>
+                    <div class="about-feature">
+                        <i class="fas fa-clock"></i>
+                        <span data-editable="feature4">Pünktlicher Service</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRICING -->
+    <section class="pricing" id="pricing">
+        <div class="pricing-inner">
+            <div class="section-header">
+                <span class="section-tag" data-editable="pricingTag">Preise</span>
+                <h2 data-editable="pricingTitle">Unsere Leistungen</h2>
+                <p data-editable="pricingDesc">Transparente Preise für erstklassige Qualität</p>
+            </div>
+
+            <div class="pricing-tabs">
+                <button class="pricing-tab active" onclick="showPricing('men')" data-editable="tabMen">Herren</button>
+                <button class="pricing-tab" onclick="showPricing('women')" data-editable="tabWomen">Damen</button>
+                <button class="pricing-tab" onclick="showPricing('kids')" data-editable="tabKids">Kinder</button>
+            </div>
+
+            <div class="pricing-content active" id="pricing-men">
+                <div class="pricing-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th data-editable="tableService">Leistung</th>
+                                <th data-editable="tablePrice">Preis</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="package-name" data-editable="men1">Trockenschnitt</td>
+                                <td class="price" data-editable="men1Price">20,00 €</td>
+                            </tr>
+                            <tr>
+                                <td class="package-name" data-editable="men2">Waschen, schneiden, stylen</td>
+                                <td class="price" data-editable="men2Price">23,00 €</td>
+                            </tr>
+                            <tr>
+                                <td class="package-name" data-editable="men3">Maschinenhaarschnitt</td>
+                                <td class="price" data-editable="men3Price">17,00 €</td>
+                            </tr>
+                            <tr>
+                                <td class="package-name" data-editable="men4">Bartschnitt</td>
+                                <td class="price" data-editable="men4Price">13,00 €</td>
+                            </tr>
+                            <tr>
+                                <td class="package-name" data-editable="men5">Augenbrauen zupfen</td>
+                                <td class="price" data-editable="men5Price">7,00 €</td>
+                            </tr>
+                            <tr>
+                                <td class="package-name" data-editable="men6">Nasen entwachsen</td>
+                                <td class="price" data-editable="men6Price">4,00 €</td>
+                            </tr>
+                            <tr>
+                                <td class="package-name" data-editable="men7">Ohren entwachsen</td>
+                                <td class="price" data-editable="men7Price">4,00 €</td>
+                            </tr>
+                            <tr style="background: rgba(196,30,58,0.05);">
+                                <td class="package-name" style="font-weight:700;" data-editable="menPackage">Komplettpaket</td>
+                                <td class="price" style="font-weight:700;" data-editable="menPackagePrice">38,00 €</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="pricing-content" id="pricing-women">
+                <div class="pricing-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th data-editable="tableService2">Leistung</th>
+                                <th data-editable="tableShort">Kurz</th>
+                                <th data-editable="tableMedium">Mittel</th>
+                                <th data-editable="tableLong">Lang</th>
+                                <th data-editable="tableExLong">Exlang</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="package-name" data-editable="women1">Trockenschnitt</td>
+                                <td class="price" data-editable="women1s">35,00 €</td>
+                                <td class="price" data-editable="women1m">40,00 €</td>
+                                <td class="price" data-editable="women1l">45,00 €</td>
+                                <td class="price" data-editable="women1xl">45,00 €</td>
+                            </tr>
+                            <tr>
+                                <td class="package-name" data-editable="women2">Waschen, föhnen</td>
+                                <td class="price" data-editable="women2s">15,00 €</td>
+                                <td class="price" data-editable="women2m">25,00 €</td>
+                                <td class="price" data-editable="women2l">30,00 €</td>
+                                <td class="price" data-editable="women2xl">30,00 €</td>
+                            </tr>
+                            <tr>
+                                <td class="package-name" data-editable="women3">Waschen, schneiden, föhnen</td>
+                                <td class="price" data-editable="women3s">40,00 €</td>
+                                <td class="price" data-editable="women3m">50,00 €</td>
+                                <td class="price" data-editable="women3l">55,00 €</td>
+                                <td class="price" data-editable="women3xl">55,00 €</td>
+                            </tr>
+                            <tr>
+                                <td class="package-name" data-editable="women4">Ansatzfärben ca. 2 cm</td>
+                                <td class="price" data-editable="women4s">40,00 €</td>
+                                <td class="price">—</td>
+                                <td class="price">—</td>
+                                <td class="price">—</td>
+                            </tr>
+                            <tr>
+                                <td class="package-name" data-editable="women5">Hochstecken</td>
+                                <td class="price" data-editable="women5s">75,00 €</td>
+                                <td class="price">—</td>
+                                <td class="price">—</td>
+                                <td class="price">—</td>
+                            </tr>
+                            <tr>
+                                <td class="package-name" data-editable="women6">Balayage</td>
+                                <td class="price">—</td>
+                                <td class="price" data-editable="women6m">150,00 €</td>
+                                <td class="price" data-editable="women6l">180,00 €</td>
+                                <td class="price" data-editable="women6xl">200,00 €</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="pricing-content" id="pricing-kids">
+                <div class="pricing-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th data-editable="tableService3">Leistung</th>
+                                <th data-editable="tablePrice2">Preis</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="package-name" data-editable="kid1">Boy bis 7 Jahre</td>
+                                <td class="price" data-editable="kid1Price">15,00 €</td>
+                            </tr>
+                            <tr>
+                                <td class="package-name" data-editable="kid2">Girl bis 10 Jahre</td>
+                                <td class="price" data-editable="kid2Price">20,00 €</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section class="gallery" id="gallery">
+        <div class="gallery-inner">
+            <div class="section-header">
+                <span class="section-tag" data-editable="galleryTag">Galerie</span>
+                <h2 data-editable="galleryTitle">Unsere Arbeiten</h2>
+                <p data-editable="galleryDesc">Lassen Sie sich von unseren Kreationen inspirieren</p>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=400&q=80" alt="Gallery" data-editable="gal1" data-type="image">
+                    <div class="gallery-item-overlay">
+                        <div class="gallery-item-category" data-editable="gal1Cat">Damen</div>
+                        <div class="gallery-item-title" data-editable="gal1Title">Moderner Bob</div>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=400&q=80" alt="Gallery" data-editable="gal2" data-type="image">
+                    <div class="gallery-item-overlay">
+                        <div class="gallery-item-category" data-editable="gal2Cat">Damen</div>
+                        <div class="gallery-item-title" data-editable="gal2Title">Elegante Locken</div>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?w=400&q=80" alt="Gallery" data-editable="gal3" data-type="image">
+                    <div class="gallery-item-overlay">
+                        <div class="gallery-item-category" data-editable="gal3Cat">Coloration</div>
+                        <div class="gallery-item-title" data-editable="gal3Title">Balayage Kunst</div>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=400&q=80" alt="Gallery" data-editable="gal4" data-type="image">
+                    <div class="gallery-item-overlay">
+                        <div class="gallery-item-category" data-editable="gal4Cat">Herren</div>
+                        <div class="gallery-item-title" data-editable="gal4Title">Herren Fade</div>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1633681926022-84c23e8cb2d6?w=400&q=80" alt="Gallery" data-editable="gal5" data-type="image">
+                    <div class="gallery-item-overlay">
+                        <div class="gallery-item-category" data-editable="gal5Cat">Coloration</div>
+                        <div class="gallery-item-title" data-editable="gal5Title">Farbenfroher Stil</div>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?w=400&q=80" alt="Gallery" data-editable="gal6" data-type="image">
+                    <div class="gallery-item-overlay">
+                        <div class="gallery-item-category" data-editable="gal6Cat">Klassisch</div>
+                        <div class="gallery-item-title" data-editable="gal6Title">Klassischer Schnitt</div>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1519699047748-de8e457a634e?w=400&q=80" alt="Gallery" data-editable="gal7" data-type="image">
+                    <div class="gallery-item-overlay">
+                        <div class="gallery-item-category" data-editable="gal7Cat">Braut</div>
+                        <div class="gallery-item-title" data-editable="gal7Title">Brautstyling</div>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1599351431202-6e0c4760a634?w=400&q=80" alt="Gallery" data-editable="gal8" data-type="image">
+                    <div class="gallery-item-overlay">
+                        <div class="gallery-item-category" data-editable="gal8Cat">Herren</div>
+                        <div class="gallery-item-title" data-editable="gal8Title">Undercut Design</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="testimonials" id="testimonials">
+        <div class="testimonials-inner">
+            <div class="section-header">
+                <span class="section-tag" style="background:rgba(255,255,255,0.1);color:white;" data-editable="testTag">Kundenstimmen</span>
+                <h2 style="color:white;" data-editable="testTitle">Was unsere Kunden sagen</h2>
+                <p style="color:rgba(255,255,255,0.7);" data-editable="testDesc">Echte Bewertungen von zufriedenen Kunden</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text" data-editable="test1Text">Absolut fantastischer Service! Das Team versteht wirklich, was Haarstyling bedeutet. Mein neuer Look ist genau das, was ich wollte. Ich komme definitiv wieder!</p>
+                    <div class="testimonial-author">
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80" alt="Customer" data-editable="test1Img" data-type="image">
+                        <div class="testimonial-author-info">
+                            <h4 data-editable="test1Name">Anna M.</h4>
+                            <span data-editable="test1Role">Stammkundin seit 2022</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text" data-editable="test2Text">Ich war noch nie so zufrieden mit einem Friseur! Die Atmosphäre im Salon ist wunderschön und das Ergebnis hat meine Erwartungen weit übertroffen. Klare Empfehlung!</p>
+                    <div class="testimonial-author">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80" alt="Customer" data-editable="test2Img" data-type="image">
+                        <div class="testimonial-author-info">
+                            <h4 data-editable="test2Name">Markus L.</h4>
+                            <span data-editable="test2Role">Stammkunde seit 2021</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text" data-editable="test3Text">Das Balayage hat sich absolut gelohnt – die Farbe ist wunderschön und hält super lange. Das Team hat sich Zeit genommen, genau zugehört und perfekt umgesetzt. Danke!</p>
+                    <div class="testimonial-author">
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&q=80" alt="Customer" data-editable="test3Img" data-type="image">
+                        <div class="testimonial-author-info">
+                            <h4 data-editable="test3Name">Laura K.</h4>
+                            <span data-editable="test3Role">Kundin seit 2023</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact" id="contact">
+        <div class="contact-inner">
+            <div class="contact-info">
+                <h2 data-editable="contactTitle">Kontaktinformationen</h2>
+                <p data-editable="contactDesc">Besuchen Sie uns oder vereinbaren Sie einen Termin. Wir freuen uns auf Sie!</p>
+                <div class="contact-details">
+                    <div class="contact-detail">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h4 data-editable="addrLabel">Adresse</h4>
+                            <p data-editable="addrValue">Musterstraße 1<br>38547 Calberlah, Deutschland</p>
+                        </div>
+                    </div>
+                    <div class="contact-detail">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h4 data-editable="phoneLabel">Telefon</h4>
+                            <a href="tel:0151 00000000" data-editable="phoneValue">0151 00000000</a>
+                        </div>
+                    </div>
+                    <div class="contact-detail">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <h4 data-editable="hoursLabel">Öffnungszeiten</h4>
+                            <p data-editable="hoursValue">Mo – Fr: 09:00 – 19:00<br>Sa: 09:00 – 14:00<br>So: Geschlossen</p>
+                        </div>
+                    </div>
+                    <div class="contact-detail">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4 data-editable="emailLabel">E-Mail</h4>
+                            <a href="mailto:info@wolf-friseur.de" data-editable="emailValue">info@wolf-friseur.de</a>
+                        </div>
+                    </div>
+                    <div class="contact-detail">
+                        <i class="fas fa-user"></i>
+                        <div>
+                            <h4 data-editable="ownerLabel">Inhaber</h4>
+                            <p data-editable="ownerValue">Max Mustermann</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="contact-form">
+                <h3 data-editable="formTitle">Termin vereinbaren</h3>
+                <form>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label data-editable="labelFirst">Vorname</label>
+                            <input type="text" placeholder="Ihr Vorname" data-editable="phFirst">
+                        </div>
+                        <div class="form-group">
+                            <label data-editable="labelLast">Nachname</label>
+                            <input type="text" placeholder="Ihr Nachname" data-editable="phLast">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label data-editable="labelPhone">Telefon</label>
+                        <input type="tel" placeholder="Ihre Telefonnummer" data-editable="phPhone">
+                    </div>
+                    <div class="form-group">
+                        <label data-editable="labelEmail">E-Mail</label>
+                        <input type="email" placeholder="Ihre E-Mail-Adresse" data-editable="phEmail">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label data-editable="labelDate">Datum</label>
+                            <input type="date">
+                        </div>
+                        <div class="form-group">
+                            <label data-editable="labelTime">Uhrzeit</label>
+                            <input type="time">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label data-editable="labelService">Dienstleistung</label>
+                        <select data-editable="phService">
+                            <option>Bitte wählen...</option>
+                            <option>Herren Haarschnitt</option>
+                            <option>Damen Haarschnitt</option>
+                            <option>Coloration</option>
+                            <option>Brautstyling</option>
+                            <option>Bartschnitt</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label data-editable="labelNotes">Besondere Wünsche</label>
+                        <textarea placeholder="Haben Sie besondere Wünsche oder Anmerkungen?" data-editable="phNotes"></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary" data-editable="formSubmit">
+                        <i class="fas fa-paper-plane"></i> Termin anfragen
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <span class="logo-text" data-editable="footerLogo">WOLF <span>FRISEUR</span></span>
+                <p data-editable="footerDesc">Ihr exklusiver Friseursalon in Wolfsburg. Wir stehen für höchste Qualität, kreative Haarstyling-Lösungen und erstklassigen Service.</p>
+                <div class="footer-social">
+                    <a href="#" data-editable="socialFb"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" data-editable="socialIg"><i class="fab fa-instagram"></i></a>
+                    <a href="#" data-editable="socialWa"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#" data-editable="socialTk"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h4 data-editable="footerNav1">Navigation</h4>
+                <ul>
+                    <li><a href="#home" data-editable="fNavHome">Startseite</a></li>
+                    <li><a href="#about" data-editable="fNavAbout">Über uns</a></li>
+                    <li><a href="#pricing" data-editable="fNavServices">Leistungen</a></li>
+                    <li><a href="#gallery" data-editable="fNavGallery">Galerie</a></li>
+                    <li><a href="#contact" data-editable="fNavContact">Kontakt</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4 data-editable="footerNav2">Leistungen</h4>
+                <ul>
+                    <li><a href="#" data-editable="fNavMen">Herren</a></li>
+                    <li><a href="#" data-editable="fNavWomen">Damen</a></li>
+                    <li><a href="#" data-editable="fNavKids">Kinder</a></li>
+                    <li><a href="#" data-editable="fNavColor">Coloration</a></li>
+                    <li><a href="#" data-editable="fNavBride">Brautstyling</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4 data-editable="footerNav3">Rechtliches</h4>
+                <ul>
+                    <li><a href="#" data-editable="fNavImprint">Impressum</a></li>
+                    <li><a href="#" data-editable="fNavPrivacy">Datenschutz</a></li>
+                    <li><a href="#" data-editable="fNavAgb">AGB</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span data-editable="footerCopy">© 2024 Wolf Friseur. Alle Rechte vorbehalten.</span>
+            <span data-editable="footerMade">Made with <i class="fas fa-heart" style="color:var(--accent);"></i> in Wolfsburg</span>
+        </div>
+    </footer>
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Pricing tabs
+        function showPricing(type) {
+            document.querySelectorAll('.pricing-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.pricing-tab').forEach(t => t.classList.remove('active'));
+            document.getElementById('pricing-' + type).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-editable="cardTitle" data-label="Seitentitel" data-section="meta">Prince Phone – Tech Blue Visitenkarte</title>
+<style>
+  :root {
+    --accent: #29abe2;
+    --bg-front: #1a1e27;
+    --bg-back: #29abe2;
+    --text-light: #ffffff;
+    --card-w: 340px;
+    --card-h: 219px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: Arial, sans-serif;
+    background: #111;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    gap: 32px;
+    padding: 40px 20px;
+  }
+  .card-label-text {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #666;
+    margin-bottom: 10px;
+    font-family: Arial, sans-serif;
+  }
+  .card-wrapper { display: flex; flex-direction: column; align-items: center; }
+
+  /* ── FRONT CARD ── */
+  .card-front {
+    width: var(--card-w);
+    height: var(--card-h);
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #2e3340 0%, #1a1e27 100%);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+  }
+
+  /* dark corner triangle */
+  .front-corner {
+    position: absolute;
+    top: 0; right: 0;
+    width: 0; height: 0;
+    border-style: solid;
+    border-width: 0 80px 80px 0;
+    border-color: transparent rgba(17,20,24,0.7) transparent transparent;
+  }
+
+  /* gear icon area – centered */
+  .front-gear-area {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -60%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .gear-ring {
+    width: 68px;
+    height: 68px;
+    border: 2px solid var(--accent);
+    border-radius: 50%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .gear-inner {
+    width: 38px;
+    height: 38px;
+    background: #1a1e27;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .gear-monogram {
+    font-size: 15px;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: -1px;
+  }
+  /* gear teeth – CSS pseudo squares */
+  .gear-tooth {
+    position: absolute;
+    width: 8px; height: 8px;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+  .gear-tooth.top    { top: -5px;  left: 50%; transform: translateX(-50%); }
+  .gear-tooth.bottom { bottom: -5px; left: 50%; transform: translateX(-50%); }
+  .gear-tooth.left   { left: -5px; top: 50%; transform: translateY(-50%); }
+  .gear-tooth.right  { right: -5px; top: 50%; transform: translateY(-50%); }
+
+  .front-tagline {
+    font-size: 8px;
+    letter-spacing: 2px;
+    color: #aab0bf;
+    text-align: center;
+    margin-top: 10px;
+    text-transform: uppercase;
+  }
+
+  /* bottom accent bar */
+  .front-bottom-bar {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 8px;
+    background: var(--accent);
+    opacity: 0.6;
+  }
+
+  /* ── BACK CARD ── */
+  .card-back {
+    width: var(--card-w);
+    height: var(--card-h);
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+    background: var(--accent);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+  }
+
+  /* circuit pattern overlay */
+  .back-circuit {
+    position: absolute;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(0deg,   transparent, transparent 18px, rgba(255,255,255,0.06) 18px, rgba(255,255,255,0.06) 19px),
+      repeating-linear-gradient(90deg,  transparent, transparent 18px, rgba(255,255,255,0.06) 18px, rgba(255,255,255,0.06) 19px);
+    pointer-events: none;
+  }
+
+  /* white info card on back */
+  .back-info-card {
+    position: absolute;
+    top: 14px; left: 10px;
+    width: 200px;
+    background: rgba(255,255,255,0.93);
+    border-radius: 6px;
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+  .back-info-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .back-info-icon {
+    font-size: 9px;
+    color: var(--accent);
+    width: 12px;
+    flex-shrink: 0;
+  }
+  .back-info-value {
+    font-size: 9px;
+    color: #1a2535;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 170px;
+  }
+  .back-info-value.name-row {
+    font-size: 10px;
+    font-weight: 700;
+  }
+
+  /* QR placeholder on back bottom-left */
+  .back-qr-box {
+    position: absolute;
+    bottom: 10px; left: 10px;
+    width: 52px; height: 52px;
+    background: rgba(0,0,0,0.2);
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: #fff;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+
+  /* Brand text bottom-right of back */
+  .back-brand {
+    position: absolute;
+    bottom: 12px; right: 12px;
+    text-align: center;
+  }
+  .back-brand-sub {
+    font-size: 8px;
+    color: rgba(255,255,255,0.55);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    display: block;
+  }
+  .back-brand-name {
+    font-size: 16px;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: -0.5px;
+    display: block;
+    line-height: 1;
+  }
+</style>
+</head>
+<body>
+
+  <!-- FRONT CARD -->
+  <div class="card-wrapper">
+    <div class="card-label-text">Vorderseite</div>
+    <div class="card-front" id="cardFront">
+      <div class="front-corner"></div>
+
+      <div class="front-gear-area">
+        <div class="gear-ring">
+          <div class="gear-tooth top"></div>
+          <div class="gear-tooth bottom"></div>
+          <div class="gear-tooth left"></div>
+          <div class="gear-tooth right"></div>
+          <div class="gear-inner">
+            <span class="gear-monogram"
+              data-editable="monogram"
+              data-label="Monogramm (2 Buchstaben)"
+              data-section="Vorderseite">PP</span>
+          </div>
+        </div>
+        <div class="front-tagline"
+          data-editable="tagline"
+          data-label="Slogan / Tagline"
+          data-section="Vorderseite">Mehr Smart · Mehr Phone</div>
+      </div>
+
+      <div class="front-bottom-bar"></div>
+    </div>
+  </div>
+
+  <!-- BACK CARD -->
+  <div class="card-wrapper">
+    <div class="card-label-text">Rückseite</div>
+    <div class="card-back" id="cardBack">
+      <div class="back-circuit"></div>
+
+      <div class="back-info-card">
+        <!-- Name -->
+        <div class="back-info-row">
+          <span class="back-info-icon">👤</span>
+          <span class="back-info-value name-row"
+            data-editable="personName"
+            data-label="Vollständiger Name"
+            data-section="Rückseite">Moustafa Al Ali</span>
+        </div>
+        <!-- Phone -->
+        <div class="back-info-row">
+          <span class="back-info-icon">✆</span>
+          <span class="back-info-value"
+            data-editable="phone"
+            data-label="Telefonnummer"
+            data-section="Rückseite">0178 198 0573</span>
+        </div>
+        <!-- Address line 1 -->
+        <div class="back-info-row">
+          <span class="back-info-icon">⊙</span>
+          <span class="back-info-value"
+            data-editable="addressLine1"
+            data-label="Adresse Zeile 1"
+            data-section="Rückseite">Kaufhof 5</span>
+        </div>
+        <!-- Address line 2 -->
+        <div class="back-info-row">
+          <span class="back-info-icon" style="visibility:hidden;">⊙</span>
+          <span class="back-info-value"
+            data-editable="addressLine2"
+            data-label="Adresse Zeile 2"
+            data-section="Rückseite">38440 Wolfsburg</span>
+        </div>
+      </div>
+
+      <!-- QR placeholder -->
+      <div class="back-qr-box"
+        data-editable="qrUrl"
+        data-label="QR-Link (URL oder Telefon)"
+        data-section="Rückseite"
+        data-type="qr">QR</div>
+
+      <!-- Brand bottom-right -->
+      <div class="back-brand">
+        <span class="back-brand-sub"
+          data-editable="brandSub"
+          data-label="Marken-Untertitel"
+          data-section="Rückseite">phone</span>
+        <span class="back-brand-name"
+          data-editable="brandName"
+          data-label="Markenname"
+          data-section="Rückseite">PRINCE</span>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>

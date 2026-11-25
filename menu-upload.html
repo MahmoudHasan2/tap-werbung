@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Menü hochladen | TAP</title>
+    <style>
+        :root { --bg:#0f0f0f; --bg-light:#1a1a1a; --text:#ffffff; --text-muted:rgba(255,255,255,0.6); --purple:#8B5CF6; --border:rgba(255,255,255,0.1); }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { background:var(--bg); color:var(--text); font-family:sans-serif; min-height:100vh; display:flex; align-items:center; justify-content:center; padding:20px; }
+        .upload-card { background:var(--bg-light); border:1px solid var(--border); border-radius:24px; padding:40px; max-width:500px; width:100%; }
+        h1 { font-size:24px; margin-bottom:8px; }
+        p { color:var(--text-muted); font-size:14px; margin-bottom:30px; }
+        .form-group { margin-bottom:20px; }
+        label { display:block; font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:1px; color:var(--text-muted); margin-bottom:8px; }
+        input[type="text"] { width:100%; background:var(--bg); border:1px solid var(--border); border-radius:12px; padding:12px 16px; color:var(--text); font-size:15px; outline:none; }
+        input[type="file"] { display:none; }
+        .file-drop { border:2px dashed var(--border); border-radius:16px; padding:40px; text-align:center; cursor:pointer; transition:all 0.3s; }
+        .file-drop:hover { border-color:var(--purple); }
+        .file-drop.dragover { border-color:var(--purple); background:rgba(139,92,246,0.1); }
+        .file-drop .icon { font-size:48px; margin-bottom:12px; }
+        .file-name { margin-top:12px; padding:12px; background:var(--bg); border-radius:8px; font-size:13px; color:var(--purple); display:none; }
+        .btn { width:100%; padding:14px; background:var(--purple); color:white; border:none; border-radius:12px; font-size:14px; font-weight:600; cursor:pointer; transition:all 0.3s; }
+        .btn:hover { background:#A78BFA; }
+        .btn:disabled { opacity:0.5; cursor:not-allowed; }
+        .result { margin-top:20px; padding:16px; background:var(--bg); border-radius:12px; display:none; }
+        .result a { color:var(--purple); word-break:break-all; font-size:13px; }
+        .loading { display:none; text-align:center; margin-top:20px; }
+        .loading .spinner { width:30px; height:30px; border:2px solid var(--border); border-top-color:var(--purple); border-radius:50%; animation:spin 0.8s linear infinite; margin:0 auto 10px; }
+        @keyframes spin { to { transform:rotate(360deg); } }
+    </style>
+</head>
+<body>
+    <div class="upload-card">
+        <h1>📄 PDF Menü hochladen</h1>
+        <p>Lade deine Speisekarte als PDF hoch und erhalte einen direkten Link.</p>
+        
+        <div class="form-group">
+            <label>Name des Betriebs</label>
+            <input type="text" id="bizName" placeholder="z.B. Restaurant Mediterran">
+        </div>
+        
+        <div class="form-group">
+            <label>PDF Datei</label>
+            <div class="file-drop" id="fileDrop" onclick="document.getElementById('fileInput').click()">
+                <div class="icon">📁</div>
+                <p>PDF hier ablegen oder klicken zum Auswählen</p>
+                <div class="file-name" id="fileName"></div>
+            </div>
+            <input type="file" id="fileInput" accept=".pdf" onchange="handleFile(this.files[0])">
+        </div>
+        
+        <button class="btn" id="uploadBtn" onclick="uploadFile()" disabled>Hochladen</button>
+        
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Wird hochgeladen...</p>
+        </div>
+        
+        <div class="result" id="result">
+            <p style="color:var(--text-muted); font-size:12px; margin-bottom:8px;">✅ Menü erfolgreich hochgeladen!</p>
+            <a id="menuLink" target="_blank"></a>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
+
+        const app = initializeApp({ databaseURL: "https://your-firebase-project-default-rtdb.europe-west1.firebasedatabase.app" });
+        const db = getDatabase(app);
+
+        let selectedFile = null;
+
+        window.handleFile = function(file) {
+            if (!file) return;
+            if (file.type !== 'application/pdf' && !file.name.endsWith('.pdf')) {
+                alert('Bitte nur PDF Dateien hochladen!');
+                return;
+            }
+            selectedFile = file;
+            document.getElementById('fileName').textContent = file.name;
+            document.getElementById('fileName').style.display = 'block';
+            document.getElementById('uploadBtn').disabled = false;
+        };
+
+        const dropZone = document.getElementById('fileDrop');
+        dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
+        dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+            const file = e.dataTransfer.files[0];
+            if (file) handleFile(file);
+        });
+
+        window.uploadFile = async function() {
+            if (!selectedFile) return;
+            
+            const bizName = document.getElementById('bizName').value || 'Unbekannt';
+            
+            document.getElementById('uploadBtn').disabled = true;
+            document.getElementById('loading').style.display = 'block';
+
+            try {
+                const formData = new FormData();
+                formData.append('file', selectedFile);
+
+                const response = await fetch('upload.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (result.error) {
+                    throw new Error(result.error);
+                }
+
+                // ✅ الرابط المباشر من PHP
+                const directUrl = result.url;
+
+                // خزن في Firebase
+                const menuId = result.id;
+                const menuData = {
+                    businessName: bizName,
+                    menuFileUrl: directUrl,
+                    menuType: 'pdf',
+                    filename: result.filename,
+                    id: menuId,
+                    createdAt: Date.now(),
+                    views: 0
+                };
+
+                await set(ref(db, 'menus/' + menuId), menuData);
+
+                // ✅ اعرض الرابط المباشر
+                document.getElementById('menuLink').href = directUrl;
+                document.getElementById('menuLink').textContent = directUrl;
+                document.getElementById('result').style.display = 'block';
+                
+                // ✅ افتح الرابط المباشر
+                window.open(directUrl, '_blank');
+
+            } catch (error) {
+                console.error('Upload error:', error);
+                alert('Fehler: ' + error.message);
+            } finally {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('uploadBtn').disabled = false;
+            }
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-editable="siteTitle">FitLife | Personalized Training & Nutrition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ===== RESET & VARIABLES - LIGHT THEME ===== */
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f7f7f7;
+            --bg-dark: #fafafa;
+            --text-primary: #111111;
+            --text-secondary: #555555;
+            --text-muted: #888888;
+            --accent: #000000;
+            --accent-light: #333333;
+            --border-light: #e5e5e5;
+            --gold: #c9a96e;
+            --success: #2ecc71;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+            --shadow-md: 0 4px 20px rgba(0,0,0,0.06);
+            --shadow-lg: 0 10px 40px rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            line-height: 1.5;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 80px;
+        }
+
+        @media (max-width: 1200px) {
+            .container {
+                padding: 0 60px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 30px;
+            }
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn-primary {
+            background: var(--accent);
+            color: var(--bg-primary);
+            padding: 16px 42px;
+            border: none;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-block;
+            text-decoration: none;
+            border-radius: 0;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-light);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-primary);
+            padding: 14px 38px;
+            border: 2px solid var(--accent);
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .btn-outline:hover {
+            background: var(--accent);
+            color: var(--bg-primary);
+        }
+
+        /* ===== NAVIGATION ===== */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 28px 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition);
+            background: rgba(255, 255, 255, 0.98);
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 48px;
+        }
+
+        .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--gold);
+        }
+
+        .nav-cta {
+            background: var(--accent);
+            color: var(--bg-primary);
+            padding: 12px 32px;
+            border: none;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .nav-cta:hover {
+            background: var(--gold);
+        }
+
+        @media (max-width: 968px) {
+            nav {
+                padding: 20px 30px;
+            }
+            .nav-links, .nav-cta {
+                display: none;
+            }
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: var(--bg-primary);
+            padding-top: 100px;
+        }
+
+        .hero-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 80px;
+        }
+
+        .hero-left {
+            flex: 1;
+        }
+
+        .hero-badge {
+            font-size: 0.7rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .hero-title {
+            font-size: 4.8rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        .hero-title span {
+            color: var(--gold);
+        }
+
+        .hero-subtitle {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+            max-width: 500px;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .hero-stat .number {
+            font-size: 2rem;
+            font-weight: 800;
+            display: block;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .hero-stat .label {
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .hero-right {
+            flex: 1;
+        }
+
+        .hero-right img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+
+        @media (max-width: 1024px) {
+            .hero-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            .hero-title {
+                font-size: 3rem;
+            }
+            .hero-subtitle {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .hero-stats {
+                justify-content: center;
+            }
+            .hero-buttons {
+                justify-content: center;
+            }
+        }
+
+        /* ===== APPROACH SECTION ===== */
+        .approach {
+            padding: 120px 0;
+            background: var(--bg-secondary);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+
+        .section-tag {
+            font-size: 0.7rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+
+        .section-subtitle {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .approach-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+        }
+
+        .approach-card {
+            text-align: center;
+            padding: 40px 30px;
+            background: var(--bg-primary);
+            transition: var(--transition);
+            border: 1px solid var(--border-light);
+        }
+
+        .approach-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .approach-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 25px;
+            background: var(--bg-secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            transition: var(--transition);
+        }
+
+        .approach-card:hover .approach-icon {
+            background: var(--gold);
+            color: white;
+        }
+
+        .approach-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+        }
+
+        .approach-card p {
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 1024px) {
+            .approach-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .approach-grid {
+                grid-template-columns: 1fr;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        /* ===== PATHS SECTION ===== */
+        .paths {
+            padding: 120px 0;
+            background: var(--bg-primary);
+        }
+
+        .paths-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .path-card {
+            text-align: center;
+            padding: 40px 25px;
+            background: var(--bg-secondary);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .path-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .path-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 20px;
+            background: var(--bg-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .path-card:hover .path-icon {
+            background: var(--gold);
+            color: white;
+        }
+
+        .path-card h4 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+        }
+
+        .path-card p {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .watch-link {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .watch-link a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            border-bottom: 2px solid var(--gold);
+            padding-bottom: 5px;
+            transition: var(--transition);
+        }
+
+        .watch-link a:hover {
+            color: var(--gold);
+        }
+
+        @media (max-width: 1024px) {
+            .paths-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .paths-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ===== MANTRA SECTION ===== */
+        .mantra {
+            padding: 100px 0;
+            background: var(--bg-secondary);
+            text-align: center;
+        }
+
+        .mantra-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+        }
+
+        .mantra-title span {
+            color: var(--gold);
+        }
+
+        @media (max-width: 768px) {
+            .mantra-title {
+                font-size: 2rem;
+            }
+        }
+
+        /* ===== RESULTS SECTION ===== */
+        .results {
+            padding: 120px 0;
+            background: var(--bg-primary);
+        }
+
+        .results-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .results-header h3 {
+            font-size: 0.7rem;
+            letter-spacing: 4px;
+            color: var(--gold);
+            margin-bottom: 15px;
+        }
+
+        .results-header h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 50px;
+            text-align: center;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .result-item .number {
+            font-size: 3rem;
+            font-weight: 800;
+            font-family: 'Playfair Display', serif;
+            display: block;
+        }
+
+        .result-item .label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 768px) {
+            .results-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 30px;
+            }
+        }
+
+        /* ===== CTA SECTION ===== */
+        .cta {
+            padding: 100px 0;
+            background: var(--bg-secondary);
+            text-align: center;
+        }
+
+        .cta h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+
+        .cta p {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ===== DAILY TRACKER ===== */
+        .tracker {
+            padding: 100px 0;
+            background: var(--bg-primary);
+            border-top: 1px solid var(--border-light);
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .tracker-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            text-align: center;
+        }
+
+        .tracker-item {
+            padding: 30px;
+        }
+
+        .tracker-icon {
+            font-size: 2rem;
+            color: var(--gold);
+            margin-bottom: 15px;
+        }
+
+        .tracker-value {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 5px;
+        }
+
+        .tracker-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 768px) {
+            .tracker-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tracker-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--bg-primary);
+            padding: 60px 80px 30px;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 60px;
+            margin-bottom: 50px;
+        }
+
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            display: inline-block;
+            color: var(--text-primary);
+        }
+
+        .footer-about {
+            font-size: 0.85rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin-bottom: 25px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-social a {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .footer-social a:hover {
+            color: var(--gold);
+        }
+
+        .footer-column h4 {
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-column ul li a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: var(--transition);
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--gold);
+        }
+
+        .footer-bottom {
+            padding-top: 30px;
+            border-top: 1px solid var(--border-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--gold);
+        }
+
+        @media (max-width: 1024px) {
+            footer {
+                padding: 50px 40px 25px;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 40px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-bottom {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+        }
+
+        .animate-on-scroll.visible {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        /* ===== SCROLLBAR ===== */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--gold);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="#" class="logo" data-editable="logo">FIT<span style="color: var(--gold);">LIFE</span></a>
+        <ul class="nav-links">
+            <li><a href="#home" data-editable="nav1">Home</a></li>
+            <li><a href="#approach" data-editable="nav2">Approach</a></li>
+            <li><a href="#paths" data-editable="nav3">Programs</a></li>
+            <li><a href="#results" data-editable="nav4">Results</a></li>
+            <li><a href="#contact" data-editable="nav5">Contact</a></li>
+        </ul>
+        <button class="nav-cta" data-editable="navCta">Start Your Journey →</button>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container hero-container">
+            <div class="hero-left">
+                <span class="hero-badge" data-editable="heroBadge">STRONGER EVERY DAY.</span>
+                <h1 class="hero-title" data-editable="heroTitle">Personalized training.<br><span>Smarter nutrition.</span><br>Real results that last.</h1>
+                <p class="hero-subtitle" data-editable="heroSubtitle">Join 150K+ members transforming their lives with our science-backed approach.</p>
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <span class="number" data-editable="stat1">150K+</span>
+                        <span class="label" data-editable="stat1Label">Happy Members</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="number" data-editable="stat2">98%</span>
+                        <span class="label" data-editable="stat2Label">Success Rate</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="number" data-editable="stat3">4.9</span>
+                        <span class="label" data-editable="stat3Label">Rating</span>
+                    </div>
+                </div>
+                <div class="hero-buttons">
+                    <button class="btn-primary" data-editable="heroBtn1">Start Your Journey →</button>
+                    <button class="btn-outline" data-editable="heroBtn2">Learn More</button>
+                </div>
+            </div>
+            <div class="hero-right">
+                <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80" alt="Fitness training" data-editable="heroImage" data-type="image">
+            </div>
+        </div>
+    </section>
+
+    <!-- Approach Section -->
+    <section class="approach" id="approach">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag" data-editable="approachTag">OUR APPROACH</span>
+                <h2 class="section-title" data-editable="approachTitle">A smarter way<br>to get fit</h2>
+                <p class="section-subtitle" data-editable="approachSubtitle">Science-backed methods that deliver real, lasting results.</p>
+            </div>
+            <div class="approach-grid">
+                <div class="approach-card animate-on-scroll">
+                    <div class="approach-icon"><i class="fas fa-user-circle"></i></div>
+                    <h4 data-editable="approach1Title">Personalized for You</h4>
+                    <p data-editable="approach1Desc">Custom plans tailored to your body, goals, and lifestyle.</p>
+                </div>
+                <div class="approach-card animate-on-scroll">
+                    <div class="approach-icon"><i class="fas fa-chalkboard-user"></i></div>
+                    <h4 data-editable="approach2Title">Expert Coaches</h4>
+                    <p data-editable="approach2Desc">Learn from certified trainers who guide you every step.</p>
+                </div>
+                <div class="approach-card animate-on-scroll">
+                    <div class="approach-icon"><i class="fas fa-chart-line"></i></div>
+                    <h4 data-editable="approach3Title">Track & Improve</h4>
+                    <p data-editable="approach3Desc">Smart tracking tools to monitor progress and stay motivated.</p>
+                </div>
+                <div class="approach-card animate-on-scroll">
+                    <div class="approach-icon"><i class="fas fa-heartbeat"></i></div>
+                    <h4 data-editable="approach4Title">Total Wellness</h4>
+                    <p data-editable="approach4Desc">Fitness, nutrition, and mindset—balanced for a better you.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Choose Your Path Section -->
+    <section class="paths" id="paths">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag" data-editable="pathsTag">CHOOSE YOUR PATH</span>
+                <h2 class="section-title" data-editable="pathsTitle">Find your perfect<br>fitness journey</h2>
+                <p class="section-subtitle" data-editable="pathsSubtitle">Select from specialized programs designed for every goal.</p>
+            </div>
+            <div class="paths-grid">
+                <div class="path-card animate-on-scroll">
+                    <div class="path-icon"><i class="fas fa-fire"></i></div>
+                    <h4 data-editable="path1Title">Fat Loss</h4>
+                    <p data-editable="path1Desc">Burn fat and build lean muscle.</p>
+                </div>
+                <div class="path-card animate-on-scroll">
+                    <div class="path-icon"><i class="fas fa-dumbbell"></i></div>
+                    <h4 data-editable="path2Title">Muscle Gain</h4>
+                    <p data-editable="path2Desc">Build strength and increase performance.</p>
+                </div>
+                <div class="path-card animate-on-scroll">
+                    <div class="path-icon"><i class="fas fa-praying-hands"></i></div>
+                    <h4 data-editable="path3Title">Yoga & Mobility</h4>
+                    <p data-editable="path3Desc">Improve flexibility and reduce stress.</p>
+                </div>
+                <div class="path-card animate-on-scroll">
+                    <div class="path-icon"><i class="fas fa-apple-alt"></i></div>
+                    <h4 data-editable="path4Title">Nutrition Plans</h4>
+                    <p data-editable="path4Desc">Eat smarter with custom meal plans.</p>
+                </div>
+            </div>
+            <div class="watch-link">
+                <a href="#" data-editable="watchLink">▶ WATCH HOW OUR MEMBERS ACHIEVE THEIR BEST →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mantra Section -->
+    <section class="mantra">
+        <div class="container">
+            <h2 class="mantra-title" data-editable="mantra">STRONG BODY. <span>STRONG MIND.</span> BETTER YOU.</h2>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section class="results" id="results">
+        <div class="container">
+            <div class="results-header">
+                <h3 data-editable="resultsTag">RESULTS THAT SPEAK FOR THEMSELVES</h3>
+                <h2 data-editable="resultsTitle">We deliver real,<br>measurable results</h2>
+            </div>
+            <div class="results-grid">
+                <div class="result-item">
+                    <span class="number" data-editable="result1">150K+</span>
+                    <span class="label" data-editable="result1Label">Happy Members</span>
+                </div>
+                <div class="result-item">
+                    <span class="number" data-editable="result2">98%</span>
+                    <span class="label" data-editable="result2Label">Success Rate</span>
+                </div>
+                <div class="result-item">
+                    <span class="number" data-editable="result3">25M+</span>
+                    <span class="label" data-editable="result3Label">Workouts Completed</span>
+                </div>
+                <div class="result-item">
+                    <span class="number" data-editable="result4">4.9/5</span>
+                    <span class="label" data-editable="result4Label">Member Rating</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Daily Tracker Section -->
+    <section class="tracker">
+        <div class="container">
+            <div class="tracker-grid">
+                <div class="tracker-item">
+                    <div class="tracker-icon"><i class="fas fa-heartbeat"></i></div>
+                    <div class="tracker-value" data-editable="tracker1">78%</div>
+                    <div class="tracker-label" data-editable="tracker1Label">Completed</div>
+                </div>
+                <div class="tracker-item">
+                    <div class="tracker-icon"><i class="fas fa-dumbbell"></i></div>
+                    <div class="tracker-value" data-editable="tracker2">45 min</div>
+                    <div class="tracker-label" data-editable="tracker2Label">Workout</div>
+                </div>
+                <div class="tracker-item">
+                    <div class="tracker-icon"><i class="fas fa-utensils"></i></div>
+                    <div class="tracker-value" data-editable="tracker3">1600 kcal</div>
+                    <div class="tracker-label" data-editable="tracker3Label">Nutrition</div>
+                </div>
+                <div class="tracker-item">
+                    <div class="tracker-icon"><i class="fas fa-tint"></i></div>
+                    <div class="tracker-value" data-editable="tracker4">2.3 L</div>
+                    <div class="tracker-label" data-editable="tracker4Label">Water</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2 data-editable="ctaTitle">YOUR TRANSFORMATION<br>STARTS TODAY</h2>
+            <p data-editable="ctaText">Take the first step toward a healthier, stronger, and happier you.</p>
+            <button class="btn-primary" data-editable="ctaBtn">Get Started Free →</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="footer-grid">
+            <div>
+                <a href="#" class="footer-logo" data-editable="footerLogo">FIT<span style="color: var(--gold);">LIFE</span></a>
+                <p class="footer-about" data-editable="footerAbout">Personalized training. Smarter nutrition. Real results that last.</p>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h4 data-editable="footerCol1Title">Programs</h4>
+                <ul>
+                    <li><a href="#" data-editable="footerLink1">Fat Loss</a></li>
+                    <li><a href="#" data-editable="footerLink2">Muscle Gain</a></li>
+                    <li><a href="#" data-editable="footerLink3">Yoga & Mobility</a></li>
+                    <li><a href="#" data-editable="footerLink4">Nutrition Plans</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4 data-editable="footerCol2Title">Company</h4>
+                <ul>
+                    <li><a href="#" data-editable="footerLink5">About Us</a></li>
+                    <li><a href="#" data-editable="footerLink6">Coaches</a></li>
+                    <li><a href="#" data-editable="footerLink7">Success Stories</a></li>
+                    <li><a href="#" data-editable="footerLink8">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4 data-editable="footerCol3Title">Support</h4>
+                <ul>
+                    <li><a href="#" data-editable="footerLink9">Help Center</a></li>
+                    <li><a href="#" data-editable="footerLink10">Contact Us</a></li>
+                    <li><a href="#" data-editable="footerLink11">Privacy Policy</a></li>
+                    <li><a href="#" data-editable="footerLink12">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div data-editable="copyright">© 2024 FitLife. All rights reserved.</div>
+            <div class="footer-links">
+                <a href="#" data-editable="bottomLink1">Privacy</a>
+                <a href="#" data-editable="bottomLink2">Terms</a>
+                <a href="#" data-editable="bottomLink3">Cookies</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                navbar.style.padding = '20px 80px';
+                navbar.style.boxShadow = '0 2px 20px rgba(0,0,0,0.05)';
+            } else {
+                navbar.style.padding = '28px 80px';
+                navbar.style.boxShadow = 'none';
+            }
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scroll for nav links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Button click feedback
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.style.transform = 'scale(0.97)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+            });
+        });
+    </script>
+
+</body>
+</html>

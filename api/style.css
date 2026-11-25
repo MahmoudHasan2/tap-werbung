@@ -1,0 +1,181 @@
+:root {
+    --bg: #ffffff;
+    --text: #1a1a1b;
+    --purple: #581cff;
+    --font: 'Plus Jakarta Sans', sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    overflow-x: hidden;
+}
+
+/* Custom Cursor */
+#cursor {
+    position: fixed;
+    width: 12px; height: 12px;
+    background: var(--purple);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 10000;
+}
+
+/* Navigation */
+nav {
+    position: fixed;
+    top: 0; width: 100%;
+    padding: 40px 60px;
+    display: flex; justify-content: space-between; align-items: center;
+    z-index: 1000;
+}
+
+.logo-main { font-weight: 800; font-size: 32px; letter-spacing: -2px; display: block; }
+.logo-sub { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.7; }
+
+.nav-links a {
+    text-decoration: none; color: var(--text);
+    margin: 0 20px; font-weight: 500; font-size: 15px;
+}
+
+.contact-btn {
+    background: var(--purple);
+    color: #fff; padding: 12px 24px;
+    border-radius: 14px; display: flex; align-items: center;
+    gap: 12px; font-weight: 600; cursor: pointer;
+}
+
+.arrow-box {
+    background: #fff; color: #000;
+    width: 24px; height: 24px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 6px; font-size: 12px;
+}
+
+/* Hero Section */
+.hero {
+    height: 120vh;
+    display: flex; flex-direction: column;
+    justify-content: space-between; padding: 150px 5%;
+}
+
+.massive-text, .hero h1 {
+    font-size: clamp(80px, 12vw, 180px);
+    font-weight: 800; line-height: 0.85;
+    letter-spacing: -6px; font-style: italic;
+}
+
+.hero-top-text { text-align: right; }
+
+
+
+
+.mobile-menu {
+    position: fixed;
+    inset: 0;
+    background: rgba(15,15,15,0.98);
+    backdrop-filter: blur(30px);
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+}
+.mobile-menu.active {
+    opacity: 1;
+    pointer-events: all;
+}
+.mobile-menu-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+}
+.mobile-menu-inner a {
+    color: var(--text);
+    text-decoration: none;
+    font-family: var(--font-display);
+    font-size: clamp(24px, 7vw, 40px);
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+}
+.mobile-menu-inner a:hover {
+    color: var(--purple);
+}
+.mobile-menu-inner .mobile-cta {
+    margin-top: 20px;
+    background: var(--purple);
+    color: white;
+    padding: 14px 32px;
+    border-radius: 50px;
+    font-size: 16px;
+    font-family: var(--font-main);
+    font-weight: 600;
+    letter-spacing: 2px;
+}
+
+/* Hamburger Animation */
+.hamburger {
+    z-index: 1001;
+    position: relative;
+}
+.hamburger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 7px);
+}
+.hamburger.active span:nth-child(2) {
+    opacity: 0;
+}
+.hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -7px);
+}
+
+/* Hide mobile menu on desktop */
+@media (min-width: 1025px) {
+    .mobile-menu { display: none !important; }
+}
+
+
+
+
+
+
+
+
+/* Orbit System */
+.orbit-center {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px; height: 600px;
+}
+
+.orbit-wrapper { position: relative; width: 100%; height: 100%; }
+
+.orbit-item {
+    position: absolute;
+    width: 150px; height: 150px;
+    border-radius: 20px; overflow: hidden;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.12);
+}
+
+.orbit-item img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Services */
+.services { padding: 100px 5%; background: #000; color: #fff; }
+
+.service-row {
+    border-top: 1px solid #333;
+    padding: 60px 0; display: flex;
+    align-items: center; justify-content: space-between;
+    cursor: pointer; transition: 0.4s;
+}
+
+.service-row:hover { padding-left: 40px; background: #111; }
+.service-row h2 { font-size: 70px; font-weight: 300; }

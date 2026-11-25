@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-editable="siteTitle">HealthPro Pharmacy | Your Trusted Online Pharmacy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0a5c4a;
+            --primary-dark: #084a3b;
+            --primary-light: #e8f5f0;
+            --accent: #f5a623;
+            --accent-light: #fff8e7;
+            --text-dark: #1a1a2e;
+            --text-medium: #4a4a5a;
+            --text-light: #8a8a9a;
+            --white: #ffffff;
+            --gray-bg: #f5f7fa;
+            --border: #e8ecf1;
+            --red: #e74c3c;
+            --green: #27ae60;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
+            --shadow-md: 0 4px 20px rgba(0,0,0,0.08);
+            --shadow-lg: 0 8px 40px rgba(0,0,0,0.12);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--white); color: var(--text-dark); overflow-x: hidden; scroll-behavior: smooth; }
+
+        /* ===== TOP BAR ===== */
+        .top-bar { background: var(--primary); color: var(--white); padding: 8px 0; font-size: 0.75rem; }
+        .top-bar-container { max-width: 1400px; margin: 0 auto; padding: 0 40px; display: flex; justify-content: space-between; align-items: center; }
+        .top-bar-left { display: flex; align-items: center; gap: 8px; }
+        .top-bar-left i { color: var(--accent); }
+        .top-bar-right { display: flex; align-items: center; gap: 20px; }
+        .top-bar-right a { color: var(--white); text-decoration: none; display: flex; align-items: center; gap: 6px; transition: opacity 0.3s; }
+        .top-bar-right a:hover { opacity: 0.8; }
+
+        /* ===== HEADER ===== */
+        header { background: var(--white); padding: 15px 0; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; }
+        .header-container { max-width: 1400px; margin: 0 auto; padding: 0 40px; display: flex; align-items: center; justify-content: space-between; gap: 30px; }
+        .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .logo-icon { width: 42px; height: 42px; background: var(--primary); border-radius: 8px; display: flex; align-items: center; justify-content: center; position: relative; }
+        .logo-icon::before { content: ''; width: 18px; height: 18px; border: 3px solid var(--white); border-radius: 50%; position: absolute; top: 8px; left: 50%; transform: translateX(-50%); }
+        .logo-icon::after { content: ''; width: 12px; height: 8px; background: var(--white); position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); border-radius: 0 0 3px 3px; }
+        .logo-text { display: flex; flex-direction: column; }
+        .logo-text-main { font-size: 1.3rem; font-weight: 800; color: var(--primary); line-height: 1; letter-spacing: -0.5px; }
+        .logo-text-sub { font-size: 0.6rem; color: var(--text-light); letter-spacing: 3px; text-transform: uppercase; margin-top: 2px; }
+        .search-bar { flex: 1; max-width: 600px; display: flex; border: 2px solid var(--border); border-radius: 8px; overflow: hidden; transition: border-color 0.3s; }
+        .search-bar:focus-within { border-color: var(--primary); }
+        .search-bar input { flex: 1; padding: 12px 18px; border: none; outline: none; font-family: 'Inter', sans-serif; font-size: 0.85rem; color: var(--text-dark); }
+        .search-bar input::placeholder { color: var(--text-light); }
+        .search-category { display: flex; align-items: center; padding: 0 15px; border-left: 1px solid var(--border); font-size: 0.8rem; color: var(--text-medium); cursor: pointer; gap: 8px; background: var(--white); }
+        .search-btn { background: var(--primary); color: var(--white); border: none; padding: 0 20px; cursor: pointer; font-size: 1rem; transition: background 0.3s; }
+        .search-btn:hover { background: var(--primary-dark); }
+        .header-actions { display: flex; align-items: center; gap: 25px; }
+        .header-action { display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: var(--text-medium); font-size: 0.7rem; transition: color 0.3s; position: relative; }
+        .header-action i { font-size: 1.2rem; }
+        .header-action:hover { color: var(--primary); }
+        .header-action .badge { position: absolute; top: -5px; right: -5px; background: var(--red); color: var(--white); font-size: 0.6rem; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; }
+        .cart-price { font-weight: 700; color: var(--text-dark); }
+
+        /* ===== NAVIGATION ===== */
+        .main-nav { background: var(--white); border-bottom: 1px solid var(--border); padding: 0; }
+        .nav-container { max-width: 1400px; margin: 0 auto; padding: 0 40px; }
+        .nav-links { display: flex; list-style: none; gap: 0; }
+        .nav-links li { position: relative; }
+        .nav-links a { display: flex; align-items: center; gap: 6px; padding: 14px 20px; color: var(--text-dark); text-decoration: none; font-size: 0.8rem; font-weight: 500; transition: all 0.3s; border-bottom: 2px solid transparent; }
+        .nav-links a:hover, .nav-links a.active { color: var(--primary); border-bottom-color: var(--primary); }
+        .nav-links a i { font-size: 0.7rem; }
+
+        /* ===== HERO SECTION ===== */
+        .hero { background: linear-gradient(135deg, #e8f4f0 0%, #f0f7f4 50%, #e8f0ec 100%); padding: 60px 0; position: relative; overflow: hidden; }
+        .hero-container { max-width: 1400px; margin: 0 auto; padding: 0 40px; display: flex; align-items: center; gap: 60px; }
+        .hero-left { flex: 1; max-width: 500px; }
+        .hero-title { font-size: 3.2rem; font-weight: 800; color: var(--text-dark); line-height: 1.15; margin-bottom: 20px; }
+        .hero-title span { color: var(--primary); }
+        .hero-subtitle { font-size: 0.95rem; color: var(--text-medium); line-height: 1.7; margin-bottom: 30px; }
+        .hero-buttons { display: flex; gap: 15px; margin-bottom: 30px; }
+        .btn-primary { background: var(--primary); color: var(--white); padding: 14px 28px; border: none; border-radius: 8px; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: all 0.3s; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; }
+        .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+        .btn-secondary { background: var(--white); color: var(--text-dark); padding: 14px 28px; border: 1px solid var(--border); border-radius: 8px; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: all 0.3s; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; }
+        .btn-secondary:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-2px); }
+        .hero-trust { display: flex; gap: 30px; }
+        .trust-item { display: flex; align-items: center; gap: 8px; font-size: 0.75rem; color: var(--text-medium); }
+        .trust-item i { color: var(--primary); font-size: 1rem; }
+        .trust-item strong { color: var(--text-dark); }
+        .hero-center { flex: 1; display: flex; justify-content: center; position: relative; }
+        .hero-image { width: 100%; max-width: 450px; height: 450px; border-radius: 20px; overflow: hidden; box-shadow: var(--shadow-lg); }
+        .hero-image img { width: 100%; height: 100%; object-fit: cover; }
+        .hero-right { flex: 0 0 320px; background: var(--white); border-radius: 16px; padding: 30px; box-shadow: var(--shadow-md); }
+        .prescription-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+        .prescription-icon { width: 44px; height: 44px; background: var(--primary-light); border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+        .prescription-icon i { color: var(--primary); font-size: 1.2rem; }
+        .prescription-header h3 { font-size: 1rem; font-weight: 700; color: var(--text-dark); }
+        .prescription-header p { font-size: 0.75rem; color: var(--text-light); }
+        .upload-zone { border: 2px dashed var(--border); border-radius: 12px; padding: 30px; text-align: center; margin-bottom: 15px; transition: all 0.3s; cursor: pointer; }
+        .upload-zone:hover { border-color: var(--primary); background: var(--primary-light); }
+        .upload-zone i { font-size: 2rem; color: var(--primary); margin-bottom: 10px; }
+        .upload-zone p { font-size: 0.8rem; color: var(--text-medium); margin-bottom: 5px; }
+        .upload-formats { font-size: 0.7rem; color: var(--text-light); text-align: center; margin-bottom: 15px; }
+        .upload-btn { width: 100%; background: var(--primary); color: var(--white); padding: 14px; border: none; border-radius: 8px; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: all 0.3s; margin-bottom: 12px; }
+        .upload-btn:hover { background: var(--primary-dark); }
+        .upload-secure { display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 0.7rem; color: var(--text-light); }
+        .upload-secure i { color: var(--green); }
+
+        /* ===== CATEGORIES ===== */
+        .categories { padding: 50px 0; background: var(--white); }
+        .section-header { max-width: 1400px; margin: 0 auto; padding: 0 40px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .section-title { font-size: 1.3rem; font-weight: 700; color: var(--text-dark); }
+        .view-all { color: var(--primary); text-decoration: none; font-size: 0.8rem; font-weight: 600; display: flex; align-items: center; gap: 6px; transition: gap 0.3s; }
+        .view-all:hover { gap: 10px; }
+        .categories-slider { max-width: 1400px; margin: 0 auto; padding: 0 40px; display: flex; gap: 20px; overflow-x: auto; scrollbar-width: none; }
+        .categories-slider::-webkit-scrollbar { display: none; }
+        .category-card { flex: 0 0 160px; background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 25px 15px; text-align: center; transition: all 0.3s; cursor: pointer; text-decoration: none; }
+        .category-card:hover { border-color: var(--primary); transform: translateY(-5px); box-shadow: var(--shadow-md); }
+        .category-img { width: 80px; height: 80px; margin: 0 auto 15px; border-radius: 50%; overflow: hidden; background: var(--gray-bg); display: flex; align-items: center; justify-content: center; }
+        .category-img img { width: 100%; height: 100%; object-fit: cover; }
+        .category-name { font-size: 0.85rem; font-weight: 600; color: var(--text-dark); margin-bottom: 5px; }
+        .category-discount { font-size: 0.7rem; color: var(--primary); font-weight: 600; }
+
+        /* ===== PROMO SECTION ===== */
+        .promo-section { padding: 40px 0; background: var(--white); }
+        .promo-container { max-width: 1400px; margin: 0 auto; padding: 0 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
+        .promo-banner { border-radius: 16px; overflow: hidden; position: relative; min-height: 280px; display: flex; align-items: center; padding: 40px; }
+        .promo-banner-left { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: var(--white); }
+        .promo-banner-right { display: grid; grid-template-rows: 1fr 1fr; gap: 20px; }
+        .promo-sub-banner { border-radius: 16px; overflow: hidden; position: relative; padding: 25px; display: flex; align-items: center; }
+        .promo-sub-banner-1 { background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); }
+        .promo-sub-banner-2 { background: linear-gradient(135deg, #fff8e7 0%, #ffeaa7 100%); }
+        .promo-label { font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; opacity: 0.9; }
+        .promo-title { font-size: 2rem; font-weight: 800; line-height: 1.2; margin-bottom: 15px; }
+        .promo-title span { display: block; }
+        .promo-code { display: inline-block; background: rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; margin-bottom: 15px; border: 1px dashed rgba(255,255,255,0.4); }
+        .promo-btn { background: var(--white); color: var(--primary); padding: 12px 24px; border: none; border-radius: 8px; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.8rem; cursor: pointer; transition: all 0.3s; display: inline-flex; align-items: center; gap: 8px; }
+        .promo-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+        .promo-product-img { position: absolute; right: 20px; bottom: 0; width: 200px; height: auto; }
+        .promo-product-img img { width: 100%; height: auto; object-fit: contain; }
+        .promo-sub-content { flex: 1; }
+        .promo-sub-content h4 { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; color: var(--text-dark); }
+        .promo-sub-content p { font-size: 0.8rem; color: var(--text-medium); margin-bottom: 12px; line-height: 1.5; }
+        .promo-sub-btn { background: var(--primary); color: var(--white); padding: 10px 20px; border: none; border-radius: 6px; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.75rem; cursor: pointer; transition: all 0.3s; }
+        .promo-sub-btn:hover { background: var(--primary-dark); }
+        .promo-sub-btn.outline { background: transparent; color: var(--primary); border: 1px solid var(--primary); }
+        .promo-sub-btn.outline:hover { background: var(--primary); color: var(--white); }
+        .promo-sub-img { width: 120px; height: 120px; border-radius: 12px; overflow: hidden; flex-shrink: 0; }
+        .promo-sub-img img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* ===== TRUST BADGES ===== */
+        .trust-badges { background: var(--gray-bg); padding: 30px 0; }
+        .trust-container { max-width: 1400px; margin: 0 auto; padding: 0 40px; display: flex; justify-content: space-around; align-items: center; }
+        .trust-badge { display: flex; align-items: center; gap: 12px; }
+        .trust-badge-icon { width: 44px; height: 44px; background: var(--white); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-sm); }
+        .trust-badge-icon i { color: var(--primary); font-size: 1.1rem; }
+        .trust-badge-text h4 { font-size: 0.85rem; font-weight: 700; color: var(--text-dark); }
+        .trust-badge-text p { font-size: 0.7rem; color: var(--text-light); }
+
+        /* ===== BEST SELLERS ===== */
+        .best-sellers { padding: 50px 0; background: var(--white); }
+        .products-grid { max-width: 1400px; margin: 0 auto; padding: 0 40px; display: grid; grid-template-columns: repeat(6, 1fr); gap: 20px; }
+        .product-card { background: var(--white); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; transition: all 0.3s; position: relative; }
+        .product-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); border-color: var(--primary-light); }
+        .product-badge { position: absolute; top: 10px; left: 10px; background: var(--green); color: var(--white); padding: 4px 10px; border-radius: 20px; font-size: 0.65rem; font-weight: 700; z-index: 2; }
+        .product-img { width: 100%; height: 160px; display: flex; align-items: center; justify-content: center; padding: 20px; background: var(--gray-bg); }
+        .product-img img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .product-info { padding: 15px; }
+        .product-name { font-size: 0.8rem; font-weight: 600; color: var(--text-dark); margin-bottom: 4px; line-height: 1.4; }
+        .product-variant { font-size: 0.7rem; color: var(--text-light); margin-bottom: 10px; }
+        .product-price { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+        .price-current { font-size: 1rem; font-weight: 700; color: var(--text-dark); }
+        .price-old { font-size: 0.75rem; color: var(--text-light); text-decoration: line-through; }
+        .product-actions { display: flex; gap: 8px; }
+        .btn-add-cart { flex: 1; background: var(--primary); color: var(--white); padding: 8px 12px; border: none; border-radius: 6px; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.7rem; cursor: pointer; transition: all 0.3s; }
+        .btn-add-cart:hover { background: var(--primary-dark); }
+        .btn-wishlist { width: 32px; height: 32px; background: var(--gray-bg); border: none; border-radius: 6px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s; color: var(--text-light); }
+        .btn-wishlist:hover { background: #ffeaea; color: var(--red); }
+
+        /* ===== HEALTH HUB ===== */
+        .health-hub { padding: 50px 0; background: var(--gray-bg); }
+        .articles-grid { max-width: 1400px; margin: 0 auto; padding: 0 40px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+        .article-card { background: var(--white); border-radius: 12px; overflow: hidden; transition: all 0.3s; cursor: pointer; }
+        .article-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); }
+        .article-img { width: 100%; height: 160px; overflow: hidden; }
+        .article-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+        .article-card:hover .article-img img { transform: scale(1.05); }
+        .article-tag { display: inline-block; background: var(--accent-light); color: var(--accent); padding: 4px 12px; border-radius: 20px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; margin: 15px 15px 8px; }
+        .article-title { font-size: 0.9rem; font-weight: 600; color: var(--text-dark); padding: 0 15px; margin-bottom: 10px; line-height: 1.4; }
+        .article-meta { display: flex; align-items: center; gap: 10px; padding: 0 15px 15px; font-size: 0.7rem; color: var(--text-light); }
+        .article-meta i { margin-right: 4px; }
+
+        /* ===== BOTTOM FEATURES ===== */
+        .bottom-features { background: var(--white); padding: 40px 0; border-top: 1px solid var(--border); }
+        .bottom-features-container { max-width: 1400px; margin: 0 auto; padding: 0 40px; display: flex; justify-content: space-around; align-items: center; }
+        .bottom-feature { display: flex; align-items: center; gap: 12px; }
+        .bottom-feature i { font-size: 1.5rem; color: var(--primary); }
+        .bottom-feature-text h4 { font-size: 0.85rem; font-weight: 700; color: var(--text-dark); }
+        .bottom-feature-text p { font-size: 0.7rem; color: var(--text-light); }
+        .bottom-qr { width: 60px; height: 60px; background: var(--gray-bg); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+        .bottom-qr i { font-size: 2rem; color: var(--text-dark); }
+
+        /* ===== FOOTER ===== */
+        footer { background: var(--text-dark); color: var(--white); padding: 60px 0 20px; }
+        .footer-container { max-width: 1400px; margin: 0 auto; padding: 0 40px; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr 1.5fr; gap: 40px; margin-bottom: 40px; }
+        .footer-brand { display: flex; flex-direction: column; }
+        .footer-brand .logo { margin-bottom: 15px; }
+        .footer-brand .logo-icon { background: var(--primary); }
+        .footer-brand .logo-text-main { color: var(--white); }
+        .footer-brand .logo-text-sub { color: var(--text-light); }
+        .footer-brand p { font-size: 0.8rem; color: var(--text-light); line-height: 1.7; margin-bottom: 20px; }
+        .footer-social { display: flex; gap: 12px; }
+        .footer-social a { width: 36px; height: 36px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--white); text-decoration: none; transition: all 0.3s; }
+        .footer-social a:hover { background: var(--primary); transform: translateY(-3px); }
+        .footer-column h4 { font-size: 0.85rem; font-weight: 700; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
+        .footer-column ul { list-style: none; }
+        .footer-column ul li { margin-bottom: 10px; }
+        .footer-column ul li a { color: var(--text-light); text-decoration: none; font-size: 0.8rem; transition: color 0.3s; }
+        .footer-column ul li a:hover { color: var(--primary); }
+        .footer-newsletter h4 { font-size: 0.85rem; font-weight: 700; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
+        .footer-newsletter p { font-size: 0.8rem; color: var(--text-light); margin-bottom: 15px; line-height: 1.5; }
+        .newsletter-form { display: flex; gap: 0; margin-bottom: 20px; }
+        .newsletter-form input { flex: 1; padding: 12px 15px; border: 1px solid rgba(255,255,255,0.2); border-radius: 6px 0 0 6px; background: rgba(255,255,255,0.05); color: var(--white); font-family: 'Inter', sans-serif; font-size: 0.8rem; outline: none; }
+        .newsletter-form input::placeholder { color: var(--text-light); }
+        .newsletter-form button { background: var(--primary); color: var(--white); border: none; padding: 0 20px; border-radius: 0 6px 6px 0; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.8rem; cursor: pointer; transition: background 0.3s; }
+        .newsletter-form button:hover { background: var(--primary-light); color: var(--primary); }
+        .payment-methods { display: flex; gap: 10px; }
+        .payment-icon { width: 40px; height: 26px; background: var(--white); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; color: var(--text-dark); }
+        .footer-bottom { max-width: 1400px; margin: 0 auto; padding: 20px 40px 0; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center; }
+        .footer-bottom p { font-size: 0.75rem; color: var(--text-light); }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-on-scroll { opacity: 0; transition: all 0.6s ease; }
+        .animate-on-scroll.visible { opacity: 1; animation: fadeInUp 0.6s ease forwards; }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1200px) {
+            .products-grid { grid-template-columns: repeat(4, 1fr); }
+            .articles-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-container { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (max-width: 992px) {
+            .hero-container { flex-direction: column; text-align: center; }
+            .hero-left { max-width: 100%; }
+            .hero-buttons { justify-content: center; }
+            .hero-trust { justify-content: center; flex-wrap: wrap; }
+            .hero-right { flex: 1; max-width: 400px; width: 100%; }
+            .promo-container { grid-template-columns: 1fr; }
+            .products-grid { grid-template-columns: repeat(3, 1fr); }
+            .trust-container { flex-wrap: wrap; gap: 20px; }
+            .bottom-features-container { flex-wrap: wrap; gap: 20px; }
+        }
+        @media (max-width: 768px) {
+            .top-bar-container, .header-container, .nav-container, .hero-container, .section-header, .categories-slider, .promo-container, .products-grid, .articles-grid, .trust-container, .bottom-features-container, .footer-container, .footer-bottom { padding-left: 20px; padding-right: 20px; }
+            .search-bar { display: none; }
+            .nav-links { overflow-x: auto; scrollbar-width: none; }
+            .nav-links::-webkit-scrollbar { display: none; }
+            .products-grid { grid-template-columns: repeat(2, 1fr); }
+            .articles-grid { grid-template-columns: 1fr; }
+            .footer-container { grid-template-columns: 1fr; gap: 30px; }
+            .hero-title { font-size: 2.2rem; }
+            .promo-title { font-size: 1.5rem; }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+
+<!-- ===== TOP BAR ===== -->
+<div class="top-bar">
+    <div class="top-bar-container">
+        <div class="top-bar-left">
+            <i class="fas fa-tag"></i>
+            <span data-editable="topBarOffer">Flat 20% OFF on your first order - Use code: FIRST20</span>
+        </div>
+        <div class="top-bar-right">
+            <a href="#" data-editable="topBarHelp"><i class="fas fa-question-circle"></i> Help & Support</a>
+            <a href="#" data-editable="topBarTrack"><i class="fas fa-map-marker-alt"></i> Track Order</a>
+        </div>
+    </div>
+</div>
+
+<!-- ===== HEADER ===== -->
+<header>
+    <div class="header-container">
+        <a href="#" class="logo">
+            <div class="logo-icon"></div>
+            <div class="logo-text">
+                <span class="logo-text-main" data-editable="logoText">HealthPro</span>
+                <span class="logo-text-sub" data-editable="logoSub">PHARMACY</span>
+            </div>
+        </a>
+        <div class="search-bar">
+            <input type="text" placeholder="Search medicines, health products..." data-editable="searchPlaceholder">
+            <div class="search-category">
+                <span data-editable="searchCategory">All Categories</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <button class="search-btn"><i class="fas fa-search"></i></button>
+        </div>
+        <div class="header-actions">
+            <a href="#" class="header-action">
+                <i class="fas fa-redo"></i>
+                <span data-editable="actionReorder">Quick Reorder</span>
+            </a>
+            <a href="#" class="header-action">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <span data-editable="actionUpload">Upload Rx</span>
+            </a>
+            <a href="#" class="header-action">
+                <i class="fas fa-user"></i>
+                <span data-editable="actionAccount">Sign In / Register</span>
+            </a>
+            <a href="#" class="header-action">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-price" data-editable="cartPrice">$48.97</span>
+                <span class="badge">2</span>
+            </a>
+        </div>
+    </div>
+</header>
+
+<!-- ===== NAVIGATION ===== -->
+<nav class="main-nav">
+    <div class="nav-container">
+        <ul class="nav-links">
+            <li><a href="#home" class="active" data-editable="navHome">Home</a></li>
+            <li><a href="#medicines" data-editable="navMedicines">Medicines <i class="fas fa-chevron-down"></i></a></li>
+            <li><a href="#conditions" data-editable="navConditions">Health Conditions</a></li>
+            <li><a href="#personal" data-editable="navPersonal">Personal Care</a></li>
+            <li><a href="#baby" data-editable="navBaby">Baby Care</a></li>
+            <li><a href="#wellness" data-editable="navWellness">Wellness</a></li>
+            <li><a href="#brands" data-editable="navBrands">Brands</a></li>
+            <li><a href="#offers" data-editable="navOffers">Offers</a></li>
+            <li><a href="#hub" data-editable="navHub">Health Hub</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- ===== HERO SECTION ===== -->
+<section class="hero" id="home">
+    <div class="hero-container">
+        <div class="hero-left">
+            <h1 class="hero-title" data-editable="heroTitle">Better Health,<br>Delivered<br><span>with Care</span></h1>
+            <p class="hero-subtitle" data-editable="heroSubtitle">Genuine medicines, trusted brands & expert advice - delivered to your doorstep.</p>
+            <div class="hero-buttons">
+                <a href="#medicines" class="btn-primary" data-editable="heroBtnPrimary">Shop Medicines <i class="fas fa-arrow-right"></i></a>
+                <a href="#" class="btn-secondary" data-editable="heroBtnSecondary"><i class="fas fa-cloud-upload-alt"></i> Upload Prescription</a>
+            </div>
+            <div class="hero-trust">
+                <div class="trust-item"><i class="fas fa-check-circle"></i><div><strong data-editable="trust1Title">100% Genuine</strong><br><span data-editable="trust1Sub">Medicines</span></div></div>
+                <div class="trust-item"><i class="fas fa-truck"></i><div><strong data-editable="trust2Title">Fast & Reliable</strong><br><span data-editable="trust2Sub">Delivery</span></div></div>
+                <div class="trust-item"><i class="fas fa-shield-alt"></i><div><strong data-editable="trust3Title">Secure</strong><br><span data-editable="trust3Sub">Payments</span></div></div>
+                <div class="trust-item"><i class="fas fa-headset"></i><div><strong data-editable="trust4Title">24/7 Expert</strong><br><span data-editable="trust4Sub">Support</span></div></div>
+            </div>
+        </div>
+        <div class="hero-center">
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=600&q=80" alt="Pharmacist" data-editable="heroImage" data-type="image">
+            </div>
+        </div>
+        <div class="hero-right">
+            <div class="prescription-header">
+                <div class="prescription-icon"><i class="fas fa-file-prescription"></i></div>
+                <div>
+                    <h3 data-editable="prescriptionTitle">Upload Prescription</h3>
+                    <p data-editable="prescriptionSub">Get your medicines delivered hassle-free</p>
+                </div>
+            </div>
+            <div class="upload-zone" data-editable="uploadZone">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p data-editable="uploadText">Drag & drop Rx here or browse files</p>
+            </div>
+            <p class="upload-formats" data-editable="uploadFormats">We accept: JPG, PNG, PDF</p>
+            <button class="upload-btn" data-editable="uploadBtn">Upload Now</button>
+            <div class="upload-secure"><i class="fas fa-lock"></i><span data-editable="uploadSecure">Your data is 100% secure</span></div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== CATEGORIES ===== -->
+<section class="categories" id="medicines">
+    <div class="section-header">
+        <h2 class="section-title" data-editable="categoriesTitle">Shop by Category</h2>
+        <a href="#" class="view-all" data-editable="categoriesViewAll">View all categories <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="categories-slider">
+        <div class="category-card animate-on-scroll">
+            <div class="category-img"><img src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=200&q=80" alt="Medicines" data-editable="cat1Img" data-type="image"></div>
+            <div class="category-name" data-editable="cat1Name">Medicines</div>
+            <div class="category-discount" data-editable="cat1Discount">Up to 25% OFF</div>
+        </div>
+        <div class="category-card animate-on-scroll">
+            <div class="category-img"><img src="https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=200&q=80" alt="Supplements" data-editable="cat2Img" data-type="image"></div>
+            <div class="category-name" data-editable="cat2Name">Supplements</div>
+            <div class="category-discount" data-editable="cat2Discount">Up to 20% OFF</div>
+        </div>
+        <div class="category-card animate-on-scroll">
+            <div class="category-img"><img src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=200&q=80" alt="Personal Care" data-editable="cat3Img" data-type="image"></div>
+            <div class="category-name" data-editable="cat3Name">Personal Care</div>
+            <div class="category-discount" data-editable="cat3Discount">Up to 20% OFF</div>
+        </div>
+        <div class="category-card animate-on-scroll">
+            <div class="category-img"><img src="https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?w=200&q=80" alt="Baby Care" data-editable="cat4Img" data-type="image"></div>
+            <div class="category-name" data-editable="cat4Name">Baby Care</div>
+            <div class="category-discount" data-editable="cat4Discount">Up to 15% OFF</div>
+        </div>
+        <div class="category-card animate-on-scroll">
+            <div class="category-img"><img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=200&q=80" alt="Diabetes Care" data-editable="cat5Img" data-type="image"></div>
+            <div class="category-name" data-editable="cat5Name">Diabetes Care</div>
+            <div class="category-discount" data-editable="cat5Discount">Up to 20% OFF</div>
+        </div>
+        <div class="category-card animate-on-scroll">
+            <div class="category-img"><img src="https://images.unsplash.com/photo-1583947215259-38e31be8751f?w=200&q=80" alt="Health Essentials" data-editable="cat6Img" data-type="image"></div>
+            <div class="category-name" data-editable="cat6Name">Health Essentials</div>
+            <div class="category-discount" data-editable="cat6Discount">Up to 30% OFF</div>
+        </div>
+        <div class="category-card animate-on-scroll">
+            <div class="category-img"><img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=200&q=80" alt="Ayurveda" data-editable="cat7Img" data-type="image"></div>
+            <div class="category-name" data-editable="cat7Name">Ayurveda</div>
+            <div class="category-discount" data-editable="cat7Discount">Up to 20% OFF</div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== PROMO SECTION ===== -->
+<section class="promo-section">
+    <div class="promo-container">
+        <div class="promo-banner promo-banner-left animate-on-scroll">
+            <div>
+                <p class="promo-label" data-editable="promo1Label">FLAT</p>
+                <h3 class="promo-title" data-editable="promo1Title"><span>20% OFF</span> on your first order</h3>
+                <div class="promo-code" data-editable="promo1Code">Use code: FIRST20</div>
+                <button class="promo-btn" data-editable="promo1Btn">Order Now <i class="fas fa-arrow-right"></i></button>
+            </div>
+            <div class="promo-product-img"><img src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=300&q=80" alt="Omega 3" data-editable="promo1Img" data-type="image"></div>
+        </div>
+        <div class="promo-banner-right">
+            <div class="promo-sub-banner promo-sub-banner-1 animate-on-scroll">
+                <div class="promo-sub-content">
+                    <h4 data-editable="promo2Title">Consult Our Pharmacist</h4>
+                    <p data-editable="promo2Desc">Get FREE advice & personalized guidance from our expert pharmacists.</p>
+                    <button class="promo-sub-btn" data-editable="promo2Btn">Consult Now <i class="fas fa-arrow-right"></i></button>
+                </div>
+                <div class="promo-sub-img"><img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=200&q=80" alt="Pharmacist" data-editable="promo2Img" data-type="image"></div>
+            </div>
+            <div class="promo-sub-banner promo-sub-banner-2 animate-on-scroll">
+                <div class="promo-sub-content">
+                    <h4 data-editable="promo3Title">Subscribe & Save</h4>
+                    <p data-editable="promo3Desc">Save up to 30% on regular medicines with our subscription plans.</p>
+                    <button class="promo-sub-btn outline" data-editable="promo3Btn">Explore Plans <i class="fas fa-arrow-right"></i></button>
+                </div>
+                <div class="promo-sub-img"><img src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=200&q=80" alt="Medicines Box" data-editable="promo3Img" data-type="image"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== TRUST BADGES ===== -->
+<section class="trust-badges">
+    <div class="trust-container">
+        <div class="trust-badge animate-on-scroll">
+            <div class="trust-badge-icon"><i class="fas fa-undo-alt"></i></div>
+            <div class="trust-badge-text"><h4 data-editable="badge1Title">Easy Returns</h4><p data-editable="badge1Desc">30 day return policy</p></div>
+        </div>
+        <div class="trust-badge animate-on-scroll">
+            <div class="trust-badge-icon"><i class="fas fa-shield-alt"></i></div>
+            <div class="trust-badge-text"><h4 data-editable="badge2Title">Secure Payments</h4><p data-editable="badge2Desc">100% protected</p></div>
+        </div>
+        <div class="trust-badge animate-on-scroll">
+            <div class="trust-badge-icon"><i class="fas fa-lock"></i></div>
+            <div class="trust-badge-text"><h4 data-editable="badge3Title">Privacy Protection</h4><p data-editable="badge3Desc">Your data is safe with us</p></div>
+        </div>
+        <div class="trust-badge animate-on-scroll">
+            <div class="trust-badge-icon"><i class="fas fa-certificate"></i></div>
+            <div class="trust-badge-text"><h4 data-editable="badge4Title">Genuine Products</h4><p data-editable="badge4Desc">Sourced from trusted brands</p></div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== BEST SELLERS ===== -->
+<section class="best-sellers" id="offers">
+    <div class="section-header">
+        <h2 class="section-title" data-editable="bestsellersTitle">Best Sellers</h2>
+        <a href="#" class="view-all" data-editable="bestsellersViewAll">View all products <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="products-grid">
+        <div class="product-card animate-on-scroll">
+            <span class="product-badge" data-editable="prod1Badge">20% OFF</span>
+            <div class="product-img"><img src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=200&q=80" alt="Crocin" data-editable="prod1Img" data-type="image"></div>
+            <div class="product-info">
+                <div class="product-name" data-editable="prod1Name">Crocin Advance</div>
+                <div class="product-variant" data-editable="prod1Variant">Tablet 15's</div>
+                <div class="product-price"><span class="price-current" data-editable="prod1Price">$4.50</span><span class="price-old" data-editable="prod1OldPrice">$5.60</span></div>
+                <div class="product-actions"><button class="btn-add-cart" data-editable="prod1Btn">Add to Cart</button><button class="btn-wishlist"><i class="far fa-heart"></i></button></div>
+            </div>
+        </div>
+        <div class="product-card animate-on-scroll">
+            <span class="product-badge" data-editable="prod2Badge">15% OFF</span>
+            <div class="product-img"><img src="https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=200&q=80" alt="Calcium" data-editable="prod2Img" data-type="image"></div>
+            <div class="product-info">
+                <div class="product-name" data-editable="prod2Name">Calcium D3</div>
+                <div class="product-variant" data-editable="prod2Variant">Tablet 60's</div>
+                <div class="product-price"><span class="price-current" data-editable="prod2Price">$9.35</span><span class="price-old" data-editable="prod2OldPrice">$11.00</span></div>
+                <div class="product-actions"><button class="btn-add-cart" data-editable="prod2Btn">Add to Cart</button><button class="btn-wishlist"><i class="far fa-heart"></i></button></div>
+            </div>
+        </div>
+        <div class="product-card animate-on-scroll">
+            <span class="product-badge" data-editable="prod3Badge">25% OFF</span>
+            <div class="product-img"><img src="https://images.unsplash.com/photo-1585435557343-3b092031a831?w=200&q=80" alt="Volini" data-editable="prod3Img" data-type="image"></div>
+            <div class="product-info">
+                <div class="product-name" data-editable="prod3Name">Volini Pain Relief</div>
+                <div class="product-variant" data-editable="prod3Variant">Gel 30gm</div>
+                <div class="product-price"><span class="price-current" data-editable="prod3Price">$6.20</span><span class="price-old" data-editable="prod3OldPrice">$7.90</span></div>
+                <div class="product-actions"><button class="btn-add-cart" data-editable="prod3Btn">Add to Cart</button><button class="btn-wishlist"><i class="far fa-heart"></i></button></div>
+            </div>
+        </div>
+        <div class="product-card animate-on-scroll">
+            <span class="product-badge" data-editable="prod4Badge">18% OFF</span>
+            <div class="product-img"><img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=200&q=80" alt="Accu-Chek" data-editable="prod4Img" data-type="image"></div>
+            <div class="product-info">
+                <div class="product-name" data-editable="prod4Name">Accu-Chek Active</div>
+                <div class="product-variant" data-editable="prod4Variant">Test Strip 50's</div>
+                <div class="product-price"><span class="price-current" data-editable="prod4Price">$24.50</span><span class="price-old" data-editable="prod4OldPrice">$30.00</span></div>
+                <div class="product-actions"><button class="btn-add-cart" data-editable="prod4Btn">Add to Cart</button><button class="btn-wishlist"><i class="far fa-heart"></i></button></div>
+            </div>
+        </div>
+        <div class="product-card animate-on-scroll">
+            <span class="product-badge" data-editable="prod5Badge">20% OFF</span>
+            <div class="product-img"><img src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=200&q=80" alt="Himalaya" data-editable="prod5Img" data-type="image"></div>
+            <div class="product-info">
+                <div class="product-name" data-editable="prod5Name">Himalaya Neem</div>
+                <div class="product-variant" data-editable="prod5Variant">Face Wash 100ml</div>
+                <div class="product-price"><span class="price-current" data-editable="prod5Price">$3.20</span><span class="price-old" data-editable="prod5OldPrice">$4.00</span></div>
+                <div class="product-actions"><button class="btn-add-cart" data-editable="prod5Btn">Add to Cart</button><button class="btn-wishlist"><i class="far fa-heart"></i></button></div>
+            </div>
+        </div>
+        <div class="product-card animate-on-scroll">
+            <span class="product-badge" data-editable="prod6Badge">25% OFF</span>
+            <div class="product-img"><img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=200&q=80" alt="Chyawanprash" data-editable="prod6Img" data-type="image"></div>
+            <div class="product-info">
+                <div class="product-name" data-editable="prod6Name">Dabur Chyawanprash</div>
+                <div class="product-variant" data-editable="prod6Variant">500gm</div>
+                <div class="product-price"><span class="price-current" data-editable="prod6Price">$7.80</span><span class="price-old" data-editable="prod6OldPrice">$10.40</span></div>
+                <div class="product-actions"><button class="btn-add-cart" data-editable="prod6Btn">Add to Cart</button><button class="btn-wishlist"><i class="far fa-heart"></i></button></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== HEALTH HUB ===== -->
+<section class="health-hub" id="hub">
+    <div class="section-header">
+        <h2 class="section-title" data-editable="hubTitle">From Our Health Hub</h2>
+        <a href="#" class="view-all" data-editable="hubViewAll">View all articles <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="articles-grid">
+        <div class="article-card animate-on-scroll">
+            <div class="article-img"><img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400&q=80" alt="Wellness" data-editable="art1Img" data-type="image"></div>
+            <span class="article-tag" data-editable="art1Tag">Wellness</span>
+            <h3 class="article-title" data-editable="art1Title">10 Morning Habits for a Better You</h3>
+            <div class="article-meta"><span><i class="far fa-calendar"></i> <span data-editable="art1Date">May 15, 2024</span></span><span><i class="far fa-clock"></i> <span data-editable="art1Read">5 min read</span></span></div>
+        </div>
+        <div class="article-card animate-on-scroll">
+            <div class="article-img"><img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=400&q=80" alt="Nutrition" data-editable="art2Img" data-type="image"></div>
+            <span class="article-tag" data-editable="art2Tag">Nutrition</span>
+            <h3 class="article-title" data-editable="art2Title">Top Immunity Boosting Foods</h3>
+            <div class="article-meta"><span><i class="far fa-calendar"></i> <span data-editable="art2Date">May 12, 2024</span></span><span><i class="far fa-clock"></i> <span data-editable="art2Read">4 min read</span></span></div>
+        </div>
+        <div class="article-card animate-on-scroll">
+            <div class="article-img"><img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=400&q=80" alt="Fitness" data-editable="art3Img" data-type="image"></div>
+            <span class="article-tag" data-editable="art3Tag">Fitness</span>
+            <h3 class="article-title" data-editable="art3Title">30 Min Walk - Big Health Benefits</h3>
+            <div class="article-meta"><span><i class="far fa-calendar"></i> <span data-editable="art3Date">May 10, 2024</span></span><span><i class="far fa-clock"></i> <span data-editable="art3Read">3 min read</span></span></div>
+        </div>
+        <div class="article-card animate-on-scroll">
+            <div class="article-img"><img src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&q=80" alt="Medication" data-editable="art4Img" data-type="image"></div>
+            <span class="article-tag" data-editable="art4Tag">Medication</span>
+            <h3 class="article-title" data-editable="art4Title">Understanding Generic Medicines</h3>
+            <div class="article-meta"><span><i class="far fa-calendar"></i> <span data-editable="art4Date">May 8, 2024</span></span><span><i class="far fa-clock"></i> <span data-editable="art4Read">4 min read</span></span></div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== BOTTOM FEATURES ===== -->
+<section class="bottom-features">
+    <div class="bottom-features-container">
+        <div class="bottom-feature">
+            <i class="fas fa-shipping-fast"></i>
+            <div class="bottom-feature-text">
+                <h4 data-editable="bottom1Title">Free Delivery</h4>
+                <p data-editable="bottom1Desc">on orders above $25</p>
+            </div>
+        </div>
+        <div class="bottom-feature">
+            <i class="fas fa-bolt"></i>
+            <div class="bottom-feature-text">
+                <h4 data-editable="bottom2Title">Quick Delivery</h4>
+                <p data-editable="bottom2Desc">Lightning fast service</p>
+            </div>
+        </div>
+        <div class="bottom-feature">
+            <i class="fas fa-undo"></i>
+            <div class="bottom-feature-text">
+                <h4 data-editable="bottom3Title">Easy Returns</h4>
+                <p data-editable="bottom3Desc">Hassle free returns</p>
+            </div>
+        </div>
+        <div class="bottom-feature">
+            <i class="fas fa-mobile-alt"></i>
+            <div class="bottom-feature-text">
+                <h4 data-editable="bottom4Title">Download App</h4>
+                <p data-editable="bottom4Desc">Extra offers on the app</p>
+            </div>
+        </div>
+        <div class="bottom-qr"><i class="fas fa-qrcode"></i></div>
+    </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+    <div class="footer-container">
+        <div class="footer-brand">
+            <a href="#" class="logo">
+                <div class="logo-icon"></div>
+                <div class="logo-text">
+                    <span class="logo-text-main" data-editable="footerLogoText">HealthPro</span>
+                    <span class="logo-text-sub" data-editable="footerLogoSub">PHARMACY</span>
+                </div>
+            </a>
+            <p data-editable="footerDesc">Your trusted online pharmacy for a healthier life. We provide genuine medicines, health products, and expert advice.</p>
+            <div class="footer-social">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+        <div class="footer-column">
+            <h4 data-editable="footerCol1Title">Shop</h4>
+            <ul>
+                <li><a href="#" data-editable="footerLink1">Medicines</a></li>
+                <li><a href="#" data-editable="footerLink2">Supplements</a></li>
+                <li><a href="#" data-editable="footerLink3">Personal Care</a></li>
+                <li><a href="#" data-editable="footerLink4">Baby Care</a></li>
+                <li><a href="#" data-editable="footerLink5">Health Devices</a></li>
+                <li><a href="#" data-editable="footerLink6">Ayurveda</a></li>
+                <li><a href="#" data-editable="footerLink7">Offers</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h4 data-editable="footerCol2Title">Customer Service</h4>
+            <ul>
+                <li><a href="#" data-editable="footerLink8">About Us</a></li>
+                <li><a href="#" data-editable="footerLink9">Contact Us</a></li>
+                <li><a href="#" data-editable="footerLink10">FAQs</a></li>
+                <li><a href="#" data-editable="footerLink11">Shipping Policy</a></li>
+                <li><a href="#" data-editable="footerLink12">Return Policy</a></li>
+                <li><a href="#" data-editable="footerLink13">Terms & Conditions</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h4 data-editable="footerCol3Title">My Account</h4>
+            <ul>
+                <li><a href="#" data-editable="footerLink14">My Orders</a></li>
+                <li><a href="#" data-editable="footerLink15">My Prescriptions</a></li>
+                <li><a href="#" data-editable="footerLink16">Track Order</a></li>
+                <li><a href="#" data-editable="footerLink17">Wishlist</a></li>
+                <li><a href="#" data-editable="footerLink18">Profile</a></li>
+            </ul>
+        </div>
+        <div class="footer-newsletter">
+            <h4 data-editable="footerNewsTitle">Stay Updated</h4>
+            <p data-editable="footerNewsDesc">Subscribe to get health tips, offers & updates.</p>
+            <div class="newsletter-form">
+                <input type="email" placeholder="Enter your email" data-editable="newsletterPlaceholder">
+                <button data-editable="newsletterBtn">Subscribe</button>
+            </div>
+            <div class="payment-methods">
+                <div class="payment-icon">VISA</div>
+                <div class="payment-icon">MC</div>
+                <div class="payment-icon">AMEX</div>
+                <div class="payment-icon">UPI</div>
+                <div class="payment-icon">GPay</div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p data-editable="footerCopy">&copy; 2024 HealthPro Pharmacy. All rights reserved.</p>
+        <p data-editable="footerMade">Made with care for your health</p>
+    </div>
+</footer>
+
+<script>
+    // Scroll animations
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+    });
+
+    // Button click feedback
+    document.querySelectorAll('button').forEach(btn => {
+        btn.addEventListener('click', function() {
+            this.style.transform = 'scale(0.95)';
+            setTimeout(() => this.style.transform = '', 150);
+        });
+    });
+
+    // Wishlist toggle
+    document.querySelectorAll('.btn-wishlist').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const icon = this.querySelector('i');
+            if (icon.classList.contains('far')) {
+                icon.classList.remove('far');
+                icon.classList.add('fas');
+                this.style.background = '#ffeaea';
+                this.style.color = '#e74c3c';
+            } else {
+                icon.classList.remove('fas');
+                icon.classList.add('far');
+                this.style.background = '';
+                this.style.color = '';
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

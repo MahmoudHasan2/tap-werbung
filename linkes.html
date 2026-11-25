@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="de" dir="ltr">
+<head>
+    
+    
+         <meta charset="UTF-8">
+    <title>TAP Werbeagentur WOB | Werbetechnik / Digitaldruck</title>
+    
+    <!-- Favicon — TAP Logo -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0iIzBmMGYwZiIvPjx0ZXh0IHg9IjE2IiB5PSIyMiIgZm9udC1mYW1pbHk9IkFyaWFsIEJsYWNrLEltcGFjdCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjIwIiBmb250LXdlaWdodD0iOTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjZmZmZmZmIj5UPC90ZXh0PjxjaXJjbGUgY3g9IjIzIiBjeT0iOSIgcj0iMi41IiBmaWxsPSIjOEI1Q0Y2Ii8+PC9zdmc+">
+    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0iIzBmMGYwZiIvPjx0ZXh0IHg9IjE2IiB5PSIyMiIgZm9udC1mYW1pbHk9IkFyaWFsIEJsYWNrLEltcGFjdCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjIwIiBmb250LXdlaWdodD0iOTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjZmZmZmZmIj5UPC90ZXh0PjxjaXJjbGUgY3g9IjIzIiBjeT0iOSIgcj0iMi41IiBmaWxsPSIjOEI1Q0Y2Ii8+PC9zdmc+">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/..." rel="stylesheet">
+    
+    
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tap — Admin Panel</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{
+  --bg:#0a0a0a;
+  --bg2:#111111;
+  --red:#7c3aed;
+  --red2:#a78bfa;
+  --gold:#8b5cf6;
+  --text:#ffffff;
+  --muted:rgba(255,255,255,0.45);
+  --border:rgba(124,58,237,0.2);
+  --surface:rgba(255,255,255,0.03);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'Tajawal',sans-serif;min-height:100vh;overflow-x:hidden;}
+
+/* ── noise grain overlay ── */
+body::before{
+  content:'';position:fixed;inset:0;z-index:1;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity:.5;
+}
+
+canvas#bg{position:fixed;inset:0;z-index:0;pointer-events:none;}
+.glow-orb{position:fixed;border-radius:50%;filter:blur(120px);pointer-events:none;z-index:0;}
+.orb1{width:500px;height:500px;top:-150px;left:-100px;background:radial-gradient(circle,rgba(124,58,237,.12),transparent 70%);}
+.orb2{width:400px;height:400px;bottom:-100px;right:-80px;background:radial-gradient(circle,rgba(139,92,246,.07),transparent 70%);}
+
+/* ── HEADER ── */
+header{
+  position:sticky;top:0;z-index:20;
+  padding:16px 40px;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(10,6,8,.85);
+  backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--border);
+}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--text);}
+.logo-mark{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:22px;letter-spacing:3px;
+  background:linear-gradient(135deg,var(--red2),var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.logo-sub{font-family:'Space Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;}
+.header-right{font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:2px;border:1px solid var(--border);padding:6px 14px;border-radius:4px;}
+
+/* ── MAIN ── */
+#admin-page{position:relative;z-index:5;}
+main{max-width:900px;margin:0 auto;padding:48px 24px 80px;}
+
+.page-hero{text-align:center;margin-bottom:52px;}
+.page-hero .eyebrow{
+  display:inline-block;
+  font-family:'Space Mono',monospace;font-size:10px;letter-spacing:4px;
+  color:var(--red2);text-transform:uppercase;
+  border:1px solid rgba(167,139,250,.3);
+  padding:6px 16px;border-radius:2px;margin-bottom:18px;
+}
+.page-hero h1{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(42px,8vw,72px);
+  letter-spacing:2px;line-height:.95;
+  background:linear-gradient(160deg,var(--text) 40%,var(--red2) 80%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:14px;
+}
+.page-hero p{font-size:14px;color:var(--muted);max-width:480px;margin:0 auto;line-height:1.7;}
+
+/* ── FORM CARD ── */
+.form-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:4px;
+  padding:36px;
+  position:relative;overflow:hidden;
+  margin-bottom:52px;
+}
+.form-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--red),var(--gold),var(--red),transparent);
+}
+.form-card::after{
+  content:'';position:absolute;
+  top:-60px;right:-60px;
+  width:200px;height:200px;
+  background:radial-gradient(circle,rgba(124,58,237,.06),transparent 70%);
+  pointer-events:none;
+}
+
+.sec-label{
+  font-family:'Space Mono',monospace;
+  font-size:9px;letter-spacing:4px;text-transform:uppercase;
+  color:var(--red2);
+  margin:32px 0 16px;
+  display:flex;align-items:center;gap:12px;
+}
+.sec-label:first-child{margin-top:0;}
+.sec-label::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent);}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.field{display:flex;flex-direction:column;gap:7px;}
+.field label{font-size:11px;letter-spacing:1px;color:var(--muted);text-transform:uppercase;}
+.field input,.field textarea{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(245,237,232,.1);
+  border-radius:3px;
+  padding:12px 15px;
+  color:var(--text);
+  font-family:'Tajawal',sans-serif;font-size:14px;
+  outline:none;width:100%;
+  transition:border-color .2s,box-shadow .2s,background .2s;
+}
+.field input:focus,.field textarea:focus{
+  border-color:var(--red);
+  box-shadow:0 0 0 3px rgba(124,58,237,.12);
+  background:rgba(124,58,237,.04);
+}
+.field input::placeholder,.field textarea::placeholder{color:rgba(245,237,232,.18);}
+.field textarea{resize:vertical;min-height:80px;}
+
+/* avatar upload */
+.avatar-zone{
+  border:2px dashed rgba(124,58,237,.3);
+  border-radius:4px;padding:24px;text-align:center;
+  cursor:pointer;position:relative;
+  transition:border-color .2s,background .2s;
+  background:rgba(124,58,237,.03);
+}
+.avatar-zone:hover{border-color:var(--red);background:rgba(124,58,237,.07);}
+.avatar-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.avatar-icon{font-size:28px;margin-bottom:8px;}
+.avatar-zone p{font-size:13px;color:var(--muted);}
+.avatar-zone span{font-size:11px;color:rgba(245,237,232,.25);}
+.av-preview{width:72px;height:72px;border-radius:50%;object-fit:cover;border:2px solid var(--red);margin:0 auto 8px;display:block;}
+
+/* social rows */
+.soc-row{
+  display:grid;grid-template-columns:44px 1fr;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(245,237,232,.1);
+  border-radius:3px;overflow:hidden;
+  transition:border-color .2s;
+}
+.soc-row:focus-within{border-color:var(--red);}
+.soc-icon{display:flex;align-items:center;justify-content:center;font-size:16px;border-right:1px solid rgba(245,237,232,.08);}
+.soc-row input{border:none;background:transparent;padding:11px 12px;color:var(--text);font-family:'Tajawal',sans-serif;font-size:14px;outline:none;}
+
+/* colors */
+.colors{display:flex;gap:9px;flex-wrap:wrap;margin-top:6px;}
+.color-dot{width:28px;height:28px;border-radius:50%;cursor:pointer;border:3px solid transparent;transition:transform .15s,border-color .2s;}
+.color-dot:hover{transform:scale(1.2);}
+.color-dot.active{border-color:white;transform:scale(1.1);}
+
+.submit-btn{
+  width:100%;padding:18px;
+  background:linear-gradient(135deg,var(--red),var(--red2));
+  border:none;border-radius:3px;
+  color:white;font-family:'Bebas Neue',sans-serif;
+  font-size:20px;letter-spacing:3px;
+  cursor:pointer;margin-top:24px;
+  transition:opacity .2s,transform .1s,box-shadow .3s;
+  position:relative;overflow:hidden;
+}
+.submit-btn::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent);
+  transform:translateX(-100%);transition:transform .4s;
+}
+.submit-btn:hover::before{transform:translateX(100%);}
+.submit-btn:hover{box-shadow:0 8px 32px rgba(124,58,237,.5);transform:translateY(-1px);}
+
+/* ── CLIENTS LIST ── */
+.clients-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+.clients-header h2{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:2px;color:var(--text);}
+.badge{
+  background:rgba(124,58,237,.15);border:1px solid rgba(124,58,237,.35);
+  color:var(--red2);border-radius:2px;padding:4px 14px;
+  font-family:'Space Mono',monospace;font-size:11px;font-weight:700;
+}
+.client-row{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:4px;padding:16px 20px;
+  display:flex;align-items:center;gap:14px;margin-bottom:10px;
+  transition:border-color .2s,background .2s,transform .2s;
+  position:relative;overflow:hidden;
+}
+.client-row::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--red);transform:scaleY(0);transition:transform .2s;transform-origin:bottom;}
+.client-row:hover{border-color:rgba(124,58,237,.4);background:rgba(124,58,237,.04);transform:translateX(3px);}
+.client-row:hover::before{transform:scaleY(1);}
+.client-av{width:46px;height:46px;border-radius:4px;flex-shrink:0;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+.client-info{flex:1;min-width:0;}
+.client-info h3{font-size:15px;font-weight:700;margin-bottom:3px;}
+.client-info p{font-size:12px;color:var(--muted);}
+.client-btns{display:flex;gap:7px;flex-shrink:0;}
+.btn-sm{
+  padding:8px 14px;border-radius:3px;
+  border:1px solid var(--border);background:transparent;
+  color:var(--text);font-family:'Tajawal',sans-serif;font-size:12px;
+  cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:5px;
+  transition:background .2s,border-color .2s,color .2s;
+}
+.btn-sm:hover{background:rgba(255,255,255,.07);}
+.btn-sm.primary{border-color:var(--red);color:var(--red2);}
+.btn-sm.primary:hover{background:rgba(124,58,237,.12);}
+.btn-sm.danger:hover{border-color:#f87171;color:#f87171;background:rgba(248,113,113,.08);}
+.empty{text-align:center;padding:48px;color:rgba(245,237,232,.2);font-size:14px;}
+
+/* ── MODAL ── */
+.overlay{
+  position:fixed;inset:0;background:rgba(10,6,8,.95);z-index:50;
+  display:flex;align-items:center;justify-content:center;padding:20px;
+  opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s;
+  backdrop-filter:blur(12px);
+}
+.overlay.open{opacity:1;visibility:visible;}
+.modal{
+  background:#150d10;
+  border:1px solid rgba(124,58,237,.3);
+  border-radius:4px;padding:36px;
+  width:100%;max-width:520px;
+  transform:scale(.88) translateY(24px);
+  transition:transform .35s cubic-bezier(.34,1.56,.64,1);
+  text-align:center;position:relative;overflow:hidden;
+  max-height:90vh;overflow-y:auto;
+}
+.modal::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--red),var(--gold),transparent);}
+.overlay.open .modal{transform:scale(1) translateY(0);}
+.modal h2{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:3px;margin-bottom:6px;}
+.modal p{color:var(--muted);font-size:13px;margin-bottom:18px;}
+.url-box{
+  background:rgba(124,58,237,.06);border:1px solid rgba(124,58,237,.25);
+  border-radius:3px;padding:12px 16px;
+  font-family:'Space Mono',monospace;font-size:10px;color:var(--red2);
+  word-break:break-all;text-align:left;direction:ltr;
+  display:block;margin-bottom:18px;text-decoration:none;
+  transition:background .2s;
+}
+.url-box:hover{background:rgba(124,58,237,.1);}
+.qr-area{margin:0 0 20px;display:flex;flex-direction:column;align-items:center;gap:10px;}
+.qr-frame{background:white;border-radius:6px;padding:14px;display:inline-block;}
+.modal-btns{display:flex;gap:8px;flex-wrap:wrap;}
+.modal-btns .btn-sm{flex:1;justify-content:center;min-width:100px;}
+
+/* ── TOAST ── */
+.toast{
+  position:fixed;bottom:28px;left:50%;
+  transform:translateX(-50%) translateY(80px);
+  z-index:200;
+  background:rgba(124,58,237,.12);border:1px solid rgba(124,58,237,.35);
+  border-radius:3px;padding:13px 24px;
+  display:flex;align-items:center;gap:10px;
+  opacity:0;transition:transform .35s cubic-bezier(.34,1.56,.64,1),opacity .25s;
+  backdrop-filter:blur(20px);white-space:nowrap;
+}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
+.toast strong{font-size:14px;color:var(--red2);}
+.toast span{font-size:12px;color:var(--muted);}
+
+/* ── EDIT MODE ── */
+.edit-banner{
+  display:none;align-items:center;justify-content:space-between;gap:12px;
+  background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.35);
+  border-radius:3px;padding:12px 16px;margin-bottom:24px;
+  font-size:13px;color:var(--red2);
+}
+.form-card.editing .edit-banner{display:flex;}
+.cancel-btn{
+  width:100%;padding:14px;margin-top:10px;
+  background:transparent;border:1px solid var(--border);border-radius:3px;
+  color:var(--muted);font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:3px;
+  cursor:pointer;display:none;transition:background .2s,color .2s;
+}
+.cancel-btn:hover{background:rgba(255,255,255,.05);color:var(--text);}
+.form-card.editing .cancel-btn{display:block;}
+.client-row.is-editing{border-color:var(--red);background:rgba(124,58,237,.08);}
+
+/* ── LOGIN ── */
+#login-page{
+  position:fixed;inset:0;z-index:100;
+  display:flex;align-items:center;justify-content:center;padding:20px;
+}
+#login-page.hidden{display:none;}
+.login-card{
+  position:relative;width:100%;max-width:380px;
+  background:#120d18;border:1px solid var(--border);border-radius:4px;
+  padding:36px 30px;text-align:center;overflow:hidden;
+}
+.login-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--red),var(--gold),var(--red),transparent);}
+.login-card h2{font-family:'Bebas Neue',sans-serif;font-size:34px;letter-spacing:3px;margin:6px 0 4px;}
+.login-card p{font-size:13px;color:var(--muted);margin-bottom:24px;}
+.login-card .field{text-align:left;margin-bottom:14px;}
+.login-err{color:#f87171;font-size:12px;min-height:18px;margin-top:4px;}
+#admin-page{display:none;}
+#admin-page.unlocked{display:block;}
+
+@media(max-width:600px){
+  header{padding:14px 16px;}
+  main{padding:32px 14px 60px;}
+  .form-card{padding:20px 14px;}
+  .grid2{grid-template-columns:1fr;}
+  .client-row{flex-wrap:wrap;}
+  .client-btns{width:100%;}
+  .modal{padding:22px 14px;}
+}
+</style>
+<base target="_blank">
+<base target="_blank">
+</head>
+<body>
+<canvas id="bg"></canvas>
+<div class="glow-orb orb1"></div>
+<div class="glow-orb orb2"></div>
+
+<!-- LOGIN -->
+<div id="login-page">
+  <form class="login-card" id="loginForm" autocomplete="off">
+    <div style="font-size:30px">🔒</div>
+    <h2>Admin Login</h2>
+    <p>Bitte Benutzername und Passwort eingeben</p>
+    <div class="field"><label>Benutzername</label><input type="text" id="l_user" required></div>
+    <div class="field"><label>Passwort</label><input type="password" id="l_pass" required></div>
+    <div class="login-err" id="loginErr"></div>
+    <button type="submit" class="submit-btn" style="margin-top:10px">Anmelden</button>
+  </form>
+</div>
+
+<div id="admin-page">
+  <header>
+    <a class="logo" href="#" style="text-decoration:none;">
+      <div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;">
+        <span style="font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:4px;color:#ffffff;">T.A.P</span>
+        <span style="font-family:'Bebas Neue',sans-serif;font-size:11px;letter-spacing:2px;color:#ffffff;">WERBEAGENTURWOB</span>
+      </div>
+      <div style="font-family:'Space Mono',monospace;font-size:8px;letter-spacing:3px;color:#a78bfa;text-transform:uppercase;margin-top:1px;margin-left:2px;">WERBETECHNIK / DIGITALDRUCK</div>
+    </a>
+    <span class="header-right" style="cursor:pointer" onclick="logout()" title="Abmelden">ADMIN PANEL · ⎋ ABMELDEN</span>
+  </header>
+
+  <main>
+    <div class="page-hero">
+      <div class="eyebrow">Client Management System</div>
+      <h1>Neue Kunden-<br>seite erstellen</h1>
+      <p>Gib die Kundendaten ein — der Link funktioniert auf jedem Gerät sofort</p>
+    </div>
+
+    <div class="form-card" id="formCard">
+      <form id="clientForm">
+        <div class="edit-banner"><span>✎ Bearbeitung: <strong id="editName"></strong></span><span style="font-size:11px;color:var(--muted)">Link &amp; QR bleiben gleich</span></div>
+        <div class="sec-label">Basisinformationen</div>
+        <div class="grid2">
+          <div class="field"><label>Vollständiger Name *</label><input type="text" id="f_name" placeholder="z.B. Max Mustermann" required></div>
+          <div class="field"><label>Berufsbezeichnung</label><input type="text" id="f_title" placeholder="z.B. Profi-Fotograf"></div>
+          <div class="field"><label>Adresse</label><input type="text" id="f_location" placeholder="z.B. Musterstraße 1, 12345 Berlin"></div>
+          
+          <div class="field" style="grid-column:1/-1"><label>Kurzbeschreibung</label><textarea id="f_bio" placeholder="Kurze Beschreibung des Kunden..."></textarea></div>
+        </div>
+
+        <div class="sec-label">Profilbild</div>
+        <div class="avatar-zone" id="avatarZone">
+          <input type="file" id="f_avatar_file" accept="image/*">
+          <div id="avPlaceholder"><div class="avatar-icon">📷</div><p>Klicke, um ein Profilbild hochzuladen</p><span>PNG · JPG · WEBP · bis 5MB</span></div>
+          <div id="avPreviewWrap" style="display:none"><img id="avPreviewImg" class="av-preview" src="" alt=""><p style="font-size:12px;color:var(--muted)">Klicke, um das Bild zu ändern</p></div>
+        </div>
+
+        <div class="sec-label">Theme-Farbe</div>
+        <div class="colors" id="colorPicker">
+          <div class="color-dot active" data-c="#7c3aed" style="background:#7c3aed"></div>
+          <div class="color-dot" data-c="#a78bfa" style="background:#a78bfa"></div>
+          <div class="color-dot" data-c="#8b5cf6" style="background:#8b5cf6"></div>
+          <div class="color-dot" data-c="#4F8EF7" style="background:#4F8EF7"></div>
+          <div class="color-dot" data-c="#34D399" style="background:#34D399"></div>
+          <div class="color-dot" data-c="#F472B6" style="background:#F472B6"></div>
+          <div class="color-dot" data-c="#FB923C" style="background:#FB923C"></div>
+          <div class="color-dot" data-c="#ec4899" style="background:#ec4899"></div>
+        </div>
+
+        <div class="sec-label">Social-Media-Links</div>
+        <div class="grid2">
+          <div class="field"><label>Instagram</label><div class="soc-row"><div class="soc-icon"><i class="fab fa-instagram" style="color:#E1306C;"></i></div><input type="text" id="f_ig" placeholder="Nur Benutzername"></div></div>
+          <div class="field"><label>WhatsApp</label><div class="soc-row"><div class="soc-icon"><i class="fab fa-whatsapp" style="color:#25D366;"></i></div><input type="text" id="f_wa" placeholder="491701234567"></div></div>
+          <div class="field"><label>Festnetznummer</label><div class="soc-row"><div class="soc-icon"><i class="fas fa-phone-alt" style="color:#8b5cf6;transform:scaleX(-1);display:inline-block;"></i></div><input type="text" id="f_landline" placeholder="0151 00000000"></div></div>
+          <div class="field"><label>Facebook</label><div class="soc-row"><div class="soc-icon"><i class="fab fa-facebook-f" style="color:#1877F2;"></i></div><input type="text" id="f_fb" placeholder="Nur Benutzername"></div></div>
+          <div class="field"><label>TikTok</label><div class="soc-row"><div class="soc-icon"><i class="fab fa-tiktok" style="color:#000000;"></i></div><input type="text" id="f_tt" placeholder="Nur Benutzername"></div></div>
+          <div class="field"><label>Twitter / X</label><div class="soc-row"><div class="soc-icon"><i class="fab fa-x-twitter" style="color:#000000;"></i></div><input type="text" id="f_tw" placeholder="Nur Benutzername"></div></div>
+          <div class="field"><label>YouTube</label><div class="soc-row"><div class="soc-icon"><i class="fab fa-youtube" style="color:#FF0000;"></i></div><input type="text" id="f_yt" placeholder="Kanal-Link oder Benutzername"></div></div>
+          <div class="field"><label>LinkedIn</label><div class="soc-row"><div class="soc-icon"><i class="fab fa-linkedin-in" style="color:#0A66C2;"></i></div><input type="text" id="f_li" placeholder="Nur Benutzername"></div></div>
+          <div class="field"><label>Snapchat</label><div class="soc-row"><div class="soc-icon"><i class="fab fa-snapchat-ghost" style="color:#FFFC00;"></i></div><input type="text" id="f_sn" placeholder="Nur Benutzername"></div></div>
+          <div class="field"><label>Webseite</label><div class="soc-row"><div class="soc-icon"><i class="fas fa-globe" style="color:#8b5cf6;"></i></div><input type="url" id="f_web" placeholder="https://..."></div></div>
+          <div class="field"><label>E-Mail</label><div class="soc-row"><div class="soc-icon"><i class="fas fa-envelope" style="color:#EA4335;"></i></div><input type="email" id="f_em" placeholder="beispiel@email.com"></div></div>
+        </div>
+
+        <button type="submit" class="submit-btn" id="submitBtn">✦ Kundenseite jetzt erstellen ✦</button>
+        <button type="button" class="cancel-btn" id="cancelEditBtn">✕ Bearbeitung abbrechen</button>
+      </form>
+    </div>
+
+    <div>
+      <div class="clients-header">
+        <h2>Registrierte Kunden</h2>
+        <span class="badge" id="countBadge">0 Kunden</span>
+      </div>
+      <div id="clientsList"></div>
+    </div>
+  </main>
+</div>
+
+<!-- MODAL -->
+<div class="overlay" id="modalOverlay">
+  <div class="modal">
+    <div style="font-size:48px;margin-bottom:10px" id="modalEmoji">✦</div>
+    <h2>Seite bereit</h2>
+    <p id="modalDesc"></p>
+    <a class="url-box" id="modalLink" href="#" target="_blank"></a>
+    <div class="qr-area">
+      <div style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:3px;color:var(--muted)">QR CODE — Herunterladbar</div>
+      <div class="qr-frame"><canvas id="qrCanvas" width="180" height="180"></canvas></div>
+    </div>
+    <div class="modal-btns">
+      <button class="btn-sm primary" id="copyBtn">📋 Link kopieren</button>
+      <a class="btn-sm primary" id="visitBtn" href="#" target="_blank">🔗 Seite öffnen</a>
+      <button class="btn-sm primary" id="dlQrBtn">⬇ QR herunterladen</button>
+      <button class="btn-sm" onclick="document.getElementById('modalOverlay').classList.remove('open')">✕ Schließen</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"><div><strong id="toastT"></strong> <span id="toastM"></span></div></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+/* ── Stars ── */
+(function(){
+  var c=document.getElementById('bg'),x=c.getContext('2d'),S=[];
+  function init(){c.width=innerWidth;c.height=innerHeight;S=Array.from({length:140},function(){return{x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*1.1+.15,sp:Math.random()*.1+.02,tw:Math.random()*Math.PI*2,tws:Math.random()*.012+.002};});}
+  function draw(){x.clearRect(0,0,c.width,c.height);S.forEach(function(s){s.tw+=s.tws;var a=.1+.3*Math.sin(s.tw);x.beginPath();x.arc(s.x,s.y,s.r,0,Math.PI*2);x.fillStyle='rgba(245,220,200,'+a+')';x.fill();s.y+=s.sp*.15;if(s.y>c.height){s.y=0;s.x=Math.random()*c.width;}});requestAnimationFrame(draw);}
+  init();draw();window.addEventListener('resize',init);
+})();
+
+/* ── Firebase Config ── */
+const FIREBASE_URL = 'https://social-1f6b9-default-rtdb.europe-west1.firebasedatabase.app/';
+const CLIENTS_PATH = 'clients';
+
+/* ── Helpers ── */
+function generateSubdomain(name) {
+  var base = name.toLowerCase().replace(/[^a-z0-9]/g, '').substring(0, 50) || 'client';
+  var rand = Math.random().toString(36).substring(2, 6);
+  return base + '-' + rand;
+}
+
+function escapeHtml(text) {
+  if (!text) return '';
+  var div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+/* ── Avatar ── */
+var _color='#7c3aed', _avatarData='';
+
+document.querySelectorAll('.color-dot').forEach(function(el){
+  el.addEventListener('click',function(){
+    document.querySelectorAll('.color-dot').forEach(function(e){e.classList.remove('active');});
+    el.classList.add('active'); _color=el.dataset.c;
+  });
+});
+
+document.getElementById('f_avatar_file').addEventListener('change',function(e){
+  var file=e.target.files[0]; if(!file) return;
+  if(file.size>5*1024*1024){showToast('⚠️ Bild zu groß','Maximal 5MB');return;}
+  var reader=new FileReader();
+  reader.onload=function(ev){
+    var img=new Image();
+    img.onload=function(){
+      var cv=document.createElement('canvas'),max=420,w=img.width,h=img.height;
+      if(w>h){if(w>max){h=Math.round(h*max/w);w=max;}}else{if(h>max){w=Math.round(w*max/h);h=max;}}
+      cv.width=w;cv.height=h;cv.getContext('2d').drawImage(img,0,0,w,h);
+      _avatarData=cv.toDataURL('image/jpeg',.82);
+      document.getElementById('avPreviewImg').src=_avatarData;
+      document.getElementById('avPlaceholder').style.display='none';
+      document.getElementById('avPreviewWrap').style.display='block';
+    };
+    img.src=ev.target.result;
+  };
+  reader.readAsDataURL(file);
+});
+
+/* ── Load Clients from Firebase ── */
+function loadClients(){
+  fetch(FIREBASE_URL + CLIENTS_PATH + '.json')
+    .then(function(r){return r.json();})
+    .then(function(data){
+      var clients = data ? Object.entries(data).map(function(e){return Object.assign({}, e[1], {firebaseKey: e[0]});}) : [];
+      renderClients(clients);
+    })
+    .catch(function(err){
+      console.error(err);
+      showToast('⚠️ Fehler','Keine Verbindung zu Firebase');
+    });
+}
+
+var _clients={}, _editKey=null;
+var FIELDS=['name','title','location','bio','ig','wa','landline','fb','tt','tw','yt','li','sn','web','em'];
+
+function renderClients(clients){
+  _clients={};
+  clients.forEach(function(c){_clients[c.firebaseKey]=c;});
+  document.getElementById('countBadge').textContent=(clients.length||0)+' Kunden';
+  var el=document.getElementById('clientsList');
+  if(!clients.length){el.innerHTML='<div class="empty">Noch keine Kunden. Erstelle die erste Seite!</div>';return;}
+  el.innerHTML=clients.map(function(c){
+    var av=c.avatar
+      ?'<img src="'+c.avatar+'" style="width:46px;height:46px;border-radius:4px;object-fit:cover">'
+      :'<div style="width:46px;height:46px;border-radius:4px;background:'+(c.color||'#c0392b')+'22;color:'+(c.color||'#c0392b')+';display:flex;align-items:center;justify-content:center;font-size:22px">'+(c.emoji||c.name[0])+'</div>';
+    return '<div class="client-row'+(c.firebaseKey===_editKey?' is-editing':'')+'">'
+      +'<div class="client-av">'+av+'</div>'
+      +'<div class="client-info"><h3>'+escapeHtml(c.name)+'</h3><p>'+escapeHtml(c.title||'')+(c.location?' · '+escapeHtml(c.location):'')+'</p></div>'
+      +'<div class="client-btns">'
+      +'<button class="btn-sm primary" onclick="openModalBySubdomain(\''+c.subdomain+'\',\''+escapeHtml(c.name)+'\',\''+(c.emoji||'✦')+'\')">🔗 Link</button>'
+      +'<button class="btn-sm primary" onclick="editClient(\''+c.firebaseKey+'\')">✎ Bearbeiten</button>'
+      +'<button class="btn-sm danger" onclick="deleteClient(\''+c.firebaseKey+'\')">🗑</button>'
+      +'</div></div>';
+  }).join('');
+}
+
+/* ── Submit Form → Firebase ── */
+document.getElementById('clientForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  var name=document.getElementById('f_name').value.trim();
+  if(!name){alert('Bitte gib einen Namen ein');return;}
+
+  if(_editKey){saveEdit();return;}
+
+  var subdomain = generateSubdomain(name);
+  
+  var client={
+    name:name,
+    title:document.getElementById('f_title').value.trim(),
+    location:document.getElementById('f_location').value.trim(),
+    bio:document.getElementById('f_bio').value.trim(),
+    avatar:_avatarData,
+    color:_color,
+    ig:document.getElementById('f_ig').value.trim(),
+    wa:document.getElementById('f_wa').value.trim(),
+    fb:document.getElementById('f_fb').value.trim(),
+    tt:document.getElementById('f_tt').value.trim(),
+    tw:document.getElementById('f_tw').value.trim(),
+    yt:document.getElementById('f_yt').value.trim(),
+    li:document.getElementById('f_li').value.trim(),
+    sn:document.getElementById('f_sn').value.trim(),
+    web:document.getElementById('f_web').value.trim(),
+    em:document.getElementById('f_em').value.trim(),
+    landline:document.getElementById('f_landline').value.trim(),
+    subdomain: subdomain,
+    createdAt: Date.now()
+  };
+
+  fetch(FIREBASE_URL + CLIENTS_PATH + '.json', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(client)
+  })
+  .then(function(r){return r.json();})
+  .then(function(res){
+    if(res.name){
+      loadClients();
+      resetForm();
+
+      var base = window.location.href.replace(/[^\/]*$/, '').replace(/#.*$/, '');
+      var url = base + 'linkes2.html?u=' + subdomain;
+      openModal(url, client.name, '✦');
+      showToast('Erstellt ✦','Seite von '+client.name+' ist bereit');
+    } else {
+      showToast('⚠️ Fehler','Erstellung fehlgeschlagen');
+    }
+  })
+  .catch(function(err){
+    console.error(err);
+    showToast('⚠️ Fehler','Keine Verbindung zu Firebase');
+  });
+});
+
+/* ── Form helpers ── */
+function setColor(c){
+  _color=c||'#7c3aed';
+  document.querySelectorAll('.color-dot').forEach(function(e){
+    e.classList.toggle('active',e.dataset.c.toLowerCase()===_color.toLowerCase());
+  });
+}
+
+function setAvatarPreview(src){
+  _avatarData=src||'';
+  document.getElementById('avPreviewImg').src=_avatarData;
+  document.getElementById('avPlaceholder').style.display=_avatarData?'none':'block';
+  document.getElementById('avPreviewWrap').style.display=_avatarData?'block':'none';
+}
+
+function resetForm(){
+  document.getElementById('clientForm').reset();
+  setAvatarPreview('');
+  setColor('#7c3aed');
+  _editKey=null;
+  document.getElementById('formCard').classList.remove('editing');
+  document.getElementById('submitBtn').textContent='✦ Kundenseite jetzt erstellen ✦';
+  document.querySelectorAll('.client-row.is-editing').forEach(function(r){r.classList.remove('is-editing');});
+}
+
+/* ── Edit Client (keeps subdomain → same link & QR) ── */
+function editClient(firebaseKey){
+  var c=_clients[firebaseKey]; if(!c) return;
+  resetForm();
+  _editKey=firebaseKey;
+  FIELDS.forEach(function(f){document.getElementById('f_'+f).value=c[f]||'';});
+  setAvatarPreview(c.avatar||'');
+  setColor(c.color);
+  document.getElementById('editName').textContent=c.name||'';
+  document.getElementById('formCard').classList.add('editing');
+  document.getElementById('submitBtn').textContent='✦ Änderungen speichern ✦';
+  renderClients(Object.values(_clients));
+  document.getElementById('formCard').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function saveEdit(){
+  var key=_editKey;
+  var updates={avatar:_avatarData,color:_color,updatedAt:Date.now()};
+  FIELDS.forEach(function(f){updates[f]=document.getElementById('f_'+f).value.trim();});
+  /* PATCH only changes these fields — subdomain & createdAt stay untouched */
+  fetch(FIREBASE_URL + CLIENTS_PATH + '/' + key + '.json', {
+    method:'PATCH',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(updates)
+  })
+  .then(function(r){if(!r.ok) throw new Error(r.status);return r.json();})
+  .then(function(){
+    resetForm();
+    loadClients();
+    showToast('Gespeichert ✓','Änderungen an '+updates.name+' übernommen');
+  })
+  .catch(function(err){
+    console.error(err);
+    showToast('⚠️ Fehler','Speichern fehlgeschlagen');
+  });
+}
+
+document.getElementById('cancelEditBtn').addEventListener('click',resetForm);
+
+function openModalBySubdomain(subdomain, name, emoji){
+  var base = window.location.href.replace(/[^\/]*$/, '').replace(/#.*$/, '');
+  var url = base + 'linkes2.html?u=' + subdomain;
+  openModal(url, name, '✦');
+}
+
+function openModal(url, name, emoji){
+  document.getElementById('modalEmoji').textContent=emoji||'✦';
+  document.getElementById('modalDesc').textContent='Link zur Seite von '+(name||'');
+  document.getElementById('modalLink').href=url;
+  document.getElementById('modalLink').textContent=url.length>60?url.substring(0,60)+'...':url;
+  document.getElementById('visitBtn').href=url;
+  document.getElementById('copyBtn').onclick=function(){
+    navigator.clipboard.writeText(url).then(function(){showToast('Kopiert 📋','Link in der Zwischenablage');});
+  };
+  generateQR(url);
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+/* ── QR Code ── */
+function generateQR(url){
+  var canvas=document.getElementById('qrCanvas');
+  var ctx=canvas.getContext('2d');
+  ctx.clearRect(0,0,180,180);
+  ctx.fillStyle='#ffffff';
+  ctx.fillRect(0,0,180,180);
+  
+  try{
+    var tmp=document.createElement('div');
+    tmp.style.position='absolute';tmp.style.left='-9999px';
+    document.body.appendChild(tmp);
+    new QRCode(tmp,{text:url,width:180,height:180,colorDark:'#000000',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M});
+    setTimeout(function(){
+      var el=tmp.querySelector('canvas')||tmp.querySelector('img');
+      if(!el){document.body.removeChild(tmp);return;}
+      var src=el.tagName==='CANVAS'?el.toDataURL():el.src;
+      var img=new Image();
+      img.onload=function(){ctx.drawImage(img,0,0,180,180);document.body.removeChild(tmp);};
+      img.onerror=function(){document.body.removeChild(tmp);};
+      img.src=src;
+    },300);
+  }catch(err){console.error('QR Error:',err);}
+}
+
+/* ── Download QR ── */
+document.getElementById('dlQrBtn').addEventListener('click',function(){
+  var canvas=document.getElementById('qrCanvas');
+  if(!canvas){showToast('⚠️ Fehler','QR Code nicht vorhanden');return;}
+  try{
+    var dataUrl=canvas.toDataURL('image/png');
+    if(!dataUrl||dataUrl==='data:,'||dataUrl.length<1000){showToast('⚠️ Fehler','QR Code noch nicht bereit');return;}
+    var a=document.createElement('a');
+    a.download='qr-ned-links.png';a.href=dataUrl;a.style.display='none';
+    document.body.appendChild(a);a.click();
+    setTimeout(function(){if(a.parentNode)document.body.removeChild(a);},100);
+    showToast('Heruntergeladen ⬇','QR Code bereit');
+  }catch(err){showToast('⚠️ Fehler','QR Download fehlgeschlagen');}
+});
+
+/* ── Delete Client ── */
+function deleteClient(firebaseKey){
+  if(!confirm('Diesen Kunden löschen?'))return;
+  fetch(FIREBASE_URL + CLIENTS_PATH + '/' + firebaseKey + '.json', {method: 'DELETE'})
+    .then(function(){if(_editKey===firebaseKey)resetForm();loadClients();showToast('Gelöscht 🗑','Kunde entfernt');})
+    .catch(function(){showToast('⚠️ Fehler','Keine Verbindung');});
+}
+
+function showToast(t,m){
+  document.getElementById('toastT').textContent=t;
+  document.getElementById('toastM').textContent=m;
+  var el=document.getElementById('toast');
+  el.classList.add('show');
+  setTimeout(function(){el.classList.remove('show');},3000);
+}
+
+document.getElementById('modalOverlay').addEventListener('click',function(e){
+  if(e.target===this) this.classList.remove('open');
+});
+
+/* ── Login ── */
+var ADMIN_USER='tap', ADMIN_PASS='CHANGE_ME', AUTH_KEY='tapAdminAuth';
+
+function unlock(){
+  document.getElementById('login-page').classList.add('hidden');
+  document.getElementById('admin-page').classList.add('unlocked');
+  loadClients();
+}
+
+function logout(){
+  try{sessionStorage.removeItem(AUTH_KEY);}catch(e){}
+  location.reload();
+}
+
+document.getElementById('loginForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  var u=document.getElementById('l_user').value.trim();
+  var p=document.getElementById('l_pass').value;
+  if(u===ADMIN_USER && p===ADMIN_PASS){
+    try{sessionStorage.setItem(AUTH_KEY,'1');}catch(err){}
+    unlock();
+  }else{
+    document.getElementById('loginErr').textContent='Benutzername oder Passwort falsch';
+    document.getElementById('l_pass').value='';
+  }
+});
+
+/* ── Init ── */
+var _authed=false;
+try{_authed=sessionStorage.getItem(AUTH_KEY)==='1';}catch(e){}
+if(_authed) unlock();
+</script>
+</body>
+</html>

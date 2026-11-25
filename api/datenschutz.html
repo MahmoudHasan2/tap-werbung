@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Datenschutz | TAP Werbeagentur WOB</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: #1a1a24;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+            --text-muted: #6b6b7b;
+            --accent-blue: #3b82f6;
+            --accent-purple: #8b5cf6;
+            --accent-orange: #f97316;
+            --border: rgba(255,255,255,0.06);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            padding: 1.25rem 2rem;
+            background: rgba(10, 10, 15, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* ===== NEW LOGO ===== */
+        .logo-group {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: #e8e8e8;
+            letter-spacing: 1px;
+            line-height: 1;
+        }
+
+        .logo-icon .dot {
+            color: var(--accent-purple);
+        }
+
+        .logo-text-group {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.05;
+        }
+
+        .logo-main {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #e8e8e8;
+            letter-spacing: 1.5px;
+        }
+
+        .logo-main .wob {
+            color: var(--accent-purple);
+            margin-left: 3px;
+        }
+
+        .logo-sub {
+            font-size: 0.58rem;
+            font-weight: 500;
+            color: var(--accent-purple);
+            letter-spacing: 2.2px;
+            margin-top: 3px;
+            opacity: 0.85;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover { color: var(--text-primary); }
+
+        .hero {
+            padding: 10rem 2rem 5rem;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(139,92,246,0.08) 0%, transparent 60%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: 50%;
+            transform: translateX(-50%);
+            width: 800px; height: 800px;
+            background: radial-gradient(circle, rgba(59,130,246,0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: -2px;
+            position: relative;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue), var(--accent-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem 6rem;
+        }
+
+        .section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .section:hover { border-color: rgba(139,92,246,0.2); }
+
+        .section h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section h2::before {
+            content: '';
+            display: inline-block;
+            width: 4px; height: 24px;
+            background: linear-gradient(180deg, var(--accent-purple), var(--accent-blue));
+            border-radius: 2px;
+        }
+
+        .section h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin: 1.5rem 0 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .section p, .section ul {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .section ul { padding-left: 1.5rem; }
+        .section li { margin-bottom: 0.5rem; }
+
+        .section a {
+            color: var(--accent-blue);
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .section a:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+
+        .section strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .highlight-box {
+            background: rgba(59,130,246,0.08);
+            border-left: 3px solid var(--accent-blue);
+            padding: 1.25rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1.5rem 0;
+        }
+
+        .highlight-box p { margin: 0; color: var(--text-secondary); }
+
+        .footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .footer-content { max-width: 1200px; margin: 0 auto; }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover { color: var(--text-primary); }
+        .footer-links a.active { color: var(--accent-purple); }
+
+        .footer p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero h1 { font-size: 2.2rem; }
+            .section { padding: 1.5rem; }
+            .logo-sub { display: none; }
+            .logo-icon { font-size: 1.4rem; }
+            .logo-main { font-size: 0.95rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo-group">
+                <div class="logo-icon">T<span class="dot">.</span>A<span class="dot">.</span>P</div>
+                <div class="logo-text-group">
+                    <div class="logo-main">WERBEAGENTUR<span class="wob">WOB</span></div>
+                    <div class="logo-sub">WERBETECHNIK / DIGITALDRUCK</div>
+                </div>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Startseite</a></li>
+                <li><a href="index.html#services">Leistungen</a></li>
+                <li><a href="index.html#portfolio">Portfolio</a></li>
+                <li><a href="index.html#contact">Kontakt</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1><span>Datenschutz</span></h1>
+        <p>Informationen zum Umgang mit Ihren personenbezogenen Daten</p>
+    </section>
+
+    <main class="content">
+        <div class="section">
+            <h2>1. Verantwortlicher</h2>
+            <p>Verantwortlicher für die Datenverarbeitung auf dieser Website ist:</p>
+            <p>
+                <strong>TAP Werbeagentur WOB</strong><br>
+                Max Mustermann<br>
+                Musterstraße 1<br>
+                38440 Wolfsburg<br>
+                Deutschland<br><br>
+                <strong>E-Mail:</strong> <a href="mailto:info@tap-werbung.de">info@tap-werbung.de</a><br>
+                <strong>Telefon:</strong> <a href="tel:+49 151 00000000">+49 151 00000000</a>
+            </p>
+        </div>
+
+        <div class="section">
+            <h2>2. Allgemeine Hinweise</h2>
+            <p>
+                Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, 
+                wenn Sie diese Website besuchen. Personenbezogene Daten sind alle Daten, mit denen Sie persönlich identifiziert werden können.
+            </p>
+            <div class="highlight-box">
+                <p><strong>Wichtig:</strong> Wir nehmen den Schutz Ihrer persönlichen Daten sehr ernst. 
+                Ihre Daten werden vertraulich und entsprechend der gesetzlichen Datenschutzvorschriften behandelt.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>3. Datenerfassung auf unserer Website</h2>
+            <h3>3.1 Server-Log-Dateien</h3>
+            <p>
+                Der Provider der Seiten erhebt und speichert automatisch Informationen in sogenannten Server-Log-Dateien, 
+                die Ihr Browser automatisch an uns übermittelt. Dies sind:
+            </p>
+            <ul>
+                <li>Browsertyp und Browserversion</li>
+                <li>Verwendetes Betriebssystem</li>
+                <li>Referrer URL</li>
+                <li>Hostname des zugreifenden Rechners</li>
+                <li>Uhrzeit der Serveranfrage</li>
+                <li>IP-Adresse</li>
+            </ul>
+            <p>
+                Eine Zusammenführung dieser Daten mit anderen Datenquellen wird nicht vorgenommen. 
+                Die Erfassung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO.
+            </p>
+
+            <h3>3.2 Kontaktformular / E-Mail-Kontakt</h3>
+            <p>
+                Wenn Sie uns per Kontaktformular oder E-Mail Anfragen zukommen lassen, werden Ihre Angaben aus dem Anfrageformular 
+                bzw. Ihre E-Mail-Adresse zwecks Bearbeitung der Anfrage und für den Fall von Anschlussfragen bei uns gespeichert. 
+                Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.
+            </p>
+        </div>
+
+        <div class="section">
+            <h2>4. Cookies</h2>
+            <p>
+                Unsere Internetseiten verwenden teilweise sogenannte Cookies. Cookies richten auf Ihrem Rechner keinen Schaden an 
+                und enthalten keine Viren. Cookies dienen dazu, unser Angebot nutzerfreundlicher, effektiver und sicherer zu machen.
+            </p>
+            <p>
+                Die meisten der von uns verwendeten Cookies sind sogenannte „Session-Cookies". Sie werden nach Ende Ihres Besuchs 
+                automatisch gelöscht. Andere Cookies bleiben auf Ihrem Endgerät gespeichert, bis Sie diese löschen.
+            </p>
+        </div>
+
+        <div class="section">
+            <h2>5. Ihre Rechte</h2>
+            <p>Sie haben jederzeit das Recht:</p>
+            <ul>
+                <li>Auskunft über Ihre bei uns gespeicherten Daten zu erhalten (Art. 15 DSGVO)</li>
+                <li>Die Berichtigung unrichtiger Daten zu verlangen (Art. 16 DSGVO)</li>
+                <li>Die Löschung Ihrer Daten zu verlangen (Art. 17 DSGVO)</li>
+                <li>Die Einschränkung der Verarbeitung zu verlangen (Art. 18 DSGVO)</li>
+                <li>Der Verarbeitung zu widersprechen (Art. 21 DSGVO)</li>
+                <li>Datenübertragbarkeit zu verlangen (Art. 20 DSGVO)</li>
+            </ul>
+            <p>
+                Wenn Sie glauben, dass die Verarbeitung Ihrer Daten gegen das Datenschutzrecht verstößt, 
+                haben Sie das Recht, sich bei der zuständigen Aufsichtsbehörde zu beschweren.
+            </p>
+        </div>
+
+        <div class="section">
+            <h2>6. SSL- bzw. TLS-Verschlüsselung</h2>
+            <p>
+                Diese Seite nutzt aus Sicherheitsgründen eine SSL- bzw. TLS-Verschlüsselung. Eine verschlüsselte Verbindung erkennen Sie daran, 
+                dass die Adresszeile des Browsers von „http://" auf „https://" wechselt und an dem Schloss-Symbol in Ihrer Browserzeile.
+            </p>
+        </div>
+
+        <div class="section">
+            <h2>7. Änderungen der Datenschutzerklärung</h2>
+            <p>
+                Wir behalten uns vor, diese Datenschutzerklärung anzupassen, damit sie stets den aktuellen rechtlichen Anforderungen entspricht 
+                oder um Änderungen unserer Leistungen in der Datenschutzerklärung umzusetzen. Für Ihren erneuten Besuch gilt dann die neue Datenschutzerklärung.
+            </p>
+        </div>
+
+        <div class="section">
+            <h2>8. Kontakt Datenschutz</h2>
+            <p>
+                Bei Fragen zum Datenschutz erreichen Sie uns unter:<br><br>
+                <strong>E-Mail:</strong> <a href="mailto:info@tap-werbung.de">info@tap-werbung.de</a>
+            </p>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="index.html">Startseite</a>
+                <a href="imprint.html">Impressum</a>
+                <a href="datenschutz.html" class="active">Datenschutz</a>
+            </div>
+            <p>&copy; 2026 TAP Werbeagentur WOB. Alle Rechte vorbehalten.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

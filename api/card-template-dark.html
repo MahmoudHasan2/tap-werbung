@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dark Elegant – Visitenkarte</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Montserrat',sans-serif;background:#0a0a0a;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:40px 20px;gap:20px;}
+.lbl{font-size:9px;color:#333;letter-spacing:4px;text-transform:uppercase;text-align:center;}
+/* 85x54mm @96dpi = 322x204px */
+.bc{width:322px;height:204px;position:relative;overflow:hidden;border-radius:8px;box-shadow:0 20px 60px rgba(0,0,0,0.8);}
+.bc-bg{position:absolute;inset:0;background:linear-gradient(135deg,#0f172a 0%,#1e1b4b 100%);z-index:0;}
+.bc-bgimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;display:none;}
+.bc-overlay{position:absolute;inset:0;z-index:2;background:linear-gradient(135deg,#0f172a 0%,#1e1b4b 100%);opacity:1;transition:opacity .3s;}
+.bc-accent{position:absolute;top:0;right:0;width:70px;height:100%;z-index:3;opacity:0.35;}
+.bc-tex{position:absolute;inset:0;background-image:radial-gradient(circle at 1px 1px,rgba(255,255,255,0.02) 1px,transparent 0);background-size:16px 16px;z-index:4;}
+.bc-corner{position:absolute;top:0;right:0;width:0;height:0;border-style:solid;border-width:0 56px 56px 0;border-color:transparent rgba(0,0,0,0.4) transparent transparent;z-index:5;}
+.bc-content{position:relative;z-index:6;width:100%;height:100%;padding:20px 22px;display:flex;flex-direction:column;justify-content:space-between;}
+/* Logo area */
+.bc-logo-area{display:flex;align-items:center;gap:10px;margin-bottom:4px;}
+.bc-logo-img{width:34px;height:34px;object-fit:contain;border-radius:6px;display:none;}
+.bc-logo-txt{font-size:10px;font-weight:800;letter-spacing:3px;color:#c4b5fd;text-transform:uppercase;}
+.bc-divider{width:26px;height:2px;margin:6px 0;}
+.bc-name{font-size:17px;font-weight:700;color:#fff;}
+.bc-title{font-size:9px;color:#94a3b8;letter-spacing:1.5px;text-transform:uppercase;margin-top:3px;}
+.bc-bottom{display:flex;justify-content:space-between;align-items:flex-end;}
+.bc-contacts{display:flex;flex-direction:column;gap:3px;}
+.bc-crow{display:flex;align-items:center;gap:6px;font-size:9px;color:#94a3b8;}
+.bc-crow i{width:10px;text-align:center;font-size:8px;}
+.bc-qrs{display:flex;gap:8px;align-items:flex-end;}
+.bc-qr-item{display:flex;flex-direction:column;align-items:center;gap:3px;}
+.bc-qr-icon{width:20px;height:20px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:10px;}
+.bc-qr-box{width:46px;height:46px;background:white;border-radius:4px;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+/* BACK */
+.bc-back-bg{position:absolute;inset:0;background:linear-gradient(135deg,#1e1b4b 0%,#0f172a 100%);z-index:0;}
+.bc-back-bgimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;display:none;}
+.bc-back-overlay{position:absolute;inset:0;z-index:2;background:linear-gradient(135deg,#1e1b4b 0%,#0f172a 100%);opacity:1;transition:opacity .3s;}
+.bc-back-decor-tl{position:absolute;top:14px;left:14px;width:36px;height:36px;border-left:2px solid #6366f1;border-top:2px solid #6366f1;opacity:0.4;z-index:3;}
+.bc-back-decor-br{position:absolute;bottom:14px;right:14px;width:36px;height:36px;border-right:2px solid #6366f1;border-bottom:2px solid #6366f1;opacity:0.4;z-index:3;}
+.bc-back-content{position:relative;z-index:4;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;padding:20px;}
+.bc-back-logo-area{display:flex;align-items:center;gap:8px;margin-bottom:2px;}
+.bc-back-logo-img{width:36px;height:36px;object-fit:contain;border-radius:6px;display:none;}
+.bc-back-icon{font-size:26px;}
+.bc-back-company{font-size:11px;font-weight:800;letter-spacing:4px;color:#fff;text-transform:uppercase;}
+.bc-back-divider{width:36px;height:2px;}
+.bc-back-services{font-size:8px;letter-spacing:1.5px;text-align:center;}
+.bc-back-tagline{font-size:8px;letter-spacing:1px;font-style:italic;text-align:center;}
+.bc-back-qrs{display:flex;gap:14px;align-items:flex-end;margin-top:6px;}
+.bc-back-qr-item{display:flex;flex-direction:column;align-items:center;gap:4px;}
+.bc-back-qr-icon{width:24px;height:24px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;}
+.bc-back-qr-box{width:52px;height:52px;border-radius:5px;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+</style>
+</head>
+<body>
+<p class="lbl">Vorderseite · Dark Elegant</p>
+<div class="bc" id="front">
+  <div class="bc-bg" id="front-bg"></div>
+  <img class="bc-bgimg" id="front-bgimg" alt="">
+  <div class="bc-overlay" id="front-overlay"></div>
+  <div class="bc-accent" id="front-accent-bar"></div>
+  <div class="bc-tex"></div>
+  <div class="bc-corner"></div>
+  <div class="bc-content">
+    <div>
+      <div class="bc-logo-area">
+        <img class="bc-logo-img" id="logo-img" alt="Logo">
+        <div class="bc-logo-txt" data-editable="companyName">Mein Unternehmen GmbH</div>
+      </div>
+      <div class="bc-divider" id="front-divider"></div>
+      <div class="bc-name" data-editable="personName">Max Mustermann</div>
+      <div class="bc-title" data-editable="jobTitle">Geschäftsführer · CEO</div>
+    </div>
+    <div class="bc-bottom">
+      <div class="bc-contacts">
+        <div class="bc-crow" id="row-phone1" style="display:none;"><i class="fas fa-phone" id="ic-phone1"></i><span data-editable="phone1"></span></div>
+        <div class="bc-crow" id="row-email"  style="display:none;"><i class="fas fa-envelope" id="ic-email"></i><span data-editable="email"></span></div>
+        <div class="bc-crow" id="row-website" style="display:none;"><i class="fas fa-globe" id="ic-web"></i><span data-editable="website"></span></div>
+      </div>
+      <div class="bc-qrs" id="front-qrs"></div>
+    </div>
+  </div>
+</div>
+
+<p class="lbl">Rückseite · Dark Elegant</p>
+<div class="bc" id="back">
+  <div class="bc-back-bg" id="back-bg"></div>
+  <img class="bc-back-bgimg" id="back-bgimg" alt="">
+  <div class="bc-back-overlay" id="back-overlay"></div>
+  <div class="bc-back-decor-tl"></div>
+  <div class="bc-back-decor-br"></div>
+  <div class="bc-back-content">
+    <div class="bc-back-logo-area">
+      <img class="bc-back-logo-img" id="back-logo-img" alt="">
+      <i class="fas fa-bolt bc-back-icon" id="back-icon" style="color:#6366f1;"></i>
+    </div>
+    <div class="bc-back-company" data-editable="companyName">Mein Unternehmen GmbH</div>
+    <div class="bc-back-divider" id="back-divider"></div>
+    <div class="bc-back-services" id="back-services" data-editable="jobTitle" style="color:#94a3b8;"></div>
+    <div class="bc-back-qrs" id="back-qrs"></div>
+  </div>
+</div>
+
+<p class="lbl" style="margin-top:8px;">85 × 54 mm · Druckfertig</p>
+
+<script>
+var state = {
+  companyName:'Mein Unternehmen GmbH', personName:'Max Mustermann',
+  jobTitle:'Geschäftsführer · CEO', phone1:'+49 30 123 456 78',
+  email:'info@firma.de', website:'www.firma.de',
+  primaryColor:'#6366f1', accentColor:'#8b5cf6', textColor:'#c4b5fd',
+  bgImage:'', bgOpacity:0.7,
+  logoImg:'', instagram:'', tiktok:''
+};
+
+function applyAll(d){
+  Object.keys(d).forEach(function(k){ if(d[k]!==undefined) state[k]=d[k]; });
+  render();
+}
+
+function render(){
+  // text fields
+  document.querySelectorAll('[data-editable]').forEach(function(el){
+    var k=el.getAttribute('data-editable');
+    if(state[k]!==undefined) el.textContent=state[k];
+  });
+  // contact rows
+  ['phone1','email','website'].forEach(function(k){
+    var row=document.getElementById('row-'+k);
+    if(row) row.style.display=state[k]?'flex':'none';
+  });
+  // colors
+  var p=state.primaryColor||'#6366f1';
+  var a=state.accentColor||'#8b5cf6';
+  var t=state.textColor||'#c4b5fd';
+  document.getElementById('front-divider').style.background=p;
+  document.getElementById('back-divider').style.background=p;
+  document.getElementById('back-icon').style.color=p;
+  document.querySelectorAll('[id^="ic-"]').forEach(function(el){ el.style.color=p; });
+  document.querySelectorAll('.bc-logo-txt').forEach(function(el){ el.style.color=t; });
+  // accent bar gradient
+  document.getElementById('front-accent-bar').style.background='linear-gradient(180deg,'+p+' 0%,'+a+' 100%)';
+  // bg overlay colors
+  document.getElementById('front-overlay').style.background='linear-gradient(135deg,#0f172a 0%,'+a+'44 100%)';
+  document.getElementById('back-overlay').style.background='linear-gradient(135deg,'+a+'44 0%,#0f172a 100%)';
+  // bg image
+  if(state.bgImage){
+    var imgs=['front-bgimg','back-bgimg'];
+    imgs.forEach(function(id){
+      var img=document.getElementById(id);
+      img.src=state.bgImage; img.style.display='block'; img.style.opacity=1-state.bgOpacity;
+    });
+    document.getElementById('front-overlay').style.opacity=state.bgOpacity;
+    document.getElementById('back-overlay').style.opacity=state.bgOpacity;
+  } else {
+    ['front-bgimg','back-bgimg'].forEach(function(id){ document.getElementById(id).style.display='none'; });
+    document.getElementById('front-overlay').style.opacity=1;
+    document.getElementById('back-overlay').style.opacity=1;
+  }
+  // logo
+  if(state.logoImg){
+    ['logo-img','back-logo-img'].forEach(function(id){
+      var el=document.getElementById(id); el.src=state.logoImg; el.style.display='block';
+    });
+    document.getElementById('back-icon').style.display='none';
+  } else {
+    ['logo-img','back-logo-img'].forEach(function(id){ document.getElementById(id).style.display='none'; });
+    document.getElementById('back-icon').style.display='';
+  }
+  // QR codes
+  buildQRs();
+}
+
+function buildQRs(){
+  var fqrs=document.getElementById('front-qrs');
+  var bqrs=document.getElementById('back-qrs');
+  fqrs.innerHTML=''; bqrs.innerHTML='';
+  var p=state.primaryColor||'#6366f1';
+  var items=[];
+  if(state.instagram) items.push({url:state.instagram,icon:'fab fa-instagram',color:'#e1306c'});
+  if(state.tiktok)    items.push({url:state.tiktok,   icon:'fab fa-tiktok',   color:'#fff'});
+  if(!items.length) return;
+  items.forEach(function(item){
+    // front QR
+    var fw=document.createElement('div'); fw.className='bc-qr-item';
+    var fi=document.createElement('div'); fi.className='bc-qr-icon';
+    fi.style.background='rgba(99,102,241,0.25)';
+    fi.innerHTML='<i class="'+item.icon+'" style="color:'+item.color+';font-size:10px;"></i>';
+    var fb=document.createElement('div'); fb.className='bc-qr-box';
+    var fe=document.createElement('div'); fe.style.cssText='width:42px;height:42px;';
+    fb.appendChild(fe); fw.appendChild(fi); fw.appendChild(fb); fqrs.appendChild(fw);
+    try{ new QRCode(fe,{text:item.url,width:42,height:42,colorDark:'#0f172a',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M}); }catch(e){}
+    // back QR
+    var bw=document.createElement('div'); bw.className='bc-back-qr-item';
+    var bi=document.createElement('div'); bi.className='bc-back-qr-icon';
+    bi.style.background='rgba(99,102,241,0.25)';
+    bi.innerHTML='<i class="'+item.icon+'" style="color:'+item.color+';font-size:12px;"></i>';
+    var bb=document.createElement('div'); bb.className='bc-back-qr-box';
+    bb.style.background='white';
+    var be=document.createElement('div'); be.style.cssText='width:48px;height:48px;';
+    bb.appendChild(be); bw.appendChild(bi); bw.appendChild(bb); bqrs.appendChild(bw);
+    try{ new QRCode(be,{text:item.url,width:48,height:48,colorDark:'#0f172a',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M}); }catch(e){}
+  });
+}
+
+// Init with defaults
+render();
+
+window.addEventListener('message',function(e){
+  if(!e.data||e.data.type!=='cardUpdate') return;
+  applyAll(e.data.data);
+});
+</script>
+</body>
+</html>

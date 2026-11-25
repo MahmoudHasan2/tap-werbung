@@ -1,0 +1,10 @@
+# منع Hostinger من تغيير أسماء الملفات
+<IfModule mod_security.c>
+    SecRuleEngine Off
+</IfModule>
+
+# السماح بجميع أنواع الملفات
+<FilesMatch "\.(pdf|jpg|jpeg|png|webp|gif)$">
+    Order allow,deny
+    Allow from all
+</FilesMatch>

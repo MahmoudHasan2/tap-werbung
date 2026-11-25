@@ -1,0 +1,133 @@
+menu-success.html
+
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speisekarte erstellt | TAP Werbeagentur WOB</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        :root { --bg:#0f0f0f;--bg-light:#1a1a1a;--text:#ffffff;--text-muted:rgba(255,255,255,0.6);--purple:#8B5CF6;--purple-light:#A78BFA;--purple-dark:#6D28D9;--gray:#2a2a2a;--border:rgba(255,255,255,0.1);--font-main:'Plus Jakarta Sans',sans-serif;--font-display:'Oswald',sans-serif; }
+        *{margin:0;padding:0;box-sizing:border-box;-webkit-font-smoothing:antialiased;}
+        body{background:var(--bg);color:var(--text);font-family:var(--font-main);min-height:100vh;}
+        nav{position:fixed;top:0;width:100%;padding:20px 5%;display:flex;justify-content:space-between;align-items:center;z-index:1000;background:rgba(15,15,15,0.8);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+        .logo-group{display:flex;align-items:center;gap:12px;text-decoration:none;}
+        .logo-icon{font-family:var(--font-display);font-size:42px;font-weight:700;color:var(--text);letter-spacing:2px;}
+        .logo-icon .dot{color:var(--purple);font-size:48px;line-height:0.5;}
+        .logo-text-group{display:flex;flex-direction:column;}
+        .logo-main{font-family:var(--font-display);font-weight:700;font-size:24px;letter-spacing:3px;color:var(--text);}
+        .logo-main .wob{color:var(--purple);font-size:16px;vertical-align:super;}
+        .logo-sub{font-size:9px;text-transform:uppercase;letter-spacing:3px;color:var(--purple);font-weight:600;margin-top:2px;}
+        .nav-links{display:flex;gap:40px;align-items:center;}
+        .nav-links a{text-decoration:none;color:var(--text-muted);font-weight:500;font-size:13px;letter-spacing:2px;text-transform:uppercase;transition:color 0.3s;}
+        .nav-links a:hover{color:var(--text);}
+        @media(max-width:768px){.nav-links{display:none;}}
+        .success-page{min-height:100vh;padding-top:120px;padding-bottom:80px;display:flex;flex-direction:column;align-items:center;}
+        .success-header{text-align:center;padding:40px 5%;}
+        .success-icon{font-size:80px;margin-bottom:24px;display:block;}
+        .success-header h1{font-family:var(--font-display);font-size:clamp(32px,6vw,64px);font-weight:700;letter-spacing:-3px;text-transform:uppercase;margin-bottom:12px;}
+        .success-header h1 span{color:var(--purple);}
+        .success-header p{color:var(--text-muted);font-size:16px;max-width:500px;margin:0 auto;line-height:1.6;}
+        .qr-section{background:var(--bg-light);border:1px solid var(--border);border-radius:24px;padding:40px;text-align:center;max-width:500px;width:90%;margin-bottom:30px;}
+        .qr-section h3{font-family:var(--font-display);font-size:22px;text-transform:uppercase;letter-spacing:-1px;margin-bottom:8px;}
+        .qr-section .qr-sub{color:var(--text-muted);font-size:14px;margin-bottom:24px;}
+        .qr-code-container{background:white;padding:20px;border-radius:16px;display:inline-block;margin-bottom:20px;box-shadow:0 10px 40px rgba(0,0,0,0.3);}
+        .menu-url{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:14px 18px;font-family:monospace;font-size:13px;color:var(--purple-light);word-break:break-all;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;gap:10px;}
+        .copy-btn{background:var(--purple);border:none;color:white;padding:6px 14px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;transition:all 0.3s;white-space:nowrap;flex-shrink:0;}
+        .copy-btn:hover{background:var(--purple-light);}
+        .copy-btn.copied{background:#10b981;}
+        .download-options{display:flex;gap:12px;justify-content:center;margin-top:16px;}
+        .dl-btn{padding:10px 20px;background:var(--bg);border:1px solid var(--border);border-radius:10px;color:var(--text-muted);font-size:12px;font-weight:600;cursor:pointer;transition:all 0.3s;display:flex;align-items:center;gap:6px;}
+        .dl-btn:hover{border-color:var(--purple);color:var(--text);}
+        .action-buttons{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;}
+        .btn{display:inline-flex;align-items:center;gap:10px;padding:14px 32px;border-radius:50px;font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all 0.4s;border:none;font-family:var(--font-main);text-decoration:none;}
+        .btn-primary{background:var(--purple);color:white;}
+        .btn-primary:hover{background:var(--purple-light);transform:translateY(-2px);}
+        .btn-secondary{background:transparent;color:var(--text-muted);border:1px solid var(--border);}
+        .btn-secondary:hover{border-color:var(--purple);color:var(--text);}
+        @media(max-width:768px){.action-buttons{flex-direction:column;width:90%;}.btn{width:100%;justify-content:center;}}
+        ::-webkit-scrollbar{width:6px;}::-webkit-scrollbar-track{background:var(--bg);}::-webkit-scrollbar-thumb{background:var(--purple-dark);border-radius:3px;}
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo-group">
+            <div class="logo-icon">T<span class="dot">.</span>A<span class="dot">.</span>P</div>
+            <div class="logo-text-group">
+                <div class="logo-main">WERBEAGENTUR<span class="wob">WOB</span></div>
+                <div class="logo-sub">WERBETECHNIK / DIGITALDRUCK</div>
+            </div>
+        </a>
+        <div class="nav-links">
+            <a href="index.html">Homepage</a>
+            <a href="menu-creator.html">+ Neue erstellen</a>
+        </div>
+    </nav>
+    <main class="success-page">
+        <div class="success-header">
+            <span class="success-icon">🎉</span>
+            <h1>Speisekarte <span>erstellt!</span></h1>
+            <p>Deine digitale Speisekarte ist jetzt online. Teile den Link oder QR-Code mit deinen Gästen.</p>
+        </div>
+        <div class="qr-section">
+            <h3>QR-Code & Link</h3>
+            <p class="qr-sub">Scanne oder teile den Link direkt</p>
+            <div class="qr-code-container" id="qrcode"></div>
+            <div class="menu-url">
+                <span id="urlText">Lade...</span>
+                <button class="copy-btn" id="copyBtn" onclick="copyUrl()">Kopieren</button>
+            </div>
+            <div class="download-options">
+                <button class="dl-btn" onclick="downloadQR()">📥 QR herunterladen</button>
+                <button class="dl-btn" onclick="window.print()">🖨 Drucken</button>
+            </div>
+        </div>
+        <div class="action-buttons">
+            <a href="#" class="btn btn-primary" id="viewMenuBtn" target="_blank">👁 Menü ansehen</a>
+            <a href="menu-creator.html" class="btn btn-secondary">+ Neue erstellen</a>
+        </div>
+    </main>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
+
+        const app = initializeApp({ databaseURL: "https://your-firebase-project-default-rtdb.europe-west1.firebasedatabase.app" });
+        const db  = getDatabase(app);
+
+        const menuId  = new URLSearchParams(window.location.search).get('id') || localStorage.getItem('lastMenuId');
+        const baseUrl = window.location.origin + window.location.pathname.replace('menu-success.html','');
+        const menuUrl = baseUrl + 'menu-view.html?id=' + menuId;
+
+        document.getElementById('urlText').textContent = menuUrl;
+        document.getElementById('viewMenuBtn').href    = menuUrl;
+
+        new QRCode(document.getElementById('qrcode'), {
+            text: menuUrl, width: 200, height: 200,
+            colorDark: '#000000', colorLight: '#ffffff',
+            correctLevel: QRCode.CorrectLevel.H
+        });
+
+        window.copyUrl = function() {
+            navigator.clipboard.writeText(menuUrl).then(() => {
+                const btn = document.getElementById('copyBtn');
+                btn.textContent = '✓ Kopiert!'; btn.classList.add('copied');
+                setTimeout(() => { btn.textContent = 'Kopieren'; btn.classList.remove('copied'); }, 2000);
+            });
+        };
+        window.downloadQR = function() {
+            const canvas = document.querySelector('#qrcode canvas');
+            if (canvas) { const a = document.createElement('a'); a.download='menu-qr.png'; a.href=canvas.toDataURL(); a.click(); }
+        };
+
+        gsap.from('.success-icon',   { scale:0, rotation:-20, duration:0.8, ease:'back.out(1.7)', delay:0.2 });
+        gsap.from('.success-header h1', { y:60, opacity:0, duration:1, ease:'power4.out', delay:0.4 });
+        gsap.from('.qr-section',     { y:40, opacity:0, duration:0.8, delay:0.8 });
+        gsap.from('.action-buttons', { y:30, opacity:0, duration:0.8, delay:1 });
+    </script>
+</body>
+</html>

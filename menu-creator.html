@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    
+        <meta charset="UTF-8">
+    <title>TAP Werbeagentur WOB | Werbetechnik / Digitaldruck</title>
+    
+    <!-- Favicon — TAP Logo -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0iIzBmMGYwZiIvPjx0ZXh0IHg9IjE2IiB5PSIyMiIgZm9udC1mYW1pbHk9IkFyaWFsIEJsYWNrLEltcGFjdCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjIwIiBmb250LXdlaWdodD0iOTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjZmZmZmZmIj5UPC90ZXh0PjxjaXJjbGUgY3g9IjIzIiBjeT0iOSIgcj0iMi41IiBmaWxsPSIjOEI1Q0Y2Ii8+PC9zdmc+">
+    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0iIzBmMGYwZiIvPjx0ZXh0IHg9IjE2IiB5PSIyMiIgZm9udC1mYW1pbHk9IkFyaWFsIEJsYWNrLEltcGFjdCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjIwIiBmb250LXdlaWdodD0iOTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjZmZmZmZmIj5UPC90ZXh0PjxjaXJjbGUgY3g9IjIzIiBjeT0iOSIgcj0iMi41IiBmaWxsPSIjOEI1Q0Y2Ii8+PC9zdmc+">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/..." rel="stylesheet">
+    
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>استخراج قائمة الطعام | AI Menu Extractor</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800;900&family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #0a0a0a; --bg-card: #111111; --bg-elevated: #1a1a1a;
+            --text: #ffffff; --text-muted: #888888; --text-dim: #555555;
+            --primary: #e63946; --primary-light: #ff4d5e; --secondary: #ff8c00;
+            --accent: #8B5CF6; --accent-light: #A78BFA;
+            --success: #10B981; --warning: #F59E0B; --danger: #EF4444;
+            --border: #2a2a2a; --border-light: #333333;
+            --font-main: 'DM Sans', 'Tajawal', sans-serif;
+        }
+        body { font-family: var(--font-main); background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
+        .app-header { background: linear-gradient(135deg,#111 0%,#1a0a0a 100%); border-bottom: 2px solid var(--primary); padding: 20px 5%; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 30px rgba(230,57,70,.15); }
+        .app-header-inner { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+        .logo-section { display: flex; align-items: center; gap: 14px; }
+        .logo-icon { width: 48px; height: 48px; background: linear-gradient(135deg,var(--primary),var(--secondary)); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 26px; }
+        .logo-text h1 { font-size: 22px; font-weight: 900; letter-spacing: 1px; color: var(--secondary); }
+        .logo-text p { font-size: 11px; color: var(--text-muted); letter-spacing: 2px; text-transform: uppercase; }
+        .header-actions { display: flex; gap: 12px; align-items: center; }
+        .btn { padding: 10px 24px; border-radius: 8px; font-family: var(--font-main); font-size: 13px; font-weight: 700; letter-spacing: .5px; cursor: pointer; border: none; transition: all .3s ease; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-primary { background: linear-gradient(135deg,var(--primary),#c1121f); color: white; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(230,57,70,.4); }
+        .btn-secondary { background: var(--bg-elevated); color: var(--text); border: 1px solid var(--border); }
+        .btn-secondary:hover { border-color: var(--primary); color: var(--primary); }
+        .btn:disabled { opacity: .4; cursor: not-allowed; transform: none !important; }
+        .steps-bar { display: flex; justify-content: center; gap: 8px; padding: 30px 20px 10px; }
+        .step-indicator { display: flex; align-items: center; gap: 8px; }
+        .step-dot { width: 36px; height: 36px; border-radius: 50%; background: var(--bg-elevated); border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: var(--text-muted); transition: all .4s ease; }
+        .step-dot.active { background: linear-gradient(135deg,var(--primary),var(--secondary)); border-color: var(--primary); color: white; box-shadow: 0 0 20px rgba(230,57,70,.4); }
+        .step-dot.completed { background: var(--success); border-color: var(--success); color: white; }
+        .step-line { width: 60px; height: 2px; background: var(--border); transition: all .4s ease; }
+        .step-line.completed { background: var(--success); }
+        .step-labels { display: flex; justify-content: center; gap: 60px; padding: 8px 0 20px; }
+        .step-label { font-size: 11px; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; font-weight: 600; }
+        .step-label.active { color: var(--primary); }
+        .main-container { max-width: 1200px; margin: 0 auto; padding: 0 20px 100px; }
+        .step-panel { display: none; animation: fadeInUp .5s ease; }
+        .step-panel.active { display: block; }
+        @keyframes fadeInUp { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
+        .panel-header { text-align: center; padding: 40px 20px; }
+        .panel-header h2 { font-size: clamp(24px,4vw,40px); font-weight: 900; letter-spacing: -1px; margin-bottom: 12px; }
+        .panel-header h2 span { color: var(--primary); }
+        .panel-header p { color: var(--text-muted); font-size: 15px; max-width: 600px; margin: 0 auto; line-height: 1.7; }
+        .upload-zone { border: 2px dashed var(--border); border-radius: 24px; padding: 60px 40px; text-align: center; background: linear-gradient(135deg,rgba(230,57,70,.03) 0%,transparent 100%); transition: all .4s ease; position: relative; cursor: pointer; margin-bottom: 30px; }
+        .upload-zone:hover,.upload-zone.dragover { border-color: var(--primary); background: linear-gradient(135deg,rgba(230,57,70,.08) 0%,rgba(230,57,70,.02) 100%); transform: scale(1.01); }
+        .upload-zone input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+        .upload-icon { font-size: 64px; margin-bottom: 20px; display: block; }
+        .upload-zone h3 { font-size: 22px; font-weight: 700; margin-bottom: 10px; }
+        .upload-zone p { color: var(--text-muted); font-size: 15px; }
+        .upload-hint { font-size: 12px; color: var(--text-dim); margin-top: 12px; }
+        .preview-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(160px,1fr)); gap: 16px; margin-bottom: 30px; }
+        .preview-card { background: var(--bg-card); border: 2px solid var(--border); border-radius: 16px; overflow: hidden; position: relative; transition: all .3s ease; }
+        .preview-card:hover { border-color: var(--primary); transform: translateY(-4px); }
+        .preview-card img { width: 100%; height: 120px; object-fit: cover; }
+        .preview-card .preview-info { padding: 10px 12px; }
+        .preview-card .preview-name { font-size: 12px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .preview-card .preview-status { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+        .preview-card .preview-status.processing { color: var(--warning); }
+        .preview-card .preview-status.done { color: var(--success); }
+        .preview-card .preview-status.error { color: var(--danger); }
+        .preview-card .remove-btn { position: absolute; top: 8px; right: 8px; width: 28px; height: 28px; background: rgba(239,68,68,.9); border: none; border-radius: 50%; color: white; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all .3s; }
+        .preview-card .remove-btn:hover { background: var(--danger); transform: scale(1.1); }
+        .api-section { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; margin-bottom: 30px; }
+        .api-section label { display: block; font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; }
+        .api-input { width: 100%; background: var(--bg); border: 2px solid var(--border); border-radius: 12px; padding: 14px 18px; color: var(--text); font-family: var(--font-main); font-size: 14px; outline: none; transition: all .3s; }
+        .api-input:focus { border-color: var(--primary); }
+        .api-input.valid { border-color: var(--success); }
+        .api-input.invalid { border-color: var(--danger); }
+        .api-hint { font-size: 12px; color: var(--text-dim); margin-top: 10px; line-height: 1.6; }
+        .api-hint a { color: var(--primary); text-decoration: none; }
+        .api-hint a:hover { text-decoration: underline; }
+        .api-status { font-size: 12px; margin-top: 8px; font-weight: 700; }
+        .api-status.valid { color: var(--success); }
+        .api-status.invalid { color: var(--danger); }
+        .review-textarea { width: 100%; min-height: 400px; background: var(--bg-card); border: 2px solid var(--border); border-radius: 16px; padding: 24px; color: var(--text); font-family: 'Courier New',monospace; font-size: 13px; line-height: 1.8; resize: vertical; outline: none; transition: all .3s; direction: ltr; text-align: left; }
+        .review-textarea:focus { border-color: var(--primary); }
+        .review-info { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 20px; }
+        .review-badge { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 8px; padding: 10px 18px; font-size: 12px; }
+        .review-badge strong { color: var(--primary); }
+        .loading-overlay { position: fixed; inset: 0; background: rgba(10,10,10,.97); z-index: 9999; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 24px; }
+        .loading-overlay.active { display: flex; }
+        .loading-spinner { width: 60px; height: 60px; border: 3px solid var(--border); border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .loading-overlay h3 { font-size: 24px; font-weight: 900; }
+        .loading-overlay p { color: var(--text-muted); font-size: 14px; max-width: 400px; text-align: center; }
+        .loading-progress-bar { width: 320px; height: 4px; background: var(--bg-elevated); border-radius: 2px; overflow: hidden; }
+        .loading-progress-bar .fill { height: 100%; background: linear-gradient(90deg,var(--primary),var(--secondary)); border-radius: 2px; transition: width .3s; width: 0%; }
+        .loading-progress-text { color: var(--primary); font-size: 14px; font-weight: 700; }
+        .loading-stage { font-size: 12px; color: var(--text-dim); letter-spacing: 1px; text-transform: uppercase; }
+        .menu-display { background: var(--bg); min-height: 100vh; }
+        .menu-display-header { background: linear-gradient(135deg,var(--bg-card) 0%,var(--bg) 100%); padding: 60px 20px 40px; text-align: center; border-bottom: 3px solid var(--primary); }
+        .menu-display-header h1 { font-size: clamp(28px,5vw,48px); font-weight: 900; color: var(--secondary); letter-spacing: 2px; }
+        .menu-info-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(250px,1fr)); gap: 20px; max-width: 1000px; margin: 30px auto 0; }
+        .menu-info-card { background: var(--bg-elevated); padding: 20px; border-radius: 12px; border-right: 4px solid var(--primary); }
+        .menu-info-card h4 { color: var(--secondary); font-size: 13px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+        .menu-info-card p { color: var(--text); font-size: 14px; line-height: 1.7; }
+        .menu-container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+        .menu-category-section { margin-bottom: 50px; scroll-margin-top: 120px; }
+        .category-header-bar { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 3px solid var(--primary); }
+        .category-icon-box { width: 48px; height: 48px; background: linear-gradient(135deg,var(--primary),var(--secondary)); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 24px; }
+        .category-header-bar h2 { font-size: clamp(22px,3vw,32px); font-weight: 900; color: var(--secondary); letter-spacing: 1px; }
+        .category-desc { color: var(--text-muted); font-size: 14px; margin-top: 4px; }
+        .items-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(300px,1fr)); gap: 20px; }
+        .item-card { background: var(--bg-card); border: 2px solid var(--border); border-radius: 12px; padding: 20px; position: relative; overflow: hidden; transition: all .3s ease; }
+        .item-card::before { content:''; position: absolute; top:0; left:0; right:0; height:3px; background: linear-gradient(90deg,var(--primary),var(--secondary)); }
+        .item-card:hover { border-color: var(--primary); transform: translateY(-4px); box-shadow: 0 10px 30px rgba(230,57,70,.15); }
+        .item-card-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 10px; }
+        .item-card-name { font-size: 17px; font-weight: 700; color: var(--text); flex: 1; }
+        .item-card-price { background: var(--primary); color: white; padding: 6px 12px; border-radius: 6px; font-weight: 800; font-size: 15px; white-space: nowrap; }
+        .item-card-desc { color: var(--text-muted); font-size: 13px; line-height: 1.6; margin-bottom: 14px; }
+        .item-card-footer { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+        .allergen-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+        .allergen-tag { background: var(--secondary); color: var(--bg); padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; }
+        .meal-badge { background: var(--bg-elevated); color: var(--secondary); padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 700; border: 1px solid var(--border); }
+        .allergen-legend-section { background: var(--bg-card); border: 2px solid var(--border); border-radius: 16px; padding: 30px; margin-top: 50px; }
+        .allergen-legend-section h3 { color: var(--secondary); font-size: 20px; font-weight: 900; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
+        .legend-columns { display: grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap: 30px; }
+        .legend-col h4 { color: var(--primary); font-size: 13px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 14px; }
+        .legend-row { font-size: 13px; color: var(--text); padding: 8px 0; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
+        .legend-row:last-child { border-bottom: none; }
+        .legend-code { color: var(--secondary); font-weight: 800; min-width: 24px; }
+        .action-bar { position: fixed; bottom:0; left:0; right:0; background: rgba(10,10,10,.95); backdrop-filter: blur(20px); border-top: 1px solid var(--border); padding: 16px 5%; display: flex; justify-content: space-between; align-items: center; z-index: 100; gap: 12px; flex-wrap: wrap; }
+        .action-bar .btn { padding: 12px 28px; }
+        .comparison-panel { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; margin-bottom: 30px; }
+        .comparison-panel h4 { color: var(--primary); font-size: 14px; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+        .comparison-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        @media (max-width:768px) { .comparison-grid { grid-template-columns: 1fr; } }
+        .comparison-col { background: var(--bg); border-radius: 12px; padding: 16px; }
+        .comparison-col h5 { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+        .comparison-col pre { font-family:'Courier New',monospace; font-size: 12px; line-height: 1.7; color: var(--text); white-space: pre-wrap; word-break: break-word; max-height: 300px; overflow-y: auto; }
+        .app-footer { background: var(--bg-card); border-top: 1px solid var(--border); padding: 30px 20px; text-align: center; margin-top: 60px; }
+        .app-footer p { color: var(--text-muted); font-size: 13px; }
+        @media (max-width:768px) { .items-grid { grid-template-columns:1fr; } .upload-zone { padding:40px 20px; } .preview-grid { grid-template-columns:repeat(2,1fr); } .steps-bar { transform:scale(.85); } .step-labels { gap:30px; } .action-bar { flex-direction:column; } .action-bar .btn { width:100%; justify-content:center; } .menu-info-grid { grid-template-columns:1fr; } }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 3px; }
+    </style>
+</head>
+<body>
+
+<div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-spinner"></div>
+    <h3 id="loadingTitle">جاري المعالجة...</h3>
+    <p id="loadingDesc">يتم استخراج النص من الصور</p>
+    <div class="loading-progress-bar"><div class="fill" id="loadingProgress"></div></div>
+    <span class="loading-progress-text" id="loadingProgressText">0%</span>
+    <span class="loading-stage" id="loadingStage">المرحلة 1 من 3</span>
+</div>
+
+<header class="app-header">
+    <div class="app-header-inner">
+        <div class="logo-section">
+            <div class="logo-icon">🍔</div>
+            <div class="logo-text">
+                <h1>AI MENU EXTRACTOR</h1>
+                <p>استخراج قائمة الطعام بالذكاء الاصطناعي</p>
+            </div>
+        </div>
+        <div class="header-actions">
+            <button class="btn btn-secondary" onclick="resetAll()">🔄 جديد</button>
+            <button class="btn btn-primary" id="exportBtn" onclick="exportMenu()" style="display:none;">📥 تصدير</button>
+        </div>
+    </div>
+</header>
+
+<div class="steps-bar">
+    <div class="step-indicator">
+        <div class="step-dot active" id="stepDot1">1</div>
+        <div class="step-line" id="stepLine1"></div>
+    </div>
+    <div class="step-indicator">
+        <div class="step-dot" id="stepDot2">2</div>
+        <div class="step-line" id="stepLine2"></div>
+    </div>
+    <div class="step-indicator">
+        <div class="step-dot" id="stepDot3">3</div>
+        <div class="step-line" id="stepLine3"></div>
+    </div>
+    <div class="step-indicator">
+        <div class="step-dot" id="stepDot4">4</div>
+    </div>
+</div>
+<div class="step-labels">
+    <span class="step-label active" id="stepLabel1">رفع الصور</span>
+    <span class="step-label" id="stepLabel2">المراجعة</span>
+    <span class="step-label" id="stepLabel3">التحقق المزدوج</span>
+    <span class="step-label" id="stepLabel4">القائمة النهائية</span>
+</div>
+
+<div class="main-container">
+
+    <!-- STEP 1 -->
+    <div class="step-panel active" id="panel1">
+        <div class="panel-header">
+            <h2>📸 <span>رفع صور</span> القائمة</h2>
+            <p>ارفع صور قائمة الطعام وسنقوم باستخراج كل التفاصيل بدقة تامة</p>
+        </div>
+        <div class="api-section">
+            <label>🔑 مفتاح OpenAI API (مطلوب)</label>
+            <input type="password" class="api-input" id="apiKey" placeholder="sk-..." oninput="validateApiKey(this)">
+            <p class="api-hint">
+                <strong>مطلوب للحصول على نتائج دقيقة</strong><br>
+                GPT-4o Vision يستخرج النص بدقة من الصور<br>
+                <a href="https://platform.openai.com/api-keys" target="_blank">احصل على مفتاح من هنا →</a>
+                &nbsp;|&nbsp;
+                <a href="https://platform.openai.com/usage" target="_blank">تحقق من رصيدك →</a>
+            </p>
+            <div class="api-status" id="apiStatus"></div>
+        </div>
+        <div class="upload-zone" id="uploadZone">
+            <input type="file" id="imageInput" accept="image/*" multiple onchange="handleImageUpload(this)">
+            <span class="upload-icon">📷</span>
+            <h3>اسحب الصور هنا أو انقر للاختيار</h3>
+            <p>يدعم JPG, PNG, WEBP, HEIC - يمكن رفع عدة صور</p>
+            <p class="upload-hint">للحصول على أفضل نتيجة، تأكد أن الصور واضحة والنص مقروء</p>
+        </div>
+        <div class="preview-grid" id="previewGrid"></div>
+        <div style="text-align:center;margin-top:30px;">
+            <button class="btn btn-primary" id="btnExtract" disabled onclick="startExtraction()" style="padding:16px 48px;font-size:15px;">
+                🔍 بدء الاستخراج الذكي
+            </button>
+        </div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="step-panel" id="panel2">
+        <div class="panel-header">
+            <h2>✏️ <span>مراجعة</span> النص المستخرج</h2>
+            <p>راجع النص المستخرج. يمكنك تعديله مباشرة قبل الانتقال للمرحلة التالية</p>
+        </div>
+        <div class="review-info">
+            <div class="review-badge">📄 <strong id="reviewImageCount">0</strong> صورة</div>
+            <div class="review-badge">🤖 المحرك: <strong id="reviewEngine">-</strong></div>
+            <div class="review-badge">⏱️ الوقت: <strong id="reviewTime">-</strong></div>
+        </div>
+        <textarea class="review-textarea" id="extractedText" placeholder="سيظهر هنا النص المستخرج..."></textarea>
+        <div style="text-align:center;margin-top:30px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+            <button class="btn btn-secondary" onclick="goToStep(1)">← رجوع</button>
+            <button class="btn btn-primary" onclick="startReview()">🔍 تشغيل المراجعة المزدوجة</button>
+        </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="step-panel" id="panel3">
+        <div class="panel-header">
+            <h2>🔍 <span>التحقق</span> المزدوج</h2>
+            <p>يقوم ذكاء اصطناعي ثانٍ بمراجعة النص المستخرج للتأكد من الدقة</p>
+        </div>
+        <div class="comparison-panel" id="comparisonPanel" style="display:none;">
+            <h4>📊 نتائج المقارنة</h4>
+            <div class="comparison-grid">
+                <div class="comparison-col">
+                    <h5>📝 النص الأصلي</h5>
+                    <pre id="originalTextCompare"></pre>
+                </div>
+                <div class="comparison-col">
+                    <h5>✅ النص بعد المراجعة</h5>
+                    <pre id="reviewedTextCompare"></pre>
+                </div>
+            </div>
+        </div>
+        <div id="reviewStatus" style="text-align:center;padding:40px;">
+            <div style="font-size:48px;margin-bottom:16px;">🤖</div>
+            <h3 style="margin-bottom:12px;">جاري المراجعة المزدوجة...</h3>
+            <p style="color:var(--text-muted);">يقوم AI ثانٍ بفحص كل كلمة</p>
+        </div>
+        <div style="text-align:center;margin-top:30px;display:none;" id="panel3Actions">
+            <button class="btn btn-secondary" onclick="goToStep(2)">← رجوع للتعديل</button>
+            <button class="btn btn-primary" onclick="structureMenu()">🏗️ بناء القائمة النهائية</button>
+        </div>
+    </div>
+
+    <!-- STEP 4 -->
+    <div class="step-panel" id="panel4">
+        <div class="menu-display" id="menuDisplay"></div>
+    </div>
+
+</div>
+
+<div class="action-bar" id="actionBar" style="display:none;">
+    <button class="btn btn-secondary" onclick="goToStep(3)">← رجوع</button>
+    <div style="display:flex;gap:12px;">
+        <button class="btn btn-secondary" onclick="printMenu()">🖨️ طباعة</button>
+        <button class="btn btn-primary" onclick="exportMenu()">📥 تصدير JSON</button>
+    </div>
+</div>
+
+<footer class="app-footer">
+    <p>AI Menu Extractor - استخراج قائمة الطعام بالذكاء الاصطناعي</p>
+</footer>
+
+<script>
+var uploadedImages = [];
+var extractedTexts = [];
+var reviewedText = '';
+var structuredMenuData = null;
+var currentStep = 1;
+var apiKey = '';
+var extractionStartTime = 0;
+
+function goToStep(step) {
+    currentStep = step;
+    document.querySelectorAll('.step-panel').forEach(function(p) { p.classList.remove('active'); });
+    document.getElementById('panel' + step).classList.add('active');
+    for (var i = 1; i <= 4; i++) {
+        var dot = document.getElementById('stepDot' + i);
+        var line = document.getElementById('stepLine' + i);
+        var label = document.getElementById('stepLabel' + i);
+        dot.classList.remove('active','completed');
+        if (label) label.classList.remove('active');
+        if (line) line.classList.remove('completed');
+        if (i < step) { dot.classList.add('completed'); if (line) line.classList.add('completed'); }
+        else if (i === step) { dot.classList.add('active'); if (label) label.classList.add('active'); }
+    }
+    document.getElementById('actionBar').style.display = (step === 4) ? 'flex' : 'none';
+    document.getElementById('exportBtn').style.display = (step === 4) ? 'inline-flex' : 'none';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function validateApiKey(input) {
+    var value = input.value.trim();
+    apiKey = value;
+    var status = document.getElementById('apiStatus');
+    if (!value) { input.classList.remove('valid','invalid'); status.textContent = ''; return; }
+    if (value.startsWith('sk-') && value.length >= 20) {
+        input.classList.add('valid'); input.classList.remove('invalid');
+        status.textContent = '✓ مفتاح صالح الشكل - سيتم التحقق عند الاستخراج';
+        status.className = 'api-status valid';
+    } else {
+        input.classList.add('invalid'); input.classList.remove('valid');
+        status.textContent = '✗ يجب أن يبدأ بـ sk- وأن يكون 20+ حرف';
+        status.className = 'api-status invalid';
+    }
+}
+
+var uploadZone = document.getElementById('uploadZone');
+uploadZone.addEventListener('dragover', function(e) { e.preventDefault(); this.classList.add('dragover'); });
+uploadZone.addEventListener('dragleave', function() { this.classList.remove('dragover'); });
+uploadZone.addEventListener('drop', function(e) {
+    e.preventDefault(); this.classList.remove('dragover');
+    var files = Array.from(e.dataTransfer.files).filter(function(f) { return f.type.startsWith('image/'); });
+    handleFiles(files);
+});
+
+function handleImageUpload(input) { if (input.files && input.files.length > 0) handleFiles(Array.from(input.files)); }
+
+function handleFiles(files) {
+    files.forEach(function(file) {
+        if (!file.type.startsWith('image/')) return;
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            uploadedImages.push({ id: Date.now() + Math.random().toString(36).substr(2,9), file: file, dataUrl: e.target.result, name: file.name, status: 'ready' });
+            renderPreviews(); updateExtractButton();
+        };
+        reader.readAsDataURL(file);
+    });
+}
+
+function renderPreviews() {
+    var grid = document.getElementById('previewGrid');
+    grid.innerHTML = uploadedImages.map(function(img) {
+        var sc = img.status === 'processing' ? 'processing' : img.status === 'done' ? 'done' : img.status === 'error' ? 'error' : '';
+        var st = img.status === 'processing' ? '⏳ جاري...' : img.status === 'done' ? '✓ تم' : img.status === 'error' ? '✗ خطأ' : 'جاهز';
+        return '<div class="preview-card" data-id="' + img.id + '"><button class="remove-btn" onclick="removeImage(\'' + img.id + '\')">×</button><img src="' + img.dataUrl + '" alt="' + img.name + '"><div class="preview-info"><div class="preview-name">' + img.name + '</div><div class="preview-status ' + sc + '">' + st + '</div></div></div>';
+    }).join('');
+}
+
+function removeImage(id) { uploadedImages = uploadedImages.filter(function(i) { return i.id !== id; }); renderPreviews(); updateExtractButton(); }
+function updateExtractButton() { document.getElementById('btnExtract').disabled = uploadedImages.length === 0; }
+
+// ── COMPRESSION ──
+async function compressImage(dataUrl, maxSizePx) {
+    return new Promise(function(resolve) {
+        var img = new Image();
+        img.onload = function() {
+            var canvas = document.createElement('canvas');
+            var w = img.width, h = img.height;
+            if (w > maxSizePx || h > maxSizePx) {
+                var ratio = Math.min(maxSizePx / w, maxSizePx / h);
+                w = Math.round(w * ratio); h = Math.round(h * ratio);
+            }
+            canvas.width = w; canvas.height = h;
+            canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+            resolve(canvas.toDataURL('image/jpeg', 0.85));
+        };
+        img.onerror = function() { resolve(dataUrl); };
+        img.src = dataUrl;
+    });
+}
+
+// ── EXTRACTION (with compression + retry + real errors) ──
+async function extractWithGpt4oVision(dataUrl, current, total) {
+    var compressedUrl = await compressImage(dataUrl, 2000);
+    var lastError = null;
+
+    for (var attempt = 1; attempt <= 2; attempt++) {
+        try {
+            updateLoading(
+                Math.round(((current - 1) / total) * 50) + (attempt === 2 ? 5 : 0),
+                'الصورة ' + current + ' من ' + total + (attempt > 1 ? ' — محاولة ثانية...' : ''),
+                'المرحلة 1 من 3: الاستخراج'
+            );
+
+            var response = await fetch('https://api.openai.com/v1/chat/completions', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + apiKey },
+                body: JSON.stringify({
+                    model: 'gpt-4o',
+                    messages: [{
+                        role: 'user',
+                        content: [
+                            {
+                                type: 'text',
+                                text: 'You are a precision OCR engine for restaurant menus. Extract EVERY SINGLE piece of text from this menu image with 100% accuracy.\n\nCRITICAL RULES:\n1. Preserve ALL original formatting, line breaks, and spacing\n2. Keep ALL prices exactly as shown (with € symbol)\n3. Keep ALL allergen codes (letters like A, B, C, D, E, F, G, H, J, numbers like 1,2,3,4,5,6,7,8)\n4. Keep ALL category headers and section titles\n5. Keep ALL meal combo prices (e.g., "وجبة: 15.90€")\n6. Keep ALL descriptions and notes\n7. Do NOT add, remove, or modify ANY text\n8. If text is unclear, mark it with [?]\n9. Preserve the RTL/LTR direction as in the original\n10. Include EVERY item, even small ones like sauces or drinks\n\nOutput ONLY the extracted text, nothing else.'
+                            },
+                            { type: 'image_url', image_url: { url: compressedUrl, detail: 'high' } }
+                        ]
+                    }],
+                    max_tokens: 4096,
+                    temperature: 0
+                })
+            });
+
+            if (!response.ok) {
+                var errBody = await response.json().catch(function() { return {}; });
+                var errMsg = (errBody.error && errBody.error.message) ? errBody.error.message : ('HTTP ' + response.status);
+                throw new Error(errMsg);
+            }
+
+            var data = await response.json();
+            return data.choices[0].message.content;
+
+        } catch(err) {
+            lastError = err;
+            // No retry for auth/quota errors
+            var msg = err.message || '';
+            if (msg.includes('401') || msg.includes('Unauthorized') || msg.includes('quota') || msg.includes('insufficient')) break;
+            if (attempt < 2) await new Promise(function(r) { setTimeout(r, 2500); });
+        }
+    }
+    throw lastError;
+}
+
+async function startExtraction() {
+    if (uploadedImages.length === 0) return;
+    apiKey = document.getElementById('apiKey').value.trim();
+
+    if (!apiKey || !apiKey.startsWith('sk-') || apiKey.length < 20) {
+        alert('الرجاء إدخال مفتاح OpenAI API صحيح (يبدأ بـ sk-)');
+        return;
+    }
+
+    extractionStartTime = Date.now();
+    showLoading('جاري استخراج النص...', 'يتم تحليل الصور واستخراج النصوص بدقة', 0);
+    extractedTexts = [];
+
+    for (var i = 0; i < uploadedImages.length; i++) {
+        var img = uploadedImages[i];
+        img.status = 'processing';
+        renderPreviews();
+
+        try {
+            var text = await extractWithGpt4oVision(img.dataUrl, i + 1, uploadedImages.length);
+            img.status = 'done';
+            extractedTexts.push({ image: img.name, text: text, engine: 'GPT-4o Vision' });
+            renderPreviews();
+        } catch(err) {
+            img.status = 'error';
+            renderPreviews();
+            hideLoading();
+
+            var reason = (err && err.message) ? err.message : 'خطأ غير معروف';
+            var tips = '\n\n──────────────────';
+            if (reason.includes('401') || reason.includes('Unauthorized') || reason.includes('Incorrect API key') || reason.includes('invalid_api_key')) {
+                tips += '\n💡 السبب: مفتاح API غير صحيح.\nتحقق من المفتاح على platform.openai.com/api-keys';
+            } else if (reason.includes('quota') || reason.includes('exceeded') || reason.includes('insufficient_quota') || reason.includes('429')) {
+                tips += '\n💡 السبب: نفذ رصيد API.\nأضف رصيداً على platform.openai.com/billing';
+            } else if (reason.includes('Failed to fetch') || reason.includes('network') || reason.includes('NetworkError')) {
+                tips += '\n💡 السبب: مشكلة في الاتصال بالإنترنت.\nتحقق من اتصالك وحاول مجدداً.';
+            } else if (reason.includes('model') || reason.includes('gpt-4o')) {
+                tips += '\n💡 السبب: المودل غير متاح لحسابك.\nتأكد أن حسابك لديه صلاحية استخدام gpt-4o.';
+            } else {
+                tips += '\n💡 تأكد من: صحة مفتاح API، رصيده، وجودة الصورة.';
+            }
+
+            alert('❌ فشل استخراج النص من: ' + img.name + '\n\nالخطأ: ' + reason + tips);
+            return;
+        }
+    }
+
+    updateLoading(50, 'اكتمل الاستخراج!', 'الانتقال للمراجعة...');
+    setTimeout(function() {
+        hideLoading();
+        var combinedText = extractedTexts.map(function(r) { return '=== ' + r.image + ' ===\n' + r.text; }).join('\n\n');
+        document.getElementById('extractedText').value = combinedText;
+        document.getElementById('reviewImageCount').textContent = uploadedImages.length;
+        document.getElementById('reviewEngine').textContent = 'GPT-4o Vision';
+        document.getElementById('reviewTime').textContent = ((Date.now() - extractionStartTime) / 1000).toFixed(1) + ' ثانية';
+        goToStep(2);
+    }, 800);
+}
+
+// ── REVIEW ──
+async function startReview() {
+    var originalText = document.getElementById('extractedText').value.trim();
+    if (!originalText) { alert('لا يوجد نص للمراجعة!'); return; }
+    if (!apiKey) { alert('مفتاح API مطلوب للمراجعة المزدوجة'); return; }
+    goToStep(3);
+    showLoading('جاري المراجعة المزدوجة...', 'يقوم ذكاء اصطناعي ثانٍ بمراجعة النص', 50);
+
+    try {
+        var imageRefs = uploadedImages.map(function(img, idx) { return 'Image ' + (idx+1) + ': ' + img.name; }).join(', ');
+        updateLoading(60, 'جاري المراجعة...', 'المرحلة 2 من 3: التحقق المزدوج');
+
+        var response = await fetch('https://api.openai.com/v1/chat/completions', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + apiKey },
+            body: JSON.stringify({
+                model: 'gpt-4o',
+                messages: [
+                    {
+                        role: 'system',
+                        content: 'You are a precision text review specialist for restaurant menus. Review the extracted menu text for quality:\n1. ALL items present\n2. ALL prices correct\n3. ALL allergen codes preserved\n4. ALL category headers present\n5. NO hallucinated content\n\nOutput format:\n- First line: REVIEW_STATUS: PASS or NEEDS_CORRECTION\n- Then the complete corrected text'
+                    },
+                    {
+                        role: 'user',
+                        content: 'Original images: ' + imageRefs + '\n\nExtracted text:\n\n' + originalText + '\n\nReview this carefully and provide the corrected complete text.'
+                    }
+                ],
+                max_tokens: 4096,
+                temperature: 0.1
+            })
+        });
+
+        if (!response.ok) {
+            var errBody = await response.json().catch(function() { return {}; });
+            throw new Error((errBody.error && errBody.error.message) ? errBody.error.message : 'Review API error ' + response.status);
+        }
+
+        var data = await response.json();
+        var reviewResult = data.choices[0].message.content;
+        var status = reviewResult.includes('REVIEW_STATUS: NEEDS_CORRECTION') ? 'NEEDS_CORRECTION' : 'PASS';
+        var correctedText = reviewResult.replace(/REVIEW_STATUS:\s*(PASS|NEEDS_CORRECTION)\n?/, '').trim();
+        reviewedText = correctedText;
+
+        updateLoading(100, 'اكتملت المراجعة!', '');
+        setTimeout(function() { hideLoading(); showComparison(originalText, correctedText, status); }, 600);
+
+    } catch(err) {
+        hideLoading();
+        alert('خطأ في المراجعة: ' + (err.message || err) + '\n\nسيتم استخدام النص الأصلي.');
+        reviewedText = originalText;
+        showComparison(originalText, originalText, 'PASS');
+    }
+}
+
+function showComparison(original, reviewed, status) {
+    document.getElementById('reviewStatus').style.display = 'none';
+    document.getElementById('comparisonPanel').style.display = 'block';
+    document.getElementById('panel3Actions').style.display = 'flex';
+    document.getElementById('originalTextCompare').textContent = original;
+    document.getElementById('reviewedTextCompare').textContent = reviewed;
+    var statusHtml = status === 'PASS'
+        ? '<span style="color:var(--success)">✓ تم التحقق - لا أخطاء</span>'
+        : '<span style="color:var(--warning)">⚠ تم تصحيح بعض الأخطاء</span>';
+    document.getElementById('reviewStatus').innerHTML = '<div style="font-size:48px;margin-bottom:16px;">✅</div><h3 style="margin-bottom:12px;">اكتملت المراجعة المزدوجة</h3><p style="color:var(--text-muted);">' + statusHtml + '</p>';
+    document.getElementById('reviewStatus').style.display = 'block';
+}
+
+// ── STRUCTURE ──
+async function structureMenu() {
+    var text = reviewedText || document.getElementById('extractedText').value.trim();
+    if (!text) { alert('لا يوجد نص!'); return; }
+    showLoading('جاري بناء القائمة...', 'يتم تنظيم البيانات', 0);
+
+    try {
+        updateLoading(30, 'جاري تحليل البنية...', 'المرحلة 3 من 3: بناء القائمة');
+        var response = await fetch('https://api.openai.com/v1/chat/completions', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + apiKey },
+            body: JSON.stringify({
+                model: 'gpt-4o',
+                messages: [
+                    {
+                        role: 'system',
+                        content: 'You are a restaurant menu structure specialist. Convert extracted menu text into a precise JSON structure.\n\nOutput ONLY valid JSON:\n{\n  "businessName": "...",\n  "info": { "hours": "...", "address": "...", "phone": "...", "notes": "..." },\n  "categories": [\n    {\n      "name": "...", "icon": "emoji", "description": "...",\n      "items": [\n        { "name": "...", "price": 8.90, "description": "...", "mealPrice": 15.90, "allergens": ["A","C"] }\n      ]\n    }\n  ],\n  "allergenLegend": {\n    "allergens": [{ "code": "A", "name": "Gluten" }],\n    "additives": [{ "code": "1", "name": "Colorants" }]\n  }\n}'
+                    },
+                    { role: 'user', content: text }
+                ],
+                max_tokens: 4096,
+                temperature: 0
+            })
+        });
+
+        if (!response.ok) {
+            var errBody = await response.json().catch(function() { return {}; });
+            throw new Error((errBody.error && errBody.error.message) ? errBody.error.message : 'Structure API error ' + response.status);
+        }
+
+        var data = await response.json();
+        var content = data.choices[0].message.content;
+        var jsonMatch = content.match(/\{[\s\S]*\}/);
+        if (!jsonMatch) throw new Error('No JSON found in response');
+        structuredMenuData = JSON.parse(jsonMatch[0]);
+
+        updateLoading(100, 'اكتمل بناء القائمة!', '');
+        setTimeout(function() { hideLoading(); renderFinalMenu(); goToStep(4); }, 600);
+
+    } catch(err) {
+        hideLoading();
+        alert('خطأ في بناء القائمة: ' + (err.message || err));
+    }
+}
+
+// ── RENDER MENU ──
+function renderFinalMenu() {
+    if (!structuredMenuData) return;
+    var menu = structuredMenuData;
+    var info = menu.info || {};
+
+    var html = '<div class="menu-display-header"><h1>🍔 ' + escapeHtml(menu.businessName || 'Restaurant') + ' 🍔</h1><div class="menu-info-grid">';
+    if (info.hours) html += '<div class="menu-info-card"><h4>⏰ ساعات العمل</h4><p>' + escapeHtml(info.hours).replace(/\n/g,'<br>') + '</p></div>';
+    if (info.address) html += '<div class="menu-info-card"><h4>📍 العنوان</h4><p>' + escapeHtml(info.address) + '</p></div>';
+    if (info.notes) html += '<div class="menu-info-card"><h4>💳 ملاحظة</h4><p>' + escapeHtml(info.notes) + '</p></div>';
+    html += '</div></div><div class="menu-container">';
+
+    (menu.categories || []).forEach(function(cat, idx) {
+        html += '<section class="menu-category-section" id="cat-' + idx + '"><div class="category-header-bar"><div class="category-icon-box">' + (cat.icon || '🍽️') + '</div><div><h2>' + escapeHtml(cat.name) + '</h2>' + (cat.description ? '<p class="category-desc">' + escapeHtml(cat.description) + '</p>' : '') + '</div></div><div class="items-grid">';
+        (cat.items || []).forEach(function(item) {
+            var priceStr = item.price ? item.price.toFixed(2).replace('.', ',') + '€' : '';
+            var mealStr = item.mealPrice ? 'وجبة: ' + item.mealPrice.toFixed(2).replace('.', ',') + '€' : '';
+            var allergenHtml = (item.allergens || []).map(function(a) { return '<span class="allergen-tag">' + escapeHtml(a) + '</span>'; }).join('');
+            html += '<div class="item-card"><div class="item-card-header"><div class="item-card-name">' + escapeHtml(item.name) + '</div>' + (priceStr ? '<div class="item-card-price">' + priceStr + '</div>' : '') + '</div>' + (item.description ? '<div class="item-card-desc">' + escapeHtml(item.description) + '</div>' : '') + '<div class="item-card-footer"><div class="allergen-tags">' + allergenHtml + '</div>' + (mealStr ? '<span class="meal-badge">' + mealStr + '</span>' : '') + '</div></div>';
+        });
+        html += '</div></section>';
+    });
+
+    var legend = menu.allergenLegend || {};
+    var allergens = legend.allergens || [];
+    var additives = legend.additives || [];
+    if (allergens.length > 0 || additives.length > 0) {
+        html += '<div class="allergen-legend-section"><h3>🔍 مفتاح المواد المسببة للحساسية</h3><div class="legend-columns">';
+        if (allergens.length > 0) {
+            html += '<div class="legend-col"><h4>المواد المسببة للحساسية</h4>' + allergens.map(function(a) { return '<div class="legend-row"><span class="legend-code">' + escapeHtml(a.code) + '</span> ' + escapeHtml(a.name) + '</div>'; }).join('') + '</div>';
+        }
+        if (additives.length > 0) {
+            html += '<div class="legend-col"><h4>الإضافات</h4>' + additives.map(function(a) { return '<div class="legend-row"><span class="legend-code">' + escapeHtml(a.code) + '</span> ' + escapeHtml(a.name) + '</div>'; }).join('') + '</div>';
+        }
+        html += '</div></div>';
+    }
+
+    html += '</div><footer class="app-footer" style="margin-top:40px;"><p><strong>' + escapeHtml(menu.businessName || '') + '</strong></p>' + (info.address ? '<p>' + escapeHtml(info.address) + '</p>' : '') + (info.phone ? '<p>☎️ ' + escapeHtml(info.phone) + '</p>' : '') + '<p style="margin-top:16px;font-size:12px;color:var(--text-dim);">تم إنشاء هذه القائمة بالذكاء الاصطناعي</p></footer>';
+
+    document.getElementById('menuDisplay').innerHTML = html;
+}
+
+function escapeHtml(text) {
+    if (!text) return '';
+    var div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// ── UTILITIES ──
+function showLoading(title, desc, percent) {
+    document.getElementById('loadingTitle').textContent = title;
+    document.getElementById('loadingDesc').textContent = desc;
+    document.getElementById('loadingProgress').style.width = percent + '%';
+    document.getElementById('loadingProgressText').textContent = percent + '%';
+    document.getElementById('loadingOverlay').classList.add('active');
+}
+function updateLoading(percent, desc, stage) {
+    document.getElementById('loadingProgress').style.width = percent + '%';
+    document.getElementById('loadingProgressText').textContent = percent + '%';
+    if (desc) document.getElementById('loadingDesc').textContent = desc;
+    if (stage) document.getElementById('loadingStage').textContent = stage;
+}
+function hideLoading() { document.getElementById('loadingOverlay').classList.remove('active'); }
+
+function resetAll() {
+    if (confirm('هل تريد البدء من جديد؟')) {
+        uploadedImages = []; extractedTexts = []; reviewedText = ''; structuredMenuData = null; currentStep = 1;
+        document.getElementById('imageInput').value = '';
+        document.getElementById('extractedText').value = '';
+        document.getElementById('previewGrid').innerHTML = '';
+        document.getElementById('comparisonPanel').style.display = 'none';
+        document.getElementById('panel3Actions').style.display = 'none';
+        document.getElementById('reviewStatus').innerHTML = '<div style="font-size:48px;margin-bottom:16px;">🤖</div><h3 style="margin-bottom:12px;">جاري المراجعة المزدوجة...</h3><p style="color:var(--text-muted);">يقوم AI ثانٍ بفحص كل كلمة</p>';
+        document.getElementById('menuDisplay').innerHTML = '';
+        goToStep(1); updateExtractButton();
+    }
+}
+
+function printMenu() { window.print(); }
+
+function exportMenu() {
+    if (!structuredMenuData) return;
+    var blob = new Blob([JSON.stringify(structuredMenuData, null, 2)], { type: 'application/json' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = (structuredMenuData.businessName || 'menu') + '.json'; a.click();
+    URL.revokeObjectURL(url);
+}
+</script>
+</body>
+</html>

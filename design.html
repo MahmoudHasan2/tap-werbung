@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="de" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RENG Shop | Bedruckte Kleidung nach Mass</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Bebas+Neue&family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<!-- ✅ Firebase SDK - مضاف بشكل صحيح في الـ head -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+<script>
+  try {
+    firebase.initializeApp({
+      apiKey: "YOUR_FIREBASE_API_KEY",
+      authDomain: "your-firebase-project.firebaseapp.com",
+      databaseURL: "https://your-firebase-project-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "your-firebase-project",
+      storageBucket: "your-firebase-project.firebasestorage.app",
+      messagingSenderId: "000000000000",
+      appId: "YOUR_APP_ID"
+    });
+    window.rengDb = firebase.database();
+    console.log("✅ Firebase verbunden");
+  } catch(e) {
+    console.error("❌ Firebase Fehler:", e);
+  }
+</script>
+
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --purple:#9B6BB5;--purple2:#B48FCC;--purple3:#7A4E96;
+  --navy:#1E3A5F;--white:#ffffff;--paper:#faf9fc;--smoke:#f2eef7;
+  --line:rgba(155,107,181,0.15);--line2:rgba(155,107,181,0.3);
+  --muted:#7a6e85;--ink:#1a0f2e;
+  --ff:'Inter',sans-serif;--ff-ar:'Cairo',sans-serif;--display:'Bebas Neue',sans-serif;
+  --ease:cubic-bezier(.16,1,.3,1);--ease2:cubic-bezier(.4,0,.2,1);
+}
+html{scroll-behavior:auto;}
+body{font-family:var(--ff);background:var(--paper);color:var(--ink);overflow-x:hidden;cursor:none;}
+body[lang="ar"]{font-family:var(--ff-ar);direction:rtl;}
+img{max-width:100%;display:block;}a{text-decoration:none;color:inherit;}
+button{cursor:none;border:none;background:none;font-family:inherit;}ul{list-style:none;}
+input,textarea,select{font-family:inherit;}
+#cursor{position:fixed;top:0;left:0;z-index:9999;pointer-events:none;}
+#cursor-dot{position:absolute;width:8px;height:8px;background:var(--purple);border-radius:50%;transform:translate(-50%,-50%);transition:transform .1s var(--ease2),background .3s;}
+#cursor-ring{position:absolute;width:36px;height:36px;border:1.5px solid var(--purple);border-radius:50%;transform:translate(-50%,-50%);transition:width .3s var(--ease),height .3s var(--ease),opacity .3s;opacity:.5;}
+body.cursor-hover #cursor-dot{transform:translate(-50%,-50%) scale(2.5);background:var(--purple2);}
+body.cursor-hover #cursor-ring{width:54px;height:54px;opacity:.22;}
+#page-veil{position:fixed;inset:0;z-index:8000;background:var(--ink);transform:scaleY(0);transform-origin:bottom;pointer-events:none;}
+.announce{background:var(--navy);color:var(--purple2);height:38px;overflow:hidden;display:flex;align-items:center;position:relative;z-index:100;}
+.announce-track{display:flex;gap:80px;white-space:nowrap;animation:ticker 30s linear infinite;font-size:11px;font-weight:600;letter-spacing:.14em;}
+.announce-track span{flex-shrink:0;}
+@keyframes ticker{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+.header{position:fixed;top:38px;left:0;right:0;z-index:500;height:72px;background:rgba(250,249,252,.96);backdrop-filter:blur(24px) saturate(1.8);border-bottom:1px solid var(--line);transition:top .3s var(--ease2),box-shadow .3s;}
+.header.hide-bar{top:0;}.header.scrolled{box-shadow:0 8px 40px rgba(155,107,181,.12);}
+.header-inner{max-width:1440px;margin:0 auto;padding:0 48px;height:100%;display:flex;align-items:center;justify-content:space-between;}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.logo-img{width:44px;height:44px;border-radius:50%;object-fit:cover;flex-shrink:0;transition:transform .4s var(--ease),box-shadow .4s;}
+.logo:hover .logo-img{transform:scale(1.08);box-shadow:0 0 0 3px var(--purple2);}
+.logo-text{display:flex;flex-direction:column;}
+.logo-r{font-family:var(--display);font-size:28px;letter-spacing:.1em;line-height:1;color:var(--navy);transition:color .3s;}
+.logo-sub{font-size:8px;letter-spacing:.25em;text-transform:uppercase;color:var(--purple);font-weight:700;line-height:1;margin-top:1px;}
+.logo:hover .logo-r{color:var(--purple3);}
+.nav{display:flex;align-items:center;gap:0;}
+.nav-link{padding:8px 18px;font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);transition:color .3s;position:relative;overflow:hidden;}
+.nav-link::after{content:'';position:absolute;bottom:0;right:0;left:0;height:2px;background:var(--purple);transform:scaleX(0);transition:transform .35s var(--ease);transform-origin:left;}
+.nav-link:hover,.nav-link.active{color:var(--ink);}
+.nav-link:hover::after,.nav-link.active::after{transform:scaleX(1);}
+.lang-sw{display:flex;align-items:center;gap:4px;padding:6px 12px;border-radius:20px;border:1.5px solid var(--line2);background:transparent;font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--muted);cursor:pointer;transition:all .3s var(--ease);}
+.lang-sw:hover{border-color:var(--purple);color:var(--purple);}
+.lang-sw.active{background:var(--purple);color:var(--white);border-color:var(--purple);}
+.lang-group{display:flex;gap:6px;align-items:center;}
+.h-actions{display:flex;align-items:center;gap:12px;}
+.h-btn{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:.1em;padding:9px 18px;border-radius:3px;transition:all .3s var(--ease);}
+.h-btn-cart{background:var(--navy);color:var(--white);position:relative;overflow:hidden;}
+.h-btn-cart::before{content:'';position:absolute;inset:0;background:var(--purple);transform:translateY(100%);transition:transform .4s var(--ease);}
+.h-btn-cart:hover::before{transform:translateY(0);}
+.h-btn-cart span{position:relative;z-index:1;}
+.cart-badge{position:absolute;top:-6px;left:-6px;width:18px;height:18px;border-radius:50%;background:var(--purple);color:var(--white);font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;z-index:2;}
+.hamburger{display:none;flex-direction:column;gap:5px;padding:4px;}
+.hamburger span{display:block;width:26px;height:2px;background:var(--ink);transition:.3s;}
+#app{padding-top:110px;min-height:100vh;}
+.page{display:none;}.page.active{display:block;animation:pageIn .6s var(--ease) forwards;}
+@keyframes pageIn{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+.btn{display:inline-flex;align-items:center;gap:10px;font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;padding:15px 34px;transition:all .35s var(--ease);border-radius:3px;position:relative;overflow:hidden;}
+.btn-fill{background:var(--navy);color:var(--white);}
+.btn-fill::before{content:'';position:absolute;inset:0;background:var(--purple);transform:translateX(-101%);transition:transform .45s var(--ease);}
+.btn-fill:hover::before{transform:translateX(0);}
+.btn-fill:hover{color:var(--white);}
+.btn-fill span{position:relative;z-index:1;}
+.btn-outline{color:var(--navy);border:2px solid var(--navy);background:transparent;}
+.btn-outline:hover{background:var(--navy);color:var(--white);}
+.btn-purple{background:var(--purple);color:var(--white);}
+.btn-purple::before{content:'';position:absolute;inset:0;background:var(--navy);transform:translateX(-101%);transition:transform .45s var(--ease);}
+.btn-purple:hover::before{transform:translateX(0);}
+.btn-purple span{position:relative;z-index:1;}
+.sec-label{display:flex;align-items:center;gap:14px;font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--purple3);margin-bottom:18px;}
+.sec-label::after{content:'';flex:1;height:1px;background:var(--line2);}
+.sec-title{font-family:var(--display);font-size:clamp(38px,5vw,68px);line-height:.95;margin-bottom:56px;color:var(--ink);}
+.sec-title em{color:var(--purple);font-style:normal;}
+.hero{min-height:calc(100vh - 110px);display:grid;grid-template-columns:55% 45%;overflow:hidden;}
+.hero-left{padding:80px 72px 80px 60px;display:flex;flex-direction:column;justify-content:center;background:var(--paper);position:relative;z-index:2;}
+.hero-tag{display:inline-flex;align-items:center;gap:10px;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--purple3);font-weight:700;margin-bottom:28px;}
+.hero-tag::before{content:'';width:44px;height:1px;background:var(--purple);}
+.hero-headline{font-family:var(--display);font-size:clamp(60px,7vw,108px);line-height:.95;letter-spacing:.02em;color:var(--ink);margin-bottom:30px;}
+.hero-headline .line{display:block;overflow:hidden;}
+.hero-headline .line span{display:block;animation:slideUp .9s var(--ease) both;}
+.hero-headline .line:nth-child(2) span{animation-delay:.1s;}
+.hero-headline .line:nth-child(3) span{animation-delay:.2s;color:var(--purple);}
+@keyframes slideUp{from{transform:translateY(110%);opacity:0;}to{transform:translateY(0);opacity:1;}}
+.hero-body{font-size:15px;line-height:1.85;color:var(--muted);max-width:420px;margin-bottom:40px;animation:fadeUp .8s var(--ease) .35s both;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;animation:fadeUp .8s var(--ease) .45s both;}
+.hero-stats{display:flex;gap:36px;margin-top:52px;padding-top:40px;border-top:1px solid var(--line2);animation:fadeUp .8s var(--ease) .55s both;}
+.stat-num{font-family:var(--display);font-size:42px;line-height:1;color:var(--navy);letter-spacing:.03em;}
+.stat-lbl{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:4px;}
+.hero-right{position:relative;overflow:hidden;background:var(--smoke);}
+.hero-right img{width:100%;height:100%;object-fit:cover;animation:heroImgIn 1.4s var(--ease) .1s both;transition:transform 10s ease;}
+.hero-right:hover img{transform:scale(1.06);}
+@keyframes heroImgIn{from{transform:scale(1.1);opacity:0;clip-path:inset(0 100% 0 0);}to{transform:scale(1);opacity:1;clip-path:inset(0 0% 0 0);}}
+.hero-pill{position:absolute;bottom:40px;right:36px;background:rgba(30,58,95,.92);color:var(--white);padding:16px 24px;border-radius:4px;backdrop-filter:blur(12px);border-left:3px solid var(--purple);animation:fadeUp .8s var(--ease) .8s both;}
+.hero-pill-title{font-size:15px;font-weight:700;margin-bottom:4px;}
+.hero-pill-sub{font-size:11px;color:var(--purple2);letter-spacing:.08em;}
+.home-featured{padding:100px 60px;max-width:1440px;margin:0 auto;}
+.products-row{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+.pcard{background:var(--white);border:1px solid var(--line);border-radius:4px;overflow:hidden;transition:transform .5s var(--ease),box-shadow .5s var(--ease),border-color .4s;position:relative;}
+.pcard:hover{transform:translateY(-10px) scale(1.01);box-shadow:0 28px 70px rgba(155,107,181,.18);border-color:var(--purple2);}
+.pcard-img{position:relative;overflow:hidden;aspect-ratio:4/5;background:var(--smoke);}
+.pcard-img img.img-main{width:100%;height:100%;object-fit:cover;transition:transform .7s var(--ease),opacity .4s ease;position:relative;z-index:1;}
+.pcard-img img.img-hover{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;z-index:2;transform:scale(1.05);transition:opacity .45s ease,transform .7s var(--ease);}
+.pcard:hover .pcard-img img.img-main{transform:scale(1.04);opacity:0.3;}
+.pcard:hover .pcard-img img.img-hover{opacity:1;transform:scale(1.08);}
+.pcard-tag{position:absolute;top:12px;right:12px;z-index:10;background:var(--navy);color:var(--white);font-size:9px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;padding:4px 10px;border-radius:2px;}
+.pcard-tag.purple{background:var(--purple);}
+.pcard-overlay{position:absolute;inset:0;z-index:5;background:rgba(30,58,95,.7);display:flex;align-items:flex-end;padding:20px;opacity:0;transition:opacity .4s var(--ease);}
+.pcard:hover .pcard-overlay{opacity:1;}
+.pcard-add-btn{width:100%;padding:13px;background:var(--purple);color:var(--white);font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;border-radius:2px;cursor:pointer;transform:translateY(14px);transition:transform .4s var(--ease) .05s,background .3s;}
+.pcard:hover .pcard-add-btn{transform:translateY(0);}
+.pcard-add-btn:hover{background:var(--navy);}
+.pcard-info{padding:16px 18px 20px;}
+.pcard-name{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:8px;line-height:1.4;transition:color .3s;}
+.pcard:hover .pcard-name{color:var(--purple3);}
+.pcard-price{font-family:var(--display);font-size:22px;color:var(--navy);letter-spacing:.04em;}
+.home-all-link{text-align:center;margin-top:52px;}
+.home-design{background:var(--navy);padding:100px 60px;overflow:hidden;}
+.home-design-inner{max-width:1440px;margin:0 auto;}
+.home-design .sec-title{color:var(--white);}
+.home-design .sec-label{color:rgba(178,143,204,.6);}
+.home-design .sec-label::after{background:rgba(255,255,255,.1);}
+.design-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;margin-top:56px;border-radius:6px;overflow:hidden;}
+.dcard{position:relative;aspect-ratio:3/4;overflow:hidden;cursor:pointer;}
+.dcard img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.45);transition:transform .9s var(--ease),filter .9s;}
+.dcard:hover img{transform:scale(1.1);filter:brightness(.25);}
+.dcard-body{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;justify-content:flex-end;padding:32px;background:linear-gradient(to top,rgba(30,58,95,.85) 0%,transparent 55%);}
+.dcard-ico{font-size:34px;margin-bottom:14px;transform:translateY(8px);opacity:.7;transition:transform .5s var(--ease),opacity .5s;}
+.dcard:hover .dcard-ico{transform:translateY(0);opacity:1;}
+.dcard-title{font-family:var(--display);font-size:34px;color:var(--white);letter-spacing:.04em;margin-bottom:10px;line-height:1;}
+.dcard-desc{font-size:13px;color:rgba(255,255,255,.6);line-height:1.7;max-height:0;overflow:hidden;transition:max-height .5s var(--ease),opacity .5s;opacity:0;}
+.dcard:hover .dcard-desc{max-height:100px;opacity:1;}
+.dcard-cta{margin-top:18px;display:inline-flex;align-items:center;gap:8px;font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--purple2);opacity:0;transform:translateY(10px);transition:opacity .4s var(--ease) .1s,transform .4s var(--ease) .1s;}
+.dcard:hover .dcard-cta{opacity:1;transform:translateY(0);}
+.home-why{padding:100px 60px;background:var(--smoke);}
+.home-why-inner{max-width:1440px;margin:0 auto;}
+.why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:56px;}
+.wcard{padding:44px 28px 40px;background:var(--white);border:1px solid var(--line);border-radius:4px;position:relative;overflow:hidden;transition:transform .5s var(--ease),box-shadow .5s var(--ease);}
+.wcard::before{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--purple),var(--navy));transform:scaleX(0);transition:transform .5s var(--ease);transform-origin:center;}
+.wcard:hover{transform:translateY(-8px);box-shadow:0 22px 55px rgba(155,107,181,.14);}
+.wcard:hover::before{transform:scaleX(1);}
+.wcard-icon{width:58px;height:58px;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:22px;transition:background .4s,transform .4s var(--ease);}
+.wcard:hover .wcard-icon{background:var(--purple);transform:rotate(8deg) scale(1.1);}
+.wcard-title{font-size:16px;font-weight:700;margin-bottom:10px;}
+.wcard-desc{font-size:13px;color:var(--muted);line-height:1.75;}
+.home-about{display:grid;grid-template-columns:1fr 1fr;min-height:70vh;overflow:hidden;}
+.about-img-side{position:relative;overflow:hidden;background:var(--smoke);}
+.about-img-side img{width:100%;height:100%;object-fit:cover;transition:transform 8s ease;}
+.about-img-side:hover img{transform:scale(1.05);}
+.about-text-side{padding:80px 72px;display:flex;flex-direction:column;justify-content:center;background:var(--navy);color:var(--white);}
+.about-eyebrow{font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--purple2);display:flex;align-items:center;gap:12px;margin-bottom:24px;}
+.about-eyebrow::before{content:'';width:36px;height:1px;background:var(--purple2);}
+.about-ht{font-family:var(--display);font-size:clamp(40px,5vw,68px);line-height:.95;letter-spacing:.02em;margin-bottom:24px;color:var(--white);}
+.about-ht span{color:var(--purple2);}
+.about-p{font-size:14px;color:rgba(255,255,255,.6);line-height:1.85;margin-bottom:16px;}
+.about-feats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:32px;}
+.ab-feat{display:flex;align-items:center;gap:10px;font-size:12px;color:rgba(255,255,255,.65);font-weight:600;}
+.ab-feat::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--purple2);flex-shrink:0;}
+.about-cta-row{margin-top:40px;}
+.products-page{padding:56px 60px 100px;max-width:1440px;margin:0 auto;}
+.page-hero-bar{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:56px;padding-bottom:28px;border-bottom:1px solid var(--line2);}
+.page-title{font-family:var(--display);font-size:clamp(48px,7vw,92px);line-height:.9;letter-spacing:.02em;color:var(--ink);}
+.page-title span{color:var(--purple);}
+.page-count{font-size:12px;color:var(--muted);font-weight:600;padding-bottom:8px;}
+.filter-bar{display:flex;align-items:center;gap:10px;margin-bottom:36px;flex-wrap:wrap;}
+.filter-btn{padding:8px 18px;border-radius:100px;font-size:11px;font-weight:700;letter-spacing:.1em;border:1.5px solid var(--line2);color:var(--muted);transition:all .3s var(--ease);cursor:pointer;}
+.filter-btn:hover,.filter-btn.active{background:var(--navy);color:var(--white);border-color:var(--navy);}
+.products-grid-full{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;}
+.design-page{padding:0;}
+.design-hero{min-height:55vh;background:var(--navy);display:flex;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden;padding:80px 40px;}
+.design-hero-bg{position:absolute;inset:0;opacity:.08;background-image:repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(155,107,181,.25) 39px,rgba(155,107,181,.25) 40px),repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(155,107,181,.25) 39px,rgba(155,107,181,.25) 40px);}
+.design-hero-content{position:relative;z-index:2;}
+.design-hero-tag{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--purple2);font-weight:700;margin-bottom:22px;display:block;}
+.design-hero-title{font-family:var(--display);font-size:clamp(56px,8vw,112px);line-height:.9;color:var(--white);letter-spacing:.03em;margin-bottom:20px;}
+.design-hero-title span{color:var(--purple2);}
+.design-hero-sub{font-size:15px;color:rgba(255,255,255,.55);max-width:500px;margin:0 auto 36px;line-height:1.8;}
+.design-prices-section{padding:80px 60px;max-width:1440px;margin:0 auto;}
+.price-tables-wrap{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:48px;}
+.price-table-card{background:var(--white);border:1px solid var(--line2);border-radius:6px;overflow:hidden;}
+.price-table-head{background:var(--navy);color:var(--white);padding:20px 28px;display:flex;align-items:center;gap:12px;}
+.price-table-head h3{font-size:14px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;}
+.price-table-head .icon{font-size:20px;}
+table{width:100%;border-collapse:collapse;}
+thead tr{background:var(--smoke);}
+th{padding:12px 20px;text-align:left;font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--purple3);border-bottom:1px solid var(--line2);}
+td{padding:14px 20px;font-size:14px;color:var(--ink);border-bottom:1px solid var(--line);}
+td:last-child{font-weight:700;color:var(--navy);text-align:right;}
+th:last-child{text-align:right;}
+tr:last-child td{border-bottom:none;}tr:hover td{background:var(--smoke);}
+.price-notes{margin-top:28px;padding:20px 24px;background:linear-gradient(135deg,rgba(155,107,181,.08),rgba(30,58,95,.06));border:1px solid var(--line2);border-radius:6px;display:flex;gap:24px;flex-wrap:wrap;}
+.price-note-item{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:600;color:var(--ink);}
+.price-note-item .badge{background:var(--purple);color:var(--white);padding:3px 10px;border-radius:100px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap;}
+.design-form-section{background:var(--smoke);padding:80px 60px;}
+.design-form-inner{max-width:860px;margin:0 auto;}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:44px;}
+.form-group{display:flex;flex-direction:column;gap:8px;}
+.form-group.full{grid-column:span 2;}
+.form-label{font-size:10px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--purple3);}
+.form-label .req{color:var(--purple);margin-right:2px;}
+.form-input,.form-select,.form-textarea{padding:14px 18px;background:var(--white);border:1.5px solid var(--line2);border-radius:4px;font-size:14px;color:var(--ink);transition:border-color .3s,box-shadow .3s;outline:none;width:100%;}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--purple);box-shadow:0 0 0 4px rgba(155,107,181,.12);}
+.form-textarea{min-height:110px;resize:vertical;}
+.phone-group{display:flex;}
+.phone-prefix{padding:14px;background:var(--smoke);border:1.5px solid var(--line2);border-right:none;border-radius:4px 0 0 4px;font-size:14px;color:var(--muted);font-weight:600;white-space:nowrap;}
+.phone-group .form-input{border-radius:0 4px 4px 0;}
+.check-group{display:flex;flex-direction:column;gap:12px;}
+.check-item{display:flex;align-items:center;gap:12px;padding:14px 18px;background:var(--white);border:1.5px solid var(--line2);border-radius:4px;cursor:pointer;transition:all .3s var(--ease);user-select:none;position:relative;}
+.check-item:hover{border-color:var(--purple2);background:rgba(155,107,181,.03);}
+.check-item input[type="checkbox"]{position:absolute;opacity:0;width:100%;height:100%;top:0;left:0;cursor:pointer;z-index:1;}
+.check-item.checked{border-color:var(--purple);background:rgba(155,107,181,.05);}
+.check-box{width:20px;height:20px;border-radius:4px;border:2px solid var(--line2);flex-shrink:0;transition:all .3s var(--ease);display:flex;align-items:center;justify-content:center;pointer-events:none;position:relative;z-index:2;}
+.check-item.checked .check-box{background:var(--purple);border-color:var(--purple);}
+.check-item.checked .check-box::after{content:"\2713";color:var(--white);font-size:12px;font-weight:800;}
+.check-label{font-size:14px;font-weight:500;color:var(--ink);flex:1;}
+.check-price{font-size:13px;font-weight:700;color:var(--purple3);}
+.upload-zone{border:2px dashed var(--purple2);border-radius:6px;padding:44px 28px;text-align:center;background:var(--white);transition:all .3s var(--ease);cursor:pointer;}
+.upload-zone:hover{background:rgba(155,107,181,.04);border-style:solid;}
+.upload-ico{font-size:44px;margin-bottom:14px;}
+.upload-title{font-size:15px;font-weight:700;margin-bottom:6px;}
+.upload-hint{font-size:12px;color:var(--muted);}
+.upload-hint strong{color:var(--purple3);}
+.price-estimator{background:var(--white);border:1.5px solid var(--purple2);border-radius:6px;padding:20px 24px;margin-top:4px;}
+.price-est-label{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--purple3);margin-bottom:12px;}
+.price-est-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+.price-est-breakdown{font-size:12px;color:var(--muted);}
+.price-est-total{font-family:var(--display);font-size:36px;color:var(--navy);letter-spacing:.04em;}
+.privacy-check{display:flex;align-items:flex-start;gap:12px;margin-top:4px;cursor:pointer;}
+.privacy-check input[type="checkbox"]{width:18px;height:18px;margin-top:1px;accent-color:var(--purple);flex-shrink:0;}
+.privacy-check-label{font-size:13px;color:var(--muted);line-height:1.6;}
+.privacy-check-label a{color:var(--purple);text-decoration:underline;}
+.form-note{font-size:12px;color:var(--muted);text-align:center;margin-top:12px;}
+.about-page-hero{background:var(--navy);padding:100px 60px;position:relative;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;min-height:70vh;}
+.about-page-hero::before{content:'RENG';font-family:var(--display);font-size:400px;position:absolute;left:-60px;top:50%;transform:translateY(-50%);color:rgba(155,107,181,.04);pointer-events:none;line-height:1;}
+.about-page-content{position:relative;z-index:2;}
+.about-page-img{position:relative;z-index:2;border-radius:6px;overflow:hidden;aspect-ratio:4/5;}
+.about-page-img img{width:100%;height:100%;object-fit:cover;}
+.about-h{font-family:var(--display);font-size:clamp(48px,6vw,86px);line-height:.9;color:var(--white);margin-bottom:26px;}
+.about-h span{color:var(--purple2);}
+.about-big-p{font-size:16px;color:rgba(255,255,255,.65);line-height:1.85;margin-bottom:18px;}
+.about-big-p strong{color:var(--purple2);font-weight:700;}
+.about-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:32px;}
+.about-tag{padding:7px 16px;border:1px solid rgba(155,107,181,.35);border-radius:100px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--purple2);}
+.about-values{padding:100px 60px;max-width:1440px;margin:0 auto;}
+.values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:56px;}
+.val-card{padding:44px 32px;border:1px solid var(--line);border-radius:6px;position:relative;overflow:hidden;transition:all .5s var(--ease);}
+.val-card::after{content:attr(data-num);font-family:var(--display);font-size:160px;color:rgba(0,0,0,.03);position:absolute;top:-20px;left:-10px;line-height:1;pointer-events:none;transition:color .4s;}
+.val-card:hover{transform:translateY(-8px);box-shadow:0 28px 70px rgba(155,107,181,.12);}
+.val-card:hover::after{color:rgba(155,107,181,.06);}
+.val-icon{font-size:38px;margin-bottom:22px;}.val-title{font-size:18px;font-weight:700;margin-bottom:12px;}.val-desc{font-size:13px;color:var(--muted);line-height:1.75;}
+.contact-top{background:var(--navy);padding:80px 60px;text-align:center;position:relative;overflow:hidden;}
+.contact-top::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(155,107,181,.15) 0%,transparent 70%);pointer-events:none;}
+.contact-top-title{font-family:var(--display);font-size:clamp(56px,8vw,106px);color:var(--white);letter-spacing:.02em;line-height:.9;position:relative;z-index:1;}
+.contact-top-title span{color:var(--purple2);}
+.contact-top-sub{font-size:15px;color:rgba(255,255,255,.45);margin-top:18px;position:relative;z-index:1;}
+.contact-body{display:grid;grid-template-columns:1fr 1.4fr;max-width:1440px;margin:0 auto;padding:80px 60px;gap:80px;align-items:start;}
+.ci-title{font-family:var(--display);font-size:38px;margin-bottom:30px;color:var(--ink);}
+.ci-item{display:flex;align-items:flex-start;gap:16px;margin-bottom:28px;padding-bottom:28px;border-bottom:1px solid var(--line);}
+.ci-icon{width:50px;height:50px;border-radius:50%;background:var(--smoke);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;transition:background .3s,transform .3s var(--ease);}
+.ci-item:hover .ci-icon{background:var(--purple);transform:scale(1.1);}
+.ci-label{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--purple3);margin-bottom:5px;}
+.ci-val{font-size:15px;font-weight:600;color:var(--ink);}
+.ci-sub{font-size:12px;color:var(--muted);margin-top:3px;}
+.contact-form-wrap{background:var(--smoke);padding:44px;border-radius:8px;}
+.cf-title{font-family:var(--display);font-size:38px;margin-bottom:32px;color:var(--ink);}
+.cf-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.cf-group{display:flex;flex-direction:column;gap:8px;}
+.cf-group.full{grid-column:span 2;}
+.cf-label{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);}
+.cf-input,.cf-textarea,.cf-select{padding:14px 16px;border:1.5px solid var(--line2);border-radius:4px;font-size:14px;color:var(--ink);background:var(--white);transition:border-color .3s,box-shadow .3s;outline:none;width:100%;}
+.cf-input:focus,.cf-textarea:focus,.cf-select:focus{border-color:var(--purple);box-shadow:0 0 0 4px rgba(155,107,181,.1);}
+.cf-textarea{min-height:120px;resize:vertical;}
+.cf-submit{grid-column:span 2;margin-top:6px;}
+/* ✅ زر تعطيل أثناء الإرسال */
+.btn-fill:disabled,.btn-fill[disabled]{opacity:0.6;cursor:not-allowed;pointer-events:none;}
+footer{background:var(--ink);color:rgba(255,255,255,.45);padding:80px 60px 40px;}
+.footer-main{max-width:1440px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1.5fr;gap:60px;padding-bottom:56px;border-bottom:1px solid rgba(155,107,181,.12);}
+.footer-logo-wrap{display:flex;flex-direction:column;}
+.footer-logo{display:flex;align-items:center;gap:10px;}
+.footer-logo .logo-img{width:40px;height:40px;}
+.footer-logo .logo-r{color:var(--white);font-size:24px;}
+.footer-logo .logo-sub{color:var(--purple2);}
+.footer-desc{font-size:13px;line-height:1.85;margin-top:18px;color:rgba(255,255,255,.35);max-width:280px;}
+.footer-socials{display:flex;gap:10px;margin-top:24px;flex-wrap:wrap;}
+.fsoc{width:40px;height:40px;border-radius:50%;border:1px solid rgba(155,107,181,.25);display:flex;align-items:center;justify-content:center;font-size:15px;color:rgba(255,255,255,.4);transition:all .3s var(--ease);}
+.fsoc:hover{background:var(--purple);border-color:var(--purple);color:var(--white);transform:translateY(-3px);}
+.footer-col h5{font-size:10px;font-weight:700;letter-spacing:.25em;text-transform:uppercase;color:var(--white);margin-bottom:22px;}
+.footer-col li{margin-bottom:11px;}
+.footer-col a{font-size:13px;color:rgba(255,255,255,.35);transition:color .3s;}
+.footer-col a:hover{color:var(--purple2);}
+.footer-contact-item{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:rgba(255,255,255,.35);margin-bottom:12px;}
+.footer-contact-item span:first-child{color:var(--purple2);flex-shrink:0;margin-top:1px;}
+.footer-pays{display:flex;gap:7px;margin-top:18px;}
+.fpay{background:rgba(255,255,255,.05);padding:4px 10px;border-radius:3px;font-size:10px;font-weight:700;color:rgba(255,255,255,.3);letter-spacing:.05em;}
+.footer-bottom{max-width:1440px;margin:0 auto;padding-top:32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:18px;}
+.footer-copy{font-size:11px;color:rgba(255,255,255,.18);}
+.footer-copy a{color:var(--purple2);}
+.footer-legal-links{display:flex;gap:22px;flex-wrap:wrap;}
+.footer-legal-links a{font-size:11px;color:rgba(255,255,255,.18);transition:color .3s;}
+.footer-legal-links a:hover{color:rgba(255,255,255,.5);}
+.drawer-veil{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:2000;opacity:0;pointer-events:none;transition:opacity .4s;backdrop-filter:blur(4px);}
+.drawer-veil.on{opacity:1;pointer-events:all;}
+.cart-drawer{position:fixed;top:0;left:0;bottom:0;width:440px;background:var(--white);z-index:2001;transform:translateX(-110%);transition:transform .5s var(--ease);display:flex;flex-direction:column;}
+.cart-drawer.on{transform:translateX(0);}
+.cd-head{padding:26px 30px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;}
+.cd-title{font-family:var(--display);font-size:26px;letter-spacing:.06em;color:var(--navy);}
+.cd-close{width:38px;height:38px;border-radius:50%;background:var(--smoke);display:flex;align-items:center;justify-content:center;font-size:16px;transition:background .3s;cursor:pointer;}
+.cd-close:hover{background:var(--line);}
+.cd-body{flex:1;overflow-y:auto;padding:30px;display:flex;align-items:center;justify-content:center;}
+.cart-empty-state{text-align:center;}
+.cart-empty-ico{font-size:52px;margin-bottom:18px;opacity:.45;}
+.cart-empty-t{font-size:17px;font-weight:700;margin-bottom:8px;}
+.cart-empty-s{font-size:13px;color:var(--muted);}
+.cd-foot{padding:22px 30px;border-top:1px solid var(--line);}
+.cd-total{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;font-size:15px;}
+.cd-total strong{font-family:var(--display);font-size:26px;letter-spacing:.04em;color:var(--navy);}
+.cd-checkout{width:100%;padding:17px;background:var(--navy);color:var(--white);font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;border-radius:3px;transition:all .4s var(--ease);position:relative;overflow:hidden;}
+.cd-checkout::before{content:'';position:absolute;inset:0;background:var(--purple);transform:translateY(100%);transition:transform .4s var(--ease);}
+.cd-checkout:hover::before{transform:translateY(0);}
+.cd-checkout span{position:relative;z-index:1;}
+.mob-menu{position:fixed;inset:0;background:var(--navy);z-index:1500;display:flex;flex-direction:column;padding:80px 48px 48px;transform:translateX(110%);transition:transform .55s var(--ease);}
+.mob-menu.on{transform:translateX(0);}
+.mob-close{position:absolute;top:22px;left:24px;width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--white);cursor:pointer;transition:background .3s;}
+.mob-close:hover{background:rgba(155,107,181,.25);}
+.mob-nav{flex:1;display:flex;flex-direction:column;justify-content:center;}
+.mob-nav a{display:block;padding:18px 0;font-family:var(--display);font-size:50px;color:rgba(255,255,255,.65);letter-spacing:.04em;border-bottom:1px solid rgba(255,255,255,.06);transition:color .3s,padding-left .4s var(--ease);}
+.mob-nav a:hover{color:var(--purple2);padding-left:14px;}
+.mob-lang{display:flex;gap:8px;margin-top:32px;}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s var(--ease),transform .7s var(--ease);}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.reveal-delay-1{transition-delay:.08s;}.reveal-delay-2{transition-delay:.16s;}
+.reveal-delay-3{transition-delay:.24s;}.reveal-delay-4{transition-delay:.32s;}
+#toast{position:fixed;bottom:32px;right:32px;z-index:9000;background:var(--navy);color:var(--white);padding:14px 26px;border-radius:5px;font-size:13px;font-weight:600;border-left:3px solid var(--purple);transform:translateY(20px) translateX(20px);opacity:0;pointer-events:none;transition:all .4s var(--ease);}
+#toast.show{transform:translateY(0) translateX(0);opacity:1;}
+@media(max-width:1024px){
+  .hero{grid-template-columns:1fr;}.hero-right{height:55vw;}.hero-left{padding:60px 40px;}
+  .products-row,.products-grid-full{grid-template-columns:repeat(2,1fr);}
+  .design-cards{grid-template-columns:1fr;}.dcard{aspect-ratio:16/7;}
+  .why-grid{grid-template-columns:repeat(2,1fr);}
+  .home-about{grid-template-columns:1fr;}.about-img-side{height:60vw;}.about-text-side{padding:60px 40px;}
+  .footer-main{grid-template-columns:1fr 1fr;gap:40px;}
+  .about-page-hero{grid-template-columns:1fr;}.about-page-img{display:none;}
+  .contact-body{grid-template-columns:1fr;}.values-grid{grid-template-columns:1fr 1fr;}
+  .price-tables-wrap{grid-template-columns:1fr;}
+}
+@media(max-width:640px){
+  #app{padding-top:100px;}.header-inner{padding:0 20px;}
+  .nav{display:none;}.lang-group{display:none;}.hamburger{display:flex;}
+  .products-row,.products-grid-full{grid-template-columns:repeat(2,1fr);gap:10px;}
+  .cart-drawer{width:100%;}.why-grid,.values-grid{grid-template-columns:1fr;}
+  .cf-grid,.form-grid{grid-template-columns:1fr;}
+  .cf-group.full,.form-group.full{grid-column:span 1;}.cf-submit{grid-column:span 1;}
+  .footer-main{grid-template-columns:1fr;}.footer-bottom{flex-direction:column;align-items:flex-start;}
+  .hero-left{padding:44px 20px;}
+  .home-featured,.home-why,.products-page,.about-values,.contact-body,.design-form-section,.home-design,.contact-top,.design-prices-section{padding-left:18px;padding-right:18px;}
+  .about-text-side{padding:44px 20px;}.contact-form-wrap{padding:24px 18px;}.about-page-hero{padding:56px 20px;}
+  .price-notes{flex-direction:column;gap:14px;}
+}
+</style>
+</head>
+<body lang="de" id="bodyEl">
+<div id="cursor"><div id="cursor-dot"></div><div id="cursor-ring"></div></div>
+<div id="page-veil"></div><div id="toast"></div>
+
+<div class="announce">
+  <div class="announce-track" id="ticker">
+    <span id="ann1">&#10022; Kostenloser Versand ab 50 &euro;</span>
+    <span id="ann2">&#10022; Hochwertige Drucktechnik &middot; Schnelle Lieferung &middot; Individuell gestaltet</span>
+    <span id="ann3">&#10022; Wolfsburg &middot; Deutschland &middot; 2025</span>
+    <span>&#10022; Kostenloser Versand ab 50 &euro;</span>
+    <span>&#10022; Hochwertige Drucktechnik &middot; Schnelle Lieferung &middot; Individuell gestaltet</span>
+    <span>&#10022; Wolfsburg &middot; Deutschland &middot; 2025</span>
+  </div>
+</div>
+
+<header class="header" id="siteHeader">
+  <div class="header-inner">
+    <nav class="nav">
+        <a href="dash.html" class="h-btn h-btn-settings" title="Dashboard"><i class="fas fa-cog"></i></a>
+      <a href="#" class="nav-link active" data-page="home" id="nav-home">Startseite</a>
+      <a href="#" class="nav-link" data-page="products" id="nav-products">Produkte</a>
+      <a href="#" class="nav-link" data-page="design" id="nav-design">Gestalte selbst</a>
+      <a href="#" class="nav-link" data-page="about" id="nav-about">&Uuml;ber uns</a>
+      <a href="#" class="nav-link" data-page="contact" id="nav-contact">Kontakt</a>
+    </nav>
+    <a href="#" class="logo" data-page="home">
+      <img class="logo-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%239B6BB5'/%3E%3Ctext x='50' y='68' font-family='Arial,Helvetica,sans-serif' font-size='56' font-weight='800' fill='white' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E" alt="RENG">
+      <div class="logo-text"><span class="logo-r">RENG</span><span class="logo-sub" id="logo-sub-main">Bedruckte Kleidung</span></div>
+    </a>
+    <div class="h-actions">
+      <div class="lang-group">
+        <button class="lang-sw active" onclick="setLang('de')" id="btn-de">DE</button>
+        <button class="lang-sw" onclick="setLang('en')" id="btn-en">EN</button>
+        <button class="lang-sw" onclick="setLang('ar')" id="btn-ar">&#1593;</button>
+      </div>
+      <a href="#" class="h-btn h-btn-cart" id="cartBtn">
+        <span id="cartTxt">Warenkorb</span>
+        <span class="cart-badge" id="cartBadge">0</span>
+      </a>
+      <button class="hamburger" id="burgerBtn"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<div class="mob-menu" id="mobMenu">
+  <button class="mob-close" id="mobClose">&#x2715;</button>
+  <nav class="mob-nav">
+    <a href="#" onclick="navTo('home');closeMob()">Startseite</a>
+    <a href="#" onclick="navTo('products');closeMob()">Produkte</a>
+    <a href="#" onclick="navTo('design');closeMob()">Gestalte selbst</a>
+    <a href="#" onclick="navTo('about');closeMob()">&Uuml;ber uns</a>
+    <a href="#" onclick="navTo('contact');closeMob()">Kontakt</a>
+  </nav>
+  <div class="mob-lang">
+    <button class="lang-sw" onclick="setLang('de');closeMob()">DE</button>
+    <button class="lang-sw" onclick="setLang('en');closeMob()">EN</button>
+    <button class="lang-sw" onclick="setLang('ar');closeMob()">&#1593;</button>
+  </div>
+</div>
+
+<div class="drawer-veil" id="drawerVeil" onclick="closeCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cd-head">
+    <span class="cd-title" id="cartTitle">Warenkorb</span>
+    <button class="cd-close" onclick="closeCart()">&#x2715;</button>
+  </div>
+  <div class="cd-body">
+    <div class="cart-empty-state">
+      <div class="cart-empty-ico">&#128717;</div>
+      <p class="cart-empty-t" id="cartEmptyT">Dein Warenkorb ist leer</p>
+      <p class="cart-empty-s" id="cartEmptyS">F&uuml;ge Produkte hinzu, um einzukaufen</p>
+    </div>
+  </div>
+  <div class="cd-foot">
+    <div class="cd-total"><span id="totalLbl">Gesamt</span><strong>&euro;0.00</strong></div>
+    <p style="font-size:11px;color:var(--muted);margin-bottom:14px;text-align:center" id="cartNote">Inkl. MwSt. &middot; Versandkosten beim Checkout</p>
+    <button class="cd-checkout"><span id="checkoutTxt">Zur Kasse &rarr;</span></button>
+  </div>
+</div>
+
+<div id="app">
+<!-- HOME -->
+<div class="page active" id="page-home">
+  <section class="hero">
+    <div class="hero-left">
+      <p class="hero-tag" id="h-tag">Wolfsburg &middot; Deutschland &middot; 2025</p>
+      <h1 class="hero-headline">
+        <span class="line"><span id="hl1">Gestalte</span></span>
+        <span class="line"><span id="hl2">deine</span></span>
+        <span class="line"><span id="hl3">Kleidung</span></span>
+      </h1>
+      <p class="hero-body" id="h-body">T-Shirts, Hoodies, Pullover und Caps mit deinem individuellen Design. Hochwertig gedruckt, schnell geliefert, kostenloser Versand ab 50&euro;.</p>
+      <div class="hero-actions">
+        <a href="#" class="btn btn-fill" data-page="products"><span id="h-shop">Jetzt shoppen</span><span>&rarr;</span></a>
+        <a href="#" class="btn btn-outline" data-page="design" id="h-design-btn">Eigenes Design</a>
+      </div>
+      <div class="hero-stats">
+        <div><div class="stat-num">500+</div><div class="stat-lbl" id="stat1">zufriedene Kunden</div></div>
+        <div><div class="stat-num">100%</div><div class="stat-lbl" id="stat2">Qualit&auml;tsgarantie</div></div>
+        <div><div class="stat-num">48h</div><div class="stat-lbl" id="stat3">Schnelle Lieferung</div></div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <img src="https://loremflickr.com/900/1100/streetwear,fashion/all?lock=1" alt="RENG T-Shirt">
+      <div class="hero-pill">
+        <div class="hero-pill-title" id="pill-t">Anime &middot; Street Style</div>
+        <div class="hero-pill-sub" id="pill-s">Kollektion 2025 jetzt verf&uuml;gbar</div>
+      </div>
+    </div>
+  </section>
+  <section class="home-featured">
+    <div class="sec-label reveal" id="feat-label">Bestseller</div>
+    <h2 class="sec-title reveal reveal-delay-1"><span id="feat-title">Unsere <em>Top-Produkte</em></span></h2>
+    <div class="products-row">
+      <div class="pcard reveal reveal-delay-1">
+        <div class="pcard-img">
+          <img class="img-main" src="https://loremflickr.com/600/750/tshirt,black/all?lock=11" alt="Gon">
+          <img class="img-hover" src="https://loremflickr.com/600/750/tshirt,anime/all?lock=12" alt="Gon 2">
+          <span class="pcard-tag purple" id="tag-bestseller">Bestseller</span>
+          <div class="pcard-overlay"><button class="pcard-add-btn" onclick="addToCart(this,'Gon T-Shirt')"><span id="atc-txt">In den Warenkorb</span></button></div>
+        </div>
+        <div class="pcard-info"><div class="pcard-name">Gon Oversized T-Shirt &ndash; Anime</div><div class="pcard-price">&euro;39.99</div></div>
+      </div>
+      <div class="pcard reveal reveal-delay-2">
+        <div class="pcard-img">
+          <img class="img-main" src="https://loremflickr.com/600/750/tshirt,streetwear/all?lock=13" alt="Hisoka">
+          <img class="img-hover" src="https://loremflickr.com/600/750/tshirt,anime/all?lock=12" alt="Hisoka 2">
+          <span class="pcard-tag" id="tag-new">Neu</span>
+          <div class="pcard-overlay"><button class="pcard-add-btn" onclick="addToCart(this,'Hisoka T-Shirt')"><span>In den Warenkorb</span></button></div>
+        </div>
+        <div class="pcard-info"><div class="pcard-name">Hisoka Oversized T-Shirt &ndash; Anime</div><div class="pcard-price">&euro;39.99</div></div>
+      </div>
+      <div class="pcard reveal reveal-delay-3">
+        <div class="pcard-img">
+          <img class="img-main" src="https://loremflickr.com/600/750/hoodie,black/all?lock=14" alt="Hunter">
+          <img class="img-hover" src="https://loremflickr.com/600/750/hoodie,streetwear/all?lock=15" alt="Hunter 2">
+          <div class="pcard-overlay"><button class="pcard-add-btn" onclick="addToCart(this,'Hunter T-Shirt')"><span>In den Warenkorb</span></button></div>
+        </div>
+        <div class="pcard-info"><div class="pcard-name">Hunter Oversized T-Shirt &ndash; Anime</div><div class="pcard-price">&euro;39.99</div></div>
+      </div>
+      <div class="pcard reveal reveal-delay-4">
+        <div class="pcard-img">
+          <img class="img-main" src="https://loremflickr.com/600/750/hoodie,urban/all?lock=16" alt="Joker">
+          <img class="img-hover" src="https://loremflickr.com/600/750/sweatshirt,streetwear/all?lock=17" alt="Joker 2">
+          <span class="pcard-tag">Neu</span>
+          <div class="pcard-overlay"><button class="pcard-add-btn" onclick="addToCart(this,'Joker T-Shirt')"><span>In den Warenkorb</span></button></div>
+        </div>
+        <div class="pcard-info"><div class="pcard-name">Joker Oversized T-Shirt &ndash; Anime</div><div class="pcard-price">&euro;39.99</div></div>
+      </div>
+    </div>
+    <div class="home-all-link reveal">
+      <a href="#" class="btn btn-outline" data-page="products" id="all-products-btn">Alle Produkte ansehen &rarr;</a>
+    </div>
+  </section>
+  <section class="home-design">
+    <div class="home-design-inner">
+      <div class="sec-label reveal" id="dc-label">Design-Service</div>
+      <h2 class="sec-title reveal reveal-delay-1" id="dc-title">Gestalte <em>dein St&uuml;ck</em></h2>
+      <div class="design-cards">
+        <div class="dcard reveal reveal-delay-1"><img src="https://loremflickr.com/900/1100/streetwear,fashion/all?lock=1" alt="T-Shirt"><div class="dcard-body"><div class="dcard-ico">&#128085;</div><h3 class="dcard-title">T-Shirt</h3><p class="dcard-desc">Perfekt f&uuml;r den Alltag, aber einzigartig.</p><a href="#" class="dcard-cta" data-page="design">Jetzt bestellen &rarr;</a></div></div>
+        <div class="dcard reveal reveal-delay-2"><img src="https://loremflickr.com/900/1100/hoodie,streetwear/all?lock=18" alt="Hoodie"><div class="dcard-body"><div class="dcard-ico">&#129125;</div><h3 class="dcard-title">Hoodie</h3><p class="dcard-desc">Warm, stylisch und einzigartig mit deinem Design.</p><a href="#" class="dcard-cta" data-page="design">Jetzt bestellen &rarr;</a></div></div>
+        <div class="dcard reveal reveal-delay-3"><img src="https://loremflickr.com/900/1100/sweatshirt,streetwear/all?lock=19" alt="Pullover"><div class="dcard-body"><div class="dcard-ico">&#129526;</div><h3 class="dcard-title">Pullover</h3><p class="dcard-desc">Kuschelig und komfortabel mit pers&ouml;nlichem Touch.</p><a href="#" class="dcard-cta" data-page="design">Jetzt bestellen &rarr;</a></div></div>
+      </div>
+    </div>
+  </section>
+  <section class="home-why">
+    <div class="home-why-inner">
+      <div class="sec-label reveal" id="why-label">Unsere Vorteile</div>
+      <h2 class="sec-title reveal reveal-delay-1" id="why-title">Warum <em>RENG?</em></h2>
+      <div class="why-grid">
+        <div class="wcard reveal reveal-delay-1"><div class="wcard-icon">🖨️</div><h3 class="wcard-title" id="wt1">Hochwertiger Druck</h3><p class="wcard-desc" id="wd1">Modernste Drucktechnologie f&uuml;r leuchtende, langlebige Farben.</p></div>
+        <div class="wcard reveal reveal-delay-2"><div class="wcard-icon">🚀</div><h3 class="wcard-title" id="wt2">Schnelle Lieferung</h3><p class="wcard-desc" id="wd2">Kostenloser Versand f&uuml;r alle Bestellungen &uuml;ber 50 &euro;.</p></div>
+        <div class="wcard reveal reveal-delay-3"><div class="wcard-icon">🎨</div><h3 class="wcard-title" id="wt3">Individuelles Design</h3><p class="wcard-desc" id="wd3">Lade dein Design hoch &ndash; wir machen daraus ein einzigartiges St&uuml;ck.</p></div>
+        <div class="wcard reveal reveal-delay-4"><div class="wcard-icon">⭐</div><h3 class="wcard-title" id="wt4">Premium-Materialien</h3><p class="wcard-desc" id="wd4">H&ouml;chste Qualit&auml;t f&uuml;r maximalen Tragekomfort und Langlebigkeit.</p></div>
+      </div>
+    </div>
+  </section>
+  <section class="home-about">
+    <div class="about-img-side reveal"><img src="https://loremflickr.com/1200/1500/fashion,studio/all?lock=20" alt="RENG" loading="lazy"></div>
+    <div class="about-text-side">
+      <p class="about-eyebrow" id="ab-eyebrow">&Uuml;ber uns</p>
+      <h2 class="about-ht">Wir sind <span>RENG</span><br>Kreativagentur</h2>
+      <p class="about-p" id="ab-p1">Wir sind eine <strong>kreative Werbeagentur</strong> mit Sitz in Wolfsburg, Deutschland.</p>
+      <p class="about-p" id="ab-p2">Mit modernster Drucktechnologie personalisieren wir T-Shirts, Hoodies und Caps nach deinen W&uuml;nschen.</p>
+      <div class="about-feats">
+        <div class="ab-feat" id="af1">Hochwertige Textilien</div>
+        <div class="ab-feat" id="af2">Pr&auml;ziser Druck</div>
+        <div class="ab-feat" id="af3">Schnelle Lieferung</div>
+        <div class="ab-feat" id="af4">Speziell f&uuml;r dich</div>
+      </div>
+      <div class="about-cta-row"><a href="#" class="btn btn-fill" data-page="about"><span id="ab-cta">Mehr erfahren</span><span>&rarr;</span></a></div>
+    </div>
+  </section>
+</div>
+
+<!-- PRODUCTS -->
+<div class="page" id="page-products">
+  <div class="products-page">
+    <div class="page-hero-bar">
+      <h1 class="page-title" id="prod-title">Alle<br><span>Produkte</span></h1>
+      <span class="page-count" id="prod-count">4 Produkte</span>
+    </div>
+    <div class="filter-bar">
+      <button class="filter-btn active" id="fb-all">Alle</button>
+      <button class="filter-btn" id="fb-ts">T-Shirts</button>
+      <button class="filter-btn" id="fb-ho">Hoodies</button>
+      <button class="filter-btn" id="fb-sw">Pullover</button>
+      <button class="filter-btn" id="fb-ca">Caps</button>
+    </div>
+    <div class="products-grid-full">
+      <div class="pcard reveal"><div class="pcard-img"><img class="img-main" src="https://loremflickr.com/600/750/tshirt,black/all?lock=11" alt="Gon" loading="lazy"><img class="img-hover" src="https://loremflickr.com/600/750/tshirt,anime/all?lock=12" alt="Gon 2"><span class="pcard-tag purple">Bestseller</span><div class="pcard-overlay"><button class="pcard-add-btn" onclick="addToCart(this,'Gon T-Shirt')">In den Warenkorb</button></div></div><div class="pcard-info"><div class="pcard-name">Gon Oversized T-Shirt</div><div class="pcard-price">&euro;39.99</div></div></div>
+      <div class="pcard reveal reveal-delay-1"><div class="pcard-img"><img class="img-main" src="https://loremflickr.com/600/750/tshirt,streetwear/all?lock=13" alt="Hisoka" loading="lazy"><img class="img-hover" src="https://loremflickr.com/600/750/tshirt,anime/all?lock=12" alt="Hisoka 2"><span class="pcard-tag">Neu</span><div class="pcard-overlay"><button class="pcard-add-btn" onclick="addToCart(this,'Hisoka T-Shirt')">In den Warenkorb</button></div></div><div class="pcard-info"><div class="pcard-name">Hisoka Oversized T-Shirt</div><div class="pcard-price">&euro;39.99</div></div></div>
+      <div class="pcard reveal reveal-delay-2"><div class="pcard-img"><img class="img-main" src="https://loremflickr.com/600/750/hoodie,black/all?lock=14" alt="Hunter" loading="lazy"><img class="img-hover" src="https://loremflickr.com/600/750/hoodie,streetwear/all?lock=15" alt="Hunter 2"><div class="pcard-overlay"><button class="pcard-add-btn" onclick="addToCart(this,'Hunter T-Shirt')">In den Warenkorb</button></div></div><div class="pcard-info"><div class="pcard-name">Hunter Oversized T-Shirt</div><div class="pcard-price">&euro;39.99</div></div></div>
+      <div class="pcard reveal reveal-delay-3"><div class="pcard-img"><img class="img-main" src="https://loremflickr.com/600/750/hoodie,urban/all?lock=16" alt="Joker" loading="lazy"><img class="img-hover" src="https://loremflickr.com/600/750/sweatshirt,streetwear/all?lock=17" alt="Joker 2"><span class="pcard-tag">Neu</span><div class="pcard-overlay"><button class="pcard-add-btn" onclick="addToCart(this,'Joker T-Shirt')">In den Warenkorb</button></div></div><div class="pcard-info"><div class="pcard-name">Joker Oversized T-Shirt</div><div class="pcard-price">&euro;39.99</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- DESIGN PAGE -->
+<div class="page" id="page-design">
+  <div class="design-hero">
+    <div class="design-hero-bg"></div>
+    <div class="design-hero-content">
+      <span class="design-hero-tag" id="dh-tag">Starte dein eigenes Design</span>
+      <h1 class="design-hero-title" id="dh-title">Gestalte<br><span>selbst</span></h1>
+      <p class="design-hero-sub" id="dh-sub">F&uuml;lle das Formular aus und lade dein Motiv hoch. Wir pr&uuml;fen deine Anfrage und melden uns mit einem Angebot.</p>
+      <a href="#design-form" class="btn btn-purple" style="margin:0 auto;display:inline-flex"><span id="dh-cta">Jetzt anfragen &darr;</span></a>
+    </div>
+  </div>
+  <div class="design-prices-section">
+    <div class="sec-label reveal" id="price-label">Preis&uuml;bersicht</div>
+    <h2 class="sec-title reveal reveal-delay-1" id="price-title">Preisliste &amp; <em>Anfrage</em></h2>
+    <div class="price-tables-wrap reveal reveal-delay-2">
+      <div class="price-table-card">
+        <div class="price-table-head"><span class="icon">&#128085;</span><h3 id="pt-cloth-title">Preise Kleidung</h3></div>
+        <table><thead><tr><th id="pt-h-prod">Produkt</th><th id="pt-h-price">Einzelpreis</th></tr></thead><tbody>
+          <tr><td>T-Shirt</td><td>15,00 &euro;</td></tr>
+          <tr><td>Polo</td><td>18,00 &euro;</td></tr>
+          <tr><td>Oversize T-Shirt</td><td>20,00 &euro;</td></tr>
+          <tr><td>Hoodie</td><td>27,00 &euro;</td></tr>
+        </tbody></table>
+      </div>
+      <div class="price-table-card">
+        <div class="price-table-head"><span class="icon">&#128424;</span><h3 id="pt-print-title">Druckpreise (pro St&uuml;ck)</h3></div>
+        <table><thead><tr><th id="pt-h-pos">Position</th><th id="pt-h-surcharge">Aufpreis</th></tr></thead><tbody>
+          <tr><td id="pos-small">Klein (Brust links / vorne mittig)</td><td>+ 7,00 &euro;</td></tr>
+          <tr><td id="pos-large">Gro&szlig; (R&uuml;cken)</td><td>+ 12,00 &euro;</td></tr>
+        </tbody></table>
+      </div>
+    </div>
+    <div class="price-notes reveal reveal-delay-3">
+      <div class="price-note-item"><span class="badge" id="badge-min">Mindestbestellung</span><span id="note-min">5 St&uuml;ck</span></div>
+      <div class="price-note-item"><span class="badge" id="badge-disc">Mengenrabatt</span><span id="note-disc">Ab 20 St&uuml;ck: 15 % Rabatt auf den Gesamtpreis</span></div>
+    </div>
+  </div>
+  <div class="design-form-section" id="design-form">
+    <div class="design-form-inner">
+      <div class="sec-label reveal" id="form-label">Anfrage senden</div>
+      <h2 class="sec-title reveal reveal-delay-1" id="form-title">Deine <em>Anfrage</em></h2>
+      <div class="form-grid">
+        <div class="form-group reveal reveal-delay-1">
+          <label class="form-label"><span class="req">*</span><span id="lbl-name">Name</span></label>
+          <input type="text" class="form-input" id="inp-name" placeholder="Vor- und Nachname">
+        </div>
+        <div class="form-group reveal reveal-delay-2">
+          <label class="form-label"><span class="req">*</span><span id="lbl-email">E-Mail</span></label>
+          <input type="email" class="form-input" id="inp-email" placeholder="deine@email.de">
+        </div>
+        <div class="form-group full reveal reveal-delay-1">
+          <label class="form-label" id="lbl-phone">Telefonnummer (optional)</label>
+          <div class="phone-group"><span class="phone-prefix">+49</span><input type="tel" class="form-input" id="inp-phone" placeholder="&hellip;"></div>
+        </div>
+        <div class="form-group reveal reveal-delay-2">
+          <label class="form-label"><span class="req">*</span><span id="lbl-product">Produkt</span></label>
+          <select class="form-select" id="sel-product" onchange="calcPrice()">
+            <option value="">Bitte w&auml;hlen&hellip;</option>
+            <option value="15">T-Shirt &ndash; 15,00 &euro;</option>
+            <option value="18">Polo &ndash; 18,00 &euro;</option>
+            <option value="20">Oversize T-Shirt &ndash; 20,00 &euro;</option>
+            <option value="27">Hoodie &ndash; 27,00 &euro;</option>
+          </select>
+        </div>
+        <div class="form-group reveal reveal-delay-3">
+          <label class="form-label"><span class="req">*</span><span id="lbl-qty">Menge (min. 5)</span></label>
+          <input type="number" class="form-input" id="inp-qty" value="5" min="5" onchange="calcPrice()">
+        </div>
+        <div class="form-group full reveal reveal-delay-2">
+          <label class="form-label" id="lbl-positions">Druckposition(en)</label>
+          <div class="check-group">
+            <label class="check-item" id="chk-shoulder" onclick="toggleCheck(this);calcPrice()">
+              <input type="checkbox" id="chk-shoulder-inp" value="5">
+              <div class="check-box"></div>
+              <span class="check-label" id="pos-lbl-shoulder">Schulter</span>
+              <span class="check-price">+5,00 &euro;</span>
+            </label>
+            <label class="check-item" id="chk-small" onclick="toggleCheck(this);calcPrice()">
+              <input type="checkbox" id="chk-small-inp" value="7">
+              <div class="check-box"></div>
+              <span class="check-label" id="pos-lbl-small">Klein (Brust links / vorne)</span>
+              <span class="check-price">+7,00 &euro;</span>
+            </label>
+            <label class="check-item" id="chk-large" onclick="toggleCheck(this);calcPrice()">
+              <input type="checkbox" id="chk-large-inp" value="12">
+              <div class="check-box"></div>
+              <span class="check-label" id="pos-lbl-large">Gro&szlig; (R&uuml;cken)</span>
+              <span class="check-price">+12,00 &euro;</span>
+            </label>
+          </div>
+        </div>
+        <div class="form-group full reveal reveal-delay-3">
+          <label class="form-label" id="lbl-file">Datei-Upload (Logo/Motiv)</label>
+          <div class="upload-zone" onclick="document.getElementById('fileInput').click()">
+            <div class="upload-ico" id="uico">&#128193;</div>
+            <div class="upload-title" id="utitle">Klicken zum Hochladen oder hierher ziehen</div>
+            <div class="upload-hint">Erlaubt: <strong>PNG, JPG, PDF, SVG, AI, EPS</strong></div>
+            <input type="file" id="fileInput" style="display:none" accept="image/*,.pdf,.svg,.ai,.eps" onchange="handleFile(this)">
+          </div>
+        </div>
+        <div class="form-group full reveal reveal-delay-3">
+          <label class="form-label" id="lbl-notes">Hinweise / W&uuml;nsche</label>
+          <textarea class="form-textarea" id="inp-notes" placeholder="z. B. Position, Farbwunsch, Deadline"></textarea>
+        </div>
+        <div class="form-group full reveal reveal-delay-4">
+          <div class="price-estimator">
+            <div class="price-est-label" id="est-label">&#128269; Preis-Sch&auml;tzung (unverbindlich)</div>
+            <div class="price-est-row">
+              <div class="price-est-breakdown" id="est-breakdown">Basis 0,00 &euro; + Druck 0,00 &euro; = 0,00 &euro; pro St&uuml;ck &bull; Menge 5 &times; 0,00 &euro; = 0,00 &euro;</div>
+              <div class="price-est-total" id="est-total">0,00 &euro;</div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group full reveal reveal-delay-4">
+          <label class="privacy-check">
+            <input type="checkbox" id="privacyCheck">
+            <span class="privacy-check-label" id="privacy-lbl">Ich habe die <a href="#">Datenschutzerkl&auml;rung</a> gelesen und stimme der Verarbeitung meiner Angaben zu.</span>
+          </label>
+        </div>
+        <div class="form-group full reveal reveal-delay-4">
+          <button class="btn btn-fill" id="submitBtn" onclick="submitDesignForm()" style="width:100%;justify-content:center;padding:17px">
+            <span id="submit-btn-txt">Anfrage senden &rarr;</span>
+          </button>
+          <p class="form-note" id="form-note-txt">Wir melden uns i. d. R. innerhalb von 24&ndash;48 Stunden.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT PAGE -->
+<div class="page" id="page-about">
+  <div class="about-page-hero">
+    <div class="about-page-content">
+      <p class="about-eyebrow" id="ab2-eye">&Uuml;ber uns</p>
+      <h1 class="about-h">Wir sind <span>RENG</span><br>Kreativagentur<br>aus Wolfsburg</h1>
+      <p class="about-big-p" id="ab2-p1">Wir sind <strong>RENG</strong>, eine kreative Werbeagentur mit Sitz in Wolfsburg, Deutschland.</p>
+      <p class="about-big-p" id="ab2-p2">Mit modernster Drucktechnologie personalisieren wir T-Shirts, Pullover, Hoodies und Caps nach euren W&uuml;nschen.</p>
+      <div class="about-tags">
+        <span class="about-tag">Digitaldruck</span><span class="about-tag">T-Shirts</span><span class="about-tag">Hoodies</span><span class="about-tag">Pullover</span><span class="about-tag">Caps</span><span class="about-tag">Individualdruck</span>
+      </div>
+    </div>
+    <div class="about-page-img"><img src="https://loremflickr.com/1200/1500/fashion,studio/all?lock=20" alt="RENG"></div>
+  </div>
+  <div class="about-values">
+    <div class="sec-label reveal" id="val-label">Unsere Werte</div>
+    <h2 class="sec-title reveal reveal-delay-1" id="val-title">Was uns <em>ausmacht</em></h2>
+    <div class="values-grid">
+      <div class="val-card reveal reveal-delay-1" data-num="01"><div class="val-icon">&#127919;</div><h3 class="val-title" id="vt1">Qualit&auml;t zuerst</h3><p class="val-desc" id="vd1">Wir verwenden die besten Materialien und modernste Drucktechnologie.</p></div>
+      <div class="val-card reveal reveal-delay-2" data-num="02"><div class="val-icon">&#128161;</div><h3 class="val-title" id="vt2">Kreativit&auml;t ohne Grenzen</h3><p class="val-desc" id="vd2">Jeder verdient es, sich auf seine eigene Art auszudr&uuml;cken.</p></div>
+      <div class="val-card reveal reveal-delay-3" data-num="03"><div class="val-icon">&#129309;</div><h3 class="val-title" id="vt3">Kunde im Mittelpunkt</h3><p class="val-desc" id="vd3">Deine Zufriedenheit ist unser oberstes Ziel.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT PAGE -->
+<div class="page" id="page-contact">
+  <div class="contact-top">
+    <h1 class="contact-top-title" id="ct-title">Kontakt<br><span>aufnehmen</span></h1>
+    <p class="contact-top-sub" id="ct-sub">Wir sind hier, um all deine Fragen zu beantworten</p>
+  </div>
+  <div class="contact-body">
+    <div class="contact-info">
+      <h2 class="ci-title" id="ci-title">Kontaktdaten</h2>
+      <div class="ci-item reveal"><div class="ci-icon">&#128205;</div><div><div class="ci-label" id="ci-loc-lbl">Standort</div><div class="ci-val">Wolfsburg, Deutschland</div></div></div>
+      <div class="ci-item reveal reveal-delay-1"><div class="ci-icon">&#9993;&#65039;</div><div><div class="ci-label" id="ci-mail-lbl">E-Mail</div><div class="ci-val">info@reng-shop.com</div><div class="ci-sub" id="ci-mail-sub">Antwort innerhalb von 24 Stunden</div></div></div>
+      <div class="ci-item reveal reveal-delay-2"><div class="ci-icon">&#128336;</div><div><div class="ci-label" id="ci-hours-lbl">&Ouml;ffnungszeiten</div><div class="ci-val" id="ci-hours-val">Montag &ndash; Freitag</div><div class="ci-sub">9:00 &ndash; 18:00 Uhr</div></div></div>
+      <div class="ci-item reveal reveal-delay-3" style="border:none;margin-bottom:0;padding-bottom:0"><div class="ci-icon">&#128666;</div><div><div class="ci-label" id="ci-ship-lbl">Versand</div><div class="ci-val" id="ci-ship-val">Kostenlos ab &euro;50</div></div></div>
+    </div>
+    <div class="contact-form-wrap reveal reveal-delay-2">
+      <h2 class="cf-title" id="cf-title">Nachricht senden</h2>
+      <div class="cf-grid">
+        <div class="cf-group"><label class="cf-label" id="cf-name-lbl">Name</label><input type="text" class="cf-input" placeholder="Vor- und Nachname"></div>
+        <div class="cf-group"><label class="cf-label" id="cf-email-lbl">E-Mail</label><input type="email" class="cf-input" placeholder="deine@email.de"></div>
+        <div class="cf-group full"><label class="cf-label" id="cf-subj-lbl">Betreff</label><select class="cf-select"><option value="">Bitte w&auml;hlen&hellip;</option><option>Bestellanfrage</option><option>Individuelles Design</option><option>Problem mit Bestellung</option><option>Sonstiges</option></select></div>
+        <div class="cf-group full"><label class="cf-label" id="cf-msg-lbl">Nachricht</label><textarea class="cf-textarea" placeholder="Schreib uns hier&hellip;"></textarea></div>
+        <div class="cf-submit"><button class="btn btn-fill" onclick="submitContact()" style="width:100%;justify-content:center;padding:17px"><span id="cf-submit-txt">Nachricht senden &rarr;</span></button></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div><!-- end #app -->
+
+<footer id="siteFooter">
+  <div class="footer-main">
+    <div class="footer-logo-wrap">
+      <div class="footer-logo"><img class="logo-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%239B6BB5'/%3E%3Ctext x='50' y='68' font-family='Arial,Helvetica,sans-serif' font-size='56' font-weight='800' fill='white' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E" alt="RENG Logo"><div class="logo-text"><span class="logo-r">RENG</span><span class="logo-sub">Bedruckte Kleidung</span></div></div>
+      <p class="footer-desc" id="f-desc">Kreativagentur aus Wolfsburg &ndash; wir gestalten eure Kleidung nach Wunsch.</p>
+      <div class="footer-socials">
+        <a href="https://www.instagram.com/reng.shop" target="_blank" class="fsoc"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.tiktok.com/@reng.shop" target="_blank" class="fsoc"><i class="fab fa-tiktok"></i></a>
+        <a href="https://www.facebook.com/rengshop" target="_blank" class="fsoc"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://wa.me/49" target="_blank" class="fsoc"><i class="fab fa-whatsapp"></i></a>
+      </div>
+    </div>
+    <div class="footer-col"><h5 id="f-quick">Schnelllinks</h5><ul><li><a href="#" data-page="home">Startseite</a></li><li><a href="#" data-page="products">Produkte</a></li><li><a href="#" data-page="design">Gestalte selbst</a></li><li><a href="#" data-page="about">&Uuml;ber uns</a></li><li><a href="#" data-page="contact">Kontakt</a></li></ul></div>
+    <div class="footer-col"><h5 id="f-legal">Rechtliches</h5><ul><li><a href="#">Datenschutz</a></li><li><a href="#">AGB</a></li><li><a href="#">Impressum</a></li></ul></div>
+    <div class="footer-col"><h5 id="f-contact-h">Kontakt</h5><div class="footer-contact-item"><span>&#128205;</span><span>Wolfsburg, Deutschland</span></div><div class="footer-contact-item"><span>&#9993;&#65039;</span><span>info@reng-shop.com</span></div><div class="footer-pays"><span class="fpay">VISA</span><span class="fpay">MC</span><span class="fpay">PAYPAL</span></div></div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy" id="f-copy">&copy; 2026 <a href="#">RENG Shop</a> &middot; Alle Rechte vorbehalten</p>
+    <div class="footer-legal-links"><a href="#">Datenschutz</a><a href="#">AGB</a><a href="#">Kontakt</a></div>
+  </div>
+</footer>
+<script>
+/* ════════════════════════════════════════
+   CURSOR
+════════════════════════════════════════ */
+const dot=document.getElementById('cursor-dot'),ring=document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;dot.style.left=mx+'px';dot.style.top=my+'px';});
+(function a(){rx+=(mx-rx)*.13;ry+=(my-ry)*.13;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(a);})();
+document.querySelectorAll('a,button,.pcard,.wcard,.dcard,.val-card,.check-item').forEach(el=>{
+  el.addEventListener('mouseenter',()=>document.body.classList.add('cursor-hover'));
+  el.addEventListener('mouseleave',()=>document.body.classList.remove('cursor-hover'));
+});
+
+/* ════════════════════════════════════════
+   HEADER SCROLL
+════════════════════════════════════════ */
+const hdr=document.getElementById('siteHeader');
+window.addEventListener('scroll',()=>{const y=window.scrollY;hdr.classList.toggle('scrolled',y>40);hdr.classList.toggle('hide-bar',y>80);},{passive:true});
+
+/* ════════════════════════════════════════
+   CART
+════════════════════════════════════════ */
+let cartCount=0;
+function addToCart(btn,name){
+  cartCount++;
+  document.getElementById('cartBadge').textContent=cartCount;
+  const sp=btn.querySelector('span');const orig=sp?sp.textContent:btn.textContent;
+  if(sp)sp.textContent='✓';else btn.textContent='✓';
+  btn.style.background='#27ae60';
+  setTimeout(()=>{if(sp)sp.textContent=orig;else btn.textContent=orig;btn.style.background='';},2000);
+  showToast(window._addedToCart(name));
+}
+function openCart(){document.getElementById('drawerVeil').classList.add('on');document.getElementById('cartDrawer').classList.add('on');document.body.style.overflow='hidden';}
+function closeCart(){document.getElementById('drawerVeil').classList.remove('on');document.getElementById('cartDrawer').classList.remove('on');document.body.style.overflow='';}
+document.getElementById('cartBtn').addEventListener('click',e=>{e.preventDefault();openCart();});
+
+/* ════════════════════════════════════════
+   MOBILE MENU
+════════════════════════════════════════ */
+document.getElementById('burgerBtn').addEventListener('click',()=>{document.getElementById('mobMenu').classList.add('on');document.body.style.overflow='hidden';});
+document.getElementById('mobClose').addEventListener('click',closeMob);
+function closeMob(){document.getElementById('mobMenu').classList.remove('on');document.body.style.overflow='';}
+
+/* ════════════════════════════════════════
+   SPA NAV
+════════════════════════════════════════ */
+const veil=document.getElementById('page-veil');
+let currentPage='home';
+function navTo(pageId){
+  if(pageId===currentPage)return;closeMob();
+  veil.style.transition='transform .4s cubic-bezier(.7,0,.3,1)';
+  veil.style.transformOrigin='bottom';veil.style.transform='scaleY(1)';
+  setTimeout(()=>{
+    document.getElementById('page-'+currentPage).classList.remove('active');
+    document.getElementById('page-'+pageId).classList.add('active');
+    currentPage=pageId;
+    document.querySelectorAll('.nav-link').forEach(l=>l.classList.toggle('active',l.dataset.page===pageId));
+    window.scrollTo({top:0});triggerReveals();
+    veil.style.transformOrigin='top';veil.style.transform='scaleY(0)';
+  },400);
+}
+document.addEventListener('click',e=>{const el=e.target.closest('[data-page]');if(el){e.preventDefault();navTo(el.dataset.page);}});
+
+/* ════════════════════════════════════════
+   REVEAL
+════════════════════════════════════════ */
+function triggerReveals(){
+  const page=document.getElementById('page-'+currentPage);
+  page.querySelectorAll('.reveal').forEach(el=>el.classList.remove('visible'));
+  const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:.1});
+  page.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+}
+window.addEventListener('load',triggerReveals);
+
+/* ════════════════════════════════════════
+   FILTERS
+════════════════════════════════════════ */
+document.querySelectorAll('.filter-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');});
+});
+
+/* ════════════════════════════════════════
+   TOAST
+════════════════════════════════════════ */
+const toastEl=document.getElementById('toast');let toastTimer;
+function showToast(msg){clearTimeout(toastTimer);toastEl.textContent=msg;toastEl.classList.add('show');toastTimer=setTimeout(()=>toastEl.classList.remove('show'),3200);}
+
+/* ════════════════════════════════════════
+   DESIGN FORM — PRICE CALC
+════════════════════════════════════════ */
+function toggleCheck(el){
+  el.classList.toggle('checked');
+  const inp=el.querySelector('input[type="checkbox"]');
+  if(inp) inp.checked=el.classList.contains('checked');
+  calcPrice();
+}
+function calcPrice(){
+  const v=parseFloat(document.getElementById('sel-product').value)||0;
+  const q=Math.max(5,parseInt(document.getElementById('inp-qty').value)||5);
+  const shc=document.getElementById('chk-shoulder-inp')?.checked||false;
+  const sc=document.getElementById('chk-small-inp')?.checked||false;
+  const lc=document.getElementById('chk-large-inp')?.checked||false;
+  const pr=(shc?5:0)+(sc?7:0)+(lc?12:0);
+  const pu=v+pr;
+  let tot=pu*q;
+  const disc=q>=20?0.15:0;
+  if(disc>0) tot*=(1-disc);
+  const bd=document.getElementById('est-breakdown');
+  const te=document.getElementById('est-total');
+  if(v===0){
+    bd.textContent='Basis 0,00 € + Druck 0,00 € = 0,00 € pro Stück • Menge 5 × 0,00 € = 0,00 €';
+    te.textContent='0,00 €';return;
+  }
+  const dn=disc>0?' (−15 % Rabatt)':'';
+  bd.textContent='Basis '+fmt(v)+' + Druck '+fmt(pr)+' = '+fmt(pu)+' pro Stück • Menge '+q+' × '+fmt(pu)+' = '+fmt(pu*q)+dn;
+  te.textContent=fmt(tot);
+}
+function fmt(n){return n.toFixed(2).replace('.',',')+' €';}
+function handleFile(i){if(i.files[0]){document.getElementById('utitle').textContent='✓ '+i.files[0].name;document.getElementById('uico').textContent='✅';}}
+
+/* ════════════════════════════════════════
+   ✅ FIREBASE SEND ORDER — الوظيفة الأساسية
+════════════════════════════════════════ */
+async function sendOrderToAdmin(orderData) {
+  // تحقق من Firebase متاح
+  if (!window.rengDb) {
+    console.error('Firebase غير متاح');
+    return { success: false, error: 'Firebase nicht verfügbar' };
+  }
+  try {
+    // اكتب الطلب
+    const orderRef = window.rengDb.ref('reng_orders').push();
+    await orderRef.set({
+      ...orderData,
+      status: 'pending',
+      createdAt: new Date().toISOString()
+    });
+    // أرسل إشعار للأدمن
+    await window.rengDb.ref('admin/reng/notifications').push({
+      type: 'new_reng_order',
+      message: orderData.name + ' — ' + orderData.product + ' ×' + orderData.qty,
+      orderId: orderRef.key,
+      ts: new Date().toISOString(),
+      read: false
+    });
+    console.log('✅ Bestellung gesendet:', orderRef.key);
+    return { success: true, id: orderRef.key };
+  } catch (err) {
+    console.error('Firebase Fehler:', err);
+    return { success: false, error: err.message };
+  }
+}
+
+/* ════════════════════════════════════════
+   ✅ SUBMIT DESIGN FORM
+════════════════════════════════════════ */
+async function submitDesignForm() {
+  // 1. Datenschutz prüfen
+  if (!document.getElementById('privacyCheck').checked) {
+    showToast(window._privacyWarn || '⚠️ Bitte stimme der Datenschutzerklärung zu.');
+    return;
+  }
+
+  // 2. Felder auslesen
+  const name  = (document.getElementById('inp-name')?.value || '').trim();
+  const email = (document.getElementById('inp-email')?.value || '').trim();
+  const phone = (document.getElementById('inp-phone')?.value || '').trim();
+  const productEl = document.getElementById('sel-product');
+  const qty   = Math.max(5, parseInt(document.getElementById('inp-qty')?.value) || 5);
+  const notes = (document.getElementById('inp-notes')?.value || '').trim();
+
+  // 3. Validierung
+  if (!name || !email) {
+    showToast('⚠️ Bitte Name und E-Mail eingeben.');
+    return;
+  }
+  if (!productEl?.value) {
+    showToast('⚠️ Bitte Produkt auswählen.');
+    return;
+  }
+
+  // 4. Positionen sammeln
+  const positions = [];
+  if (document.getElementById('chk-shoulder-inp')?.checked) positions.push('Schulter (+5€)');
+  if (document.getElementById('chk-small-inp')?.checked)    positions.push('Klein Brust (+7€)');
+  if (document.getElementById('chk-large-inp')?.checked)    positions.push('Groß Rücken (+12€)');
+
+  // 5. Preis berechnen
+  const basePrice  = parseFloat(productEl.value) || 0;
+  const printPrice = (document.getElementById('chk-shoulder-inp')?.checked ? 5 : 0)
+                   + (document.getElementById('chk-small-inp')?.checked    ? 7 : 0)
+                   + (document.getElementById('chk-large-inp')?.checked    ? 12 : 0);
+  const discount   = qty >= 20 ? 0.15 : 0;
+  const totalEst   = (basePrice + printPrice) * qty * (1 - discount);
+
+  // 6. Button deaktivieren
+  const btn = document.getElementById('submitBtn');
+  const btnTxt = document.getElementById('submit-btn-txt');
+  if (btn) { btn.disabled = true; }
+  if (btnTxt) btnTxt.textContent = 'Wird gesendet…';
+
+  // 7. An Firebase senden
+  const result = await sendOrderToAdmin({
+    name,
+    email,
+    phone,
+    product: productEl.options[productEl.selectedIndex]?.text || productEl.value,
+    productValue: parseFloat(productEl.value),
+    qty,
+    positions,
+    notes,
+    estimatedPrice: totalEst.toFixed(2),
+    lang: document.getElementById('bodyEl')?.getAttribute('lang') || 'de'
+  });
+
+  // 8. Button wieder aktivieren
+  if (btn) { btn.disabled = false; }
+  if (btnTxt) btnTxt.textContent = (window._submitBtnTxt || 'Anfrage senden →');
+
+  // 9. Ergebnis anzeigen
+  if (result.success) {
+    showToast(window._formSent || '✅ Anfrage gesendet! Wir melden uns in 24–48 Stunden.');
+    // Formular zurücksetzen
+    document.getElementById('inp-name').value = '';
+    document.getElementById('inp-email').value = '';
+    if (document.getElementById('inp-phone')) document.getElementById('inp-phone').value = '';
+    document.getElementById('inp-notes').value = '';
+    document.getElementById('sel-product').value = '';
+    document.getElementById('inp-qty').value = '5';
+    document.getElementById('privacyCheck').checked = false;
+    ['chk-shoulder','chk-small','chk-large'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.classList.remove('checked');
+      const inp = document.getElementById(id + '-inp');
+      if (inp) inp.checked = false;
+    });
+    calcPrice();
+  } else {
+    showToast('❌ Fehler beim Senden. Bitte erneut versuchen.');
+    console.error('Sende-Fehler:', result.error);
+  }
+}
+
+function submitContact(){showToast(window._contactSent || '✅ Nachricht gesendet!');}
+
+/* ════════════════════════════════════════
+   MULTILINGUAL
+════════════════════════════════════════ */
+window._addedToCart=n=>n+' wurde in den Warenkorb gelegt 🛒';
+window._formSent='✅ Anfrage gesendet! Wir melden uns in 24–48 Stunden.';
+window._contactSent='✅ Nachricht gesendet!';
+window._privacyWarn='⚠️ Bitte stimme der Datenschutzerklärung zu.';
+window._submitBtnTxt='Anfrage senden →';
+
+const T={
+de:{dir:'ltr',lang:'de','nav-home':'Startseite','nav-products':'Produkte','nav-design':'Gestalte selbst','nav-about':'Über uns','nav-contact':'Kontakt',cartTxt:'Warenkorb',hl1:'Gestalte',hl2:'deine',hl3:'Kleidung','submit-btn-txt':'Anfrage senden →','form-note-txt':'Wir melden uns i. d. R. innerhalb von 24–48 Stunden.'},
+en:{dir:'ltr',lang:'en','nav-home':'Home','nav-products':'Products','nav-design':'Design yourself','nav-about':'About us','nav-contact':'Contact',cartTxt:'Cart',hl1:'Create',hl2:'your',hl3:'clothing','submit-btn-txt':'Send request →','form-note-txt':'We usually respond within 24–48 hours.'},
+ar:{dir:'rtl',lang:'ar','nav-home':'الرئيسية','nav-products':'المنتجات','nav-design':'صمم نفسك','nav-about':'من نحن','nav-contact':'تواصل',cartTxt:'السلة',hl1:'اصنع',hl2:'ملابسك',hl3:'بطريقتك','submit-btn-txt':'إرسال الطلب ←','form-note-txt':'سنرد خلال 24–48 ساعة.'}
+};
+let currentLang='de';
+function setLang(code){
+  currentLang=code;const t=T[code];
+  const body=document.getElementById('bodyEl');
+  body.setAttribute('lang',t.lang);
+  body.setAttribute('dir',t.dir);
+  body.style.fontFamily=code==='ar'?"'Cairo',sans-serif":"'Inter',sans-serif";
+  for(const[id,val]of Object.entries(t)){
+    if(id==='dir'||id==='lang')continue;
+    const el=document.getElementById(id);if(el)el.innerHTML=val;
+  }
+  ['de','en','ar'].forEach(l=>{const b=document.getElementById('btn-'+l);if(b)b.classList.toggle('active',l===code);});
+  if(code==='de'){
+    window._addedToCart=n=>n+' wurde in den Warenkorb gelegt 🛒';
+    window._formSent='✅ Anfrage gesendet! Wir melden uns in 24–48 Stunden.';
+    window._contactSent='✅ Nachricht gesendet!';
+    window._privacyWarn='⚠️ Bitte stimme der Datenschutzerklärung zu.';
+    window._submitBtnTxt='Anfrage senden →';
+  } else if(code==='en'){
+    window._addedToCart=n=>n+' added to cart 🛒';
+    window._formSent='✅ Request sent! We\'ll respond within 24-48h.';
+    window._contactSent='✅ Message sent!';
+    window._privacyWarn='⚠️ Please agree to the privacy policy.';
+    window._submitBtnTxt='Send request →';
+  } else {
+    window._addedToCart=n=>'تمت إضافة '+n+' 🛒';
+    window._formSent='✅ تم إرسال طلبك!';
+    window._contactSent='✅ تم إرسال رسالتك!';
+    window._privacyWarn='⚠️ يرجى الموافقة على سياسة الخصوصية.';
+    window._submitBtnTxt='إرسال الطلب ←';
+  }
+  calcPrice();
+}
+</script>
+</body>
+</html>

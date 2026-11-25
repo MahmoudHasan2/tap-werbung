@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Soft Cut – Visitenkarte</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700;800&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Montserrat',sans-serif;background:#111;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:40px 20px;gap:20px;}
+.lbl{font-size:9px;color:#444;letter-spacing:4px;text-transform:uppercase;text-align:center;}
+.bc{width:322px;height:204px;position:relative;overflow:hidden;border-radius:7px;box-shadow:0 20px 60px rgba(0,0,0,0.85);}
+.bc-bg{position:absolute;inset:0;background:#1c1c1c;z-index:0;}
+.bc-bgimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;display:none;}
+.bc-overlay{position:absolute;inset:0;background:#1c1c1c;z-index:2;opacity:1;transition:opacity .3s;}
+.bc-tex{position:absolute;inset:0;background-image:radial-gradient(circle at 1px 1px,rgba(255,255,255,0.018) 1px,transparent 0);background-size:14px 14px;z-index:3;}
+/* FRONT content */
+.front-content{position:relative;z-index:4;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;padding:14px 20px 12px;gap:4px;}
+.logo-row{display:flex;align-items:center;gap:2px;}
+.logo-img-el{width:36px;height:36px;object-fit:contain;border-radius:6px;display:none;margin-right:6px;}
+.logo-soft{font-family:'Dancing Script',cursive;font-size:34px;font-weight:800;color:#d4836a;line-height:1;}
+.logo-cut {font-family:'Dancing Script',cursive;font-size:34px;font-weight:800;color:#d4836a;line-height:1;}
+.sub-title{font-size:10px;font-weight:500;letter-spacing:3px;text-transform:uppercase;margin:2px 0;}
+.divider-line{width:160px;height:1.5px;margin:3px 0;}
+.qr-wrap{background:white;padding:3px;border-radius:3px;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+.phone-row{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:600;margin-top:2px;}
+/* BACK content */
+.back-content{position:relative;z-index:4;width:100%;height:100%;display:flex;padding:12px 14px;gap:12px;}
+.back-header{position:absolute;top:11px;left:13px;font-size:8.5px;font-weight:700;letter-spacing:1px;padding:4px 10px;border-radius:3px;text-transform:uppercase;font-family:'Montserrat',sans-serif;}
+.days-col{display:flex;flex-direction:column;justify-content:flex-end;padding-top:22px;}
+.day-row{display:flex;align-items:center;height:21px;gap:7px;}
+.day-name{font-size:9.5px;font-weight:500;min-width:76px;}
+.day-chk{width:17px;height:13px;border:1px solid #555;border-radius:2px;flex-shrink:0;}
+.fields-col{flex:1;display:flex;flex-direction:column;justify-content:flex-end;padding-top:22px;}
+.field-label{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;height:21px;display:flex;align-items:center;font-family:'Montserrat',sans-serif;}
+.field-line{height:17px;border-bottom:1px solid #555;margin-bottom:3px;}
+.field-spacer{height:21px;}
+</style>
+</head>
+<body>
+<p class="lbl">Vorderseite · Soft Cut</p>
+<div class="bc" id="front">
+  <div class="bc-bg"></div>
+  <img class="bc-bgimg" id="front-bgimg" alt="">
+  <div class="bc-overlay" id="front-overlay"></div>
+  <div class="bc-tex"></div>
+  <div class="front-content">
+    <div class="logo-row">
+      <img class="logo-img-el" id="logo-img" alt="Logo">
+      <span class="logo-soft">Soft</span>
+      <svg width="40" height="40" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg" style="margin:0 2px;" id="logo-svg">
+        <circle cx="30" cy="22" r="14" fill="none" stroke="#c8b8a2" stroke-width="2"/>
+        <circle cx="25" cy="20" r="1.5" fill="#c8b8a2"/><circle cx="35" cy="20" r="1.5" fill="#c8b8a2"/>
+        <path d="M25 27 Q30 31 35 27" fill="none" stroke="#c8b8a2" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M18 16 Q22 10 30 9 Q38 10 42 16" fill="none" stroke="#c8b8a2" stroke-width="1.8" stroke-linecap="round"/>
+        <g transform="translate(19,38) scale(0.85)">
+          <line x1="0" y1="0" x2="22" y2="16" stroke="#d4836a" stroke-width="2" stroke-linecap="round"/>
+          <line x1="0" y1="16" x2="22" y2="0" stroke="#d4836a" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="2" cy="1" r="3" fill="none" stroke="#d4836a" stroke-width="1.5"/>
+          <circle cx="2" cy="15" r="3" fill="none" stroke="#d4836a" stroke-width="1.5"/>
+        </g>
+      </svg>
+      <span class="logo-cut">Cut</span>
+    </div>
+    <div class="sub-title" id="sub-txt" data-editable="subTitle" style="color:#ccc;">Hairstyle</div>
+    <div class="divider-line" id="front-divider"></div>
+    <div class="qr-wrap" id="qr-front" style="width:62px;height:62px;"></div>
+    <div class="phone-row" id="phone-row">
+      <span id="phone-ic" style="font-size:13px;">&#9990;</span>
+      <span data-editable="phone1" style="color:#ddd;">0151 00000000</span>
+    </div>
+  </div>
+</div>
+
+<p class="lbl">Rückseite · Soft Cut</p>
+<div class="bc" id="back">
+  <div class="bc-bg"></div>
+  <img class="bc-bgimg" id="back-bgimg" alt="">
+  <div class="bc-overlay" id="back-overlay"></div>
+  <div class="bc-tex"></div>
+  <div class="back-content">
+    <div class="back-header" id="back-header" data-editable="appointmentLabel">Ihr Soft Cut Termin</div>
+    <div class="days-col">
+      <div class="day-row"><span class="day-name" data-editable="day1" id="d1">Montag</span><div class="day-chk"></div></div>
+      <div class="day-row"><span class="day-name" data-editable="day2" id="d2">Dienstag</span><div class="day-chk"></div></div>
+      <div class="day-row"><span class="day-name" data-editable="day3" id="d3">Mittwoch</span><div class="day-chk"></div></div>
+      <div class="day-row"><span class="day-name" data-editable="day4" id="d4">Donnerstag</span><div class="day-chk"></div></div>
+      <div class="day-row"><span class="day-name" data-editable="day5" id="d5">Freitag</span><div class="day-chk"></div></div>
+      <div class="day-row"><span class="day-name" data-editable="day6" id="d6">Samstag</span><div class="day-chk"></div></div>
+    </div>
+    <div class="fields-col">
+      <div class="field-label" data-editable="datumLabel" id="datum-lbl">Datum</div>
+      <div class="field-line"></div><div class="field-line"></div>
+      <div class="field-spacer"></div>
+      <div class="field-label" data-editable="uhrzeitLabel" id="uhrzeit-lbl">Uhrzeit</div>
+      <div class="field-line"></div><div class="field-line"></div>
+    </div>
+  </div>
+</div>
+
+<p class="lbl" style="margin-top:8px;">85 × 54 mm · Druckfertig</p>
+
+<script>
+var state={
+  subTitle:'Hairstyle',phone1:'0151 00000000',
+  appointmentLabel:'Ihr Soft Cut Termin',
+  day1:'Montag',day2:'Dienstag',day3:'Mittwoch',day4:'Donnerstag',day5:'Freitag',day6:'Samstag',
+  datumLabel:'Datum',uhrzeitLabel:'Uhrzeit',
+  primaryColor:'#d4836a',accentColor:'#c0736a',textColor:'#ccc',
+  bgImage:'',bgOpacity:0.7,logoImg:'',socialLink:''
+};
+
+function render(){
+  document.querySelectorAll('[data-editable]').forEach(function(el){
+    var k=el.getAttribute('data-editable');
+    if(state[k]!==undefined) el.textContent=state[k];
+  });
+  var p=state.primaryColor||'#d4836a';
+  var a=state.accentColor||'#c0736a';
+  var t=state.textColor||'#ccc';
+  document.getElementById('front-divider').style.background='linear-gradient(90deg,transparent,'+a+',transparent)';
+  document.getElementById('back-header').style.background=a;
+  document.getElementById('back-header').style.color='#1a1a1a';
+  document.getElementById('datum-lbl').style.color=p;
+  document.getElementById('uhrzeit-lbl').style.color=p;
+  document.getElementById('phone-ic').style.color=p;
+  document.getElementById('sub-txt').style.color=t;
+  document.querySelectorAll('.day-name').forEach(function(el){ el.style.color=t; });
+  // bg image
+  if(state.bgImage){
+    ['front-bgimg','back-bgimg'].forEach(function(id){
+      var img=document.getElementById(id); img.src=state.bgImage; img.style.display='block'; img.style.opacity=1-state.bgOpacity;
+    });
+    document.getElementById('front-overlay').style.opacity=state.bgOpacity;
+    document.getElementById('back-overlay').style.opacity=state.bgOpacity;
+  } else {
+    ['front-bgimg','back-bgimg'].forEach(function(id){ document.getElementById(id).style.display='none'; });
+    document.getElementById('front-overlay').style.opacity=1;
+    document.getElementById('back-overlay').style.opacity=1;
+  }
+  // logo
+  if(state.logoImg){
+    var li=document.getElementById('logo-img'); li.src=state.logoImg; li.style.display='block';
+    document.getElementById('logo-svg').style.display='none';
+  } else {
+    document.getElementById('logo-img').style.display='none';
+    document.getElementById('logo-svg').style.display='';
+  }
+  // QR
+  buildQR(p);
+}
+
+function buildQR(p){
+  var el=document.getElementById('qr-front');
+  el.innerHTML='';
+  var url=state.socialLink
+    ? (state.socialLink.startsWith('http')?state.socialLink:'https://'+state.socialLink)
+    : 'tel:'+(state.phone1||'').replace(/\s/g,'');
+  if(!url) return;
+  try{ new QRCode(el,{text:url,width:56,height:56,colorDark:'#1a1a1a',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.H}); }catch(e){}
+}
+
+render();
+window.addEventListener('message',function(e){
+  if(!e.data||e.data.type!=='cardUpdate') return;
+  Object.keys(e.data.data).forEach(function(k){ state[k]=e.data.data[k]; });
+  render();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,1729 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-editable="siteTitle">Café Deluxe | Ihre Genuss-Kaffeebar</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ===== VARIABLES ===== */
+        :root {
+            --primary: #5e2e1c;
+            --primary-dark: #3d1e11;
+            --primary-light: #7a3d26;
+            --secondary: #c8a87b;
+            --secondary-dark: #b8926a;
+            --secondary-light: #dcc29e;
+            --accent: #e8a735;
+            --accent-dark: #d49228;
+            --cream: #fdf8f0;
+            --brown: #4a2c1a;
+            --white: #ffffff;
+            --gray-50: #faf9f8;
+            --gray-100: #f4f2ef;
+            --gray-200: #e8e4df;
+            --gray-300: #d6d0c9;
+            --gray-400: #b8b0a6;
+            --gray-500: #9a8f84;
+            --gray-600: #7a6e62;
+            --gray-700: #5c5348;
+            --gray-800: #3d362e;
+            --gray-900: #1e1a16;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+            --shadow-md: 0 4px 20px rgba(0,0,0,0.08);
+            --shadow-lg: 0 10px 40px rgba(0,0,0,0.12);
+            --shadow-xl: 0 20px 60px rgba(0,0,0,0.15);
+            --shadow-warm: 0 0 30px rgba(232,167,53,0.25);
+            --transition-fast: 0.2s ease;
+            --transition-normal: 0.4s ease;
+            --transition-slow: 0.6s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--cream);
+            color: var(--gray-800);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 80px;
+        }
+
+        @media (max-width: 1200px) {
+            .container {
+                padding: 0 60px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 30px;
+            }
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+            padding: 16px 38px;
+            border: none;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: var(--transition-normal);
+            display: inline-block;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            border-radius: 50px;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-dark);
+            transition: left var(--transition-normal);
+            z-index: -1;
+            border-radius: 50px;
+        }
+
+        .btn-primary:hover::before {
+            left: 0;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-warm);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            padding: 14px 34px;
+            border: 2px solid var(--primary);
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: var(--transition-normal);
+            display: inline-block;
+            text-decoration: none;
+            border-radius: 50px;
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+
+        .btn-accent {
+            background: var(--accent);
+            color: var(--white);
+            padding: 14px 32px;
+            border: none;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: var(--transition-normal);
+            display: inline-block;
+            text-decoration: none;
+            border-radius: 50px;
+        }
+
+        .btn-accent:hover {
+            background: var(--accent-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(232,167,53,0.4);
+        }
+
+        /* ===== NAVIGATION ===== */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 25px 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition-normal);
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        nav.scrolled {
+            padding: 18px 80px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 45px;
+        }
+
+        .nav-links a {
+            color: var(--gray-700);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: var(--transition-fast);
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width var(--transition-normal);
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-icons a {
+            color: var(--gray-700);
+            font-size: 1.2rem;
+            transition: var(--transition-fast);
+        }
+
+        .nav-icons a:hover {
+            color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 968px) {
+            nav {
+                padding: 18px 30px;
+            }
+            .nav-links {
+                display: none;
+            }
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            min-height: 95vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            background: linear-gradient(135deg, var(--cream) 0%, #f5ede3 100%);
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1200&q=80') center/cover;
+            opacity: 0.12;
+            animation: slowZoom 20s ease-in-out infinite;
+        }
+
+        @keyframes slowZoom {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .hero-container {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 60px;
+        }
+
+        .hero-left {
+            flex: 1;
+        }
+
+        .hero-badge {
+            font-size: 0.7rem;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 20px;
+            display: block;
+            font-weight: 600;
+        }
+
+        .hero-title {
+            font-size: 4.5rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .hero-title span {
+            color: var(--accent);
+            display: block;
+        }
+
+        .hero-subtitle {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--gray-600);
+            margin-bottom: 40px;
+            max-width: 500px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .hero-right {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        .hero-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            padding: 45px;
+            border-radius: 30px;
+            text-align: center;
+            box-shadow: var(--shadow-xl);
+            animation: float 4s ease-in-out infinite;
+            border: 1px solid rgba(94,46,28,0.1);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .hero-card .coffee-icon {
+            font-size: 3rem;
+            color: var(--accent);
+            margin-bottom: 15px;
+        }
+
+        .hero-card .number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            display: block;
+        }
+
+        .hero-card .label {
+            font-size: 0.8rem;
+            color: var(--gray-600);
+            letter-spacing: 1px;
+        }
+
+        .hero-card .divider {
+            width: 50px;
+            height: 2px;
+            background: var(--accent);
+            margin: 15px auto;
+        }
+
+        @media (max-width: 1024px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+            .hero-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            .hero-subtitle {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .hero-buttons {
+                justify-content: center;
+            }
+        }
+
+        /* ===== CATEGORIES SECTION ===== */
+        .categories {
+            padding: 100px 0;
+            background: var(--white);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-tag {
+            font-size: 0.7rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 15px;
+            display: block;
+            font-weight: 600;
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 20px;
+        }
+
+        .category-card {
+            text-align: center;
+            padding: 30px 20px;
+            background: var(--cream);
+            border-radius: 20px;
+            transition: var(--transition-normal);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            transition: left var(--transition-normal);
+            z-index: 0;
+        }
+
+        .category-card:hover::before {
+            left: 0;
+        }
+
+        .category-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .category-icon {
+            position: relative;
+            z-index: 1;
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+            transition: var(--transition-normal);
+        }
+
+        .category-card:hover .category-icon {
+            color: var(--white);
+            transform: scale(1.1);
+        }
+
+        .category-card h4 {
+            position: relative;
+            z-index: 1;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: var(--transition-normal);
+        }
+
+        .category-card:hover h4 {
+            color: var(--white);
+        }
+
+        @media (max-width: 1024px) {
+            .categories-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .categories-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        /* ===== FEATURED PRODUCTS ===== */
+        .featured {
+            padding: 100px 0;
+            background: var(--cream);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+
+        .product-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 25px;
+            transition: var(--transition-normal);
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: var(--accent);
+            color: var(--white);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            z-index: 2;
+        }
+
+        .product-badge.hot {
+            background: var(--danger);
+        }
+
+        .product-badge.bestseller {
+            background: var(--primary);
+        }
+
+        .product-image {
+            text-align: center;
+            margin-bottom: 20px;
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            max-width: 100%;
+            max-height: 100%;
+            transition: var(--transition-slow);
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.08);
+        }
+
+        .product-card h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .product-category {
+            font-size: 0.7rem;
+            color: var(--gray-500);
+            margin-bottom: 10px;
+        }
+
+        .product-price {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .product-price .old-price {
+            font-size: 0.8rem;
+            color: var(--gray-500);
+            text-decoration: line-through;
+            margin-left: 8px;
+            font-weight: normal;
+        }
+
+        .product-btn {
+            background: transparent;
+            border: 2px solid var(--primary);
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: var(--transition-normal);
+            width: 100%;
+        }
+
+        .product-btn:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        @media (max-width: 1024px) {
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ===== OFFER SECTION ===== */
+        .offer {
+            padding: 100px 0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .offer::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -20%;
+            width: 60%;
+            height: 120%;
+            background: radial-gradient(circle, rgba(200,168,123,0.15) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .offer-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 60px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .offer-left {
+            flex: 1;
+        }
+
+        .offer-left h2 {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--white);
+            margin-bottom: 20px;
+        }
+
+        .offer-left h2 span {
+            color: var(--secondary);
+        }
+
+        .offer-left p {
+            font-size: 1rem;
+            color: var(--gray-300);
+            margin-bottom: 30px;
+        }
+
+        .offer-right {
+            flex: 1;
+            text-align: center;
+        }
+
+        .offer-timer {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 30px;
+            display: inline-block;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .timer-digits {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .timer-unit {
+            text-align: center;
+        }
+
+        .timer-unit .number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--secondary);
+            display: block;
+        }
+
+        .timer-unit .label {
+            font-size: 0.7rem;
+            color: var(--gray-300);
+        }
+
+        @media (max-width: 968px) {
+            .offer-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            .offer-left h2 {
+                font-size: 2rem;
+            }
+        }
+
+        /* ===== TESTIMONIALS ===== */
+        .testimonials {
+            padding: 100px 0;
+            background: var(--white);
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .testimonial-card {
+            background: var(--cream);
+            padding: 40px;
+            border-radius: 20px;
+            transition: var(--transition-normal);
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .testimonial-stars {
+            color: var(--accent);
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+
+        .testimonial-text {
+            font-size: 0.9rem;
+            line-height: 1.7;
+            color: var(--gray-600);
+            margin-bottom: 25px;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .testimonial-author img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .testimonial-author h4 {
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 3px;
+        }
+
+        .testimonial-author p {
+            font-size: 0.7rem;
+            color: var(--gray-500);
+        }
+
+        @media (max-width: 1024px) {
+            .testimonials-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ===== AMBIENCE SECTION ===== */
+        .ambience {
+            padding: 100px 0;
+            background: linear-gradient(135deg, var(--cream) 0%, var(--white) 100%);
+        }
+
+        .ambience-container {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+        }
+
+        .ambience-left {
+            flex: 1;
+        }
+
+        .ambience-left h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .ambience-left p {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: var(--gray-600);
+            margin-bottom: 30px;
+        }
+
+        .ambience-features {
+            list-style: none;
+        }
+
+        .ambience-features li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .ambience-features li i {
+            width: 35px;
+            height: 35px;
+            background: rgba(232,167,53,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+        }
+
+        .ambience-right {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .ambience-img {
+            border-radius: 20px;
+            overflow: hidden;
+            transition: var(--transition-normal);
+        }
+
+        .ambience-img:hover {
+            transform: scale(1.03);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .ambience-img img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: var(--transition-slow);
+        }
+
+        .ambience-img:hover img {
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 968px) {
+            .ambience-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            .ambience-features li {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .ambience-right {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ===== RESERVATION SECTION ===== */
+        .reservation {
+            padding: 100px 0;
+            background: var(--primary);
+            position: relative;
+        }
+
+        .reservation .section-title {
+            color: var(--white);
+        }
+
+        .reservation .section-tag {
+            color: var(--secondary);
+        }
+
+        .reservation-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 60px;
+            align-items: center;
+        }
+
+        .reservation-info {
+            color: var(--gray-300);
+        }
+
+        .reservation-info h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 20px;
+        }
+
+        .reservation-info p {
+            margin-bottom: 30px;
+            line-height: 1.7;
+        }
+
+        .reservation-details {
+            list-style: none;
+        }
+
+        .reservation-details li {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .reservation-details li i {
+            width: 45px;
+            height: 45px;
+            background: rgba(200,168,123,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--secondary);
+            font-size: 1.2rem;
+        }
+
+        .reservation-form {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: var(--shadow-xl);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1px solid var(--gray-300);
+            border-radius: 10px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            transition: var(--transition-fast);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(232,167,53,0.2);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        @media (max-width: 968px) {
+            .reservation-grid {
+                grid-template-columns: 1fr;
+            }
+            .reservation-info {
+                text-align: center;
+            }
+            .reservation-details li {
+                justify-content: center;
+            }
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--gray-900);
+            padding: 60px 80px 30px;
+            color: var(--gray-400);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 50px;
+            margin-bottom: 50px;
+        }
+
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--white);
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .footer-logo span {
+            color: var(--accent);
+        }
+
+        .footer-about {
+            font-size: 0.85rem;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            color: var(--gray-500);
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-social a {
+            color: var(--gray-500);
+            font-size: 1.2rem;
+            transition: var(--transition-fast);
+        }
+
+        .footer-social a:hover {
+            color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .footer-column h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: var(--white);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-column ul li a {
+            color: var(--gray-500);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: var(--transition-fast);
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--accent);
+            transform: translateX(5px);
+            display: inline-block;
+        }
+
+        .footer-bottom {
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.75rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .footer-links a {
+            color: var(--gray-500);
+            text-decoration: none;
+            transition: var(--transition-fast);
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        @media (max-width: 1024px) {
+            footer {
+                padding: 50px 40px 25px;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 40px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-bottom {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+        }
+
+        .animate-on-scroll.visible {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--gray-100);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 5px;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--gray-700);
+            font-size: 1.8rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 968px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 80%;
+            max-width: 350px;
+            height: 100vh;
+            background: var(--white);
+            z-index: 1001;
+            padding: 80px 40px;
+            transition: right var(--transition-normal);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .mobile-nav.active {
+            right: 0;
+        }
+
+        .mobile-nav-links {
+            list-style: none;
+        }
+
+        .mobile-nav-links li {
+            margin-bottom: 25px;
+        }
+
+        .mobile-nav-links a {
+            color: var(--gray-800);
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .close-menu {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: var(--gray-800);
+            font-size: 1.8rem;
+            cursor: pointer;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition-normal);
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <a href="#" class="logo" data-editable="logo">CAFÉ<span>DELUXE</span></a>
+        <ul class="nav-links">
+            <li><a href="#home" data-editable="nav1">Startseite</a></li>
+            <li><a href="#categories" data-editable="nav2">Genuss</a></li>
+            <li><a href="#products" data-editable="nav3">Spezialitäten</a></li>
+            <li><a href="#testimonials" data-editable="nav4">Bewertungen</a></li>
+            <li><a href="#reservation" data-editable="nav5">Reservierung</a></li>
+        </ul>
+        <div class="nav-icons">
+            <a href="#"><i class="fas fa-search"></i></a>
+            <a href="#"><i class="fas fa-heart"></i></a>
+            <a href="#"><i class="fas fa-shopping-bag"></i></a>
+            <button class="mobile-menu-btn" id="menuBtn"><i class="fas fa-bars"></i></button>
+        </div>
+    </nav>
+
+    <div class="overlay" id="overlay"></div>
+    <div class="mobile-nav" id="mobileNav">
+        <button class="close-menu" id="closeMenu"><i class="fas fa-times"></i></button>
+        <ul class="mobile-nav-links">
+            <li><a href="#home">Startseite</a></li>
+            <li><a href="#categories">Genuss</a></li>
+            <li><a href="#products">Spezialitäten</a></li>
+            <li><a href="#testimonials">Bewertungen</a></li>
+            <li><a href="#reservation">Reservierung</a></li>
+        </ul>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-bg"></div>
+        <div class="container hero-container">
+            <div class="hero-left">
+                <span class="hero-badge" data-editable="heroBadge">CAFÉ DELUXE</span>
+                <h1 class="hero-title" data-editable="heroTitle">Genuss, der<br><span>verbindet.</span><br>Jeden Tag.</h1>
+                <p class="hero-subtitle" data-editable="heroSubtitle">Entdecken Sie unsere handwerklich zubereiteten Kaffeespezialitäten und hausgemachten Köstlichkeiten. Ihr Ort für Entspannung und Genuss.</p>
+                <div class="hero-buttons">
+                    <button class="btn-primary" data-editable="heroBtn1">Reservieren →</button>
+                    <button class="btn-outline" data-editable="heroBtn2">Speisekarte</button>
+                </div>
+            </div>
+            <div class="hero-right">
+                <div class="hero-card">
+                    <div class="coffee-icon"><i class="fas fa-mug-hot"></i></div>
+                    <span class="number" data-editable="heroStat1">15+</span>
+                    <span class="label" data-editable="heroStat1Label">Kaffeespezialitäten</span>
+                    <div class="divider"></div>
+                    <span class="number" data-editable="heroStat2">4.9</span>
+                    <span class="label" data-editable="heroStat2Label">Kundenbewertung</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories" id="categories">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag" data-editable="categoriesTag">GENUSS</span>
+                <h2 class="section-title" data-editable="categoriesTitle">Entdecken Sie unsere<br>Kaffeevariationen</h2>
+            </div>
+            <div class="categories-grid">
+                <div class="category-card animate-on-scroll">
+                    <div class="category-icon"><i class="fas fa-mug-hot"></i></div>
+                    <h4 data-editable="cat1">Klassiker</h4>
+                </div>
+                <div class="category-card animate-on-scroll">
+                    <div class="category-icon"><i class="fas fa-milk"></i></div>
+                    <h4 data-editable="cat2">Milchkaffee</h4>
+                </div>
+                <div class="category-card animate-on-scroll">
+                    <div class="category-icon"><i class="fas fa-cocktail"></i></div>
+                    <h4 data-editable="cat3">Eiskaffee</h4>
+                </div>
+                <div class="category-card animate-on-scroll">
+                    <div class="category-icon"><i class="fas fa-cake-candles"></i></div>
+                    <h4 data-editable="cat4">Gebäck</h4>
+                </div>
+                <div class="category-card animate-on-scroll">
+                    <div class="category-icon"><i class="fas fa-ice-cream"></i></div>
+                    <h4 data-editable="cat5">Desserts</h4>
+                </div>
+                <div class="category-card animate-on-scroll">
+                    <div class="category-icon"><i class="fas fa-leaf"></i></div>
+                    <h4 data-editable="cat6">Tee & Mehr</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="featured" id="products">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag" data-editable="featuredTag">UNSERE SPEZIALITÄTEN</span>
+                <h2 class="section-title" data-editable="featuredTitle">Das lieben unsere Gäste</h2>
+            </div>
+            <div class="products-grid">
+                <div class="product-card animate-on-scroll">
+                    <div class="product-badge bestseller" data-editable="badge1">Bestseller</div>
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=200&q=80" alt="Cappuccino" data-editable="product1Img" data-type="image">
+                    </div>
+                    <h3 data-editable="product1Title">Cappuccino Classico</h3>
+                    <p class="product-category" data-editable="product1Cat">Kaffee</p>
+                    <div class="product-price" data-editable="product1Price">€4.50</div>
+                    <button class="product-btn" data-editable="product1Btn">Jetzt bestellen</button>
+                </div>
+                <div class="product-card animate-on-scroll">
+                    <div class="product-badge hot" data-editable="badge2">Heißer Tipp</div>
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=200&q=80" alt="Latte Macchiato" data-editable="product2Img" data-type="image">
+                    </div>
+                    <h3 data-editable="product2Title">Latte Macchiato</h3>
+                    <p class="product-category" data-editable="product2Cat">Kaffee</p>
+                    <div class="product-price" data-editable="product2Price">€5.20</div>
+                    <button class="product-btn" data-editable="product2Btn">Jetzt bestellen</button>
+                </div>
+                <div class="product-card animate-on-scroll">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1541167760496-1628856ab772?w=200&q=80" alt="Cheesecake" data-editable="product3Img" data-type="image">
+                    </div>
+                    <h3 data-editable="product3Title">New York Cheesecake</h3>
+                    <p class="product-category" data-editable="product3Cat">Kuchen</p>
+                    <div class="product-price" data-editable="product3Price">€5.90</div>
+                    <button class="product-btn" data-editable="product3Btn">Jetzt bestellen</button>
+                </div>
+                <div class="product-card animate-on-scroll">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?w=200&q=80" alt="Croissant" data-editable="product4Img" data-type="image">
+                    </div>
+                    <h3 data-editable="product4Title">Butter Croissant</h3>
+                    <p class="product-category" data-editable="product4Cat">Gebäck</p>
+                    <div class="product-price" data-editable="product4Price">€3.20</div>
+                    <button class="product-btn" data-editable="product4Btn">Jetzt bestellen</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Offer Section -->
+    <section class="offer">
+        <div class="container offer-container">
+            <div class="offer-left">
+                <h2 data-editable="offerTitle">Morgenstund'<br><span>hat Gold im Mund</span></h2>
+                <p data-editable="offerDesc">Jeden Morgen von 8-10 Uhr: 20% Rabatt auf alle Kaffeespezialitäten. Starten Sie genussvoll in den Tag!</p>
+                <button class="btn-accent" data-editable="offerBtn">Angebot sichern →</button>
+            </div>
+            <div class="offer-right">
+                <div class="offer-timer">
+                    <div class="timer-digits" id="timer">
+                        <div class="timer-unit"><span class="number" id="days">00</span><span class="label">Tage</span></div>
+                        <div class="timer-unit"><span class="number" id="hours">00</span><span class="label">Std</span></div>
+                        <div class="timer-unit"><span class="number" id="minutes">00</span><span class="label">Min</span></div>
+                        <div class="timer-unit"><span class="number" id="seconds">00</span><span class="label">Sek</span></div>
+                    </div>
+                    <p data-editable="timerLabel">Angebot endet in</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag" data-editable="testimonialTag">KUNDENSTIMMEN</span>
+                <h2 class="section-title" data-editable="testimonialTitle">Das sagen unsere Gäste</h2>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card animate-on-scroll">
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text" data-editable="testimonial1Text">"Der beste Cappuccino der Stadt! Die Atmosphäre ist ein Traum und das Personal unglaublich freundlich. Absolute Empfehlung!"</p>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/women/1.jpg" alt="Kundin" data-editable="testimonial1Img" data-type="image">
+                        <div>
+                            <h4 data-editable="testimonial1Name">Julia Hoffmann</h4>
+                            <p data-editable="testimonial1Role">Stammgästin</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card animate-on-scroll">
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text" data-editable="testimonial2Text">"Gemütliches Ambiente, leckerer Kuchen und perfekter Service. Mein Lieblingscafé zum Entspannen nach der Arbeit."</p>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="Kunde" data-editable="testimonial2Img" data-type="image">
+                        <div>
+                            <h4 data-editable="testimonial2Name">Thomas Weber</h4>
+                            <p data-editable="testimonial2Role">Geschäftsmann</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card animate-on-scroll">
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p class="testimonial-text" data-editable="testimonial3Text">"Die Kaffeequalität ist hervorragend und die hausgemachten Kuchen sind ein Gedicht! Komme immer wieder gerne hierher."</p>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/women/2.jpg" alt="Kundin" data-editable="testimonial3Img" data-type="image">
+                        <div>
+                            <h4 data-editable="testimonial3Name">Sophie Meyer</h4>
+                            <p data-editable="testimonial3Role">Studentin</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ambience Section -->
+    <section class="ambience">
+        <div class="container ambience-container">
+            <div class="ambience-left">
+                <h2 data-editable="ambienceTitle">Ein Ort zum<br>Wohlfühlen</h2>
+                <p data-editable="ambienceDesc">Unser Café ist mehr als nur ein Ort für Kaffee. Es ist ein Rückzugsort vom Alltag, wo Sie entspannen, arbeiten oder Freunde treffen können.</p>
+                <ul class="ambience-features">
+                    <li><i class="fas fa-wifi"></i><span data-editable="ambienceFeat1">Kostenloses WLAN</span></li>
+                    <li><i class="fas fa-music"></i><span data-editable="ambienceFeat2">Entspannende Livemusik</span></li>
+                    <li><i class="fas fa-book"></i><span data-editable="ambienceFeat3">Gemütliche Leseecke</span></li>
+                    <li><i class="fas fa-chair"></i><span data-editable="ambienceFeat4">Outdoor Terrasse</span></li>
+                </ul>
+            </div>
+            <div class="ambience-right">
+                <div class="ambience-img">
+                    <img src="https://images.unsplash.com/photo-1445116572660-236099ec97a0?w=300&q=80" alt="Café Innen" data-editable="ambience1Img" data-type="image">
+                </div>
+                <div class="ambience-img">
+                    <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=300&q=80" alt="Café Terrasse" data-editable="ambience2Img" data-type="image">
+                </div>
+                <div class="ambience-img">
+                    <img src="https://images.unsplash.com/photo-1600091169224-2e6daa9c47c8?w=300&q=80" alt="Kaffee Bar" data-editable="ambience3Img" data-type="image">
+                </div>
+                <div class="ambience-img">
+                    <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=300&q=80" alt="Café Stimmung" data-editable="ambience4Img" data-type="image">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reservation Section -->
+    <section class="reservation" id="reservation">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag" data-editable="reservationTag">RESERVIERUNG</span>
+                <h2 class="section-title" data-editable="reservationTitle">Tisch reservieren</h2>
+            </div>
+            <div class="reservation-grid">
+                <div class="reservation-info">
+                    <h3 data-editable="reservationSubtitle">Besuchen Sie uns</h3>
+                    <p data-editable="reservationDesc">Reservieren Sie jetzt Ihren Tisch für einen unvergesslichen Aufenthalt. Wir freuen uns auf Sie!</p>
+                    <ul class="reservation-details">
+                        <li><i class="fas fa-map-marker-alt"></i><span data-editable="address">Musterstraße 42, 10115 Berlin</span></li>
+                        <li><i class="fas fa-phone"></i><span data-editable="phone">+49 151 00000000</span></li>
+                        <li><i class="fas fa-envelope"></i><span data-editable="email">info@cafe-deluxe.de</span></li>
+                        <li><i class="fas fa-clock"></i><span data-editable="hours">Mo-So: 8:00 - 22:00 Uhr</span></li>
+                    </ul>
+                </div>
+                <div class="reservation-form">
+                    <form id="reservationForm">
+                        <div class="form-group">
+                            <input type="text" placeholder="Ihr Name" data-editable="formName" id="name">
+                        </div>
+                        <div class="form-group">
+                            <input type="email" placeholder="Ihre E-Mail" data-editable="formEmail" id="email">
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" placeholder="Ihre Telefonnummer" data-editable="formPhone" id="phone">
+                        </div>
+                        <div class="form-group">
+                            <input type="date" placeholder="Datum" data-editable="formDate" id="date">
+                        </div>
+                        <div class="form-group">
+                            <select data-editable="formTime" id="time">
+                                <option value="18:00">18:00 Uhr</option>
+                                <option value="19:00">19:00 Uhr</option>
+                                <option value="20:00">20:00 Uhr</option>
+                                <option value="21:00">21:00 Uhr</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select data-editable="formPersons" id="persons">
+                                <option value="1">1 Person</option>
+                                <option value="2">2 Personen</option>
+                                <option value="3">3 Personen</option>
+                                <option value="4">4 Personen</option>
+                                <option value="5">5+ Personen</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <textarea placeholder="Besondere Wünsche" data-editable="formMessage" id="message"></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary" style="width: 100%;" data-editable="formBtn">Tisch reservieren →</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-grid">
+            <div>
+                <a href="#" class="footer-logo" data-editable="footerLogo">CAFÉ<span>DELUXE</span></a>
+                <p class="footer-about" data-editable="footerAbout">Ihr Ort für Genuss und Entspannung. Handwerklich zubereiteter Kaffee und hausgemachte Köstlichkeiten.</p>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h4 data-editable="footerCol1">Speisekarte</h4>
+                <ul>
+                    <li><a href="#" data-editable="footerLink1">Kaffeespezialitäten</a></li>
+                    <li><a href="#" data-editable="footerLink2">Kuchen & Gebäck</a></li>
+                    <li><a href="#" data-editable="footerLink3">Frühstück</a></li>
+                    <li><a href="#" data-editable="footerLink4">Desserts</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4 data-editable="footerCol2">Informationen</h4>
+                <ul>
+                    <li><a href="#" data-editable="footerLink5">Über uns</a></li>
+                    <li><a href="#" data-editable="footerLink6">Karriere</a></li>
+                    <li><a href="#" data-editable="footerLink7">Presse</a></li>
+                    <li><a href="#" data-editable="footerLink8">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4 data-editable="footerCol3">Rechtliches</h4>
+                <ul>
+                    <li><a href="#" data-editable="footerLink9">Impressum</a></li>
+                    <li><a href="#" data-editable="footerLink10">Datenschutz</a></li>
+                    <li><a href="#" data-editable="footerLink11">AGB</a></li>
+                    <li><a href="#" data-editable="footerLink12">Cookies</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div data-editable="copyright">© 2024 Café Deluxe. Alle Rechte vorbehalten.</div>
+            <div class="footer-links">
+                <a href="#" data-editable="bottomLink1">Impressum</a>
+                <a href="#" data-editable="bottomLink2">Datenschutz</a>
+                <a href="#" data-editable="bottomLink3">AGB</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Timer for offer section
+        function startTimer() {
+            const targetDate = new Date();
+            targetDate.setDate(targetDate.getDate() + 3);
+            targetDate.setHours(23, 59, 59, 0);
+
+            function updateTimer() {
+                const now = new Date();
+                const diff = targetDate - now;
+
+                if (diff <= 0) {
+                    document.getElementById('days').textContent = '00';
+                    document.getElementById('hours').textContent = '00';
+                    document.getElementById('minutes').textContent = '00';
+                    document.getElementById('seconds').textContent = '00';
+                    return;
+                }
+
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                document.getElementById('days').textContent = days.toString().padStart(2, '0');
+                document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+                document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+                document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+            }
+
+            updateTimer();
+            setInterval(updateTimer, 1000);
+        }
+        startTimer();
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scroll for nav links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Button click feedback
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.style.transform = 'scale(0.97)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+            });
+        });
+
+        // Mobile Menu
+        const menuBtn = document.getElementById('menuBtn');
+        const closeMenu = document.getElementById('closeMenu');
+        const mobileNav = document.getElementById('mobileNav');
+        const overlay = document.getElementById('overlay');
+
+        if (menuBtn) {
+            menuBtn.addEventListener('click', () => {
+                mobileNav.classList.add('active');
+                overlay.classList.add('active');
+            });
+        }
+
+        if (closeMenu) {
+            closeMenu.addEventListener('click', () => {
+                mobileNav.classList.remove('active');
+                overlay.classList.remove('active');
+            });
+        }
+
+        if (overlay) {
+            overlay.addEventListener('click', () => {
+                mobileNav.classList.remove('active');
+                overlay.classList.remove('active');
+            });
+        }
+
+        // Reservation form
+        const reservationForm = document.getElementById('reservationForm');
+        if (reservationForm) {
+            reservationForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                alert('Vielen Dank für Ihre Reservierung! Wir haben Ihren Tisch gebucht und uns bald bei Ihnen.');
+                reservationForm.reset();
+            });
+        }
+    </script>
+
+</body>
+</html>

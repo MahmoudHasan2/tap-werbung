@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-editable="siteTitle">Dexlory | Bauunternehmen & Konstruktion</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ===== VARIABLES & RESET ===== */
+        :root {
+            --primary: #1a2a3a;
+            --primary-dark: #0f1a24;
+            --primary-light: #2a3f55;
+            --accent: #d4af37;
+            --accent-dark: #b8962e;
+            --accent-light: #e8c84a;
+            --white: #ffffff;
+            --gray-50: #fafafa;
+            --gray-100: #f5f5f5;
+            --gray-200: #e5e5e5;
+            --gray-300: #d4d4d4;
+            --gray-400: #a3a3a3;
+            --gray-500: #737373;
+            --gray-600: #525252;
+            --gray-700: #404040;
+            --gray-800: #262626;
+            --gray-900: #171717;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+            --shadow-md: 0 4px 20px rgba(0,0,0,0.08);
+            --shadow-lg: 0 10px 40px rgba(0,0,0,0.12);
+            --shadow-xl: 0 20px 60px rgba(0,0,0,0.15);
+            --transition-fast: 0.2s ease;
+            --transition-normal: 0.4s ease;
+            --transition-slow: 0.6s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--white);
+            color: var(--gray-800);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 80px;
+        }
+
+        @media (max-width: 1200px) {
+            .container {
+                padding: 0 60px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 30px;
+            }
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn-primary {
+            background: var(--accent);
+            color: var(--primary);
+            padding: 16px 38px;
+            border: none;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: var(--transition-normal);
+            display: inline-block;
+            text-decoration: none;
+            border-radius: 0;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--accent-dark);
+            transition: left var(--transition-normal);
+            z-index: -1;
+        }
+
+        .btn-primary:hover::before {
+            left: 0;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--white);
+            padding: 14px 34px;
+            border: 2px solid var(--white);
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: var(--transition-normal);
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .btn-outline:hover {
+            background: var(--white);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .btn-dark {
+            background: var(--primary);
+            color: var(--white);
+            padding: 14px 32px;
+            border: none;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: var(--transition-normal);
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .btn-dark:hover {
+            background: var(--accent);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* ===== NAVIGATION ===== */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 24px 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition-normal);
+            background: rgba(26, 42, 58, 0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        nav.scrolled {
+            padding: 18px 80px;
+            background: rgba(26, 42, 58, 0.98);
+            box-shadow: var(--shadow-md);
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--accent);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            color: var(--white);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 48px;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: var(--transition-fast);
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width var(--transition-normal);
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            background: var(--accent);
+            color: var(--primary);
+            padding: 12px 28px;
+            border: none;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: var(--transition-normal);
+        }
+
+        .nav-cta:hover {
+            background: var(--accent-light);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 968px) {
+            nav {
+                padding: 18px 30px;
+            }
+            .nav-links, .nav-cta {
+                display: none;
+            }
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1503387762-592b58cfffbd?w=1200&q=80') center/cover;
+            opacity: 0.4;
+        }
+
+        .hero-container {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 60px;
+        }
+
+        .hero-left {
+            flex: 1;
+        }
+
+        .hero-title {
+            font-size: 4.5rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            color: var(--white);
+        }
+
+        .hero-title span {
+            color: var(--accent);
+            display: block;
+        }
+
+        .hero-subtitle {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--gray-300);
+            margin-bottom: 40px;
+            max-width: 500px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .hero-right {
+            flex: 1;
+            text-align: center;
+        }
+
+        .hero-stat {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 30px;
+            text-align: center;
+        }
+
+        .hero-stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--accent);
+            display: block;
+        }
+
+        .hero-stat-label {
+            font-size: 0.8rem;
+            color: var(--gray-300);
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 1024px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+            .hero-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            .hero-subtitle {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .hero-buttons {
+                justify-content: center;
+            }
+            .hero-bg {
+                width: 100%;
+                opacity: 0.2;
+            }
+        }
+
+        /* ===== QUALITY SECTION ===== */
+        .quality {
+            padding: 120px 0;
+            background: var(--white);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+
+        .section-tag {
+            font-size: 0.7rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 15px;
+            display: block;
+            font-weight: 600;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .section-subtitle {
+            font-size: 1rem;
+            color: var(--gray-600);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .quality-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 60px;
+            align-items: center;
+        }
+
+        .quality-left h3 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .quality-left p {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: var(--gray-600);
+            margin-bottom: 30px;
+        }
+
+        .quality-features {
+            list-style: none;
+            margin-bottom: 40px;
+        }
+
+        .quality-features li {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .quality-features li i {
+            width: 40px;
+            height: 40px;
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            font-size: 1rem;
+        }
+
+        .quality-features li span {
+            font-size: 0.9rem;
+            color: var(--gray-700);
+        }
+
+        .quality-right img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: var(--shadow-xl);
+            transition: var(--transition-normal);
+        }
+
+        .quality-right img:hover {
+            transform: scale(1.02);
+        }
+
+        @media (max-width: 968px) {
+            .quality-grid {
+                grid-template-columns: 1fr;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        /* ===== SERVICES SECTION ===== */
+        .services {
+            padding: 100px 0;
+            background: var(--gray-50);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .service-card {
+            background: var(--white);
+            padding: 40px 30px;
+            transition: var(--transition-normal);
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--accent);
+            transition: width var(--transition-normal);
+        }
+
+        .service-card:hover::before {
+            width: 100%;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .service-icon {
+            width: 70px;
+            height: 70px;
+            margin-bottom: 25px;
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: var(--accent);
+            transition: var(--transition-normal);
+        }
+
+        .service-card:hover .service-icon {
+            background: var(--accent);
+            color: var(--white);
+            transform: rotateY(360deg);
+        }
+
+        .service-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .service-card p {
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: var(--gray-600);
+            margin-bottom: 20px;
+        }
+
+        .service-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition-fast);
+        }
+
+        .service-link:hover {
+            gap: 12px;
+        }
+
+        @media (max-width: 1024px) {
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ===== PROJECTS SECTION ===== */
+        .projects {
+            padding: 100px 0;
+            background: var(--white);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+        .project-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        .project-card img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            transition: var(--transition-slow);
+        }
+
+        .project-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .project-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(0deg, rgba(26,42,58,0.9) 0%, rgba(26,42,58,0.4) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 30px;
+            opacity: 0;
+            transition: var(--transition-normal);
+        }
+
+        .project-card:hover .project-overlay {
+            opacity: 1;
+        }
+
+        .project-overlay h3 {
+            font-size: 1.3rem;
+            color: var(--white);
+            margin-bottom: 5px;
+        }
+
+        .project-overlay p {
+            font-size: 0.8rem;
+            color: var(--accent);
+        }
+
+        @media (max-width: 968px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ===== STEPS SECTION ===== */
+        .steps {
+            padding: 100px 0;
+            background: var(--gray-50);
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+
+        .step-card {
+            text-align: center;
+            padding: 40px 20px;
+            background: var(--white);
+            transition: var(--transition-normal);
+            position: relative;
+        }
+
+        .step-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: var(--accent);
+            color: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            font-weight: 800;
+            margin: 0 auto 20px;
+        }
+
+        .step-card h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .step-card p {
+            font-size: 0.8rem;
+            color: var(--gray-600);
+        }
+
+        @media (max-width: 1024px) {
+            .steps-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .steps-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ===== TESTIMONIAL SECTION ===== */
+        .testimonial {
+            padding: 100px 0;
+            background: var(--primary);
+            position: relative;
+        }
+
+        .testimonial .section-title,
+        .testimonial .section-tag {
+            color: var(--white);
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            transition: var(--transition-normal);
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .testimonial-icon {
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .testimonial-text {
+            font-size: 0.9rem;
+            line-height: 1.7;
+            color: var(--gray-200);
+            margin-bottom: 25px;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 5px;
+        }
+
+        .testimonial-role {
+            font-size: 0.7rem;
+            color: var(--gray-400);
+        }
+
+        @media (max-width: 1024px) {
+            .testimonial-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .testimonial-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ===== CTA SECTION ===== */
+        .cta-section {
+            padding: 100px 0;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .cta-section p {
+            font-size: 1rem;
+            color: var(--primary);
+            margin-bottom: 30px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-section .btn-dark {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .cta-section .btn-dark:hover {
+            background: var(--white);
+            color: var(--primary);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--primary-dark);
+            padding: 60px 80px 30px;
+            color: var(--gray-400);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 50px;
+            margin-bottom: 50px;
+        }
+
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--accent);
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .footer-about {
+            font-size: 0.85rem;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            color: var(--gray-500);
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-social a {
+            color: var(--gray-500);
+            font-size: 1.2rem;
+            transition: var(--transition-fast);
+        }
+
+        .footer-social a:hover {
+            color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .footer-column h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: var(--white);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-column ul li a {
+            color: var(--gray-500);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: var(--transition-fast);
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--accent);
+        }
+
+        .footer-bottom {
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.75rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .footer-links a {
+            color: var(--gray-500);
+            text-decoration: none;
+            transition: var(--transition-fast);
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        @media (max-width: 1024px) {
+            footer {
+                padding: 50px 40px 25px;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 40px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-bottom {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+        }
+
+        .animate-on-scroll.visible {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .fade-left.visible {
+            animation: fadeInLeft 0.8s ease forwards;
+        }
+
+        .fade-right.visible {
+            animation: fadeInRight 0.8s ease forwards;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--gray-100);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <a href="#" class="logo" data-editable="logo">DEXLORY<span>.</span></a>
+        <ul class="nav-links">
+            <li><a href="#home" data-editable="nav1">Startseite</a></li>
+            <li><a href="#services" data-editable="nav2">Leistungen</a></li>
+            <li><a href="#projects" data-editable="nav3">Projekte</a></li>
+            <li><a href="#about" data-editable="nav4">Über uns</a></li>
+            <li><a href="#contact" data-editable="nav5">Kontakt</a></li>
+        </ul>
+        <button class="nav-cta" data-editable="navCta">Angebot anfordern →</button>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-bg"></div>
+        <div class="container hero-container">
+            <div class="hero-left">
+                <h1 class="hero-title" data-editable="heroTitle">Where Quality<br><span>Meets Innovation</span></h1>
+                <p class="hero-subtitle" data-editable="heroSubtitle">Crafting reliable, future-ready structures with precision. High-quality construction for a better tomorrow.</p>
+                <div class="hero-buttons">
+                    <button class="btn-primary" data-editable="heroBtn1">Let's Book Your Call →</button>
+                    <button class="btn-outline" data-editable="heroBtn2">Get Started</button>
+                </div>
+            </div>
+            <div class="hero-right">
+                <div class="hero-stat">
+                    <span class="hero-stat-number" data-editable="heroStatNum">150+</span>
+                    <span class="hero-stat-label" data-editable="heroStatLabel">Abgeschlossene Projekte</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quality Section -->
+    <section class="quality" id="about">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag" data-editable="qualityTag">ÜBER UNS</span>
+                <h2 class="section-title" data-editable="qualityTitle">Crafting Solid Foundations<br>In Every Project</h2>
+            </div>
+            <div class="quality-grid">
+                <div class="quality-left">
+                    <h3 data-editable="qualitySubtitle">Expert Services Backed by Precision and Innovation</h3>
+                    <p data-editable="qualityDesc">Mit über 15 Jahren Erfahrung in der Bauindustrie bieten wir maßgeschneiderte Lösungen für jedes Projekt. Von der Planung bis zur Schlüsselübergabe – wir stehen für Qualität, Termintreue und höchste Standards.</p>
+                    <ul class="quality-features">
+                        <li><i class="fas fa-check"></i><span data-editable="qualityFeat1">Hochwertige Materialien & moderne Techniken</span></li>
+                        <li><i class="fas fa-check"></i><span data-editable="qualityFeat2">Zertifizierte Bauingenieure & Architekten</span></li>
+                        <li><i class="fas fa-check"></i><span data-editable="qualityFeat3">100% Termingarantie & transparente Kosten</span></li>
+                    </ul>
+                    <button class="btn-dark" data-editable="qualityBtn">Mehr über uns →</button>
+                </div>
+                <div class="quality-right">
+                    <img src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=600&q=80" alt="Construction site" data-editable="qualityImg" data-type="image">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag" data-editable="servicesTag">UNSERE LEISTUNGEN</span>
+                <h2 class="section-title" data-editable="servicesTitle">Was wir anbieten</h2>
+                <p class="section-subtitle" data-editable="servicesSubtitle">Komplette Bauleistungen aus einer Hand – von der Planung bis zur Fertigstellung.</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card animate-on-scroll">
+                    <div class="service-icon"><i class="fas fa-drafting-compass"></i></div>
+                    <h3 data-editable="service1Title">Planung & Beratung</h3>
+                    <p data-editable="service1Desc">Individuelle Bauplanung, statische Berechnungen und professionelle Beratung für Ihr Bauprojekt.</p>
+                    <a href="#" class="service-link">Mehr erfahren →</a>
+                </div>
+                <div class="service-card animate-on-scroll">
+                    <div class="service-icon"><i class="fas fa-hard-hat"></i></div>
+                    <h3 data-editable="service2Title">Rohbau & Fundament</h3>
+                    <p data-editable="service2Desc">Professioneller Rohbau, Bodenplatten, Fundamente und Mauerarbeiten nach höchsten Standards.</p>
+                    <a href="#" class="service-link">Mehr erfahren →</a>
+                </div>
+                <div class="service-card animate-on-scroll">
+                    <div class="service-icon"><i class="fas fa-paint-roller"></i></div>
+                    <h3 data-editable="service3Title">Ausbau & Fassade</h3>
+                    <p data-editable="service3Desc">Modernste Fassadentechnik, Innenausbau, Putzarbeiten und energieeffiziente Lösungen.</p>
+                    <a href="#" class="service-link">Mehr erfahren →</a>
+                </div>
+                <div class="service-card animate-on-scroll">
+                    <div class="service-icon"><i class="fas fa-tools"></i></div>
+                    <h3 data-editable="service4Title">Sanierung & Modernisierung</h3>
+                    <p data-editable="service4Desc">Komplette Sanierung, Modernisierung und energetische Ertüchtigung bestehender Gebäude.</p>
+                    <a href="#" class="service-link">Mehr erfahren →</a>
+                </div>
+                <div class="service-card animate-on-scroll">
+                    <div class="service-icon"><i class="fas fa-tree"></i></div>
+                    <h3 data-editable="service5Title">Garten & Landschaftsbau</h3>
+                    <p data-editable="service5Desc">Professioneller Garten- und Landschaftsbau für Ihr perfektes Ambiente rund ums Haus.</p>
+                    <a href="#" class="service-link">Mehr erfahren →</a>
+                </div>
+                <div class="service-card animate-on-scroll">
+                    <div class="service-icon"><i class="fas fa-chalkboard-user"></i></div>
+                    <h3 data-editable="service6Title">Projektmanagement</h3>
+                    <p data-editable="service6Desc">Professionelle Bauüberwachung, Terminplanung und Kostenkontrolle für Ihr Projekt.</p>
+                    <a href="#" class="service-link">Mehr erfahren →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="projects" id="projects">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag" data-editable="projectsTag">REFERENZEN</span>
+                <h2 class="section-title" data-editable="projectsTitle">Unsere neuesten Projekte</h2>
+                <p class="section-subtitle" data-editable="projectsSubtitle">Ein Blick auf unsere abgeschlossenen Bauvorhaben.</p>
+            </div>
+            <div class="projects-grid">
+                <div class="project-card animate-on-scroll">
+                    <img src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=600&q=80" alt="Projekt 1" data-editable="project1Img" data-type="image">
+                    <div class="project-overlay">
+                        <h3 data-editable="project1Title">Wohnanlage München</h3>
+                        <p data-editable="project1Cat">Wohnbau | 2024</p>
+                    </div>
+                </div>
+                <div class="project-card animate-on-scroll">
+                    <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=600&q=80" alt="Projekt 2" data-editable="project2Img" data-type="image">
+                    <div class="project-overlay">
+                        <h3 data-editable="project2Title">Bürokomplex Berlin</h3>
+                        <p data-editable="project2Cat">Gewerbebau | 2024</p>
+                    </div>
+                </div>
+                <div class="project-card animate-on-scroll">
+                    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80" alt="Projekt 3" data-editable="project3Img" data-type="image">
+                    <div class="project-overlay">
+                        <h3 data-editable="project3Title">Villa Hamburg</h3>
+                        <p data-editable="project3Cat">Luxusimmobilie | 2023</p>
+                    </div>
+                </div>
+                <div class="project-card animate-on-scroll">
+                    <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&q=80" alt="Projekt 4" data-editable="project4Img" data-type="image">
+                    <div class="project-overlay">
+                        <h3 data-editable="project4Title">Industriehalle Stuttgart</h3>
+                        <p data-editable="project4Cat">Industriebau | 2024</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Simple Steps Section -->
+    <section class="steps">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag" data-editable="stepsTag">SO GEHT'S</span>
+                <h2 class="section-title" data-editable="stepsTitle">Einfache Schritte zu Ihrem Projekt</h2>
+                <p class="section-subtitle" data-editable="stepsSubtitle">In wenigen Schritten zu Ihrem Traumprojekt.</p>
+            </div>
+            <div class="steps-grid">
+                <div class="step-card animate-on-scroll">
+                    <div class="step-number">1</div>
+                    <h4 data-editable="step1Title">Beratungsgespräch</h4>
+                    <p data-editable="step1Desc">Wir besprechen Ihre Wünsche und erstellen ein individuelles Angebot.</p>
+                </div>
+                <div class="step-card animate-on-scroll">
+                    <div class="step-number">2</div>
+                    <h4 data-editable="step2Title">Planung & Konzept</h4>
+                    <p data-editable="step2Desc">Entwicklung eines maßgeschneiderten Baukonzepts mit Zeitplan.</p>
+                </div>
+                <div class="step-card animate-on-scroll">
+                    <div class="step-number">3</div>
+                    <h4 data-editable="step3Title">Bauausführung</h4>
+                    <p data-editable="step3Desc">Professionelle Umsetzung mit regelmäßiger Bauüberwachung.</p>
+                </div>
+                <div class="step-card animate-on-scroll">
+                    <div class="step-number">4</div>
+                    <h4 data-editable="step4Title">Übergabe & Service</h4>
+                    <p data-editable="step4Desc">Abnahme, Übergabe und zuverlässiger Kundenservice danach.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonial Section -->
+    <section class="testimonial">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag" data-editable="testimonialTag">KUNDENSTIMMEN</span>
+                <h2 class="section-title" data-editable="testimonialTitle">Was unsere Kunden sagen</h2>
+            </div>
+            <div class="testimonial-grid">
+                <div class="testimonial-card animate-on-scroll">
+                    <div class="testimonial-icon"><i class="fas fa-quote-left"></i></div>
+                    <p class="testimonial-text" data-editable="testimonial1Text">"Professionelle Abwicklung von Anfang bis Ende. Die Kommunikation war hervorragend und das Ergebnis übertrifft unsere Erwartungen."</p>
+                    <p class="testimonial-author" data-editable="testimonial1Author">Thomas Weber</p>
+                    <p class="testimonial-role" data-editable="testimonial1Role">Bauherr, München</p>
+                </div>
+                <div class="testimonial-card animate-on-scroll">
+                    <div class="testimonial-icon"><i class="fas fa-quote-left"></i></div>
+                    <p class="testimonial-text" data-editable="testimonial2Text">"Termingerecht, transparente Kosten und höchste Qualität. Wir würden Dexlory jederzeit wieder beauftragen."</p>
+                    <p class="testimonial-author" data-editable="testimonial2Author">Sarah Schmidt</p>
+                    <p class="testimonial-role" data-editable="testimonial2Role">Architektin, Berlin</p>
+                </div>
+                <div class="testimonial-card animate-on-scroll">
+                    <div class="testimonial-icon"><i class="fas fa-quote-left"></i></div>
+                    <p class="testimonial-text" data-editable="testimonial3Text">"Innovative Lösungen und ein engagiertes Team. Die Zusammenarbeit war ausgezeichnet."</p>
+                    <p class="testimonial-author" data-editable="testimonial3Author">Michael Hoffmann</p>
+                    <p class="testimonial-role" data-editable="testimonial3Role">Projektentwickler, Hamburg</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section" id="contact">
+        <div class="container">
+            <h2 data-editable="ctaTitle">Crafting Spaces That Stand With Purpose</h2>
+            <p data-editable="ctaSubtitle">Bereit für Ihr nächstes Bauprojekt? Kontaktieren Sie uns noch heute.</p>
+            <button class="btn-dark" data-editable="ctaBtn">Kostenloses Angebot einholen →</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-grid">
+            <div>
+                <a href="#" class="footer-logo" data-editable="footerLogo">DEXLORY<span>.</span></a>
+                <p class="footer-about" data-editable="footerAbout">Ihr zuverlässiger Partner für hochwertige Bauprojekte in Deutschland.</p>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-xing"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h4 data-editable="footerCol1">Leistungen</h4>
+                <ul>
+                    <li><a href="#" data-editable="footerLink1">Planung & Beratung</a></li>
+                    <li><a href="#" data-editable="footerLink2">Rohbau & Fundament</a></li>
+                    <li><a href="#" data-editable="footerLink3">Ausbau & Fassade</a></li>
+                    <li><a href="#" data-editable="footerLink4">Sanierung & Modernisierung</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4 data-editable="footerCol2">Unternehmen</h4>
+                <ul>
+                    <li><a href="#" data-editable="footerLink5">Über uns</a></li>
+                    <li><a href="#" data-editable="footerLink6">Projekte</a></li>
+                    <li><a href="#" data-editable="footerLink7">Karriere</a></li>
+                    <li><a href="#" data-editable="footerLink8">Presse</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4 data-editable="footerCol3">Kontakt</h4>
+                <ul>
+                    <li><a href="#" data-editable="footerLink9">+49 151 00000000</a></li>
+                    <li><a href="#" data-editable="footerLink10">info@dexlory.de</a></li>
+                    <li><a href="#" data-editable="footerLink11">Mo-Fr: 8:00 - 18:00</a></li>
+                    <li><a href="#" data-editable="footerLink12">Notfall: 24/7</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div data-editable="copyright">© 2024 Dexlory. Alle Rechte vorbehalten.</div>
+            <div class="footer-links">
+                <a href="#" data-editable="bottomLink1">Impressum</a>
+                <a href="#" data-editable="bottomLink2">Datenschutz</a>
+                <a href="#" data-editable="bottomLink3">AGB</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scroll for nav links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Button click feedback
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.style.transform = 'scale(0.97)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+            });
+        });
+    </script>
+
+</body>
+</html>

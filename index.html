@@ -1,0 +1,2990 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+        
+        
+        
+          <meta charset="UTF-8">
+    <title data-i18n="index.meta.title">TAP Werbeagentur WOB | Werbetechnik / Digitaldruck</title>
+    <script src="cms.js"></script>
+    
+    <!-- Favicon — TAP Logo -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0iIzBmMGYwZiIvPjx0ZXh0IHg9IjE2IiB5PSIyMiIgZm9udC1mYW1pbHk9IkFyaWFsIEJsYWNrLEltcGFjdCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjIwIiBmb250LXdlaWdodD0iOTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjZmZmZmZmIj5UPC90ZXh0PjxjaXJjbGUgY3g9IjIzIiBjeT0iOSIgcj0iMi41IiBmaWxsPSIjOEI1Q0Y2Ii8+PC9zdmc+">
+    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0iIzBmMGYwZiIvPjx0ZXh0IHg9IjE2IiB5PSIyMiIgZm9udC1mYW1pbHk9IkFyaWFsIEJsYWNrLEltcGFjdCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjIwIiBmb250LXdlaWdodD0iOTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjZmZmZmZmIj5UPC90ZXh0PjxjaXJjbGUgY3g9IjIzIiBjeT0iOSIgcj0iMi41IiBmaWxsPSIjOEI1Q0Y2Ii8+PC9zdmc+">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/..." rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,800&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <style>
+        :root {
+            --bg: #0f0f0f;
+            --bg-light: #1a1a1a;
+            --text: #ffffff;
+            --text-muted: rgba(255,255,255,0.6);
+            --purple: #8B5CF6;
+            --purple-light: #A78BFA;
+            --purple-dark: #6D28D9;
+            --gray: #2a2a2a;
+            --border: rgba(255,255,255,0.1);
+            --font-main: 'Plus Jakarta Sans', sans-serif;
+            --font-display: 'Oswald', sans-serif;
+        }
+        
+        
+        /* ===== ÜBER UNS SCROLL REVEAL & HOVER ===== */
+
+        /* Initial hidden state - elements start hidden */
+        .about-section .massive-about,
+        .about-section .about-description p,
+        .about-section .about-image-above {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .about-section .about-image-above {
+            transform: translateY(40px) rotate(3deg);
+        }
+        .about-section .about-description p:nth-child(2) {
+            transition-delay: 0.15s;
+        }
+        .about-section .uber-label .dot {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Visible state (added by JS on scroll) */
+        .about-section.is-visible .massive-about {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .about-section.is-visible .about-description p {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .about-section.is-visible .about-image-above {
+            opacity: 1;
+            transform: translateY(0) rotate(3deg);
+        }
+
+        /* Hover refinements */
+        .about-section:hover .about-image-above {
+            transform: translateY(-8px) rotate(0deg) scale(1.05) !important;
+            box-shadow: 0 30px 80px rgba(139, 92, 246, 0.45) !important;
+            border-color: var(--purple) !important;
+        }
+        .about-section:hover .u-letter {
+            text-shadow: 0 0 40px rgba(139, 92, 246, 0.9), 0 0 80px rgba(139, 92, 246, 0.4);
+        }
+        .about-section:hover .uber-label .dot {
+            transform: scale(1.5);
+            box-shadow: 0 0 10px var(--purple);
+        }
+
+        @keyframes purplePulse {
+            0% { text-shadow: 0 0 20px rgba(139, 92, 246, 0.5); }
+            100% { text-shadow: 0 0 40px rgba(139, 92, 246, 0.9), 0 0 80px rgba(139, 92, 246, 0.4); }
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+
+        html { scroll-behavior: auto; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: var(--font-main);
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        /* Custom Cursor */
+        .cursor {
+            width: 20px; height: 20px;
+            border: 2px solid var(--purple);
+            border-radius: 50%;
+            position: fixed; pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.15s ease, width 0.3s ease, height 0.3s ease;
+            transform: translate(-50%, -50%);
+            mix-blend-mode: difference;
+        }
+        .cursor.hover {
+            width: 50px; height: 50px;
+            background: rgba(139, 92, 246, 0.1);
+        }
+        .cursor-dot {
+            width: 4px; height: 4px;
+            background: var(--purple);
+            border-radius: 50%;
+            position: fixed; pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+        }
+
+        /* --- Navigation --- */
+        nav {
+            position: fixed; top: 0; width: 100%; padding: 20px 5%;
+            display: flex; justify-content: space-between; align-items: center; z-index: 1000;
+            background: rgba(15,15,15,0.8); backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            transition: all 0.4s ease;
+        }
+        nav.scrolled {
+            padding: 15px 5%;
+            background: rgba(15,15,15,0.95);
+        }
+
+        .logo-group { 
+            display: flex; align-items: center; gap: 12px;
+            text-decoration: none;
+        }
+        .logo-icon {
+            font-family: var(--font-display);
+            font-size: 42px; font-weight: 700;
+            color: var(--text);
+            letter-spacing: 2px;
+            line-height: 1;
+        }
+        .logo-icon .dot {
+            color: var(--purple);
+            font-size: 48px;
+            line-height: 0.5;
+        }
+        .logo-text-group {
+            display: flex; flex-direction: column;
+        }
+        .logo-main { 
+            font-family: var(--font-display);
+            font-weight: 700; font-size: 24px; 
+            letter-spacing: 3px; color: var(--text);
+            line-height: 1;
+        }
+        .logo-main .wob {
+            color: var(--purple);
+            font-size: 16px;
+            vertical-align: super;
+            letter-spacing: 1px;
+        }
+        .logo-sub { 
+            font-size: 9px; text-transform: uppercase; 
+            letter-spacing: 3px; color: var(--purple);
+            font-weight: 600;
+            margin-top: 2px;
+        }
+
+        .nav-links { display: flex; gap: 40px; align-items: center; }
+        .nav-links a { 
+            text-decoration: none; color: var(--text-muted); 
+            font-weight: 500; font-size: 13px;
+            letter-spacing: 2px; text-transform: uppercase;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+        .nav-links a::after {
+            content: ''; position: absolute;
+            bottom: -6px; left: 0; width: 0; height: 1px;
+            background: var(--purple);
+            transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .nav-links a:hover {
+            color: var(--text);
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-social {
+            display: flex; gap: 20px; align-items: center;
+        }
+        .nav-social a {
+            color: var(--text-muted);
+            transition: color 0.3s ease;
+            font-size: 18px;
+        }
+        .nav-social a:hover {
+            color: var(--purple);
+        }
+        .hamburger {
+            width: 30px; height: 20px;
+            display: flex; flex-direction: column;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+        .hamburger span {
+            width: 100%; height: 2px;
+            background: var(--text);
+            transition: all 0.3s ease;
+        }
+        .hamburger:hover span {
+            background: var(--purple);
+        }
+
+        /* --- SECTION 1: HERO --- */
+        .hero {
+            height: 100vh; position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: var(--bg);
+            min-height: 600px;
+        }
+        @media (max-width: 768px) {
+            .hero {
+                min-height: 500px;
+            }
+        }
+        .hero::before {
+            content: '';
+            position: absolute; top: 0; right: 0;
+            width: 60%; height: 100%;
+            background: radial-gradient(ellipse at center right, rgba(139, 92, 246, 0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .massive-title {
+            position: absolute;
+            font-family: var(--font-display);
+            font-size: clamp(40px, 10vw, 140px);
+            font-weight: 700;
+            line-height: 0.9; letter-spacing: -4px;
+            z-index: 5; pointer-events: none;
+            text-transform: uppercase;
+        }
+        @media (max-width: 768px) {
+            .massive-title {
+                font-size: clamp(28px, 8vw, 60px);
+                letter-spacing: -2px;
+            }
+        }
+        @media (max-width: 480px) {
+            .massive-title {
+                font-size: clamp(22px, 7vw, 40px);
+                letter-spacing: -1px;
+            }
+        }
+        .title-top { 
+            top: 10%; right: 5%; text-align: right; 
+            color: var(--text);
+            z-index: 20;
+        }
+        .title-top .highlight {
+            color: var(--purple);
+            display: block;
+        }
+        .title-bottom { 
+            bottom: 8%; left: 5%; 
+            color: var(--text);
+            z-index: 20;
+        }
+        .title-bottom .highlight {
+            color: var(--purple);
+        }
+
+        .orbit-container {
+            width: 100%;
+            max-width: 100vw;
+            height: 220px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            margin: 0 auto;
+            overflow: visible;
+        }
+        .orbit-row {
+            position: relative;
+            width: 100%;
+            height: 50%;
+            display: flex;
+            align-items: center;
+            overflow: visible;
+        }
+
+        /* MOBILE: Stack words vertically with self-rotation */
+        @media (max-width: 768px) {
+            .orbit-row {
+                display: none;
+            }
+        }
+        .orbit-item {
+            position: absolute;
+            width: 140px; height: 140px;
+            border-radius: 20px; overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            cursor: pointer;
+            border: 1px solid var(--border);
+        }
+        .orbit-item img { 
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .orbit-item:hover img { transform: scale(1.1); }
+
+        /* Orbit Words - Blue Circles */
+        .orbit-word {
+            color: #ffffff;
+            font-family: 'Oswald';
+            font-size: 50px;
+            font-weight: 800;
+            text-align: center;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.8), 0 0 20px rgba(139, 92, 246, 0.5);
+            letter-spacing: 0.5px;
+            line-height: 1.2;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            user-select: none;
+            z-index: 15;
+            white-space: nowrap;
+            display: inline-block;
+            padding: 8px 20px;
+            position: absolute;
+        }
+        .orbit-word:hover {
+            text-shadow: 0 2px 8px rgba(0,0,0,0.9), 0 0 30px rgba(139, 92, 246, 0.8);
+            z-index: 100;
+            color: #A78BFA;
+            transform: scale(1.1);
+        }
+
+        /* MOBILE: Circular orbit handled by JS, no CSS overrides needed here */
+
+
+        /* Corner Arrows */
+        .corner-arrows {
+            position: absolute;
+            bottom: 60px; left: 5%;
+            display: flex; gap: 16px;
+            z-index: 10;
+        }
+        .corner-arrow {
+            width: 48px; height: 48px;
+            border: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+        .corner-arrow:hover {
+            border-color: var(--purple);
+            background: rgba(139, 92, 246, 0.1);
+        }
+        .corner-arrow svg {
+            width: 16px; height: 16px;
+            stroke: var(--text);
+            transition: all 0.4s ease;
+        }
+        .corner-arrow:hover svg {
+            stroke: var(--purple);
+            transform: translate(2px, -2px);
+        }
+
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 60px; right: 5%;
+            display: flex; flex-direction: column;
+            align-items: center; gap: 12px;
+            z-index: 10;
+        }
+        .scroll-indicator span {
+            font-size: 10px; font-weight: 500;
+            letter-spacing: 3px; text-transform: uppercase;
+            color: var(--text-muted);
+            writing-mode: vertical-rl;
+        }
+        .scroll-line {
+            width: 1px; height: 60px;
+            background: linear-gradient(to bottom, var(--purple), transparent);
+            animation: scrollPulse 2s ease infinite;
+        }
+
+        /* --- SECTION 2: ÜBER UNS --- */
+        .about-section {
+            padding: 150px 5%; position: relative;
+            min-height: 100vh; background: var(--bg);
+            overflow: hidden;
+        }
+        .about-section::before {
+            content: '';
+            position: absolute; top: 50%; left: 50%;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.05) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+        .uber-label {
+            position: absolute;
+            top: 40px; right: 5%;
+            display: flex; align-items: center; gap: 10px;
+            font-size: 14px; color: var(--text-muted);
+        }
+        .uber-label .dot {
+            width: 10px; height: 10px;
+            background: var(--purple);
+            border-radius: 50%;
+        }
+
+        .about-title-wrapper { 
+            position: relative; 
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 60px;
+            gap: 20px;
+        }
+          .massive-about {
+    font-family: var(--font-display);
+    font-size: clamp(80px, 20vw, 350px);
+    font-weight: 700;
+    letter-spacing: -10px;
+    color: var(--text);
+    display: flex;          /* ← لازم يكون flex */
+    align-items: baseline;
+    line-height: 0.85;
+    text-transform: uppercase;
+}
+        @media (max-width: 768px) {
+            .massive-about {
+                font-size: clamp(50px, 15vw, 120px);
+                letter-spacing: -5px;
+            }
+        }
+        @media (max-width: 480px) {
+            .massive-about {
+                font-size: clamp(36px, 12vw, 80px);
+                letter-spacing: -3px;
+            }
+        }
+        .u-letter { 
+            position: relative; 
+            display: inline-block;
+            color: var(--purple);
+        }
+
+        .u-img-box img {
+            width: 100%; height: 100%; object-fit: cover;
+        }
+        .about-content {
+            position: relative;
+            width: 100%;
+            margin-top: 60px;
+        }
+
+        .about-image-above {
+            position: absolute;
+            top: 0;
+            right: 5%;
+            width: 220px;
+            height: 150px;
+            border-radius: 16px;
+            overflow: hidden;
+            z-index: 10;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            border: 1px solid var(--border);
+            transform: translateY(0) rotate(3deg);
+            transition: transform 0.5s cubic-bezier(0.16,1,0.3,1),
+                        box-shadow 0.5s ease,
+                        border-color 0.3s ease;
+        }
+        .about-image-above:hover {
+            transform: translateY(-8px) rotate(0deg) scale(1.05);
+        }
+        .about-image-above img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .about-description {
+            max-width: 700px;
+            margin-top: 60px;
+            padding: 0 5%;
+        }
+        .about-description p {
+            color: var(--text-muted);
+            font-size: 18px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        .about-description p:first-child {
+            color: var(--text);
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .about-image-above {
+                width: 130px;
+                height: 90px;
+            }
+            .about-description {
+                margin-top: 40px;
+            }
+            .about-description p {
+                font-size: 15px;
+            }
+            .about-description p:first-child {
+                font-size: 17px;
+            }
+        }
+        @media (max-width: 480px) {
+            .about-image-above {
+                width: 90px;
+                height: 65px;
+                flex-shrink: 0;
+            }
+            .about-description {
+                margin-top: 20px;
+                padding: 0 3%;
+            }
+        }
+
+        .s-letter {
+            position: relative;
+            display: inline-block;
+        }
+
+        .s-img-box img {
+            width: 100%; height: 100%; object-fit: cover;
+        }
+
+        /* --- SECTION 3: TEAM --- */
+        .team-section {
+            padding: 100px 5%; text-align: center;
+            background: var(--bg-light); min-height: 90vh;
+            overflow: hidden;
+        }
+        .team-header h2 { 
+            font-family: var(--font-display);
+            font-size: clamp(40px, 6vw, 80px);
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: -2px;
+            text-transform: uppercase;
+        }
+        .team-header h2 span {
+            color: var(--purple);
+        }
+        .team-header p {
+            color: var(--text-muted);
+            font-size: 18px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* Playing Card Fan Container */
+        .team-container {
+            position: relative;
+            height: 500px;
+            margin-top: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            perspective: 1200px;
+        }
+
+        .team-card {
+            position: absolute;
+            width: 260px;
+            height: 360px;
+            border-radius: 20px;
+            overflow: hidden;
+            background: var(--gray);
+            transform-origin: bottom center;
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            cursor: pointer;
+            border: 2px solid var(--border);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            bottom: 0;
+            will-change: transform, opacity, filter;
+        }
+        @media (max-width: 768px) {
+            .team-card {
+                width: 160px;
+                height: 220px;
+            }
+        }
+        @media (max-width: 480px) {
+            .team-card {
+                width: 120px;
+                height: 170px;
+            }
+        }
+
+        .team-card .card-inner {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .team-card img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover;
+            filter: grayscale(20%);
+            transition: all 0.5s ease;
+        }
+
+        .card-name {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 50%, transparent 100%);
+            color: var(--text);
+            padding: 50px 20px 20px;
+            font-family: var(--font-main);
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transform: translateY(100%);
+            transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            text-align: center;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+        }
+
+        /* Default fan positions */
+        .team-card[data-index="0"] { 
+            transform: translateX(-320px) rotate(-25deg) translateY(20px); 
+            z-index: 1;
+        }
+        .team-card[data-index="1"] { 
+            transform: translateX(-160px) rotate(-12deg) translateY(8px); 
+            z-index: 2;
+        }
+        .team-card[data-index="2"] { 
+            transform: translateX(0) rotate(0deg) translateY(0); 
+            z-index: 3;
+        }
+        .team-card[data-index="3"] { 
+            transform: translateX(160px) rotate(12deg) translateY(8px); 
+            z-index: 2;
+        }
+        .team-card[data-index="4"] { 
+            transform: translateX(320px) rotate(25deg) translateY(20px); 
+            z-index: 1;
+        }
+
+        /* ===== HOVER EFFECTS - Vertical Lift Only ===== */
+
+        /* When hovering on a specific card, it lifts straight up vertically */
+        .team-container:has(.team-card[data-index="0"]:hover) .team-card[data-index="0"],
+        .team-container:has(.team-card[data-index="1"]:hover) .team-card[data-index="1"],
+        .team-container:has(.team-card[data-index="2"]:hover) .team-card[data-index="2"],
+        .team-container:has(.team-card[data-index="3"]:hover) .team-card[data-index="3"],
+        .team-container:has(.team-card[data-index="4"]:hover) .team-card[data-index="4"] {
+            transform: translateY(-120px) !important;
+            z-index: 100 !important;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.6), 0 0 60px rgba(139, 92, 246, 0.3);
+            border-color: var(--purple);
+            filter: brightness(1.3);
+        }
+
+        .team-container:has(.team-card:hover) .team-card:hover img {
+            filter: grayscale(0%) brightness(1.2);
+        }
+
+        .team-container:has(.team-card:hover) .team-card:hover .card-name {
+            transform: translateY(0);
+        }
+
+        /* Other cards become very dim when one is hovered - keep their original positions */
+        .team-container:has(.team-card:hover) .team-card:not(:hover) {
+            opacity: 0.15;
+            filter: grayscale(80%) brightness(0.5);
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        /* Specific hover states for each card - only the hovered card lifts, others dim */
+        /* Card 0 hovered */
+        .team-container:has(.team-card[data-index="0"]:hover) .team-card[data-index="0"] {
+            transform: translateX(-320px) rotate(-25deg) translateY(-120px) !important;
+        }
+
+        /* Card 1 hovered */
+        .team-container:has(.team-card[data-index="1"]:hover) .team-card[data-index="1"] {
+            transform: translateX(-160px) rotate(-12deg) translateY(-120px) !important;
+        }
+
+        /* Card 2 hovered */
+        .team-container:has(.team-card[data-index="2"]:hover) .team-card[data-index="2"] {
+            transform: translateX(0) rotate(0deg) translateY(-120px) !important;
+        }
+
+        /* Card 3 hovered */
+        .team-container:has(.team-card[data-index="3"]:hover) .team-card[data-index="3"] {
+            transform: translateX(160px) rotate(12deg) translateY(-120px) !important;
+        }
+
+        /* Card 4 hovered */
+        .team-container:has(.team-card[data-index="4"]:hover) .team-card[data-index="4"] {
+            transform: translateX(320px) rotate(25deg) translateY(-120px) !important;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .team-card {
+                width: 200px;
+                height: 280px;
+            }
+            .team-card[data-index="0"] { transform: translateX(-240px) rotate(-25deg) translateY(20px); }
+            .team-card[data-index="1"] { transform: translateX(-120px) rotate(-12deg) translateY(8px); }
+            .team-card[data-index="2"] { transform: translateX(0) rotate(0deg) translateY(0); }
+            .team-card[data-index="3"] { transform: translateX(120px) rotate(12deg) translateY(8px); }
+            .team-card[data-index="4"] { transform: translateX(240px) rotate(25deg) translateY(20px); }
+
+            /* Hover responsive */
+            .team-container:has(.team-card[data-index="0"]:hover) .team-card[data-index="0"] {
+                transform: translateX(-240px) rotate(-25deg) translateY(-100px) !important;
+            }
+            .team-container:has(.team-card[data-index="1"]:hover) .team-card[data-index="1"] {
+                transform: translateX(-120px) rotate(-12deg) translateY(-100px) !important;
+            }
+            .team-container:has(.team-card[data-index="2"]:hover) .team-card[data-index="2"] {
+                transform: translateX(0) rotate(0deg) translateY(-100px) !important;
+            }
+            .team-container:has(.team-card[data-index="3"]:hover) .team-card[data-index="3"] {
+                transform: translateX(120px) rotate(12deg) translateY(-100px) !important;
+            }
+            .team-container:has(.team-card[data-index="4"]:hover) .team-card[data-index="4"] {
+                transform: translateX(240px) rotate(25deg) translateY(-100px) !important;
+            }
+        }
+        @media (max-width: 768px) {
+            .team-card[data-index="0"] { transform: translateX(-140px) rotate(-25deg) translateY(20px); }
+            .team-card[data-index="1"] { transform: translateX(-70px) rotate(-12deg) translateY(8px); }
+            .team-card[data-index="2"] { transform: translateX(0) rotate(0deg) translateY(0); }
+            .team-card[data-index="3"] { transform: translateX(70px) rotate(12deg) translateY(8px); }
+            .team-card[data-index="4"] { transform: translateX(140px) rotate(25deg) translateY(20px); }
+
+            .team-container:has(.team-card[data-index="0"]:hover) .team-card[data-index="0"] {
+                transform: translateX(-140px) rotate(-25deg) translateY(-80px) !important;
+            }
+            .team-container:has(.team-card[data-index="1"]:hover) .team-card[data-index="1"] {
+                transform: translateX(-70px) rotate(-12deg) translateY(-80px) !important;
+            }
+            .team-container:has(.team-card[data-index="2"]:hover) .team-card[data-index="2"] {
+                transform: translateX(0) rotate(0deg) translateY(-80px) !important;
+            }
+            .team-container:has(.team-card[data-index="3"]:hover) .team-card[data-index="3"] {
+                transform: translateX(70px) rotate(12deg) translateY(-80px) !important;
+            }
+            .team-container:has(.team-card[data-index="4"]:hover) .team-card[data-index="4"] {
+                transform: translateX(140px) rotate(25deg) translateY(-80px) !important;
+            }
+        }
+        @media (max-width: 480px) {
+            .team-card[data-index="0"] { transform: translateX(-100px) rotate(-25deg) translateY(20px); }
+            .team-card[data-index="1"] { transform: translateX(-50px) rotate(-12deg) translateY(8px); }
+            .team-card[data-index="2"] { transform: translateX(0) rotate(0deg) translateY(0); }
+            .team-card[data-index="3"] { transform: translateX(50px) rotate(12deg) translateY(8px); }
+            .team-card[data-index="4"] { transform: translateX(100px) rotate(25deg) translateY(20px); }
+
+            .team-container:has(.team-card[data-index="0"]:hover) .team-card[data-index="0"] {
+                transform: translateX(-100px) rotate(-25deg) translateY(-60px) !important;
+            }
+            .team-container:has(.team-card[data-index="1"]:hover) .team-card[data-index="1"] {
+                transform: translateX(-50px) rotate(-12deg) translateY(-60px) !important;
+            }
+            .team-container:has(.team-card[data-index="2"]:hover) .team-card[data-index="2"] {
+                transform: translateX(0) rotate(0deg) translateY(-60px) !important;
+            }
+            .team-container:has(.team-card[data-index="3"]:hover) .team-card[data-index="3"] {
+                transform: translateX(50px) rotate(12deg) translateY(-60px) !important;
+            }
+            .team-container:has(.team-card[data-index="4"]:hover) .team-card[data-index="4"] {
+                transform: translateX(100px) rotate(25deg) translateY(-60px) !important;
+            }
+        }
+
+
+
+        /* ===== TEAM SECTION - MOBILE MARQUEE ===== */
+        @media (max-width: 768px) {
+
+            /* Override min-height so section doesn't feel too tall */
+            .team-section {
+                min-height: unset !important;
+                padding: 70px 0 80px !important;
+            }
+            .team-header {
+                padding: 0 5%;
+            }
+
+            /* Outer clipping wrapper */
+            .team-container {
+                /* Reset desktop fan layout */
+                position: relative !important;
+                height: auto !important;
+                margin-top: 40px !important;
+                display: block !important;
+                perspective: none !important;
+                overflow: hidden !important;
+                width: 100% !important;
+            }
+
+            /* Inner track that holds the doubled cards and slides */
+            .team-marquee-track {
+                display: flex !important;
+                flex-direction: row !important;
+                align-items: center !important;
+                gap: 16px !important;
+                width: max-content !important;
+                padding: 20px 16px !important;
+                /* animation driven by JS via transform */
+            }
+
+            /* Each card in marquee mode */
+            .team-container .team-card {
+                position: relative !important;
+                bottom: auto !important;
+                transform: none !important;
+                flex-shrink: 0 !important;
+                width: 150px !important;
+                height: 210px !important;
+                border-radius: 16px !important;
+                transition: box-shadow 0.3s ease, border-color 0.3s ease !important;
+                opacity: 1 !important;
+                filter: none !important;
+            }
+
+            /* Touch tap highlight */
+            .team-container .team-card:active {
+                border-color: var(--purple) !important;
+                box-shadow: 0 10px 40px rgba(139,92,246,0.35) !important;
+            }
+
+            /* Always show names on mobile */
+            .team-container .team-card .card-name {
+                transform: translateY(0) !important;
+                font-size: 13px !important;
+                padding: 30px 10px 12px !important;
+            }
+
+            /* Disable all :has hover rules on mobile */
+            .team-container:has(.team-card:hover) .team-card:not(:hover) {
+                opacity: 1 !important;
+                filter: none !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .team-container .team-card {
+                width: 130px !important;
+                height: 185px !important;
+            }
+        }
+
+        /* --- SECTION 4: LEISTUNGEN --- */
+        .leistungen-section { 
+            padding: 150px 5%; 
+            background: var(--bg); 
+        }
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 80px;
+        }
+        @media (max-width: 768px) {
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+                margin-bottom: 40px;
+            }
+            .section-number {
+                font-size: 60px;
+            }
+        }
+        .section-header-left {
+            max-width: 600px;
+        }
+        .section-label {
+            font-size: 11px; font-weight: 600;
+            letter-spacing: 4px; text-transform: uppercase;
+            color: var(--purple);
+            margin-bottom: 20px;
+            display: block;
+        }
+        .section-header h2 {
+            font-family: var(--font-display);
+            font-size: clamp(40px, 6vw, 80px);
+            font-weight: 700;
+            line-height: 1;
+            letter-spacing: -3px;
+            text-transform: uppercase;
+        }
+        .section-number {
+            font-family: var(--font-display);
+            font-size: 120px;
+            font-weight: 700;
+            color: rgba(255,255,255,0.03);
+            line-height: 1;
+        }
+        .service-item {
+            display: grid;
+            grid-template-columns: 80px 200px 1fr 150px;
+            align-items: center;
+            padding: 50px 0;
+            border-top: 1px solid var(--border);
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+        @media (max-width: 768px) {
+            .service-item {
+                grid-template-columns: 60px 120px 1fr 100px;
+                padding: 30px 0;
+                gap: 15px;
+            }
+            .s-img {
+                width: 100px;
+                height: 100px;
+            }
+            .s-content h3 {
+                font-size: 20px;
+            }
+            .s-content p {
+                font-size: 13px;
+            }
+        }
+        @media (max-width: 480px) {
+            .service-item {
+                grid-template-columns: 1fr;
+                gap: 15px;
+                padding: 25px 0;
+            }
+            .s-img {
+                width: 100%;
+                height: 150px;
+            }
+            .s-content h3 {
+                font-size: 18px;
+            }
+        }
+        .service-item:hover {
+            background: rgba(139, 92, 246, 0.03);
+            padding-left: 30px;
+        }
+        .service-item.active-highlight {
+            background: rgba(139, 92, 246, 0.15) !important;
+            border-left: 4px solid var(--purple) !important;
+            padding-left: 26px !important;
+        }
+        .s-num { 
+            font-style: italic; 
+            color: var(--purple);
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .s-img { 
+            width: 160px; height: 160px;
+            border-radius: 20px; overflow: hidden;
+            border: 1px solid var(--border);
+        }
+        
+        .s-img img { 
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .service-item:hover .s-img img {
+            transform: scale(1.1);
+        }
+        .s-content h3 { 
+            font-family: var(--font-display);
+            font-size: 32px; 
+            margin-bottom: 12px;
+            letter-spacing: -1px;
+            text-transform: uppercase;
+        }
+        .s-content p { 
+            color: var(--text-muted); 
+            max-width: 450px; 
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        .s-category {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--purple);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* --- SECTION 5: PORTFOLIO --- */
+        .portfolio-section { 
+            padding: 100px 0; 
+            overflow: hidden; 
+            background: var(--bg-light); 
+        }
+        .portfolio-title {
+            font-family: var(--font-display);
+            font-size: clamp(60px, 10vw, 150px);
+            text-align: center;
+            margin-bottom: 60px;
+            letter-spacing: -5px;
+            text-transform: uppercase;
+        }
+        .portfolio-title span {
+            color: var(--purple);
+        }
+        .marquee-wrapper { 
+            transform: rotate(-5deg) scale(1.1);
+            display: flex; flex-direction: column; gap: 30px;
+        }
+        @media (max-width: 768px) {
+            .marquee-wrapper {
+                transform: rotate(-3deg) scale(1.05);
+                gap: 20px;
+            }
+        }
+        @media (max-width: 480px) {
+            .marquee-wrapper {
+                transform: rotate(-2deg) scale(1);
+                gap: 15px;
+            }
+        }
+        .marquee-row { 
+            display: flex; gap: 30px;
+            white-space: nowrap; width: fit-content;
+        }
+        .port-card {
+            width: 400px; height: 260px;
+            border-radius: 24px; overflow: hidden;
+            flex-shrink: 0;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            border: 1px solid var(--border);
+            position: relative;
+        }
+        @media (max-width: 768px) {
+            .port-card {
+                width: 280px;
+                height: 180px;
+            }
+        }
+        @media (max-width: 480px) {
+            .port-card {
+                width: 220px;
+                height: 150px;
+            }
+        }
+        .port-card img { 
+            width: 100%; height: 100%; object-fit: cover;
+            filter: grayscale(50%);
+            transition: all 0.5s ease;
+        }
+        .port-card:hover img {
+            filter: grayscale(0%);
+            transform: scale(1.05);
+        }
+        .port-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 30px;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        .port-card:hover .port-overlay {
+            opacity: 1;
+        }
+        .port-overlay h4 {
+            font-family: var(--font-display);
+            font-size: 24px;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+        }
+        .port-overlay p {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-top: 4px;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background: var(--bg-light);
+            padding: 80px 5% 40px;
+            border-top: 1px solid var(--border);
+        }
+        .footer-top {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+        @media (max-width: 1024px) {
+            .footer-top {
+                grid-template-columns: 1fr 1fr;
+                gap: 40px;
+            }
+        }
+        @media (max-width: 768px) {
+            .footer-top {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+        .footer-cta h3 {
+            font-family: var(--font-display);
+            font-size: clamp(30px, 4vw, 48px);
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -2px;
+            margin-bottom: 30px;
+        }
+        .footer-cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 32px;
+            background: var(--purple);
+            color: var(--text);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border-radius: 50px;
+            transition: all 0.4s ease;
+        }
+        .footer-cta-btn:hover {
+            background: var(--purple-light);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(139, 92, 246, 0.3);
+        }
+        .footer-col h4 {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+        .footer-col p, .footer-col a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 15px;
+            line-height: 2;
+            transition: color 0.3s ease;
+            display: block;
+        }
+        .footer-col a:hover {
+            color: var(--purple);
+        }
+        .footer-col p.phone {
+            color: var(--purple);
+            font-weight: 600;
+            font-size: 18px;
+        }
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 40px;
+            border-top: 1px solid var(--border);
+        }
+        .footer-logo-large {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .footer-logo-large .logo-icon {
+            font-size: 48px;
+        }
+        .footer-logo-large .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+        .footer-logo-large .logo-main {
+            font-size: 28px;
+        }
+        .footer-logo-large .logo-sub {
+            font-size: 10px;
+        }
+        .footer-copyright {
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+        .footer-copyright a {
+            color: var(--purple);
+            text-decoration: none;
+        }
+        .footer-links-bottom {
+            display: flex;
+            gap: 24px;
+        }
+        .footer-links-bottom a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.3s ease;
+        }
+        .footer-links-bottom a:hover {
+            color: var(--text);
+        }
+
+        /* Animations */
+        @keyframes scrollPulse {
+            0%, 100% { opacity: 0.3; transform: scaleY(1); }
+            50% { opacity: 1; transform: scaleY(1.2); }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .nav-links { display: none; }
+            .massive-title { font-size: clamp(40px, 8vw, 80px); }
+            .orbit-container { width: 350px; height: 350px; }
+            .orbit-item { width: 100px; height: 100px; }
+            .service-item {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .footer-top {
+                grid-template-columns: 1fr 1fr;
+                gap: 40px;
+            }
+            .massive-about { letter-spacing: -5px; }
+            .floating-about-img { width: 200px; height: 280px; }
+        }
+        @media (max-width: 768px) {
+            .massive-about { font-size: clamp(50px, 15vw, 120px); }
+            .footer-top { grid-template-columns: 1fr; }
+            .footer-bottom {
+                flex-direction: column;
+                gap: 30px;
+                text-align: center;
+            }
+            .corner-arrows, .scroll-indicator { display: none; }
+            body { cursor: auto; }
+            .cursor, .cursor-dot { display: none; }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--purple-dark); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--purple); }
+        ::selection { background: var(--purple); color: var(--text); }
+
+        /* ===== MOBILE RESPONSIVE ADDITIONS ===== */
+
+/* ========================================
+   MOBILE RESPONSIVE PATCH - تحسينات الموبايل
+   Only additions, nothing removed
+   ======================================== */
+
+/* ── Chat Widget ── */
+@media (max-width: 768px) {
+  #chat-window {
+    width: calc(100vw - 20px) !important;
+    right: 10px !important;
+    left: 10px !important;
+    bottom: 90px !important;
+    height: 420px !important;
+    border-radius: 16px !important;
+  }
+  #chat-widget {
+    bottom: 20px !important;
+    right: 20px !important;
+    width: 54px !important;
+    height: 54px !important;
+  }
+}
+@media (max-width: 480px) {
+  #chat-window {
+    width: calc(100vw - 16px) !important;
+    right: 8px !important;
+    left: 8px !important;
+    bottom: 85px !important;
+    height: 380px !important;
+  }
+}
+
+/* ── Navigation ── */
+@media (max-width: 768px) {
+  nav {
+    padding: 12px 4% !important;
+  }
+  .logo-icon {
+    font-size: 28px !important;
+  }
+  .logo-main {
+    font-size: 16px !important;
+    letter-spacing: 1px !important;
+  }
+  .logo-sub {
+    font-size: 7px !important;
+    letter-spacing: 1.5px !important;
+  }
+  .logo-group {
+    gap: 8px !important;
+  }
+}
+
+/* ── Hero Section ── */
+@media (max-width: 768px) {
+  .hero {
+    padding-top: 70px;
+  }
+  .title-top {
+    top: 8% !important;
+    right: 4% !important;
+    font-size: clamp(22px, 7vw, 48px) !important;
+    letter-spacing: -1px !important;
+    line-height: 1.1 !important;
+  }
+  .title-bottom {
+    bottom: 18% !important;
+    left: 4% !important;
+    font-size: clamp(20px, 6.5vw, 44px) !important;
+    letter-spacing: -1px !important;
+  }
+  /* Kundenportal button in hero */
+  .hero > div[style*="bottom: 140px"] {
+    bottom: 5% !important;
+    right: 50% !important;
+    transform: translateX(50%) !important;
+    width: max-content !important;
+  }
+  .hero > div[style*="bottom: 140px"] a {
+    font-size: 1rem !important;
+    padding: 12px 24px !important;
+    letter-spacing: 0.08em !important;
+  }
+}
+@media (max-width: 480px) {
+  .title-top {
+    font-size: clamp(18px, 6vw, 34px) !important;
+  }
+  .title-bottom {
+    font-size: clamp(16px, 5.5vw, 30px) !important;
+  }
+}
+
+/* ── Orbit Container Mobile - Circular Rotation ── */
+@media (max-width: 768px) {
+  .orbit-container {
+    position: relative !important;
+    display: block !important;
+    width: 100% !important;
+    height: 280px !important;
+    overflow: visible !important;
+  }
+  .orbit-word {
+    position: absolute !important;
+    font-size: 16px !important;
+    padding: 6px 14px !important;
+    left: 50% !important;
+    top: 50% !important;
+    transform-origin: center center !important;
+    animation: none !important;
+    white-space: nowrap !important;
+    text-shadow: 0 0 10px rgba(139, 92, 246, 0.5) !important;
+  }
+  .orbit-word:active {
+    color: #A78BFA !important;
+  }
+}
+@media (max-width: 480px) {
+  .orbit-container {
+    height: 240px !important;
+  }
+  .orbit-word {
+    font-size: 14px !important;
+    padding: 5px 11px !important;
+  }
+}
+
+/* ── About Section ── */
+@media (max-width: 768px) {
+  .about-section {
+    padding: 100px 4% 80px !important;
+  }
+  .about-content {
+    margin-top: 40px !important;
+  }
+  .about-title-wrapper {
+    margin-top: 40px !important;
+  }
+  .massive-about {
+    font-size: clamp(42px, 13vw, 100px) !important;
+    letter-spacing: -4px !important;
+    flex-wrap: wrap !important;
+  }
+  .about-description {
+    padding: 0 0 !important;
+    margin-top: 30px !important;
+  }
+}
+@media (max-width: 480px) {
+  .about-section {
+    padding: 80px 4% 60px !important;
+  }
+  .massive-about {
+    font-size: clamp(32px, 11vw, 68px) !important;
+    letter-spacing: -2px !important;
+  }
+  .about-image-above {
+    width: 110px !important;
+    height: 80px !important;
+  }
+  .about-description p {
+    font-size: 14px !important;
+  }
+}
+
+/* ── Team Section ── */
+@media (max-width: 768px) {
+  .team-section {
+    padding: 70px 4% 80px !important;
+  }
+  .team-header h2 {
+    font-size: clamp(28px, 6vw, 52px) !important;
+    letter-spacing: -1px !important;
+  }
+  .team-header p {
+    font-size: 14px !important;
+  }
+  .team-container {
+    height: 320px !important;
+    margin-top: 50px !important;
+  }
+}
+@media (max-width: 480px) {
+  .team-container {
+    height: 260px !important;
+    margin-top: 35px !important;
+  }
+}
+
+/* ── Leistungen Section ── */
+@media (max-width: 768px) {
+  .leistungen-section {
+    padding: 80px 4% !important;
+  }
+  .section-header h2 {
+    letter-spacing: -1px !important;
+  }
+}
+@media (max-width: 480px) {
+  .leistungen-section {
+    padding: 60px 4% !important;
+  }
+  .s-content h3 {
+    font-size: 16px !important;
+    letter-spacing: -0.5px !important;
+  }
+  .s-content p {
+    font-size: 12px !important;
+  }
+  .s-category {
+    font-size: 11px !important;
+  }
+  .s-num {
+    font-size: 12px !important;
+  }
+}
+
+/* ── Portfolio Section ── */
+@media (max-width: 768px) {
+  .portfolio-section {
+    padding: 70px 0 !important;
+  }
+  .portfolio-title {
+    font-size: clamp(40px, 9vw, 80px) !important;
+    letter-spacing: -2px !important;
+    margin-bottom: 40px !important;
+  }
+}
+@media (max-width: 480px) {
+  .portfolio-title {
+    font-size: clamp(32px, 8vw, 56px) !important;
+    letter-spacing: -1px !important;
+  }
+}
+
+/* ── Footer ── */
+@media (max-width: 768px) {
+  footer {
+    padding: 60px 4% 30px !important;
+  }
+  .footer-cta h3 {
+    font-size: clamp(24px, 5vw, 36px) !important;
+    letter-spacing: -1px !important;
+  }
+  .footer-col p, .footer-col a {
+    font-size: 14px !important;
+  }
+  .footer-col h4 {
+    font-size: 10px !important;
+    margin-bottom: 16px !important;
+  }
+  .footer-logo-large .logo-icon {
+    font-size: 32px !important;
+  }
+  .footer-logo-large .logo-main {
+    font-size: 18px !important;
+  }
+  .footer-copyright {
+    font-size: 12px !important;
+  }
+}
+
+/* ── General Touch Improvements ── */
+@media (max-width: 768px) {
+  /* Bigger tap targets */
+  .footer-col a {
+    padding: 4px 0 !important;
+    display: block !important;
+  }
+  .port-card {
+    cursor: pointer !important;
+  }
+  /* Fix overflow issues */
+  section {
+    overflow-x: hidden !important;
+  }
+  /* Safe area for notch phones (iPhone notch / Dynamic Island) */
+  body {
+    padding-bottom: env(safe-area-inset-bottom, 0px) !important;
+  }
+  #chat-widget {
+    bottom: calc(20px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+}
+
+/* ── iPhone SE / Small Screens (375px and below) ── */
+@media (max-width: 375px) {
+  .massive-about {
+    font-size: 30px !important;
+    letter-spacing: -1.5px !important;
+  }
+  /* orbit words sized by JS on mobile */
+  .team-container {
+    height: 220px !important;
+  }
+  .team-card {
+    width: 100px !important;
+    height: 140px !important;
+  }
+  .team-card[data-index="0"] { transform: translateX(-80px) rotate(-25deg) translateY(20px) !important; }
+  .team-card[data-index="1"] { transform: translateX(-40px) rotate(-12deg) translateY(8px) !important; }
+  .team-card[data-index="3"] { transform: translateX(40px) rotate(12deg) translateY(8px) !important; }
+  .team-card[data-index="4"] { transform: translateX(80px) rotate(25deg) translateY(20px) !important; }
+  .team-container:has(.team-card[data-index="0"]:hover) .team-card[data-index="0"] { transform: translateX(-80px) rotate(-25deg) translateY(-50px) !important; }
+  .team-container:has(.team-card[data-index="1"]:hover) .team-card[data-index="1"] { transform: translateX(-40px) rotate(-12deg) translateY(-50px) !important; }
+  .team-container:has(.team-card[data-index="2"]:hover) .team-card[data-index="2"] { transform: translateX(0) rotate(0deg) translateY(-50px) !important; }
+  .team-container:has(.team-card[data-index="3"]:hover) .team-card[data-index="3"] { transform: translateX(40px) rotate(12deg) translateY(-50px) !important; }
+  .team-container:has(.team-card[data-index="4"]:hover) .team-card[data-index="4"] { transform: translateX(80px) rotate(25deg) translateY(-50px) !important; }
+}
+
+
+/* ===== MOBILE MENU ===== */
+.mobile-menu {
+    position: fixed;
+    top: 70px; left: 0; right: 0;
+    background: #1a1a1a;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    display: none;
+    flex-direction: column;
+    padding: 20px 5%;
+    z-index: 999;
+    gap: 16px;
+}
+.mobile-menu.active { display: flex; }
+.mobile-menu a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.mobile-menu a:hover { color: #8B5CF6; }
+@media (min-width: 1025px) { .mobile-menu { display: none !important; } }
+
+    </style>
+
+
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-dot" id="cursorDot"></div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <a href="#" class="logo-group">
+            <div class="logo-icon">T<span class="dot">.</span>A<span class="dot">.</span>P</div>
+            <div class="logo-text-group">
+                <div class="logo-main" data-i18n="common.logo.main">WERBEAGENTUR<span class="wob">WOB</span></div>
+                <div class="logo-sub" data-i18n="common.logo.sub">WERBETECHNIK / DIGITALDRUCK</div>
+            </div>
+        </a>
+        <div class="nav-links">
+            <a href="#hero" data-i18n="common.nav.home">Homepage</a>
+            <a href="#services" data-i18n="common.nav.services">Services</a>
+            <a href="#about" data-i18n="common.nav.about">About Us</a>
+            <a href="design.html" data-i18n="common.nav.shop">Shop</a>
+            <a href="create.html" data-i18n="common.nav.create">Create</a>
+            <a href="#contact" data-i18n="common.nav.contact">Contact</a>
+           
+            <a href="customer.html" style="
+                background: var(--purple);
+                color: white;
+                padding: 7px 18px;
+                border-radius: 20px;
+                font-weight: 600;
+                font-size: 0.82rem;
+                letter-spacing: 0.06em;
+                text-decoration: none;
+                transition: background 0.2s;
+            " onmouseover="this.style.background='var(--purple-light)'"
+               onmouseout="this.style.background='var(--purple)'" data-i18n="common.nav.portal">
+                Kundenportal →
+            </a>
+        </div>
+        <div class="nav-social">
+            <a href="#" aria-label="Facebook" data-link="common.link.facebook" target="_blank" rel="noopener">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </a>
+            <a href="#" aria-label="Instagram" data-link="common.link.instagram" target="_blank" rel="noopener">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+            </a>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+    <a href="#hero" data-i18n="common.nav.home">Homepage</a>
+    <a href="#services" data-i18n="common.nav.services">Services</a>
+    <a href="#about" data-i18n="common.nav.about">About Us</a>
+    <a href="design.html" data-i18n="common.nav.shop">Shop</a>
+    <a href="create.html" data-i18n="common.nav.create">Create</a>
+    <a href="#contact" data-i18n="common.nav.contact">Contact</a>
+    <a href="customer.html" data-i18n="common.nav.portal">Kundenportal →</a>
+</div>
+
+    
+    
+    <!-- MOBILE MENU OVERLAY -->
+<div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-inner">
+        <a href="#hero" data-i18n="common.nav.home">Homepage</a>
+        <a href="#services" data-i18n="common.nav.services">Services</a>
+        <a href="#about" data-i18n="common.nav.about">About Us</a>
+        <a href="design.html" data-i18n="common.nav.shop">Shop</a>
+        <a href="create.html" data-i18n="common.nav.create">Create</a>
+        <a href="#contact" data-i18n="common.nav.contact">Contact</a>
+        <a href="customer.html" class="mobile-cta" data-i18n="common.nav.portal">Kundenportal →</a>
+    </div>
+</div>
+    
+    
+    
+    
+    
+    <main id="main-content">
+
+        <!-- SECTION 1: HERO -->
+        <section class="hero" id="hero">
+            <div class="massive-title title-top" data-i18n="index.hero.title_top">
+                Wir machen<br><span class="highlight">Werbung</span>
+            </div>
+            <div class="orbit-container" id="orbit"></div>
+            <div class="massive-title title-bottom" data-i18n="index.hero.title_bottom">
+                Erstrahle <span class="highlight">deine Marke</span>
+            </div>
+
+            
+
+            <div style="position: absolute; bottom: 140px; right: 5%; z-index: 10;">
+                <a href="customer.html" style="
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 10px;
+                    background: var(--purple);
+                    color: white;
+                    padding: 14px 36px;
+                    border-radius: 8px;
+                    font-family: var(--font-display);
+                    font-size: 1.3rem;
+                    letter-spacing: 0.15em;
+                    text-decoration: none;
+                    transition: all 0.2s;
+                    box-shadow: 0 4px 20px rgba(139, 92, 246, 0.3);
+                " onmouseover="this.style.background='var(--purple-light)';this.style.transform='translateY(-2px)'"
+                   onmouseout="this.style.background='var(--purple)';this.style.transform='none'">
+                    <span>🔐</span> <span data-i18n="index.hero.portal_btn">KUNDENPORTAL ÖFFNEN</span>
+                </a>
+            </div>
+
+            <div class="scroll-indicator">
+                <span data-i18n="index.hero.scroll">Scroll</span>
+                <div class="scroll-line"></div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: ÜBER UNS -->
+        <section class="about-section" id="about">
+            <div class="uber-label">
+                <div class="dot"></div>
+                <span data-i18n="index.about.label">Über uns</span>
+            </div>
+
+            <div class="about-content">
+                <div class="about-title-wrapper">
+                    <div class="massive-about" data-i18n="index.about.title">
+                        <div class="u-letter">Ü</div>ber un<div class="s-letter">s</div>
+                    </div>
+                    <div class="about-image-above" style="position:relative; top:auto; right:auto; flex-shrink:0; align-self:center;">
+                        <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&q=80" alt="TAP Werbeagentur" data-img="index.about.image">
+                    </div>
+                </div>
+
+                <div class="about-description">
+                    <p data-i18n="index.about.p1">Willkommen bei TAP Werbeagentur WOB – Ihrem kreativen Partner für Werbetechnik und Digitaldruck in Wolfsburg und Umgebung. Wir verbinden innovative Designlösungen mit höchster Druckqualität, um Ihre Marke zum Strahlen zu bringen.</p>
+                    <p data-i18n="index.about.p2">Von der ersten Idee bis zur finalen Umsetzung begleiten wir Sie mit Leidenschaft und Fachwissen. Ob Fahrzeugbeschriftung, Großformatdruck, professionelles Branding oder individueller Textildruck – wir setzen Ihre Vision in beeindruckende Werbemittel um, die Ihre Kunden begeistern und Ihr Business voranbringen.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: TEAM -->
+        <!--<section class="team-section" id="team">-->
+        <!--    <div class="team-header">-->
+        <!--        <h2>Das Team hinter <span>TAP.</span></h2>-->
+        <!--        <p>Kreative Köpfe, die Ihre Marke zum Strahlen bringen.</p>-->
+        <!--    </div>-->
+        <!--    <div class="team-container" id="team-cards">-->
+                <!-- marquee track (JS clones cards for infinite loop on mobile) -->
+        <!--        <div class="team-marquee-track" id="team-marquee-track">-->
+        <!--            <div class="team-card" data-index="0">-->
+        <!--                <div class="card-inner">-->
+        <!--                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&q=80" alt="Arges Khalil">-->
+        <!--                    <div class="card-name">Arges Khalil</div>-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--            <div class="team-card" data-index="1">-->
+        <!--                <div class="card-inner">-->
+        <!--                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=500&q=80" alt="Arges Khalil">-->
+        <!--                    <div class="card-name">Arges Khalil</div>-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--            <div class="team-card" data-index="2">-->
+        <!--                <div class="card-inner">-->
+        <!--                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=500&q=80" alt="Arges Khalil">-->
+        <!--                    <div class="card-name">Arges Khalil</div>-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--            <div class="team-card" data-index="3">-->
+        <!--                <div class="card-inner">-->
+        <!--                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&q=80" alt="Arges Khalil">-->
+        <!--                    <div class="card-name">Arges Khalil</div>-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--            <div class="team-card" data-index="4">-->
+        <!--                <div class="card-inner">-->
+        <!--                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=500&q=80" alt="Arges Khalil">-->
+        <!--                    <div class="card-name">Arges Khalil</div>-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--        </div>-->
+        <!--    </div>-->
+        <!--</section>-->
+        
+        
+<!-- SECTION 4: LEISTUNGEN -->
+        <section class="leistungen-section" id="services">
+            <div class="section-header">
+                <div class="section-header-left">
+                    <span class="section-label" data-i18n="index.services.label">Was wir tun</span>
+                    <h2 data-i18n="index.services.title">Unsere<br>Leistungen</h2>
+                </div>
+              
+            </div>
+             
+            <a href="digitaldruck.html" class="service-item" id="service-digitaldruck" data-service="digitaldruck">
+    <div class="s-num" data-i18n="index.services.digitaldruck.num">(01)</div>
+    <div class="s-img"><img data-img="index.services.digitaldruck.image" alt="" src="https://kimi-web-img.moonshot.cn/img/img.magnific.com/624421b4e7f62c2bb9c219d079702fd2c97382e8.jpg"></div>
+    <div class="s-content">
+        <h3 data-i18n="index.services.digitaldruck.title">Digitaldruck</h3>
+        <p data-i18n="index.services.digitaldruck.text">Hochwertiger Digitaldruck für Banner, Plakate, Folien und Werbebanner in allen Formaten.</p>
+    </div>
+    <div class="s-category" data-i18n="index.services.digitaldruck.category">Druck</div>
+</a>
+            
+
+            <a href="werbetechnik.html" class="service-item" id="service-werbetechnik" data-service="werbetechnik">
+    <div class="s-num" data-i18n="index.services.werbetechnik.num">(02)</div>
+    <div class="s-img"><img data-img="index.services.werbetechnik.image" alt="" src="https://kimi-web-img.moonshot.cn/img/images.unsplash.com/1fd0d9951260588912fc6735ecadf98d42774896"></div>
+    <div class="s-content">
+        <h3 data-i18n="index.services.werbetechnik.title">Werbetechnik & Beschriftung</h3>
+        <p data-i18n="index.services.werbetechnik.text">Fahrzeugbeschriftung, Schaufensterbeklebung, Leuchtreklamen und Schilder für Ihr Business.</p>
+    </div>
+    <div class="s-category" data-i18n="index.services.werbetechnik.category">Technik</div>
+</a>
+
+            <a href="grafikdesign.html" class="service-item" id="service-grafikdesign" data-service="grafikdesign">
+    <div class="s-num" data-i18n="index.services.grafikdesign.num">(03)</div>
+    <div class="s-img"><img data-img="index.services.grafikdesign.image" alt="" src="https://kimi-web-img.moonshot.cn/img/img.magnific.com/26c47022b6f9a5498c600b0a947c26fc396f8633.jpg"></div>
+    <div class="s-content">
+        <h3 data-i18n="index.services.grafikdesign.title">Grafikdesign & Branding</h3>
+        <p data-i18n="index.services.grafikdesign.text">Logo-Design, Corporate Identity, Flyer, Broschüren und komplette Markenauftritte.</p>
+    </div>
+    <div class="s-category" data-i18n="index.services.grafikdesign.category">Design</div>
+</a>
+
+            <a href="webdesign.html" class="service-item" id="service-webdesign" data-service="webdesign">
+    <div class="s-num" data-i18n="index.services.webdesign.num">(04)</div>
+    <div class="s-img"><img data-img="index.services.webdesign.image" alt="" src="https://kimi-web-img.moonshot.cn/img/thumbs.dreamstime.com/c43cffbdbebf61675c04c9b426f4232c6e59ccbd.jpg"></div>
+    <div class="s-content">
+        <h3 data-i18n="index.services.webdesign.title">Webdesign & Digital</h3>
+        <p data-i18n="index.services.webdesign.text">Moderne Websites, Social Media Content und digitale Marketingstrategien.</p>
+    </div>
+    <div class="s-category" data-i18n="index.services.webdesign.category">Digital</div>
+</a>
+
+           <a href="textildruck.html" class="service-item" id="service-textildruck" data-service="textildruck">
+    <div class="s-num" data-i18n="index.services.textildruck.num">(05)</div>
+    <div class="s-img"><img data-img="index.services.textildruck.image" alt="" src="https://kimi-web-img.moonshot.cn/img/www.deconetwork.com/13c009c07f05c7864be1beab2b2966750b7c1d36.jpg"></div>
+    <div class="s-content">
+        <h3 data-i18n="index.services.textildruck.title">Textildruck & Bestickung</h3>
+        <p data-i18n="index.services.textildruck.text">Individueller Textildruck und Bestickung für T-Shirts, Hoodies, Caps und Arbeitskleidung. Perfekt für Firmenbekleidung, Events und Merchandise.</p>
+    </div>
+    <div class="s-category" data-i18n="index.services.textildruck.category">Textil</div>
+</a>
+        </section>
+
+        <!-- SECTION 5: PORTFOLIO -->
+        <section class="portfolio-section" id="portfolio">
+            <h2 class="portfolio-title" data-i18n="index.portfolio.title">Unser <span>Portfolio</span></h2>
+            <div class="marquee-wrapper">
+                <div class="marquee-row" id="row1">
+                    <div class="port-card">
+                        <img src="https://kimi-web-img.moonshot.cn/img/img.magnific.com/624421b4e7f62c2bb9c219d079702fd2c97382e8.jpg">
+                        <div class="port-overlay">
+                            <h4>Branding</h4>
+                            <p>Corporate Identity</p>
+                        </div>
+                    </div>
+                    <div class="port-card">
+                        <img src="https://kimi-web-img.moonshot.cn/img/www.postermockup.com/d15bfc92e13b61d946a8ad7709f078dd27d8a12c.jpg">
+                        <div class="port-overlay">
+                            <h4>Print</h4>
+                            <p>Kampagne Design</p>
+                        </div>
+                    </div>
+                   <a href="websiten.html">
+    <div class="port-card">
+        <img src="https://kimi-web-img.moonshot.cn/img/i.fbcd.co/f623e75110691842fd5c2c3df445b29aa86647c2.jpg">
+        <div class="port-overlay">
+            <h4>Web</h4>
+            <p>Website Design</p>
+        </div>
+    </div>
+</a>
+                    <div class="port-card">
+                        <img src="https://kimi-web-img.moonshot.cn/img/cdn.prod.website-files.com/2290024d6ec24e5b3e1ea1aca1eff7a251616a6e.jpg">
+                        <div class="port-overlay">
+                            <h4>Technik</h4>
+                            <p>Fahrzeugbeschriftung</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="marquee-row" id="row2" style="margin-left: -500px;">
+                    <div class="port-card">
+                        <img src="https://kimi-web-img.moonshot.cn/img/www.customproductpackaging.com/e2f7917b9349988c350a92a2acbbddef1f937c83.jpg">
+                        <div class="port-overlay">
+                            <h4>Design</h4>
+                            <p>Verpackungsdesign</p>
+                        </div>
+                    </div>
+                    <div class="port-card">
+                        <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?w=600&q=80">
+                        <div class="port-overlay">
+                            <h4>Digital</h4>
+                            <p>Social Media</p>
+                        </div>
+                    </div>
+                    <div class="port-card">
+                        <img src="https://kimi-web-img.moonshot.cn/img/5.imimg.com/2e116fb6d8e83465c1aec4ef99fb4f52eab9f402.jpeg">
+                        <div class="port-overlay">
+                            <h4>Druck</h4>
+                            <p>Großformatdruck</p>
+                        </div>
+                    </div>
+                    <div class="port-card">
+                        <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=600&q=80">
+                        <div class="port-overlay">
+                            <h4>Technik</h4>
+                            <p>Leuchtreklame</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        
+<!-- CMS: texts used by scripts (editable in the dashboard) -->
+<div hidden id="cms-strings">
+    <span data-i18n="index.orbit.w1">DIGITALDRUCK</span>
+    <span data-i18n="index.orbit.w2">GROßFORMAT</span>
+    <span data-i18n="index.orbit.w3">BESCHRIFTUNG</span>
+    <span data-i18n="index.orbit.w4">WERBETECHNIK</span>
+    <span data-i18n="index.orbit.w5">BRANDING</span>
+    <span data-i18n="index.orbit.w6">GRAFIKDESIGN</span>
+    <span data-i18n="index.orbit.w7">WEBDESIGN</span>
+    <span data-i18n="index.orbit.w8">TEXTILDRUCK</span>
+</div>
+<footer id="contact">
+            <div class="footer-top">
+                <div class="footer-cta">
+                    <h3 data-i18n="common.footer.cta_title">Ready for your<br>next project?</h3>
+                    <a href="mailto:info@tap-werbetechnik.de" class="footer-cta-btn" data-link="common.link.email">
+                        <span data-i18n="common.footer.cta_btn">Kontakt aufnehmen</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </a>
+                </div>
+
+                <div class="footer-col">
+                    <h4 data-i18n="common.footer.visit_title">Visit Us</h4>
+                    <p data-i18n="common.footer.address1">Schillerstrasse 60</p>
+                    <p data-i18n="common.footer.address2">38440 Wolfsburg</p>
+                </div>
+
+                <div class="footer-col">
+                    <h4 data-i18n="common.footer.call_title">Call Us</h4>
+                    <p class="phone"><a href="tel:+49 151 00000000" data-link="common.link.phone" data-i18n="common.footer.phone" style="color:inherit;font:inherit;line-height:inherit;">0151 00000000</a></p>
+                </div>
+
+                <div class="footer-col">
+                    <h4 data-i18n="common.footer.email_title">E-Mail</h4>
+                    <a href="mailto:info@tap-werbetechnik.de" data-link="common.link.email" data-i18n="common.footer.email">info@tap-<br>werbetechnik.de</a>
+                </div>
+            </div>
+
+            <div class="footer-top" style="margin-top: 40px;">
+                <div class="footer-col">
+                    <h4 data-i18n="common.footer.social_title">Social Media</h4>
+                    <a href="#" data-link="common.link.instagram" data-i18n="common.footer.instagram" target="_blank" rel="noopener">Instagram</a>
+                    <a href="#" data-link="common.link.facebook" data-i18n="common.footer.facebook" target="_blank" rel="noopener">Facebook</a>
+                </div>
+
+                <div class="footer-col">
+                    <h4 data-i18n="common.footer.quick_title">Quick Links</h4>
+                    <a href="#about" data-i18n="common.footer.quick_about">About</a>
+                    <a href="#team" data-i18n="common.footer.quick_team">Team</a>
+                    <a href="#services" data-i18n="common.footer.quick_pricing">Pricing</a>
+                    <a href="#" data-i18n="common.footer.quick_career">Career</a>
+                </div>
+
+                <div class="footer-col">
+                    <h4 data-i18n="common.footer.nav_title">Navigation</h4>
+                    <a href="#about" data-i18n="common.nav.about">About Us</a>
+                    <a href="#" data-i18n="common.footer.nav_roadmap">Roadmap</a>
+                    <a href="#" data-i18n="common.footer.nav_affiliate">Affiliate</a>
+                    <a href="#" data-i18n="common.footer.nav_help">Help Center</a>
+                </div>
+
+                <div class="footer-col">
+                    <h4 data-i18n="common.footer.hours_title">Opening Hours</h4>
+                    <p style="color: var(--text); font-weight: 600;" data-i18n="common.footer.hours_days">Monday - Saturday</p>
+                    <p style="margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--border);" data-i18n="common.footer.hours_time">09:00-18:00</p>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="footer-logo-large">
+                    <div class="logo-icon">T<span class="dot">.</span>A<span class="dot">.</span>P</div>
+                    <div class="logo-text">
+                        <div class="logo-main" data-i18n="common.logo.main">WERBEAGENTUR<span class="wob">WOB</span></div>
+                        <div class="logo-sub" data-i18n="common.logo.sub">WERBETECHNIK / DIGITALDRUCK</div>
+                    </div>
+                </div>
+
+                <div class="footer-copyright">
+                    <span data-i18n="common.footer.copyright">© 2026 Copyright</span> <a href="#" data-i18n="common.footer.company">TAP Werbeagentur</a>
+                </div>
+
+                <div class="footer-links-bottom">
+                    <a href="imprint.html" data-i18n="common.footer.imprint">Impressum</a>
+                    <a href="datenschutz.html" data-i18n="common.footer.privacy">Datenschutz</a>
+                </div>
+                <span style="margin-left: 2rem;">
+                    <a href="admin.html" style="
+                        color: var(--text-muted);
+                        font-size: 0.65rem;
+                        text-decoration: none;
+                        letter-spacing: 0.05em;
+                        opacity: 0.4;
+                        transition: opacity 0.2s;
+                    " onmouseover="this.style.opacity='1'"
+                       onmouseout="this.style.opacity='0.4'">
+                        ⚙
+                    </a>
+                </span>
+            </div>
+        </footer>
+
+    </main>
+
+    <script>
+        // Custom Cursor
+        const cursor = document.getElementById('cursor');
+        const cursorDot = document.getElementById('cursorDot');
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            cursorDot.style.left = mouseX + 'px';
+            cursorDot.style.top = mouseY + 'px';
+        });
+
+        function animateCursor() {
+            cursorX += (mouseX - cursorX) * 0.15;
+            cursorY += (mouseY - cursorY) * 0.15;
+            cursor.style.left = cursorX + 'px';
+            cursor.style.top = cursorY + 'px';
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        document.querySelectorAll('a, button, .team-card, .service-item, .port-card, .corner-arrow, .orbit-word').forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+        });
+
+        // Header Scroll Effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // GSAP + ScrollTrigger
+        gsap.registerPlugin(ScrollTrigger);
+
+        // ============================================
+        // ORBIT WORDS - CONTINUOUS COUNTER-CLOCKWISE ROTATION
+        // ============================================
+        const orbit = document.getElementById('orbit');
+        const wordCount = 8;
+        const radius = 220;
+
+        // Define orbit words with their corresponding service IDs
+        const orbitWordsData = [
+            { word: ' DIGITALDRUCK', serviceId: 'service-digitaldruck', category: 'Druck' },
+            { word: 'GROßFORMAT', serviceId: 'service-digitaldruck', category: 'Druck' },
+            { word: 'BESCHRIFTUNG', serviceId: 'service-werbetechnik', category: 'Technik' },
+            { word: 'WERBETECHNIK', serviceId: 'service-werbetechnik', category: 'Technik' },
+            { word: 'BRANDING', serviceId: 'service-grafikdesign', category: 'Design' },
+            { word: 'GRAFIKDESIGN', serviceId: 'service-grafikdesign', category: 'Design' },
+            { word: 'WEBDESIGN', serviceId: 'service-webdesign', category: 'Digital' },
+            { word: 'TEXTILDRUCK', serviceId: 'service-textildruck', category: 'Textil' }
+        ];
+
+        const orbitItems = [];
+
+        for (let i = 0; i < wordCount; i++) {
+            const angle = (i / wordCount) * Math.PI * 2;
+            const x = Math.cos(angle) * radius;
+            const y = Math.sin(angle) * radius;
+            const item = document.createElement('div');
+            item.className = 'orbit-word';
+            item.textContent = orbitWordsData[i].word;
+            item.dataset.serviceId = orbitWordsData[i].serviceId;
+            item.dataset.word = orbitWordsData[i].word;
+
+            // Store initial angle for rotation calculation
+            item.dataset.initialAngle = angle;
+
+            gsap.set(item, { x: x, y: y, xPercent: -50, yPercent: -50 });
+            orbit.appendChild(item);
+            orbitItems.push(item);
+        }
+
+        // DUAL MODE: Desktop = Bouncing Marquee | Mobile = Self-Rotation
+        const isMobile = window.innerWidth <= 768;
+
+        if (!isMobile) {
+            // ===== DESKTOP: BOUNCING MARQUEE =====
+            const wordsPerRow = 4;
+            const wordSpacing = 400;
+
+            const orbitContainer = document.getElementById('orbit');
+            let containerRect = orbitContainer.getBoundingClientRect();
+            let containerW = containerRect.width;
+
+            const rowConfig = [
+                { direction: -1, baseY: -50, speed: 1.2 },
+                { direction: 1, baseY: 50, speed: 1.0 }
+            ];
+
+            const orbitItemsData = orbitItems.map((item, i) => {
+                const rowIndex = i < wordsPerRow ? 0 : 1;
+                const colIndex = i % wordsPerRow;
+                const config = rowConfig[rowIndex];
+                const startX = (colIndex * wordSpacing) - (wordSpacing * 1.5);
+
+                return {
+                    element: item,
+                    row: rowIndex,
+                    col: colIndex,
+                    x: startX,
+                    y: config.baseY,
+                    baseY: config.baseY,
+                    direction: config.direction,
+                    speed: config.speed,
+                    isHovered: false,
+                    wordWidth: 0
+                };
+            });
+
+            setTimeout(() => {
+                orbitItemsData.forEach(data => {
+                    data.wordWidth = data.element.offsetWidth;
+                });
+            }, 100);
+
+            window.addEventListener('resize', () => {
+                containerRect = orbitContainer.getBoundingClientRect();
+                containerW = containerRect.width;
+            });
+
+            orbitItems.forEach((item, i) => {
+                item.addEventListener('mouseenter', () => {
+                    orbitItemsData[i].isHovered = true;
+                });
+                item.addEventListener('mouseleave', () => {
+                    orbitItemsData[i].isHovered = false;
+                });
+            });
+
+            function animateOrbit() {
+                if (window.innerWidth <= 768) return; // Stop if switched to mobile
+
+                containerRect = orbitContainer.getBoundingClientRect();
+                containerW = containerRect.width;
+                const halfW = containerW / 2;
+                const edgePadding = 60;
+                const leftBound = -halfW + edgePadding;
+                const rightBound = halfW - edgePadding;
+
+                orbitItemsData.forEach(data => {
+                    if (!data.isHovered) {
+                        data.x += data.speed * data.direction;
+                        const wordHalfWidth = (data.wordWidth || 100) / 2;
+
+                        if (data.x - wordHalfWidth < leftBound) {
+                            data.x = leftBound + wordHalfWidth;
+                            data.direction = 1;
+                        }
+                        else if (data.x + wordHalfWidth > rightBound) {
+                            data.x = rightBound - wordHalfWidth;
+                            data.direction = -1;
+                        }
+                    }
+
+                    gsap.set(data.element, { 
+                        x: data.x, 
+                        y: data.baseY, 
+                        xPercent: -50, 
+                        yPercent: -50 
+                    });
+                });
+
+                requestAnimationFrame(animateOrbit);
+            }
+            animateOrbit();
+
+        } else {
+            // ===== MOBILE: CIRCULAR ORBIT ANIMATION =====
+            const mobileOrbitContainer = document.getElementById('orbit');
+
+            function getMobileRadius() {
+                return window.innerWidth <= 480 ? 90 : 110;
+            }
+
+            // Position each word around a circle using angle
+            // angle increases with time → words orbit around center
+            let mobileAngleOffset = 0;
+            const mobileSpeed = 0.004; // radians per frame
+
+            function animateMobileOrbit() {
+                if (window.innerWidth > 768) return;
+
+                const R = getMobileRadius();
+                const containerH = mobileOrbitContainer.offsetHeight || 280;
+                const cx = 0;   // relative to center (xPercent:-50 handles this)
+                const cy = 0;
+
+                mobileAngleOffset += mobileSpeed;
+
+                orbitItems.forEach((item, i) => {
+                    const angle = mobileAngleOffset + (i / wordCount) * Math.PI * 2;
+                    const x = Math.cos(angle) * R;
+                    const y = Math.sin(angle) * R;
+                    gsap.set(item, {
+                        x: x,
+                        y: y,
+                        xPercent: -50,
+                        yPercent: -50,
+                        position: 'absolute',
+                        left: '50%',
+                        top: '50%'
+                    });
+                });
+
+                requestAnimationFrame(animateMobileOrbit);
+            }
+            animateMobileOrbit();
+        }
+
+        // Mouse tilt effect on orbit container (subtle 3D feel)
+        window.addEventListener('mousemove', (e) => {
+            const rotateX = (e.clientY / window.innerHeight - 0.5) * 10;
+            const rotateY = (e.clientX / window.innerWidth - 0.5) * 10;
+            gsap.to(orbit, { rotationX: -rotateX, rotationY: rotateY, duration: 1 });
+        });
+
+        // ============================================
+        // CLICK HANDLER - Scroll to Service & Highlight
+        // ============================================
+        orbitItems.forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                const serviceId = this.dataset.serviceId;
+                const targetService = document.getElementById(serviceId);
+
+                if (targetService) {
+                    // Remove any existing highlights
+                    document.querySelectorAll('.service-item').forEach(s => {
+                        s.classList.remove('active-highlight');
+                    });
+
+                    // Scroll to the services section first
+                    const servicesSection = document.getElementById('services');
+                    servicesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+                    // Then scroll to the specific service with highlight
+                    setTimeout(() => {
+                        targetService.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+                        // Add highlight effect
+                        setTimeout(() => {
+                            targetService.classList.add('active-highlight');
+
+                            // Remove highlight after 3 seconds
+                            setTimeout(() => {
+                                targetService.classList.remove('active-highlight');
+                            }, 3000);
+                        }, 800);
+                    }, 500);
+                }
+            });
+        });
+
+        // Team Card Fan - Entrance Animation (desktop only)
+        const cards = document.querySelectorAll('.team-card');
+
+        if (window.innerWidth > 768) {
+            // Initial state - cards stacked together
+            gsap.set(cards, { 
+                y: 100, 
+                opacity: 0,
+                scale: 0.8
+            });
+
+            ScrollTrigger.create({
+                trigger: ".team-section",
+                start: "top 80%",
+                end: "bottom 20%",
+                toggleActions: "play reverse play reverse",
+                onEnter: () => {
+                    gsap.to(cards, {
+                        y: 0, opacity: 1, scale: 1,
+                        duration: 1.2, stagger: 0.1, ease: "power4.out"
+                    });
+                },
+                onLeave: () => {
+                    gsap.to(cards, { y: 100, opacity: 0, scale: 0.8, duration: 0.6 });
+                },
+                onEnterBack: () => {
+                    gsap.to(cards, {
+                        y: 0, opacity: 1, scale: 1,
+                        duration: 1.2, stagger: 0.1, ease: "power4.out"
+                    });
+                },
+                onLeaveBack: () => {
+                    gsap.to(cards, { y: 100, opacity: 0, scale: 0.8, duration: 0.6 });
+                }
+            });
+        }
+// ===== TEAM MOBILE MARQUEE =====
+        (function() {
+            if (window.innerWidth > 768) return;
+
+            const container = document.getElementById('team-cards');
+            const track     = document.getElementById('team-marquee-track');
+            if (!container || !track) return;
+
+            // Clone all original cards for seamless infinite loop
+            const origCards = Array.from(track.querySelectorAll('.team-card'));
+            origCards.forEach(card => {
+                const clone = card.cloneNode(true);
+                clone.setAttribute('aria-hidden', 'true');
+                track.appendChild(clone);
+            });
+
+            const SPEED = 0.9; // px per frame — medium speed
+            let x = 0;
+            let rafId = null;
+            let paused = false;
+
+            function getSetWidth() {
+                const cardW = window.innerWidth <= 480 ? 146 : 166; // card + gap
+                return origCards.length * cardW;
+            }
+
+            function tick() {
+                if (window.innerWidth > 768) return;
+                if (!paused) {
+                    x -= SPEED;
+                    const setW = getSetWidth();
+                    if (x <= -setW) x += setW;
+                    track.style.transform = 'translateX(' + x + 'px)';
+                }
+                rafId = requestAnimationFrame(tick);
+            }
+            tick();
+
+            // Pause briefly on touch so user can see the card they tapped
+            container.addEventListener('touchstart', () => { paused = true; }, { passive: true });
+            container.addEventListener('touchend',   () => { setTimeout(() => { paused = false; }, 600); }, { passive: true });
+        })();
+
+// Portfolio Marquee
+        gsap.to("#row1", {
+            xPercent: -50,
+            scrollTrigger: {
+                trigger: ".portfolio-section",
+                scrub: 1,
+                start: "top bottom",
+                end: "bottom top"
+            }
+        });
+        gsap.to("#row2", {
+            xPercent: 50,
+            scrollTrigger: {
+                trigger: ".portfolio-section",
+                scrub: 1,
+                start: "top bottom",
+                end: "bottom top"
+            }
+        });
+
+        // About Reveal
+            gsap.fromTo(".about-image-above", 
+    { y: 200, opacity: 0 },
+    {
+        y: 0,
+        opacity: 1,
+        duration: 1,
+        scrollTrigger: {
+            trigger: ".about-section",
+            start: "top 80%",
+            end: "bottom 20%",
+            toggleActions: "play reverse play reverse"
+        }
+    }
+);
+
+        // Service Items Reveal
+            gsap.utils.toArray('.service-item').forEach((item, i) => {
+    gsap.fromTo(item, 
+        { y: 60, opacity: 0 },
+        {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            delay: i * 0.1,
+            scrollTrigger: {
+                trigger: item,
+                start: "top 85%",
+                end: "bottom 15%",
+                toggleActions: "play reverse play reverse"
+            }
+        }
+    );
+});
+
+        // Smooth scroll for nav links - NATIVE only
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // ===== ÜBER UNS SCROLL REVEAL =====
+        const aboutSection = document.querySelector('.about-section');
+        if (aboutSection) {
+            const aboutObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        aboutSection.classList.add('is-visible');
+                    } else {
+                        aboutSection.classList.remove('is-visible');
+                    }
+                });
+            }, { threshold: 0.15 });
+            aboutObserver.observe(aboutSection);
+        }
+    </script>
+    
+    <!-- زر التشات -->
+<div id="chat-widget" style="position:fixed; bottom:30px; right:30px; width:60px; height:60px; background:var(--purple); border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:9999; box-shadow:0 10px40px rgba(139,92,246,0.4);">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg>
+</div>
+
+<!-- نافذة التشات -->
+<div id="chat-window" style="display:none; position:fixed; bottom:100px; right:30px; width:380px; height:500px; background:var(--bg-light); border:1px solid var(--border); border-radius:20px; z-index:9999; overflow:hidden; flex-direction:column;">
+  <!-- Header -->
+ <div style="padding:20px; background:var(--purple); display:flex; align-items:center; gap:15px;">
+    <img src="https://i.ibb.co/Fkq6m6m8/a3ecce39-dd53-4e60-8db7-9bacde5f1dba.png" data-img="common.chat.avatar" 
+         alt="TAP Assistant" 
+         style="width:50px; height:50px; border-radius:50%; object-fit:cover; border:2px solid white; box-shadow:0 4px 15px rgba(0,0,0,0.3);">
+    <div>
+      <div style="color:white; font-weight:700; font-size:16px;" data-i18n="common.chat.title">TAP Assistant</div>
+      <div style="color:rgba(255,255,255,0.7); font-size:12px;" data-i18n="common.chat.status">Online</div>
+    </div>
+  </div>
+  <!-- Messages -->
+  <div id="chat-messages" style="flex:1; padding:20px; overflow-y:auto; display:flex; flex-direction:column; gap:12px;">
+    <div style="background:var(--gray); padding:12px 16px; border-radius:16px 16px 16px 4px; color:var(--text); font-size:14px; max-width:80%;" data-i18n="common.chat.greeting">Hallo! Ich bin der virtuelle Assistent von TAP Werbeagentur. Wie kann ich dir helfen?</div>
+  </div>
+  <!-- Input -->
+  <div style="padding:15px; border-top:1px solid var(--border); display:flex; gap:10px;">
+    <input id="chat-input" type="text" placeholder="Schreib deine Frage..." data-i18n-ph="common.chat.placeholder" style="flex:1; background:var(--bg); border:1px solid var(--border); border-radius:12px; padding:12px 16px; color:var(--text); outline:none;">
+    <button id="chat-send" style="background:var(--purple); border:none; border-radius:12px; padding:12px 20px; color:white; cursor:pointer; font-weight:600;" data-i18n="common.chat.send">Send</button>
+  </div>
+</div>
+
+<script>
+ // ===== HYBRID CHATBOT: Rules + AI - MULTILINGUAL =====
+const GEMINI_API_KEY = 'YOUR_GEMINI_API_KEY';
+
+// 📚 قاعدة بيانات الردود المسبقة - متعدد اللغات مع مرادفات
+const PRESET_ANSWERS = {
+    // ═══════════════════════════════════════════════════════
+    // 🔤 العربية (الفصحى + العامية)
+    // ═══════════════════════════════════════════════════════
+    // الأسعار
+    'سعر': 'أسعارنا حسب المشروع. للعرض المفصل: 0151 00000000 أو info@tap-werbetechnik.de',
+    'سعر الطباعة': 'أسعار الطباعة تبدأ من 5€ للمتر المربع. للعرض المفصل: 0151 00000000',
+    'سعر البانر': 'سعر البانر يبدأ من 10€ للمتر. للاستفسار: 0151 00000000',
+    'سعر الكروت': 'طباعة الكروت الشخصية (Business Cards) تبدأ من 25€ لـ 100 كرت. للتصميم + الطباعة: 0151 00000000',
+    'سعر بطاقات التعريف': 'بطاقات التعريف (ID Cards) تبدأ من 30€ لـ 100 بطاقة بلاستيكية. للاستفسار: 0151 00000000',
+    'سعر المينيو': 'طباعة مينيو المطاعم تبدأ من 15€ للقطعة (A4 مغلف). للتصميم + الطباعة: 0151 00000000',
+    'سعر القائمة': 'طباعة قوائم الطعام (Menu) تبدأ من 15€. للعرض المفصل: 0151 00000000',
+    'سعر الأرمات': 'طباعة الأرمات (Roll-up Banner) تبدأ من 80€ (85x200cm). للاستفسار: 0151 00000000',
+    'سعر القارمات': 'القارمات (X-Banner / Pop-up) تبدأ من 60€. للعرض المفصل: 0151 00000000',
+    'سعر الموقع': 'تصميم مواقع الويب يبدأ من 499€ (موقع تعريفي). متجر إلكتروني من 999€. للاستفسار: 0151 00000000',
+    'سعر المتجر': 'برمجة المتجر الإلكتروني يبدأ من 999€ شامل التصميم والربط مع الدفع. للتفاصيل: 0151 00000000',
+    'سعر التصميم': 'تصميم الجرافيك يبدأ من 150€ (شعار + هوية بصرية). للاستفسار: 0151 00000000',
+    'سعر الهودي': 'طباعة الهوديز تبدأ من 25€ للقطعة (تصميم + طباعة). للكميات: 0151 00000000',
+    'سعر التيشرت': 'طباعة التيشرتات تبدأ من 15€ للقطعة. للكميات الكبيرة خصم خاص: 0151 00000000',
+    'سعر الكنزة': 'طباعة الكنزات (Sweatshirts) تبدأ من 22€ للقطعة. للاستفسار: 0151 00000000',
+    'سعر البنطلون': 'طباعة البناطيل (Work Pants) تبدأ من 20€ للقطعة. للكميات: 0151 00000000',
+    'سعر القميص': 'طباعة القمصان (Shirts) تبدأ من 18€ للقطعة. للعرض المفصل: 0151 00000000',
+    'سعر البلوزة': 'طباعة البلوزات تبدأ من 18€ للقطعة. للاستفسار: 0151 00000000',
+    'سعر الشحن': 'خدمة شحن Hermes: داخل ألمانيا 5.99€، أوروبا 12.99€. للطلبات الكبيرة شحن مجاني: 0151 00000000',
+    
+    // المرادفات العامية
+    'كم': 'أسعارنا حسب المشروع. للعرض المفصل: 0151 00000000',
+    'قديش': 'أسعارنا حسب المشروع. للعرض المفصل: 0151 00000000',
+    'بقديش': 'أسعارنا حسب المشروع. للعرض المفصل: 0151 00000000',
+    'شحال': 'أسعارنا حسب المشروع. للعرض المفصل: 0151 00000000',
+    'بشحال': 'أسعارنا حسب المشروع. للعرض المفصل: 0151 00000000',
+    'كروت': 'طباعة الكروت الشخصية تبدأ من 25€ لـ 100 كرت. للتصميم + الطباعة: 0151 00000000',
+    'كرت': 'طباعة الكروت الشخصية تبدأ من 25€ لـ 100 كرت. للتصميم + الطباعة: 0151 00000000',
+    'بطاقة': 'بطاقات التعريف تبدأ من 30€ لـ 100 بطاقة. للاستفسار: 0151 00000000',
+    'مينيو': 'طباعة مينيو المطاعم تبدأ من 15€ للقطعة. للتصميم + الطباعة: 0151 00000000',
+    'منيو': 'طباعة مينيو المطاعم تبدأ من 15€ للقطعة. للتصميم + الطباعة: 0151 00000000',
+    'قائمة الطعام': 'طباعة قوائم الطعام تبدأ من 15€. للعرض المفصل: 0151 00000000',
+    'أرمة': 'الأرمات (Roll-up Banner) تبدأ من 80€. للاستفسار: 0151 00000000',
+    'قارمة': 'القارمات (X-Banner) تبدأ من 60€. للعرض المفصل: 0151 00000000',
+    'ستاند': 'ستاندات العرض تبدأ من 60€. للاستفسار: 0151 00000000',
+    'موقع': 'تصميم مواقع الويب يبدأ من 499€. للاستفسار: 0151 00000000',
+    'ويب': 'تصميم مواقع الويب يبدأ من 499€. للاستفسار: 0151 00000000',
+    'متجر': 'برمجة المتجر الإلكتروني يبدأ من 999€. للتفاصيل: 0151 00000000',
+    'شوب': 'برمجة المتجر الإلكتروني يبدأ من 999€. للتفاصيل: 0151 00000000',
+    'تيشرت': 'طباعة التيشرتات تبدأ من 15€ للقطعة. للكميات: 0151 00000000',
+    'تيشيرت': 'طباعة التيشرتات تبدأ من 15€ للقطعة. للكميات: 0151 00000000',
+    'هودي': 'طباعة الهوديز تبدأ من 25€ للقطعة. للاستفسار: 0151 00000000',
+    'هوديز': 'طباعة الهوديز تبدأ من 25€ للقطعة. للاستفسار: 0151 00000000',
+    'كنزة': 'طباعة الكنزات تبدأ من 22€ للقطعة. للاستفسار: 0151 00000000',
+    'بلوزة': 'طباعة البلوزات تبدأ من 18€ للقطعة. للاستفسار: 0151 00000000',
+    'بنطلون': 'طباعة البناطيل تبدأ من 20€ للقطعة. للاستفسار: 0151 00000000',
+    'قميص': 'طباعة القمصان تبدأ من 18€ للقطعة. للاستفسار: 0151 00000000',
+    'شحن': 'خدمة شحن Hermes: داخل ألمانيا 5.99€، أوروبا 12.99€. للطلبات الكبيرة شحن مجاني: 0151 00000000',
+    'توصيل': 'خدمة شحن Hermes: داخل ألمانيا 5.99€، أوروبا 12.99€. للطلبات الكبيرة شحن مجاني: 0151 00000000',
+    
+    // المعلومات العامة
+    'مواعيد': 'نعمل من الاثنين للسبت 9:00-18:00',
+    'وقت': 'من الاثنين للسبت 9:00-18:00',
+    'ساعات': 'من الاثنين للسبت 9:00-18:00',
+    'عنوان': 'Schillerstrasse 60, 38440 Wolfsburg',
+    'وين': 'Schillerstrasse 60, 38440 Wolfsburg',
+    'فتح': 'من الاثنين للسبت 9:00-18:00',
+    'خدمات': 'طباعة رقمية، بانرات، ملصقات، تغليف سيارات، تصميم جرافيك، مواقع ويب، متاجر إلكترونية، تيشرتات، كروت، مينيو، أرمات، شحن Hermes',
+    'شو بتعملو': 'كل شي! طباعة، تصميم، مواقع، متاجر، تيشرتات، سيارات، شحن. للاستفسار: 0151 00000000',
+    'سيارات': 'نعم! نعمل تغليف سيارات احترافي بجميع الأحجام. للاستفسار: 0151 00000000',
+    'طباعة': 'نعمل جميع أنواع الطباعة: رقمية، كبيرة الحجم، كروت، مينيو، تيشرتات. للاستفسار: 0151 00000000',
+    'تصميم': 'نعمل تصميم جرافيك، شعارات، هوية بصرية، مواقع ويب، متاجر إلكترونية. للاستفسار: 0151 00000000',
+    'رقم': '0151 00000000',
+    'تلفون': '0151 00000000',
+    'تليفون': '0151 00000000',
+    'ايميل': 'info@tap-werbetechnik.de',
+    'هاتف': '0151 00000000',
+    'موبايل': '0151 00000000',
+    'جوال': '0151 00000000',
+    
+    // ═══════════════════════════════════════════════════════
+    // 🇩🇪 الألمانية (Hochdeutsch + Dialekt)
+    // ═══════════════════════════════════════════════════════
+    'preis': 'Unsere Preise richten sich nach dem Projekt. Kontaktiere uns: 0151 00000000',
+    'kosten': 'Individuelle Preise je nach Projekt. Ruf uns an: 0151 00000000',
+    'wieviel': 'Preise auf Anfrage. Telefon: 0151 00000000',
+    'was kostet': 'Individuelle Preise. Ruf an: 0151 00000000',
+    'visitenkarten preis': 'Visitenkarten ab 25€ für 100 Stück. Design + Druck: 0151 00000000',
+    'visitenkarte': 'Visitenkarten ab 25€ für 100 Stück. Design + Druck: 0151 00000000',
+    'karten preis': 'Visitenkarten ab 25€ für 100 Stück. Für Angebot: 0151 00000000',
+    'ausweis preis': 'ID-Karten ab 30€ für 100 Stück. Infos: 0151 00000000',
+    'menü preis': 'Speisekarten-Druck ab 15€ pro Stück (A4 laminiert). Design + Druck: 0151 00000000',
+    'speisekarte': 'Speisekarten-Druck ab 15€ pro Stück. Design + Druck: 0151 00000000',
+    'roll up preis': 'Roll-up Banner ab 80€ (85x200cm). Für Angebot: 0151 00000000',
+    'rollup': 'Roll-up Banner ab 80€ (85x200cm). Infos: 0151 00000000',
+    'x-banner preis': 'X-Banner / Pop-up ab 60€. Für Details: 0151 00000000',
+    'werbebanner': 'Alle Banner-Drucke ab 10€/m². Für Angebot: 0151 00000000',
+    'website preis': 'Webdesign ab 499€ (Business-Website). Onlineshop ab 999€. Infos: 0151 00000000',
+    'webseite': 'Webdesign ab 499€. Für Beratung: 0151 00000000',
+    'shop preis': 'Onlineshop-Entwicklung ab 999€ inkl. Design & Zahlungsanbindung. Details: 0151 00000000',
+    'onlineshop': 'Onlineshop ab 999€ komplett. Für Beratung: 0151 00000000',
+    'e-commerce': 'E-Commerce Lösungen ab 999€. Für Angebot: 0151 00000000',
+    'hoodie preis': 'Hoodie-Druck ab 25€ pro Stück (Design + Druck). Mengenrabatt: 0151 00000000',
+    't-shirt preis': 'T-Shirt Druck ab 15€ pro Stück. Mengenrabatt verfügbar: 0151 00000000',
+    'shirt preis': 'Hemden-Druck ab 18€ pro Stück. Für Angebot: 0151 00000000',
+    'pullover preis': 'Pullover-Druck ab 22€ pro Stück. Infos: 0151 00000000',
+    'hose preis': 'Hosen-Druck ab 20€ pro Stück. Für Details: 0151 00000000',
+    'bluse preis': 'Blusen-Druck ab 18€ pro Stück. Infos: 0151 00000000',
+    'versand preis': 'Hermes Versand: Deutschland 5.99€, Europa 12.99€. Ab große Mengen: kostenlos. Infos: 0151 00000000',
+    'lieferung': 'Hermes Versand: Deutschland 5.99€, Europa 12.99€. Infos: 0151 00000000',
+    
+    'öffnungszeit': 'Montag-Samstag: 09:00-18:00 Uhr',
+    'wann offen': 'Mo-Sa: 09:00-18:00 Uhr',
+    'uhrzeit': 'Mo-Sa: 09:00-18:00 Uhr',
+    'adresse': 'Schillerstrasse 60, 38440 Wolfsburg',
+    'wo': 'Schillerstrasse 60, 38440 Wolfsburg',
+    'standort': 'Schillerstrasse 60, 38440 Wolfsburg',
+    'digitaldruck': 'Hochwertiger Digitaldruck für Banner, Plakate, Folien in allen Formaten.',
+    'fahrzeug': 'Ja! Professionelle Fahrzeugbeschriftung und Vollfolierung.',
+    'beschriftung': 'Ja! Fahrzeuge, Schaufenster, Schilder - alles aus einer Hand.',
+    'textildruck': 'Ja! T-Shirts, Hoodies, Caps und Arbeitskleidung mit Druck oder Stick.',
+    'webdesign': 'Ja! Moderne Websites und Social Media Content.',
+    'telefon': '0151 00000000',
+    'nummer': '0151 00000000',
+    'email': 'info@tap-werbetechnik.de',
+    'mail': 'info@tap-werbetechnik.de',
+    'was macht ihr': 'Alles rund um Werbung! Druck, Design, Web, Textil, Fahrzeuge, Versand. Infos: 0151 00000000',
+    'leistungen': 'Digitaldruck, Großformat, Werbetechnik, Webdesign, Onlineshop, Textildruck, Visitenkarten, Speisekarten, Banner, Versand',
+    
+    // ═══════════════════════════════════════════════════════
+    // 🇬🇧 الإنجليزية
+    // ═══════════════════════════════════════════════════════
+    'price': 'Prices depend on the project. Contact us: 0151 00000000',
+    'cost': 'Individual quotes for each project. Call: 0151 00000000',
+    'how much': 'Prices vary by project. For quote: 0151 00000000',
+    'business card price': 'Business cards from 25€ for 100 pieces. Design + Print: 0151 00000000',
+    'business cards': 'Business cards from 25€ for 100 pieces. Design + Print: 0151 00000000',
+    'id card price': 'ID cards from 30€ for 100 plastic cards. Info: 0151 00000000',
+    'menu price': 'Restaurant menu printing from 15€ per piece (A4 laminated). Design + Print: 0151 00000000',
+    'restaurant menu': 'Menu printing from 15€ per piece. Design + Print: 0151 00000000',
+    'roll up price': 'Roll-up banners from 80€ (85x200cm). For quote: 0151 00000000',
+    'x-banner price': 'X-Banner / Pop-up displays from 60€. Details: 0151 00000000',
+    'display price': 'Display stands from 60€. Info: 0151 00000000',
+    'website price': 'Web design from 499€ (business website). E-commerce from 999€. Info: 0151 00000000',
+    'web design': 'Web design from 499€. For consultation: 0151 00000000',
+    'shop price': 'E-commerce development from 999€ incl. design & payment. Details: 0151 00000000',
+    'e-commerce price': 'E-commerce solutions from 999€. For quote: 0151 00000000',
+    'online store': 'Online store from 999€ complete. For details: 0151 00000000',
+    'hoodie price': 'Hoodie printing from 25€ per piece (design + print). Bulk discount: 0151 00000000',
+    't-shirt price': 'T-shirt printing from 15€ per piece. Bulk discount available: 0151 00000000',
+    'shirt price': 'Shirt printing from 18€ per piece. For quote: 0151 00000000',
+    'sweater price': 'Sweater printing from 22€ per piece. Info: 0151 00000000',
+    'pants price': 'Pants printing from 20€ per piece. Details: 0151 00000000',
+    'blouse price': 'Blouse printing from 18€ per piece. Info: 0151 00000000',
+    'shipping price': 'Hermes shipping: Germany 5.99€, Europe 12.99€. Free for large orders. Info: 0151 00000000',
+    'delivery': 'Hermes delivery: Germany 5.99€, Europe 12.99€. Info: 0151 00000000',
+    
+    'hours': 'Monday-Saturday: 09:00-18:00',
+    'open': 'Monday-Saturday: 09:00-18:00',
+    'when open': 'Mon-Sat: 09:00-18:00',
+    'address': 'Schillerstrasse 60, 38440 Wolfsburg',
+    'where': 'Schillerstrasse 60, 38440 Wolfsburg',
+    'location': 'Schillerstrasse 60, 38440 Wolfsburg',
+    'services': 'Digital printing, banners, vehicle wrapping, graphic design, web design, online shops, t-shirts, business cards, menus, roll-ups, shipping',
+    'what do you do': 'Everything advertising! Print, design, web, shops, textiles, vehicles, shipping. Info: 0151 00000000',
+    'car': 'Yes! Professional vehicle wrapping and lettering.',
+    'printing': 'All types of printing: digital, large format, cards, menus, t-shirts. Info: 0151 00000000',
+    'design': 'Graphic design, logos, branding, websites, online shops. Info: 0151 00000000',
+    'phone': '0151 00000000',
+    'number': '0151 00000000',
+    
+    // ═══════════════════════════════════════════════════════
+    // 🇹🇷 التركية (Türkçe)
+    // ═══════════════════════════════════════════════════════
+    'fiyat': 'Fiyatlar projeye göre değişir. Bilgi için: 0151 00000000',
+    'fiyatı': 'Fiyatlar projeye göre değişir. Bilgi için: 0151 00000000',
+    'kaç para': 'Projeye göre fiyatlar. Ara: 0151 00000000',
+    'ne kadar': 'Projeye göre fiyatlar. Ara: 0151 00000000',
+    'kartvizit fiyat': 'Kartvizit baskı 100 adet 25€\'dan başlar. Tasarım + Baskı: 0151 00000000',
+    'kartvizit': 'Kartvizit baskı 100 adet 25€\'dan başlar. Bilgi: 0151 00000000',
+    'kimlik kartı fiyat': 'ID kart baskı 100 adet 30€\'dan başlar. Bilgi: 0151 00000000',
+    'menü fiyat': 'Restoran menü baskı adet başı 15€\'dan başlar (A4 laminasyonlu). Tasarım + Baskı: 0151 00000000',
+    'menü baskı': 'Menü baskı adet başı 15€\'dan başlar. Bilgi: 0151 00000000',
+    'roll up fiyat': 'Roll-up banner 80€\'dan başlar (85x200cm). Teklif için: 0151 00000000',
+    'x-banner fiyat': 'X-Banner / Pop-up 60€\'dan başlar. Detaylar: 0151 00000000',
+    'web sitesi fiyat': 'Web tasarım 499€\'dan başlar (kurumsal site). E-ticaret 999€\'dan başlar. Bilgi: 0151 00000000',
+    'eticaret fiyat': 'E-ticaret geliştirme 999€\'dan başlar (tasarım + ödeme entegrasyonu dahil). Detaylar: 0151 00000000',
+    'online mağaza': 'Online mağaza 999€\'dan başlar komple. Bilgi: 0151 00000000',
+    'kapüşonlu fiyat': 'Kapüşonlu sweatshirt baskı adet başı 25€\'dan başlar (tasarım + baskı). Toplu sipariş: 0151 00000000',
+    'tişört fiyat': 'Tişört baskı adet başı 15€\'dan başlar. Toplu sipariş indirimi: 0151 00000000',
+    'gömlek fiyat': 'Gömlek baskı adet başı 18€\'dan başlar. Teklif için: 0151 00000000',
+    'kazak fiyat': 'Kazak baskı adet başı 22€\'dan başlar. Bilgi: 0151 00000000',
+    'pantolon fiyat': 'Pantolon baskı adet başı 20€\'dan başlar. Detaylar: 0151 00000000',
+    'bluz fiyat': 'Bluz baskı adet başı 18€\'dan başlar. Bilgi: 0151 00000000',
+    'kargo fiyat': 'Hermes kargo: Almanya 5.99€, Avrupa 12.99€. Büyük siparişlerde ücretsiz. Bilgi: 0151 00000000',
+    'teslimat': 'Hermes teslimat: Almanya 5.99€, Avrupa 12.99€. Bilgi: 0151 00000000',
+    
+    'çalışma saatleri': 'Pazartesi-Cumartesi: 09:00-18:00',
+    'saatler': 'Pzt-Cmt: 09:00-18:00',
+    'ne zaman açık': 'Pzt-Cmt: 09:00-18:00',
+    'adres': 'Schillerstrasse 60, 38440 Wolfsburg',
+    'nerede': 'Schillerstrasse 60, 38440 Wolfsburg',
+    'lokasyon': 'Schillerstrasse 60, 38440 Wolfsburg',
+    'dijital baskı': 'Tüm formatlarda yüksek kaliteli dijital baskı.',
+    'araç giydirme': 'Evet! Profesyonel araç giydirme ve kaplama.',
+    'tekstil baskı': 'Evet! Tişört, kapüşonlu, şapka ve iş kıyafeti baskısı.',
+    'telefon': '0151 00000000',
+    'numara': '0151 00000000',
+    'e-posta': 'info@tap-werbetechnik.de',
+    'ne yapıyorsunuz': 'Reklamın her alanında! Baskı, tasarım, web, tekstil, araç, kargo. Bilgi: 0151 00000000',
+    'hizmetler': 'Dijital baskı, büyük format, reklam, web tasarım, e-ticaret, tekstil baskı, kartvizit, menü, banner, kargo',
+    
+    // ═══════════════════════════════════════════════════════
+    // 🟢 الكردية البادينية (Kurdî - Badînî)
+    // ═══════════════════════════════════════════════════════
+    'biha': 'Biha li gorî projeyê ye. Ji bo agahî: 0151 00000000',
+    'nirx': 'Nirx li gorî projeyê ye. Zeng: 0151 00000000',
+    'çend e': 'Biha li gorî projeyê ye. Zeng: 0151 00000000',
+    'qardê karsaziyê biha': 'Qardê karsaziyê ji 25€ dest pê dike (100 qard). Dizayn + Çap: 0151 00000000',
+    'qardê karsaziyê': 'Qardê karsaziyê ji 25€ dest pê dike (100 qard). Agahî: 0151 00000000',
+    'qardê nasnameyê biha': 'Qardê nasnameyê ji 30€ dest pê dike (100 qard plastîk). Agahî: 0151 00000000',
+    'menûya restorantê biha': 'Çapkirina menûya restorantê ji 15€ dest pê dike ji bo her yekê (A4 laminat). Dizayn + Çap: 0151 00000000',
+    'menû çap': 'Çapkirina menûyê ji 15€ dest pê dike. Agahî: 0151 00000000',
+    'roll up biha': 'Roll-up banner ji 80€ dest pê dike (85x200cm). Ji bo pêşniyaz: 0151 00000000',
+    'x-banner biha': 'X-Banner / Pop-up ji 60€ dest pê dike. Detay: 0151 00000000',
+    'malper biha': 'Dizayna malperê ji 499€ dest pê dike (malpera karsaziyê). Firoşgeha serhêl ji 999€ dest pê dike. Agahî: 0151 00000000',
+    'dizayna malperê': 'Dizayna malperê ji 499€ dest pê dike. Ji bo şêwirmendî: 0151 00000000',
+    'firoşgeha serhêl biha': 'Pêşveçûna firoşgeha serhêl ji 999€ dest pê dike (dizayn + girêdana dravdanê). Detay: 0151 00000000',
+    'dikana serhêl': 'Dikana serhêl ji 999€ dest pê dike temam. Agahî: 0151 00000000',
+    'kapuşon biha': 'Çapkirina kapuşonê ji 25€ dest pê dike ji bo her yekê (dizayn + çap). Ji bo fermana kom: 0151 00000000',
+    'tişort biha': 'Çapkirina tişortê ji 15€ dest pê dike ji bo her yekê. Ji bo fermana kom erzanî: 0151 00000000',
+    'kiris biha': 'Çapkirina kirisê ji 18€ dest pê dike ji bo her yekê. Ji bo pêşniyaz: 0151 00000000',
+    'kazak biha': 'Çapkirina kazakê ji 22€ dest pê dike ji bo her yekê. Agahî: 0151 00000000',
+    'pantolon biha': 'Çapkirina pantolonê ji 20€ dest pê dike ji bo her yekê. Detay: 0151 00000000',
+    'bluz biha': 'Çapkirina bluzê ji 18€ dest pê dike ji bo her yekê. Agahî: 0151 00000000',
+    'şandin biha': 'Kargoya Hermes: Almanya 5.99€, Ewropa 12.99€. Ji bo fermana mezin belaş. Agahî: 0151 00000000',
+    'gihandin': 'Kargoya Hermes: Almanya 5.99€, Ewropa 12.99€. Agahî: 0151 00000000',
+    
+    'saetên kar': 'Duşem-Sêşem: 09:00-18:00',
+    'dem': 'Duşem-Sêşem: 09:00-18:00',
+    'demên vekirî': 'Duşem-Sêşem: 09:00-18:00',
+    'navnîşan': 'Schillerstrasse 60, 38440 Wolfsburg',
+    'ku': 'Schillerstrasse 60, 38440 Wolfsburg',
+    'cih': 'Schillerstrasse 60, 38440 Wolfsburg',
+    'çapa dîjîtal': 'Çapa dîjîtal a bilind-kalîteyê ji bo hemû formatan.',
+    'gerînendeya wesayîtê': 'Erê! Gerînendeya profesyonel a wesayîtê û kaplama.',
+    'çapa tekstîlê': 'Erê! Çapa tişort, kapuşon, kulik û cilên kar.',
+    'dizayna webê': 'Erê! Malperên nûjen û naveroka medya civakî.',
+    'jimare': '0151 00000000',
+    'peyam': 'info@tap-werbetechnik.de',
+    'tu çi dikî': 'Her tişt li ser reklamê! Çap, dizayn, web, tekstîl, wesayît, kargo. Agahî: 0151 00000000',
+    'xizmet': 'Çapa dîjîtal, formatê mezin, reklam, dizayna webê, firoşgeha serhêl, çapa tekstîlê, qardê karsaziyê, menû, banner, kargo'
+};
+
+// 🧠 سياق الشركة للـ AI
+const COMPANY_CONTEXT = `
+Du bist der virtuelle Assistent von TAP Werbeagentur WOB in Wolfsburg.
+Du sprichst Deutsch, Englisch, Arabisch, Türkisch und Kurdisch (Badînî).
+WICHTIG: Für Preise und Angebote verweise IMMER auf die Telefonnummer 0151 00000000.
+- Adresse: Schillerstrasse 60, 38440 Wolfsburg
+- Telefon: 0151 00000000
+- E-Mail: info@tap-werbetechnik.de
+- Öffnungszeiten: Montag-Samstag 09:00-18:00
+- Leistungen: Digitaldruck, Großformat, Werbetechnik, Fahrzeugbeschriftung, Grafikdesign, Webdesign, Onlineshop, Textildruck, Visitenkarten, Speisekarten, Roll-up Banner, X-Banner, Hermes Versand
+- Sprachen: Deutsch, English, العربية, Türkçe, Kurdî (Badînî)
+`;
+
+// Toggle chat window
+document.getElementById('chat-widget').addEventListener('click', () => {
+    const win = document.getElementById('chat-window');
+    win.style.display = win.style.display === 'none' ? 'flex' : 'none';
+});
+
+// Send message
+document.getElementById('chat-send').addEventListener('click', sendMessage);
+document.getElementById('chat-input').addEventListener('keypress', (e) => {
+    if(e.key === 'Enter') sendMessage();
+});
+
+async function sendMessage() {
+    const input = document.getElementById('chat-input');
+    const msg = input.value.trim();
+    if(!msg) return;
+    
+    addMessage(msg, 'user');
+    input.value = '';
+    showTyping();
+    
+    // 🔍 الخطوة 1: دور على رد مسبق
+    const presetReply = findPresetAnswer(msg);
+    
+    if (presetReply) {
+        // ✅ لقينا رد مسبق - استخدمه فوراً
+        setTimeout(() => {
+            hideTyping();
+            addMessage(presetReply, 'bot');
+        }, 600);
+    } else {
+        // 🤖 ما لقينا رد - استخدم Gemini AI
+        try {
+            const reply = await getGeminiReply(msg);
+            hideTyping();
+            addMessage(reply, 'bot');
+        } catch (error) {
+            hideTyping();
+            addMessage('Entschuldigung / عذراً / Üzgünüm / Bibore / ببورە\n\nIch habe gerade technische Probleme. Bitte ruf uns direkt an:\n\n📞 0151 00000000\n📧 info@tap-werbetechnik.de', 'bot');
+            console.error('Error:', error);
+        }
+    }
+}
+
+// 🔍 دالة البحث الذكي عن الرد المسبق
+function findPresetAnswer(userMsg) {
+    const lower = userMsg.toLowerCase().trim();
+    
+    // 1. دور على تطابق مباشر
+    for (const [keyword, answer] of Object.entries(PRESET_ANSWERS)) {
+        if (lower.includes(keyword.toLowerCase())) {
+            return answer;
+        }
+    }
+    
+    // 2. دور على كلمات متشابهة (fuzzy matching)
+    const words = lower.split(/[\s\.,;!?]+/);
+    for (const word of words) {
+        if (word.length > 3) {
+            for (const [keyword, answer] of Object.entries(PRESET_ANSWERS)) {
+                if (similarity(word, keyword) > 0.65) {
+                    return answer;
+                }
+            }
+        }
+    }
+    
+    return null;
+}
+
+// 📊 دالة حساب التشابه بين كلمتين (Levenshtein)
+function similarity(s1, s2) {
+    s1 = s1.toLowerCase();
+    s2 = s2.toLowerCase();
+    
+    const longer = s1.length > s2.length ? s1 : s2;
+    const shorter = s1.length > s2.length ? s2 : s1;
+    
+    if (longer.length === 0) return 1.0;
+    
+    const costs = [];
+    for (let i = 0; i <= shorter.length; i++) {
+        let lastValue = i;
+        for (let j = 0; j <= longer.length; j++) {
+            if (i === 0) {
+                costs[j] = j;
+            } else if (j > 0) {
+                let newValue = costs[j - 1];
+                if (shorter[i - 1] !== longer[j - 1]) {
+                    newValue = Math.min(Math.min(newValue, lastValue), costs[j]) + 1;
+                }
+                costs[j - 1] = lastValue;
+                lastValue = newValue;
+            }
+        }
+        if (i > 0) costs[longer.length] = lastValue;
+    }
+    
+    return (longer.length - costs[longer.length]) / longer.length;
+}
+
+function addMessage(text, sender) {
+    const div = document.createElement('div');
+    div.style.cssText = sender === 'user' 
+        ? 'background:var(--purple); padding:12px 16px; border-radius:16px 16px 4px 16px; color:white; font-size:14px; max-width:80%; align-self:flex-end; margin:4px 0;'
+        : 'background:var(--gray); padding:12px 16px; border-radius:16px 16px 16px 4px; color:var(--text); font-size:14px; max-width:80%; margin:4px 0;';
+    div.textContent = text;
+    document.getElementById('chat-messages').appendChild(div);
+    document.getElementById('chat-messages').scrollTop = 999999;
+}
+
+function showTyping() {
+    const div = document.createElement('div');
+    div.id = 'typing-indicator';
+    div.style.cssText = 'background:var(--gray); padding:12px 16px; border-radius:16px; color:var(--text-muted); font-size:14px; align-self:flex-start; margin:4px 0; font-style:italic; display:flex; align-items:center; gap:8px;';
+    div.innerHTML = '<span>Schreibt / يكتب / Yazıyor / Dinivîse...</span><span style="animation:typingDots 1.4s infinite;">...</span>';
+    document.getElementById('chat-messages').appendChild(div);
+    document.getElementById('chat-messages').scrollTop = 999999;
+}
+
+function hideTyping() {
+    const typing = document.getElementById('typing-indicator');
+    if(typing) typing.remove();
+}
+
+// 🤖 Gemini API Call
+async function getGeminiReply(userMessage) {
+    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
+    
+    const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            contents: [{
+                role: 'user',
+                parts: [{
+                    text: `${COMPANY_CONTEXT}\n\nKundenfrage: ${userMessage}\n\nAntworte kurz (max. 3 Sätze) in der Sprache des Kunden:`
+                }]
+            }],
+            generationConfig: {
+                temperature: 0.7,
+                maxOutputTokens: 200,
+                topP: 0.9
+            }
+        })
+    });
+    
+    const data = await response.json();
+    
+    if (!response.ok) {
+        throw new Error(data.error?.message || 'API Error');
+    }
+    
+    return data.candidates[0].content.parts[0].text;
+}
+
+// Typing animation CSS
+const style = document.createElement('style');
+style.textContent = `
+@keyframes typingDots {
+    0%, 20% { opacity: 0; }
+    40% { opacity: 1; }
+    60% { opacity: 1; }
+    80%, 100% { opacity: 0; }
+}
+`;
+document.head.appendChild(style);
+
+
+// ===== MOBILE MENU TOGGLE =====
+document.querySelector('.hamburger').addEventListener('click', function() {
+    document.getElementById('mobileMenu').classList.toggle('active');
+});
+document.querySelectorAll('.mobile-menu a').forEach(function(a) {
+    a.addEventListener('click', function() {
+        document.getElementById('mobileMenu').classList.remove('active');
+    });
+});
+
+</script>
+<script>
+// ===== CMS: portfolio works + orbit words from the dashboard =====
+TAP_CMS.ready.then(function () {
+    // Orbit words (hidden #cms-strings spans are already translated)
+    document.querySelectorAll('.orbit-word').forEach(function (el, i) {
+        var src = document.querySelector('[data-i18n="index.orbit.w' + (i + 1) + '"]');
+        if (src) { el.textContent = src.textContent; el.dataset.word = src.textContent; }
+    });
+    var items = TAP_CMS.collection('portfolio');
+    if (!items) return;
+    var rows = [document.getElementById('row1'), document.getElementById('row2')];
+    rows.forEach(function (r) { r.innerHTML = ''; });
+    var half = Math.ceil(items.length / 2);
+    items.forEach(function (it, i) {
+        var card = document.createElement('div');
+        card.className = 'port-card';
+        card.innerHTML = '<img alt=""><div class="port-overlay"><h4></h4><p></p></div>';
+        card.querySelector('img').src = it.img;
+        card.querySelector('h4').textContent = TAP_CMS.tr(it.title);
+        card.querySelector('p').textContent = TAP_CMS.tr(it.sub);
+        var node = card;
+        if (it.link) { node = document.createElement('a'); node.href = it.link; node.appendChild(card); }
+        rows[i < half ? 0 : 1].appendChild(node);
+    });
+});
+</script>
+</body>
+</html>

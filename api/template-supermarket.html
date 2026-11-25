@@ -1,0 +1,1681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-editable="siteTitle">Zilly - Fresh Groceries Delivered</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #16a34a;
+            --primary-dark: #15803d;
+            --primary-light: #dcfce7;
+            --accent: #f59e0b;
+            --accent-red: #ef4444;
+            --bg: #f8fafc;
+            --white: #ffffff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        /* ===== TOP BAR ===== */
+        .top-bar {
+            background: var(--primary);
+            color: var(--white);
+            padding: 8px 0;
+            font-size: 0.8rem;
+        }
+
+        .top-bar-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .top-bar-left {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .top-bar-left i {
+            margin-right: 6px;
+        }
+
+        .top-bar-right {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .top-bar-right a {
+            color: var(--white);
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .top-bar-right a:hover { opacity: 0.8; }
+
+        /* ===== HEADER ===== */
+        .main-header {
+            background: var(--white);
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .logo i {
+            font-size: 2rem;
+        }
+
+        .logo span {
+            color: var(--text);
+        }
+
+        .header-search {
+            flex: 1;
+            max-width: 600px;
+            display: flex;
+            position: relative;
+        }
+
+        .search-category {
+            background: var(--bg);
+            border: 2px solid var(--border);
+            border-right: none;
+            border-radius: 12px 0 0 12px;
+            padding: 12px 20px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text);
+        }
+
+        .search-input {
+            flex: 1;
+            border: 2px solid var(--border);
+            border-left: none;
+            border-right: none;
+            padding: 12px 20px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+        .search-btn {
+            background: var(--accent);
+            color: var(--white);
+            border: 2px solid var(--accent);
+            border-radius: 0 12px 12px 0;
+            padding: 12px 24px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .search-btn:hover {
+            background: #d97706;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .header-action {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--text);
+            font-size: 0.85rem;
+            font-weight: 500;
+            position: relative;
+        }
+
+        .header-action i {
+            font-size: 1.4rem;
+            color: var(--primary);
+        }
+
+        .action-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--accent-red);
+            color: var(--white);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+
+        /* ===== NAV MENU ===== */
+        .nav-menu {
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+            padding: 0;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-all-categories {
+            background: var(--primary);
+            color: var(--white);
+            padding: 14px 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            border: none;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 4px;
+            flex: 1;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            padding: 14px 18px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--primary);
+        }
+
+        .nav-links a i {
+            font-size: 0.7rem;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        .nav-right i {
+            color: var(--primary);
+            margin-right: 6px;
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero-section {
+            max-width: 1400px;
+            margin: 30px auto;
+            padding: 0 40px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .hero-content {
+            padding: 40px 0;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            color: var(--text);
+            padding: 8px 20px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            color: var(--text);
+        }
+
+        .hero-desc {
+            color: var(--text-light);
+            font-size: 1rem;
+            line-height: 1.7;
+            margin-bottom: 30px;
+            max-width: 500px;
+        }
+
+        .hero-btn {
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 16px 40px;
+            border-radius: 12px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(22, 163, 74, 0.3);
+        }
+
+        .hero-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(22, 163, 74, 0.4);
+        }
+
+        .hero-image {
+            position: relative;
+        }
+
+        .hero-image img {
+            width: 100%;
+            max-height: 450px;
+            object-fit: contain;
+            border-radius: 24px;
+        }
+
+        .hero-decor {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: var(--primary-light);
+            border-radius: 50%;
+            opacity: 0.3;
+        }
+
+        .hero-decor-1 { top: -20px; left: -20px; }
+        .hero-decor-2 { bottom: 40px; right: 40px; width: 60px; height: 60px; }
+
+        /* ===== PROMO BANNERS ===== */
+        .promo-banners {
+            max-width: 1400px;
+            margin: 0 auto 40px;
+            padding: 0 40px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .promo-banner {
+            border-radius: 20px;
+            padding: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+            min-height: 160px;
+        }
+
+        .promo-banner-1 {
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+        }
+
+        .promo-banner-2 {
+            background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+        }
+
+        .promo-banner-3 {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+        }
+
+        .promo-info h4 {
+            font-size: 1.1rem;
+            margin-bottom: 4px;
+            color: var(--text);
+        }
+
+        .promo-info p {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-bottom: 12px;
+        }
+
+        .promo-price {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--primary-dark);
+        }
+
+        .promo-btn {
+            background: var(--white);
+            color: var(--text);
+            border: none;
+            padding: 10px 24px;
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .promo-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .promo-img {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            position: absolute;
+            right: 20px;
+            bottom: 10px;
+        }
+
+        /* ===== INFO BAR ===== */
+        .info-bar {
+            max-width: 1400px;
+            margin: 0 auto 40px;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        .info-item i {
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        .info-item strong {
+            color: var(--text);
+        }
+
+        /* ===== SECTIONS ===== */
+        .section-container {
+            max-width: 1400px;
+            margin: 0 auto 50px;
+            padding: 0 40px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary) 0%, transparent 100%);
+            margin-left: 20px;
+            max-width: 200px;
+        }
+
+        .view-all {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s;
+        }
+
+        .view-all:hover {
+            gap: 10px;
+        }
+
+        /* ===== PRODUCT CARDS ===== */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 20px;
+        }
+
+        .product-card {
+            background: var(--white);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow);
+        }
+
+        .product-wishlist {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--white);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 2;
+            transition: all 0.3s;
+            color: var(--text-light);
+        }
+
+        .product-wishlist:hover {
+            background: var(--accent-red);
+            color: var(--white);
+            border-color: var(--accent-red);
+        }
+
+        .product-img-wrap {
+            padding: 20px;
+            background: var(--bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 180px;
+        }
+
+        .product-img {
+            max-width: 100%;
+            max-height: 140px;
+            object-fit: contain;
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover .product-img {
+            transform: scale(1.05);
+        }
+
+        .product-info {
+            padding: 16px;
+        }
+
+        .product-name {
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 10px;
+            font-size: 0.75rem;
+            color: var(--text-light);
+        }
+
+        .stars {
+            color: #fbbf24;
+        }
+
+        .product-price-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .price-current {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+        }
+
+        .price-old {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            text-decoration: line-through;
+        }
+
+        .add-to-cart {
+            width: 100%;
+            padding: 10px;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .add-to-cart:hover {
+            background: var(--primary-dark);
+        }
+
+        /* ===== CATEGORY GRID ===== */
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        .category-card-large {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .category-card-large:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow);
+        }
+
+        .cat-img-wrap {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .cat-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .category-card-large:hover .cat-img-wrap img {
+            transform: scale(1.1);
+        }
+
+        .cat-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%);
+        }
+
+        .cat-info {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            color: var(--white);
+        }
+
+        .cat-info h4 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .cat-info p {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        /* ===== DEAL BANNER ===== */
+        .deal-banner {
+            max-width: 1400px;
+            margin: 0 auto 50px;
+            padding: 0 40px;
+        }
+
+        .deal-banner-inner {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 50%, #fbbf24 100%);
+            border-radius: 24px;
+            padding: 40px 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .deal-banner-inner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 400px;
+            height: 400px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+        }
+
+        .deal-content {
+            z-index: 2;
+        }
+
+        .deal-content h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+
+        .deal-content p {
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+
+        .deal-badge {
+            background: var(--accent-red);
+            color: var(--white);
+            padding: 12px 24px;
+            border-radius: 16px;
+            text-align: center;
+            z-index: 2;
+        }
+
+        .deal-badge span {
+            display: block;
+            font-size: 2rem;
+            font-weight: 800;
+        }
+
+        .deal-badge small {
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .deal-img {
+            width: 200px;
+            z-index: 2;
+        }
+
+        .deal-img img {
+            width: 100%;
+            object-fit: contain;
+        }
+
+        /* ===== TRENDING SECTION ===== */
+        .trending-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr 280px;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .sidebar-ad {
+            background: linear-gradient(180deg, #fef9c3 0%, #fde047 100%);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .sidebar-ad h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+
+        .sidebar-ad p {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-bottom: 8px;
+        }
+
+        .sidebar-ad .price {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--primary-dark);
+            margin-bottom: 16px;
+        }
+
+        .sidebar-ad img {
+            width: 100%;
+            max-height: 200px;
+            object-fit: contain;
+            margin-bottom: 16px;
+        }
+
+        .sidebar-ad-btn {
+            background: var(--text);
+            color: var(--white);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .sidebar-ad-btn:hover {
+            background: var(--primary);
+        }
+
+        .trending-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .trending-product {
+            display: flex;
+            gap: 16px;
+            background: var(--white);
+            border-radius: 16px;
+            padding: 16px;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        .trending-product:hover {
+            box-shadow: var(--shadow);
+            transform: translateY(-3px);
+        }
+
+        .trending-img {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            background: var(--bg);
+            border-radius: 12px;
+            padding: 10px;
+        }
+
+        .trending-info {
+            flex: 1;
+        }
+
+        .trending-info h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .trending-info .cat-tag {
+            font-size: 0.75rem;
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .trending-price {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .trending-price .current {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+        }
+
+        .trending-price .old {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            text-decoration: line-through;
+        }
+
+        .trending-add {
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 8px 20px;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .trending-add:hover {
+            background: var(--primary-dark);
+        }
+
+        /* ===== BOTTOM BANNER ===== */
+        .bottom-banner {
+            max-width: 1400px;
+            margin: 0 auto 50px;
+            padding: 0 40px;
+        }
+
+        .bottom-banner-inner {
+            background: linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%);
+            border-radius: 24px;
+            padding: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bottom-content h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .bottom-content p {
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+
+        .bottom-price {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .bottom-price span {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .bottom-price-btn {
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .bottom-price-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .bottom-img {
+            width: 250px;
+        }
+
+        .bottom-img img {
+            width: 100%;
+            object-fit: contain;
+        }
+
+        /* ===== FOOTER ===== */
+        .main-footer {
+            background: var(--text);
+            color: var(--white);
+            padding: 60px 0 30px;
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+            gap: 40px;
+        }
+
+        .footer-brand h3 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+            color: var(--primary);
+        }
+
+        .footer-brand p {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 12px;
+        }
+
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .footer-social a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-col h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--white);
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col li {
+            margin-bottom: 12px;
+        }
+
+        .footer-col a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .footer-col a:hover {
+            color: var(--primary);
+            padding-left: 4px;
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 40px auto 0;
+            padding: 30px 40px 0;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        .payment-methods {
+            display: flex;
+            gap: 12px;
+        }
+
+        .payment-methods i {
+            font-size: 1.8rem;
+            color: var(--text-light);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1200px) {
+            .products-grid { grid-template-columns: repeat(4, 1fr); }
+            .category-grid { grid-template-columns: repeat(2, 1fr); }
+            .trending-layout { grid-template-columns: 1fr; }
+            .sidebar-ad { display: none; }
+        }
+
+        @media (max-width: 768px) {
+            .products-grid { grid-template-columns: repeat(2, 1fr); }
+            .hero-section { grid-template-columns: 1fr; }
+            .hero-title { font-size: 2.5rem; }
+            .promo-banners { grid-template-columns: 1fr; }
+            .header-search { display: none; }
+            .footer-container { grid-template-columns: 1fr; }
+            .bottom-banner-inner { flex-direction: column; text-align: center; }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
+    </style>
+</head>
+<body>
+
+    <!-- Top Bar -->
+    <div class="top-bar" data-editable="topBar">
+        <div class="top-bar-container">
+            <div class="top-bar-left">
+                <span data-editable="topAddress"><i class="fas fa-map-marker-alt"></i> 123 Main Street, New York City</span>
+                <span data-editable="topEmail"><i class="fas fa-envelope"></i> info@zillystore.com</span>
+            </div>
+            <div class="top-bar-right">
+                <a href="#" data-editable="topHelp">Help Center</a>
+                <a href="#" data-editable="topTrack">Track Order</a>
+                <a href="#" data-editable="topGift">Gift Cards</a>
+                <a href="#" data-editable="topSell">Sell on Zilly</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="main-header" data-editable="mainHeader">
+        <div class="header-container">
+            <a href="#" class="logo" data-editable="logo">
+                <i class="fas fa-leaf"></i>
+                Zilly<span data-editable="logoSuffix">Store</span>
+            </a>
+            <div class="header-search" data-editable="searchBox">
+                <button class="search-category" data-editable="searchCategory">
+                    <i class="fas fa-th-large"></i> All Categories <i class="fas fa-chevron-down"></i>
+                </button>
+                <input type="text" class="search-input" placeholder="Search for products..." data-editable="searchPlaceholder">
+                <button class="search-btn" data-editable="searchBtn"><i class="fas fa-search"></i> Search</button>
+            </div>
+            <div class="header-actions">
+                <a href="#" class="header-action" data-editable="actionAccount">
+                    <i class="far fa-user"></i>
+                    <div>
+                        <div style="font-size:0.75rem;color:var(--text-light);">Hello,</div>
+                        <div data-editable="accountText">Account</div>
+                    </div>
+                </a>
+                <a href="#" class="header-action" data-editable="actionCompare">
+                    <i class="fas fa-exchange-alt"></i>
+                    <div>
+                        <div style="font-size:0.75rem;color:var(--text-light);">Compare</div>
+                        <div data-editable="compareText">Products</div>
+                    </div>
+                </a>
+                <a href="#" class="header-action" data-editable="actionWishlist">
+                    <i class="far fa-heart"></i>
+                    <span class="action-badge" data-editable="wishlistBadge">3</span>
+                    <div>
+                        <div style="font-size:0.75rem;color:var(--text-light);">Favorite</div>
+                        <div data-editable="wishlistText">Wishlist</div>
+                    </div>
+                </a>
+                <a href="#" class="header-action" data-editable="actionCart">
+                    <i class="fas fa-shopping-basket"></i>
+                    <span class="action-badge" data-editable="cartBadge">2</span>
+                    <div>
+                        <div style="font-size:0.75rem;color:var(--text-light);">Your</div>
+                        <div data-editable="cartText">Cart: $0.00</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav-menu" data-editable="navMenu">
+        <div class="nav-container">
+            <button class="nav-all-categories" data-editable="navAllCat">
+                <i class="fas fa-bars"></i> All Categories <i class="fas fa-chevron-down"></i>
+            </button>
+            <ul class="nav-links">
+                <li><a href="#" class="active" data-editable="navHome">Home <i class="fas fa-chevron-down"></i></a></li>
+                <li><a href="#" data-editable="navPages">Pages <i class="fas fa-chevron-down"></i></a></li>
+                <li><a href="#" data-editable="navShop">Shop <i class="fas fa-chevron-down"></i></a></li>
+                <li><a href="#" data-editable="navVendor">Vendor <i class="fas fa-chevron-down"></i></a></li>
+                <li><a href="#" data-editable="navElements">Elements <i class="fas fa-chevron-down"></i></a></li>
+                <li><a href="#" data-editable="navBlog">Blog <i class="fas fa-chevron-down"></i></a></li>
+                <li><a href="#" data-editable="navContact">Contact</a></li>
+            </ul>
+            <div class="nav-right">
+                <span data-editable="navWeekly"><i class="fas fa-bolt"></i> Weekly Discount</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section" data-editable="heroSection">
+        <div class="hero-content">
+            <span class="hero-badge" data-editable="heroBadge">Garden Fresh Fruits</span>
+            <h1 class="hero-title" data-editable="heroTitle">Feel The Taste</h1>
+            <p class="hero-desc" data-editable="heroDesc">When an unknown printer took a galley of type and scrambled it to make you specimen book not only five but also the into electronic are unknown printer.</p>
+            <button class="hero-btn" data-editable="heroBtn">Shop Now <i class="fas fa-arrow-right"></i></button>
+        </div>
+        <div class="hero-image">
+            <div class="hero-decor hero-decor-1"></div>
+            <div class="hero-decor hero-decor-2"></div>
+            <img src="https://images.unsplash.com/photo-1610832958506-4b567eba4022?w=600&q=80" alt="Fresh Fruits Basket" data-editable="heroImage" data-type="image">
+        </div>
+    </section>
+
+    <!-- Promo Banners -->
+    <div class="promo-banners" data-editable="promoSection">
+        <div class="promo-banner promo-banner-1" data-editable="promo1">
+            <div class="promo-info">
+                <h4 data-editable="promo1Title">Creamy Fruits</h4>
+                <p data-editable="promo1Subtitle">baby Jam</p>
+                <div class="promo-price" data-editable="promo1Price">$12.99</div>
+                <button class="promo-btn" data-editable="promo1Btn">Shop Now</button>
+            </div>
+            <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=200&q=80" class="promo-img" alt="Jam" data-editable="promo1Img" data-type="image">
+        </div>
+        <div class="promo-banner promo-banner-2" data-editable="promo2">
+            <div class="promo-info">
+                <h4 data-editable="promo2Title">Handwash</h4>
+                <p data-editable="promo2Subtitle">Hand Cleaning</p>
+                <div class="promo-price" data-editable="promo2Price">$5.98</div>
+                <button class="promo-btn" data-editable="promo2Btn">Shop Now</button>
+            </div>
+            <img src="https://images.unsplash.com/photo-1584305574647-0cc949a2bb9f?w=200&q=80" class="promo-img" alt="Handwash" data-editable="promo2Img" data-type="image">
+        </div>
+        <div class="promo-banner promo-banner-3" data-editable="promo3">
+            <div class="promo-info">
+                <h4 data-editable="promo3Title">Organic Fruits</h4>
+                <p data-editable="promo3Subtitle">100% Organic</p>
+                <div class="promo-price" data-editable="promo3Price">$14.99</div>
+                <button class="promo-btn" data-editable="promo3Btn">Shop Now</button>
+            </div>
+            <img src="https://images.unsplash.com/photo-1619566636858-adf3ef46400b?w=200&q=80" class="promo-img" alt="Organic" data-editable="promo3Img" data-type="image">
+        </div>
+    </div>
+
+    <!-- Info Bar -->
+    <div class="info-bar" data-editable="infoBar">
+        <div class="info-item" data-editable="info1">
+            <i class="fas fa-gift"></i>
+            <span>First your free trial and enjoy 1 months of jelly for <strong>$25/month</strong> on select plans.</span>
+        </div>
+        <div class="info-item" data-editable="info2">
+            <i class="fas fa-truck"></i>
+            <span>Next your pro enjoy 3 months of jelly for <strong>$10/month</strong> on select plans.</span>
+        </div>
+        <div class="info-item" data-editable="info3">
+            <i class="fas fa-star"></i>
+            <span>Previous your pro enjoy 10 months of jelly for <strong>$25/month</strong> on select plans.</span>
+        </div>
+    </div>
+
+    <!-- Featured Products -->
+    <section class="section-container" data-editable="featuredSection">
+        <div class="section-header">
+            <h2 class="section-title" data-editable="featuredTitle">Featured Products</h2>
+            <a href="#" class="view-all" data-editable="featuredView">View More <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="products-grid" data-editable="featuredGrid">
+            <!-- Product 1 -->
+            <div class="product-card" data-editable="fp1">
+                <button class="product-wishlist"><i class="far fa-heart"></i></button>
+                <div class="product-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?w=300&q=80" class="product-img" alt="Vegetables" data-editable="fp1Img" data-type="image">
+                </div>
+                <div class="product-info">
+                    <h4 class="product-name" data-editable="fp1Name">Whole Foods Market, Organic Banana</h4>
+                    <div class="product-rating">
+                        <span class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></span>
+                        <span>(4.5)</span>
+                    </div>
+                    <div class="product-price-row">
+                        <span class="price-current" data-editable="fp1Price">$3.00</span>
+                        <span class="price-old" data-editable="fp1Old">$5.00</span>
+                    </div>
+                    <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+                </div>
+            </div>
+            <!-- Product 2 -->
+            <div class="product-card" data-editable="fp2">
+                <button class="product-wishlist"><i class="far fa-heart"></i></button>
+                <div class="product-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?w=300&q=80" class="product-img" alt="Vegetables" data-editable="fp2Img" data-type="image">
+                </div>
+                <div class="product-info">
+                    <h4 class="product-name" data-editable="fp2Name">Whole Foods Market, Organic Broccoli</h4>
+                    <div class="product-rating">
+                        <span class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i></span>
+                        <span>(4.0)</span>
+                    </div>
+                    <div class="product-price-row">
+                        <span class="price-current" data-editable="fp2Price">$3.99</span>
+                        <span class="price-old" data-editable="fp2Old">$6.00</span>
+                    </div>
+                    <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+                </div>
+            </div>
+            <!-- Product 3 -->
+            <div class="product-card" data-editable="fp3">
+                <button class="product-wishlist"><i class="far fa-heart"></i></button>
+                <div class="product-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=300&q=80" class="product-img" alt="Baby Food" data-editable="fp3Img" data-type="image">
+                </div>
+                <div class="product-info">
+                    <h4 class="product-name" data-editable="fp3Name">Baby Food, Fruit Puree Pouch</h4>
+                    <div class="product-rating">
+                        <span class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span>
+                        <span>(5.0)</span>
+                    </div>
+                    <div class="product-price-row">
+                        <span class="price-current" data-editable="fp3Price">$6.00</span>
+                    </div>
+                    <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+                </div>
+            </div>
+            <!-- Product 4 -->
+            <div class="product-card" data-editable="fp4">
+                <button class="product-wishlist"><i class="far fa-heart"></i></button>
+                <div class="product-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1615141982880-1313d06a3db4?w=300&q=80" class="product-img" alt="Fish" data-editable="fp4Img" data-type="image">
+                </div>
+                <div class="product-info">
+                    <h4 class="product-name" data-editable="fp4Name">Fresh Atlantic Salmon Fillet</h4>
+                    <div class="product-rating">
+                        <span class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></span>
+                        <span>(4.8)</span>
+                    </div>
+                    <div class="product-price-row">
+                        <span class="price-current" data-editable="fp4Price">$18.00</span>
+                        <span class="price-old" data-editable="fp4Old">$22.00</span>
+                    </div>
+                    <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+                </div>
+            </div>
+            <!-- Product 5 -->
+            <div class="product-card" data-editable="fp5">
+                <button class="product-wishlist"><i class="far fa-heart"></i></button>
+                <div class="product-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=300&q=80" class="product-img" alt="Toy" data-editable="fp5Img" data-type="image">
+                </div>
+                <div class="product-info">
+                    <h4 class="product-name" data-editable="fp5Name">Toy Car for Kids, Remote Control</h4>
+                    <div class="product-rating">
+                        <span class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i></span>
+                        <span>(4.2)</span>
+                    </div>
+                    <div class="product-price-row">
+                        <span class="price-current" data-editable="fp5Price">$24.00</span>
+                    </div>
+                    <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+                </div>
+            </div>
+            <!-- Product 6 -->
+            <div class="product-card" data-editable="fp6">
+                <button class="product-wishlist"><i class="far fa-heart"></i></button>
+                <div class="product-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=300&q=80" class="product-img" alt="Toy" data-editable="fp6Img" data-type="image">
+                </div>
+                <div class="product-info">
+                    <h4 class="product-name" data-editable="fp6Name">Baby Toddler Toy Smart Phone</h4>
+                    <div class="product-rating">
+                        <span class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span>
+                        <span>(5.0)</span>
+                    </div>
+                    <div class="product-price-row">
+                        <span class="price-current" data-editable="fp6Price">$9.00</span>
+                        <span class="price-old" data-editable="fp6Old">$12.00</span>
+                    </div>
+                    <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Grid -->
+    <section class="section-container" data-editable="catSection">
+        <div class="section-header">
+            <h2 class="section-title" data-editable="catTitle">Featured Products</h2>
+            <a href="#" class="view-all" data-editable="catView">View More <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="category-grid" data-editable="catGrid">
+            <div class="category-card-large" data-editable="cat1">
+                <div class="cat-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?w=400&q=80" alt="Vegetables" data-editable="cat1Img" data-type="image">
+                    <div class="cat-overlay"></div>
+                    <div class="cat-info">
+                        <h4 data-editable="cat1Name">Vegetables</h4>
+                        <p data-editable="cat1Count">8 Products</p>
+                    </div>
+                </div>
+            </div>
+            <div class="category-card-large" data-editable="cat2">
+                <div class="cat-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1619566636858-adf3ef46400b?w=400&q=80" alt="Fruits" data-editable="cat2Img" data-type="image">
+                    <div class="cat-overlay"></div>
+                    <div class="cat-info">
+                        <h4 data-editable="cat2Name">Fresh Fruits</h4>
+                        <p data-editable="cat2Count">12 Products</p>
+                    </div>
+                </div>
+            </div>
+            <div class="category-card-large" data-editable="cat3">
+                <div class="cat-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1615141982880-1313d06a3db4?w=400&q=80" alt="Fish" data-editable="cat3Img" data-type="image">
+                    <div class="cat-overlay"></div>
+                    <div class="cat-info">
+                        <h4 data-editable="cat3Name">Fish & Meats</h4>
+                        <p data-editable="cat3Count">7 Products</p>
+                    </div>
+                </div>
+            </div>
+            <div class="category-card-large" data-editable="cat4">
+                <div class="cat-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1622597467836-f3285f2131b8?w=400&q=80" alt="Drinks" data-editable="cat4Img" data-type="image">
+                    <div class="cat-overlay"></div>
+                    <div class="cat-info">
+                        <h4 data-editable="cat4Name">Drinks & Juice</h4>
+                        <p data-editable="cat4Count">6 Products</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Deal Banner -->
+    <div class="deal-banner" data-editable="dealBanner">
+        <div class="deal-banner-inner">
+            <div class="deal-content">
+                <h3 data-editable="dealTitle">Daily Grocery Tuesday Night Weekend Deal!</h3>
+                <p data-editable="dealSubtitle">Get up to 15% discount on all grocery items</p>
+            </div>
+            <div class="deal-badge" data-editable="dealBadge">
+                <span>15%</span>
+                <small>Discount</small>
+            </div>
+            <div class="deal-img">
+                <img src="https://images.unsplash.com/photo-1584305574647-0cc949a2bb9f?w=300&q=80" alt="Products" data-editable="dealImg" data-type="image">
+            </div>
+        </div>
+    </div>
+
+    <!-- Trending Products -->
+    <section class="section-container" data-editable="trendingSection">
+        <div class="section-header">
+            <h2 class="section-title" data-editable="trendingTitle">Trending Products</h2>
+            <a href="#" class="view-all" data-editable="trendingView">View More <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="trending-layout" data-editable="trendingLayout">
+            <!-- Left Ad -->
+            <div class="sidebar-ad" data-editable="trendAd">
+                <h4 data-editable="trendAdTitle">100% Organic Feed Your Family</h4>
+                <p data-editable="trendAdSubtitle">Quality food daily</p>
+                <div class="price" data-editable="trendAdPrice">$39.00</div>
+                <img src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=300&q=80" alt="Organic" data-editable="trendAdImg" data-type="image">
+                <button class="sidebar-ad-btn" data-editable="trendAdBtn">Shop Now</button>
+            </div>
+
+            <!-- Center Grid -->
+            <div class="trending-grid" data-editable="trendGrid">
+                <div class="trending-product" data-editable="tp1">
+                    <img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?w=200&q=80" class="trending-img" alt="Vegetables" data-editable="tp1Img" data-type="image">
+                    <div class="trending-info">
+                        <div class="cat-tag" data-editable="tp1Cat">Vegetables</div>
+                        <h4 data-editable="tp1Name">Organic Fresh Broccoli</h4>
+                        <div class="trending-price">
+                            <span class="current" data-editable="tp1Price">$3.00 - $8.00</span>
+                        </div>
+                        <button class="trending-add"><i class="fas fa-shopping-cart"></i> Add</button>
+                    </div>
+                </div>
+                <div class="trending-product" data-editable="tp2">
+                    <img src="https://images.unsplash.com/photo-1619566636858-adf3ef46400b?w=200&q=80" class="trending-img" alt="Fruits" data-editable="tp2Img" data-type="image">
+                    <div class="trending-info">
+                        <div class="cat-tag" data-editable="tp2Cat">Vegetables</div>
+                        <h4 data-editable="tp2Name">Fresh Organic Banana</h4>
+                        <div class="trending-price">
+                            <span class="current" data-editable="tp2Price">$1.99 - $5.00</span>
+                        </div>
+                        <button class="trending-add"><i class="fas fa-shopping-cart"></i> Add</button>
+                    </div>
+                </div>
+                <div class="trending-product" data-editable="tp3">
+                    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=200&q=80" class="trending-img" alt="Baby Food" data-editable="tp3Img" data-type="image">
+                    <div class="trending-info">
+                        <div class="cat-tag" data-editable="tp3Cat">Baby</div>
+                        <h4 data-editable="tp3Name">Baby Food Pouch</h4>
+                        <div class="trending-price">
+                            <span class="current" data-editable="tp3Price">$6.00 - $12.00</span>
+                        </div>
+                        <button class="trending-add"><i class="fas fa-shopping-cart"></i> Add</button>
+                    </div>
+                </div>
+                <div class="trending-product" data-editable="tp4">
+                    <img src="https://images.unsplash.com/photo-1615141982880-1313d06a3db4?w=200&q=80" class="trending-img" alt="Fish" data-editable="tp4Img" data-type="image">
+                    <div class="trending-info">
+                        <div class="cat-tag" data-editable="tp4Cat">Fish</div>
+                        <h4 data-editable="tp4Name">Fresh Atlantic Salmon</h4>
+                        <div class="trending-price">
+                            <span class="current" data-editable="tp4Price">$18.00 - $25.00</span>
+                        </div>
+                        <button class="trending-add"><i class="fas fa-shopping-cart"></i> Add</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Ad -->
+            <div class="sidebar-ad" style="background: linear-gradient(180deg, #dbeafe 0%, #bfdbfe 100%);" data-editable="trendAd2">
+                <h4 data-editable="trendAd2Title">Premium Mixed</h4>
+                <p data-editable="trendAd2Subtitle">Healthy Snacks</p>
+                <div class="price" data-editable="trendAd2Price">$5.99</div>
+                <img src="https://images.unsplash.com/photo-1622597467836-f3285f2131b8?w=300&q=80" alt="Snacks" data-editable="trendAd2Img" data-type="image">
+                <button class="sidebar-ad-btn" style="background: var(--accent-red);" data-editable="trendAd2Btn">Shop Now</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Top Rated -->
+    <section class="section-container" data-editable="ratedSection">
+        <div class="section-header">
+            <h2 class="section-title" data-editable="ratedTitle">Top Rated Products</h2>
+            <a href="#" class="view-all" data-editable="ratedView">View More <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="products-grid" data-editable="ratedGrid">
+            <div class="product-card" data-editable="rp1">
+                <button class="product-wishlist"><i class="far fa-heart"></i></button>
+                <div class="product-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1584305574647-0cc949a2bb9f?w=300&q=80" class="product-img" alt="Detergent" data-editable="rp1Img" data-type="image">
+                </div>
+                <div class="product-info">
+                    <h4 class="product-name" data-editable="rp1Name">Laundry Detergent Liquid</h4>
+                    <div class="product-rating">
+                        <span class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span>
+                        <span>(5.0)</span>
+                    </div>
+                    <div class="product-price-row">
+                        <span class="price-current" data-editable="rp1Price">$24.00 - $40.00</span>
+                    </div>
+                    <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+                </div>
+            </div>
+            <div class="product-card" data-editable="rp2">
+                <button class="product-wishlist"><i class="far fa-heart"></i></button>
+                <div class="product-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=300&q=80" class="product-img" alt="Vitamins" data-editable="rp2Img" data-type="image">
+                </div>
+                <div class="product-info">
+                    <h4 class="product-name" data-editable="rp2Name">Vitamin C Supplements</h4>
+                    <div class="product-rating">
+                        <span class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></span>
+                        <span>(4.8)</span>
+                    </div>
+                    <div class="product-price-row">
+                        <span class="price-current" data-editable="rp2Price">$20.00 - $30.00</span>
+                    </div>
+                    <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+                </div>
+            </div>
+            <div class="product-card" data-editable="rp3">
+                <button class="product-wishlist"><i class="far fa-heart"></i></button>
+                <div class="product-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=300&q=80" class="product-img" alt="Cereal" data-editable="rp3Img" data-type="image">
+                </div>
+                <div class="product-info">
+                    <h4 class="product-name" data-editable="rp3Name">Organic Oats Cereal</h4>
+                    <div class="product-rating">
+                        <span class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span>
+                        <span>(5.0)</span>
+                    </div>
+                    <div class="product-price-row">
+                        <span class="price-current" data-editable="rp3Price">$12.00 - $18.00</span>
+                    </div>
+                    <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+                </div>
+            </div>
+            <div class="product-card" data-editable="rp4">
+                <button class="product-wishlist"><i class="far fa-heart"></i></button>
+                <div class="product-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1610832958506-4b567eba4022?w=300&q=80" class="product-img" alt="Fruits" data-editable="rp4Img" data-type="image">
+                </div>
+                <div class="product-info">
+                    <h4 class="product-name" data-editable="rp4Name">Mixed Fresh Fruits Box</h4>
+                    <div class="product-rating">
+                        <span class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></span>
+                        <span>(4.9)</span>
+                    </div>
+                    <div class="product-price-row">
+                        <span class="price-current" data-editable="rp4Price">$30.00 - $50.00</span>
+                    </div>
+                    <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+                </div>
+            </div>
+            <div class="product-card" data-editable="rp5">
+                <button class="product-wishlist"><i class="far fa-heart"></i></button>
+                <div class="product-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1584305574647-0cc949a2bb9f?w=300&q=80" class="product-img" alt="Soap" data-editable="rp5Img" data-type="image">
+                </div>
+                <div class="product-info">
+                    <h4 class="product-name" data-editable="rp5Name">Organic Hand Soap</h4>
+                    <div class="product-rating">
+                        <span class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i></span>
+                        <span>(4.2)</span>
+                    </div>
+                    <div class="product-price-row">
+                        <span class="price-current" data-editable="rp5Price">$6.00 - $10.00</span>
+                    </div>
+                    <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+                </div>
+            </div>
+            <div class="product-card" data-editable="rp6">
+                <button class="product-wishlist"><i class="far fa-heart"></i></button>
+                <div class="product-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1622597467836-f3285f2131b8?w=300&q=80" class="product-img" alt="Juice" data-editable="rp6Img" data-type="image">
+                </div>
+                <div class="product-info">
+                    <h4 class="product-name" data-editable="rp6Name">Fresh Orange Juice Pack</h4>
+                    <div class="product-rating">
+                        <span class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span>
+                        <span>(5.0)</span>
+                    </div>
+                    <div class="product-price-row">
+                        <span class="price-current" data-editable="rp6Price">$8.00 - $15.00</span>
+                    </div>
+                    <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Best Selling Sidebar -->
+    <section class="section-container" data-editable="bestSection">
+        <div class="section-header">
+            <h2 class="section-title" data-editable="bestTitle">Best Selling</h2>
+        </div>
+        <div class="trending-layout" data-editable="bestLayout">
+            <div class="trending-grid" style="grid-template-columns: repeat(3, 1fr);" data-editable="bestGrid">
+                <div class="trending-product" data-editable="bp1">
+                    <img src="https://images.unsplash.com/photo-1619566636858-adf3ef46400b?w=200&q=80" class="trending-img" alt="Fruits" data-editable="bp1Img" data-type="image">
+                    <div class="trending-info">
+                        <h4 data-editable="bp1Name">Mediterranean Sweet</h4>
+                        <div class="trending-price">
+                            <span class="current" data-editable="bp1Price">$12.00</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="trending-product" data-editable="bp2">
+                    <img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?w=200&q=80" class="trending-img" alt="Vegetables" data-editable="bp2Img" data-type="image">
+                    <div class="trending-info">
+                        <h4 data-editable="bp2Name">Garden Fresh Juicy Grapes</h4>
+                        <div class="trending-price">
+                            <span class="current" data-editable="bp2Price">$6.00</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="trending-product" data-editable="bp3">
+                    <img src="https://images.unsplash.com/photo-1610832958506-4b567eba4022?w=200&q=80" class="trending-img" alt="Fruits" data-editable="bp3Img" data-type="image">
+                    <div class="trending-info">
+                        <h4 data-editable="bp3Name">Great Value Wild Caught</h4>
+                        <div class="trending-price">
+                            <span class="current" data-editable="bp3Price">$34.00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar-ad" style="background: linear-gradient(180deg, #dbeafe 0%, #bfdbfe 100%);" data-editable="bestAd">
+                <h4 data-editable="bestAdTitle">Baby Diaper</h4>
+                <p data-editable="bestAdSubtitle">Premium Quality</p>
+                <div class="price" data-editable="bestAdPrice">$5.00</div>
+                <img src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=300&q=80" alt="Diaper" data-editable

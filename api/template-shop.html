@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-editable="siteTitle">MODEHAUS | Modernes Fashion Boutique</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --gold: #c9a96e;
+            --gold-light: #e0c48f;
+            --gold-dark: #a88b4a;
+            --black: #0a0a0a;
+            --black-light: #1a1a1a;
+            --white: #ffffff;
+            --gray: #888888;
+            --gray-light: #cccccc;
+            --cream: #f5f0e8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--black);
+            color: var(--white);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* ===== NAVIGATION ===== */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.4s ease;
+            background: transparent;
+        }
+
+        nav.scrolled {
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 50px;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.5);
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--gold);
+            text-decoration: none;
+            letter-spacing: 2px;
+        }
+
+        .logo span {
+            color: var(--white);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            background: var(--gold);
+            color: var(--black);
+            padding: 12px 30px;
+            border: none;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 0.8rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-cta:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(201, 169, 110, 0.3);
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: stretch;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-image {
+            width: 50%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.7) contrast(1.1);
+            transition: transform 8s ease;
+        }
+
+        .hero:hover .hero-image img {
+            transform: scale(1.05);
+        }
+
+        .hero-content {
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 80px 80px 80px 60px;
+            background: var(--black);
+            position: relative;
+        }
+
+        .hero-content::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            width: 3px;
+            height: 200px;
+            background: var(--gold);
+        }
+
+        .hero-icon {
+            font-size: 2.5rem;
+            color: var(--gold);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .hero-title {
+            font-size: 4.5rem;
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-align: center;
+        }
+
+        .hero-title span {
+            display: block;
+            color: var(--gold);
+        }
+
+        .hero-subtitle {
+            font-size: 0.75rem;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            color: var(--gray);
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .hero-line {
+            width: 80px;
+            height: 2px;
+            background: var(--gold);
+            margin: 0 auto 40px;
+        }
+
+        .hero-right {
+            text-align: right;
+            padding-left: 40px;
+        }
+
+        .hero-right h3 {
+            font-size: 1.2rem;
+            color: var(--gold);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .hero-right p {
+            font-size: 0.85rem;
+            line-height: 1.8;
+            color: var(--gray);
+            margin-bottom: 30px;
+        }
+
+        .hero-btn {
+            background: var(--gold);
+            color: var(--black);
+            padding: 14px 40px;
+            border: none;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .hero-btn:hover {
+            background: var(--gold-light);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(201, 169, 110, 0.4);
+        }
+
+        /* ===== SERVICES STRIP ===== */
+        .services-strip {
+            display: flex;
+            background: var(--white);
+            color: var(--black);
+        }
+
+        .service-item {
+            flex: 1;
+            padding: 60px 40px;
+            text-align: center;
+            border-right: 1px solid #eee;
+            transition: all 0.3s ease;
+        }
+
+        .service-item:last-child {
+            border-right: none;
+        }
+
+        .service-item:hover {
+            background: #f9f9f9;
+        }
+
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 20px;
+            border: 2px solid var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--gold);
+            transition: all 0.3s ease;
+        }
+
+        .service-item:hover .service-icon {
+            background: var(--gold);
+            color: var(--white);
+            transform: rotateY(360deg);
+        }
+
+        .service-item h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .service-item p {
+            font-size: 0.8rem;
+            line-height: 1.7;
+            color: var(--gray);
+            margin-bottom: 25px;
+        }
+
+        .service-btn {
+            background: var(--gold);
+            color: var(--white);
+            padding: 10px 25px;
+            border: none;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 0.7rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .service-btn:hover {
+            background: var(--black);
+            color: var(--gold);
+        }
+
+        /* ===== PRICING SECTION ===== */
+        .pricing-section {
+            background: var(--black);
+            padding: 100px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-section::before {
+            content: '';
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            width: 60px;
+            height: 60px;
+            border-left: 3px solid var(--gold);
+            border-top: 3px solid var(--gold);
+            opacity: 0.5;
+        }
+
+        .pricing-section::after {
+            content: '';
+            position: absolute;
+            bottom: 50px;
+            right: 50px;
+            width: 60px;
+            height: 60px;
+            border-right: 3px solid var(--gold);
+            border-bottom: 3px solid var(--gold);
+            opacity: 0.5;
+        }
+
+        .pricing-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 50px;
+            display: flex;
+            align-items: center;
+            gap: 60px;
+        }
+
+        .pricing-left {
+            flex: 0 0 300px;
+        }
+
+        .pricing-left h2 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            line-height: 1;
+        }
+
+        .pricing-left h2 span {
+            color: var(--gold);
+            font-size: 4rem;
+            display: block;
+        }
+
+        .pricing-left p {
+            font-size: 0.85rem;
+            line-height: 1.8;
+            color: var(--gray);
+            margin: 25px 0;
+        }
+
+        .pricing-cta {
+            background: var(--gold);
+            color: var(--black);
+            padding: 14px 35px;
+            border: none;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 0.8rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .pricing-cta:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+        }
+
+        .pricing-right {
+            flex: 1;
+            display: flex;
+            gap: 40px;
+        }
+
+        .barber-card {
+            text-align: center;
+            flex: 1;
+        }
+
+        .barber-circle {
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto 20px;
+            border: 4px solid var(--gold);
+            position: relative;
+            transition: all 0.4s ease;
+        }
+
+        .barber-circle::before {
+            content: '';
+            position: absolute;
+            inset: -8px;
+            border-radius: 50%;
+            border: 2px solid var(--gold);
+            opacity: 0;
+            transition: all 0.4s ease;
+        }
+
+        .barber-card:hover .barber-circle::before {
+            opacity: 1;
+            inset: -12px;
+        }
+
+        .barber-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .barber-card:hover .barber-circle img {
+            transform: scale(1.1);
+        }
+
+        .barber-card h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .barber-card p {
+            font-size: 0.8rem;
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        .barber-btn {
+            background: var(--gold);
+            color: var(--black);
+            padding: 10px 25px;
+            border: none;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 0.7rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .barber-btn:hover {
+            background: var(--white);
+        }
+
+        .pricing-bottom-text {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 0.75rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gray);
+        }
+
+        /* ===== FEATURES SECTION ===== */
+        .features-section {
+            background: var(--white);
+            color: var(--black);
+            padding: 100px 0;
+        }
+
+        .features-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 50px;
+            display: flex;
+            align-items: center;
+            gap: 60px;
+        }
+
+        .features-left {
+            flex: 2;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+        }
+
+        .feature-box h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+
+        .feature-box h4 span {
+            color: var(--gold);
+            display: block;
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            margin-bottom: 5px;
+        }
+
+        .feature-box p {
+            font-size: 0.85rem;
+            line-height: 1.8;
+            color: var(--gray);
+        }
+
+        .features-center {
+            flex: 0 0 120px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .diamond-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--gold);
+            transform: rotate(45deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+            transition: all 0.4s ease;
+        }
+
+        .diamond-icon:hover {
+            transform: rotate(45deg) scale(1.1);
+            box-shadow: 0 0 30px rgba(201, 169, 110, 0.5);
+        }
+
+        .diamond-icon i {
+            transform: rotate(-45deg);
+            font-size: 1.5rem;
+            color: var(--white);
+        }
+
+        .features-right {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        .features-circle {
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 5px solid var(--gold);
+            position: relative;
+        }
+
+        .features-circle::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            border: 2px solid var(--gold);
+            transform: scale(1.1);
+            opacity: 0.5;
+        }
+
+        .features-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* ===== GALLERY SECTION ===== */
+        .gallery-section {
+            position: relative;
+            height: 500px;
+            overflow: hidden;
+        }
+
+        .gallery-bg {
+            position: absolute;
+            inset: 0;
+            background: url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1920&q=80') center/cover;
+            filter: brightness(0.4);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right, rgba(10,10,10,0.9) 0%, rgba(10,10,10,0.3) 50%, rgba(10,10,10,0.9) 100%);
+        }
+
+        .gallery-grid {
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            height: 100%;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-item::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(10, 10, 10, 0.4);
+            transition: background 0.3s ease;
+        }
+
+        .gallery-item:hover::after {
+            background: rgba(201, 169, 110, 0.2);
+        }
+
+        /* ===== CONTACT SECTION ===== */
+        .contact-section {
+            background: var(--black);
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .contact-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 50px;
+            display: flex;
+            gap: 0;
+            align-items: stretch;
+        }
+
+        .contact-left {
+            flex: 1;
+            background: var(--white);
+            color: var(--black);
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .contact-left h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .contact-left .subtitle {
+            font-size: 0.75rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        .contact-info-row {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .contact-info-item {
+            flex: 1;
+        }
+
+        .contact-info-item h5 {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .contact-info-item h5 i {
+            color: var(--gold);
+            font-size: 1rem;
+        }
+
+        .contact-info-item p {
+            font-size: 0.8rem;
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        .contact-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .contact-btn-primary {
+            background: var(--gold);
+            color: var(--black);
+            padding: 12px 30px;
+            border: none;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 0.75rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .contact-btn-primary:hover {
+            background: var(--black);
+            color: var(--gold);
+        }
+
+        .contact-btn-secondary {
+            background: transparent;
+            color: var(--black);
+            padding: 12px 30px;
+            border: 2px solid var(--black);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 0.75rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .contact-btn-secondary:hover {
+            background: var(--black);
+            color: var(--white);
+        }
+
+        .contact-right {
+            flex: 1;
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: var(--black-light);
+        }
+
+        .contact-right h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .contact-right .divider {
+            width: 60px;
+            height: 3px;
+            background: var(--gold);
+            margin-bottom: 25px;
+        }
+
+        .contact-right p {
+            font-size: 0.85rem;
+            line-height: 1.8;
+            color: var(--gray);
+            margin-bottom: 30px;
+        }
+
+        .contact-right-btn {
+            background: var(--gold);
+            color: var(--black);
+            padding: 14px 40px;
+            border: none;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            align-self: flex-start;
+        }
+
+        .contact-right-btn:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--black);
+            border-top: 1px solid #222;
+            padding: 40px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-left {
+            font-size: 0.75rem;
+            color: var(--gray);
+            letter-spacing: 1px;
+        }
+
+        .footer-center {
+            display: flex;
+            gap: 30px;
+        }
+
+        .footer-center a {
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 0.75rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+        }
+
+        .footer-center a:hover {
+            color: var(--gold);
+        }
+
+        .footer-right {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-right a {
+            color: var(--gray);
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .footer-right a:hover {
+            color: var(--gold);
+            transform: translateY(-3px);
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transition: all 0.8s ease;
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+        }
+
+        .fade-up.visible {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .fade-left.visible {
+            animation: fadeInLeft 0.8s ease forwards;
+        }
+
+        .fade-right.visible {
+            animation: fadeInRight 0.8s ease forwards;
+        }
+
+        /* ===== MOBILE RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .hero {
+                flex-direction: column;
+            }
+
+            .hero-image, .hero-content {
+                width: 100%;
+            }
+
+            .hero-image {
+                height: 50vh;
+            }
+
+            .hero-content {
+                padding: 60px 40px;
+            }
+
+            .hero-title {
+                font-size: 3rem;
+            }
+
+            .pricing-container {
+                flex-direction: column;
+            }
+
+            .pricing-right {
+                flex-wrap: wrap;
+            }
+
+            .features-container {
+                flex-direction: column;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-container {
+                flex-direction: column;
+            }
+
+            .services-strip {
+                flex-direction: column;
+            }
+
+            .service-item {
+                border-right: none;
+                border-bottom: 1px solid #eee;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .pricing-left h2 span {
+                font-size: 2.5rem;
+            }
+
+            .features-left {
+                grid-template-columns: 1fr;
+            }
+
+            footer {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+
+            .footer-center {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--black);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--gold);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--gold-light);
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <a href="#" class="logo" data-editable="logoText">MODEHAUS <span>BERLIN</span></a>
+        <ul class="nav-links">
+            <li><a href="#home" data-editable="navHome">Startseite</a></li>
+            <li><a href="#services" data-editable="navServices">Kollektion</a></li>
+            <li><a href="#preise" data-editable="navPreise">Preise</a></li>
+            <li><a href="#team" data-editable="navTeam">Team</a></li>
+            <li><a href="#kontakt" data-editable="navKontakt">Kontakt</a></li>
+        </ul>
+        <button class="nav-cta" data-editable="navCta">Jetzt Shoppen</button>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-image">
+            <img src="https://images.unsplash.com/photo-1445205170230-053b83016050?w=800&q=80" alt="Fashion Boutique" data-editable="heroImage" data-type="image">
+        </div>
+        <div class="hero-content">
+            <div class="hero-icon">
+                <i class="fas fa-gem"></i>
+            </div>
+            <h1 class="hero-title" data-editable="heroTitle">MODEHAUS<br><span>BERLIN</span></h1>
+            <p class="hero-subtitle" data-editable="heroSubtitle">Moderne Mode Boutique</p>
+            <div class="hero-line"></div>
+            <div class="hero-right">
+                <h3 data-editable="heroWelcome">Willkommen bei uns</h3>
+                <p data-editable="heroDesc">Entdecken Sie exklusive Mode in zeitlosem Design. Unser kuratiertes Sortiment vereint internationale Trends mit lokaler Handwerkskunst – für den perfekten Look bei jedem Anlass.</p>
+                <a href="#kontakt" class="hero-btn" data-editable="heroCta">Kollektion entdecken</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Strip -->
+    <section class="services-strip" id="services">
+        <div class="service-item animate-on-scroll fade-up">
+            <div class="service-icon">
+                <i class="fas fa-tshirt"></i>
+            </div>
+            <h4 data-editable="svc1Title">Damenmode</h4>
+            <p data-editable="svc1Desc">Elegante Kleider, Blazer und Accessoires für den modernen Lifestyle. Von Business bis Casual – wir haben den perfekten Style für Sie.</p>
+            <button class="service-btn" data-editable="svc1Btn">Mehr erfahren</button>
+        </div>
+        <div class="service-item animate-on-scroll fade-up">
+            <div class="service-icon">
+                <i class="fas fa-user-tie"></i>
+            </div>
+            <h4 data-editable="svc2Title">Herrenmode</h4>
+            <p data-editable="svc2Desc">Zeitlose Anzüge, Hemden und Casual-Wear für den selbstbewussten Mann. Qualität und Stil treffen aufeinander.</p>
+            <button class="service-btn" data-editable="svc2Btn">Mehr erfahren</button>
+        </div>
+        <div class="service-item animate-on-scroll fade-up">
+            <div class="service-icon">
+                <i class="fas fa-shopping-bag"></i>
+            </div>
+            <h4 data-editable="svc3Title">Accessoires</h4>
+            <p data-editable="svc3Desc">Taschen, Schuhe, Schmuck und mehr – die perfekten Details, die Ihren Look vervollständigen und Ihre Persönlichkeit unterstreichen.</p>
+            <button class="service-btn" data-editable="svc3Btn">Mehr erfahren</button>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing-section" id="preise">
+        <div class="pricing-container">
+            <div class="pricing-left animate-on-scroll fade-left">
+                <h2 data-editable="pricingLabel">AB<br><span data-editable="pricingPrice">€49</span></h2>
+                <p data-editable="pricingDesc">Entdecken Sie unsere transparenten Preise für hochwertige Mode. Jedes Stück wird sorgfältig ausgewählt und steht für Qualität und zeitlosen Stil.</p>
+                <button class="pricing-cta" data-editable="pricingCta">Preisliste ansehen</button>
+            </div>
+            <div class="pricing-right">
+                <div class="barber-card animate-on-scroll fade-up">
+                    <div class="barber-circle">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&q=80" alt="Stylistin Anna" data-editable="barber1Img" data-type="image">
+                    </div>
+                    <h4 data-editable="barber1Name">Anna Weber</h4>
+                    <p data-editable="barber1Desc">Modeberaterin mit über 10 Jahren Erfahrung. Spezialistin für elegante Business-Looks und Abendmode.</p>
+                    <button class="barber-btn" data-editable="barber1Btn">Beratung buchen</button>
+                </div>
+                <div class="barber-card animate-on-scroll fade-up">
+                    <div class="barber-circle">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80" alt="Stylist Max" data-editable="barber2Img" data-type="image">
+                    </div>
+                    <h4 data-editable="barber2Name">Max Schmidt</h4>
+                    <p data-editable="barber2Desc">Experte für Herrenmode und maßgeschneiderte Anzüge. Ihr Partner für den perfekten Business-Look.</p>
+                    <button class="barber-btn" data-editable="barber2Btn">Beratung buchen</button>
+                </div>
+                <div class="barber-card animate-on-scroll fade-up">
+                    <div class="barber-circle">
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&q=80" alt="Stylistin Lisa" data-editable="barber3Img" data-type="image">
+                    </div>
+                    <h4 data-editable="barber3Name">Lisa Müller</h4>
+                    <p data-editable="barber3Desc">Kreative Stylistin für moderne Trends und individuelle Looks. Spezialisiert auf Accessoires und Styling.</p>
+                    <button class="barber-btn" data-editable="barber3Btn">Beratung buchen</button>
+                </div>
+            </div>
+        </div>
+        <p class="pricing-bottom-text" data-editable="pricingBottom">Unser professionelles Team steht Ihnen zur Verfügung</p>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="features-container">
+            <div class="features-left">
+                <div class="feature-box animate-on-scroll fade-left">
+                    <h4><span data-editable="feat1Tag">Exklusive</span><span data-editable="feat1Title">Marken</span></h4>
+                    <p data-editable="feat1Desc">Wir führen sorgfältig ausgewählte Premium-Marken und lokale Designer, die für Qualität, Nachhaltigkeit und einzigartiges Design stehen.</p>
+                </div>
+                <div class="feature-box animate-on-scroll fade-left">
+                    <h4><span data-editable="feat2Tag">Persönliche</span><span data-editable="feat2Title">Beratung</span></h4>
+                    <p data-editable="feat2Desc">Jeder Kunde ist einzigartig. Wir nehmen uns Zeit für eine persönliche Beratung und finden gemeinsam den perfekten Style für Sie.</p>
+                </div>
+            </div>
+            <div class="features-center animate-on-scroll fade-up">
+                <div class="diamond-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="diamond-icon">
+                    <i class="fas fa-gem"></i>
+                </div>
+            </div>
+            <div class="features-right animate-on-scroll fade-right">
+                <div class="features-circle">
+                    <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=400&q=80" alt="Fashion Styling" data-editable="featuresImg" data-type="image">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery-section">
+        <div class="gallery-bg"></div>
+        <div class="gallery-overlay"></div>
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=600&q=80" alt="Boutique Impression 1" data-editable="gal1" data-type="image">
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1445205170230-053b83016050?w=600&q=80" alt="Boutique Impression 2" data-editable="gal2" data-type="image">
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600&q=80" alt="Boutique Impression 3" data-editable="gal3" data-type="image">
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section" id="kontakt">
+        <div class="contact-container">
+            <div class="contact-left animate-on-scroll fade-left">
+                <h3 data-editable="contactTitle">Kontaktieren Sie uns</h3>
+                <p class="subtitle" data-editable="contactSubtitle">Wir freuen uns auf Sie</p>
+                <div class="contact-info-row">
+                    <div class="contact-info-item">
+                        <h5><i class="fas fa-map-marker-alt"></i> <span data-editable="addrLabel">Adresse</span></h5>
+                        <p data-editable="addrValue">Musterstraße 42<br>10115 Berlin, Deutschland</p>
+                    </div>
+                    <div class="contact-info-item">
+                        <h5><i class="fas fa-phone"></i> <span data-editable="phoneLabel">Telefon</span></h5>
+                        <p data-editable="phoneValue">+49 151 00000000<br>Mo-Sa: 10:00 - 20:00 Uhr</p>
+                    </div>
+                </div>
+                <div class="contact-buttons">
+                    <button class="contact-btn-primary" data-editable="contactBtn1">Anrufen</button>
+                    <button class="contact-btn-secondary" data-editable="contactBtn2">Route planen</button>
+                </div>
+            </div>
+            <div class="contact-right animate-on-scroll fade-right">
+                <h3 data-editable="contactRightTitle">Modehaus Berlin</h3>
+                <div class="divider"></div>
+                <p data-editable="contactRightDesc">Tauchen Sie ein in die Welt der zeitlosen Mode. Bei uns erleben Sie nicht nur ein Einkaufserlebnis, sondern eine Reise durch Stil und Eleganz. Mit persönlicher Beratung, exklusiven Kollektionen und einer Atmosphäre, die Sie begeistern wird.</p>
+                <button class="contact-right-btn" data-editable="contactRightBtn">Termin vereinbaren</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-left" data-editable="footerCopy">
+            © 2026 Modehaus Berlin. Alle Rechte vorbehalten.
+        </div>
+        <div class="footer-center">
+            <a href="#" data-editable="footerLink1">Impressum</a>
+            <a href="#" data-editable="footerLink2">Datenschutz</a>
+            <a href="#" data-editable="footerLink3">AGB</a>
+            <a href="#" data-editable="footerLink4">Kontakt</a>
+        </div>
+        <div class="footer-right">
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-pinterest-p"></i></a>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scroll for nav links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Button click feedback
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+            });
+        });
+    </script>
+
+</body>
+</html>

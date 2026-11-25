@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prince Phone – Visitenkarte</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Montserrat',sans-serif;background:#111;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:40px 20px;gap:20px;}
+.lbl{font-size:9px;color:#444;letter-spacing:4px;text-transform:uppercase;text-align:center;}
+.bc{width:322px;height:204px;position:relative;overflow:hidden;border-radius:7px;box-shadow:0 20px 60px rgba(0,0,0,0.8);}
+/* FRONT layers */
+.f-bg{position:absolute;inset:0;background:#2a2d32;z-index:0;}
+.f-bgimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;display:none;}
+.f-overlay{position:absolute;inset:0;background:#2a2d32;z-index:2;opacity:1;transition:opacity .3s;}
+.f-tex{position:absolute;inset:0;background-image:radial-gradient(circle at 1px 1px,rgba(255,255,255,0.022) 1px,transparent 0);background-size:16px 16px;z-index:3;}
+.f-corner{position:absolute;top:0;right:0;width:0;height:0;border-style:solid;border-width:0 65px 65px 0;border-color:transparent #1a1c1f transparent transparent;z-index:4;}
+.f-content{position:relative;z-index:5;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px 22px 12px;gap:7px;}
+.logo-row{display:flex;align-items:center;gap:8px;}
+.logo-img-el{width:38px;height:38px;object-fit:contain;border-radius:7px;display:none;}
+.f-slogan{font-size:8px;font-weight:400;letter-spacing:2px;text-align:center;border-top:1px solid rgba(255,255,255,0.13);padding-top:7px;width:186px;}
+/* BACK layers */
+.b-bg{position:absolute;inset:0;z-index:0;}
+.b-bgimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;display:none;}
+.b-overlay{position:absolute;inset:0;z-index:2;opacity:1;transition:opacity .3s;}
+.b-circuit{position:absolute;top:0;right:0;width:130px;height:100%;opacity:0.18;z-index:3;}
+.b-panel{position:absolute;top:0;left:0;width:195px;height:100%;background:rgba(255,255,255,0.88);z-index:4;clip-path:polygon(0 0,100% 0,86% 100%,0 100%);}
+.b-content{position:relative;z-index:5;width:100%;height:100%;display:flex;}
+.b-left{width:180px;padding:12px 14px 10px 12px;display:flex;flex-direction:column;justify-content:space-between;}
+.b-rows{display:flex;flex-direction:column;gap:5px;}
+.b-row{display:flex;align-items:flex-start;gap:6px;font-size:9.5px;color:#1a1c1f;font-weight:500;}
+.b-ic{width:14px;height:14px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.b-ic svg{width:7px;height:7px;fill:white;}
+.b-nametxt{font-size:11px;font-weight:700;color:#0f172a;}
+.b-qr-wrap{background:white;padding:2px;border-radius:3px;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+.b-right{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:10px 8px 12px;}
+.b-brand{display:flex;flex-direction:column;align-items:center;gap:1px;}
+.b-brand-sm{font-size:7px;letter-spacing:3px;text-transform:uppercase;font-weight:700;}
+.b-brand-nm{font-size:17px;font-weight:900;color:white;letter-spacing:1px;line-height:1;}
+.b-brand-web{font-size:7px;margin-top:2px;}
+</style>
+</head>
+<body>
+<p class="lbl">Vorderseite · Prince Phone</p>
+<div class="bc" id="front">
+  <div class="f-bg" id="f-bg"></div>
+  <img class="f-bgimg" id="front-bgimg" alt="">
+  <div class="f-overlay" id="f-overlay"></div>
+  <div class="f-tex"></div>
+  <div class="f-corner"></div>
+  <div class="f-content">
+    <div class="logo-row">
+      <img class="logo-img-el" id="logo-img" alt="Logo">
+      <svg id="gear-svg" width="110" height="62" viewBox="0 0 220 120" xmlns="http://www.w3.org/2000/svg">
+        <g transform="translate(110,68)">
+          <path d="M0,-68 L8,-64 L8,-56 L16,-52 L22,-58 L30,-50 L24,-44 L28,-36 L38,-36 L40,-24 L30,-22 L28,-14 L36,-8 L30,4 L20,2 L14,10 L18,20 L8,26 L2,16 L-2,16 L-8,26 L-18,20 L-14,10 L-20,2 L-30,4 L-36,-8 L-28,-14 L-30,-22 L-40,-24 L-38,-36 L-28,-36 L-24,-44 L-30,-50 L-22,-58 L-16,-52 L-8,-56 L-8,-64 Z" id="gear-path" fill="#00b4d8"/>
+          <circle cx="0" cy="-10" r="28" id="gear-inner" fill="#2a2d32"/>
+          <rect x="-50" y="8" width="100" height="80" id="gear-mask" fill="#2a2d32"/>
+          <rect x="-50" y="6" width="100" height="3" id="gear-bar" fill="#00b4d8" rx="1"/>
+        </g>
+        <text x="110" y="62" text-anchor="middle" dominant-baseline="middle" font-family="Montserrat,sans-serif" font-weight="700" font-size="22" fill="white" letter-spacing="2" id="pp-text">PP</text>
+      </svg>
+    </div>
+    <div class="f-slogan" id="f-slogan">
+      Mehr Smart . Mehr Phone . <span id="slogan-brand" style="color:#00b4d8;" data-editable="sloganBrand">Prince Phone</span>
+    </div>
+  </div>
+</div>
+
+<p class="lbl">Rückseite · Prince Phone</p>
+<div class="bc" id="back">
+  <div class="b-bg" id="b-bg"></div>
+  <img class="b-bgimg" id="back-bgimg" alt="">
+  <div class="b-overlay" id="b-overlay"></div>
+  <svg class="b-circuit" viewBox="0 0 130 204" xmlns="http://www.w3.org/2000/svg">
+    <line x1="10" y1="30" x2="120" y2="30" stroke="white" stroke-width="1.5"/><line x1="20" y1="60" x2="130" y2="60" stroke="white" stroke-width="1"/>
+    <line x1="0" y1="90" x2="110" y2="90" stroke="white" stroke-width="1.5"/><line x1="30" y1="120" x2="130" y2="120" stroke="white" stroke-width="1"/>
+    <line x1="10" y1="150" x2="100" y2="150" stroke="white" stroke-width="1.5"/><line x1="20" y1="180" x2="130" y2="180" stroke="white" stroke-width="1"/>
+    <line x1="30" y1="30" x2="30" y2="60" stroke="white" stroke-width="1"/><line x1="70" y1="60" x2="70" y2="90" stroke="white" stroke-width="1"/>
+    <line x1="50" y1="90" x2="50" y2="120" stroke="white" stroke-width="1"/><line x1="90" y1="120" x2="90" y2="150" stroke="white" stroke-width="1"/>
+    <circle cx="30" cy="30" r="3" fill="white"/><circle cx="70" cy="60" r="3" fill="white"/>
+    <circle cx="50" cy="90" r="3" fill="white"/><circle cx="90" cy="120" r="3" fill="white"/>
+    <rect x="55" y="22" width="12" height="12" fill="none" stroke="white" stroke-width="1.2" rx="2"/>
+    <rect x="95" y="82" width="12" height="12" fill="none" stroke="white" stroke-width="1.2" rx="2"/>
+  </svg>
+  <div class="b-panel"></div>
+  <div class="b-content">
+    <div class="b-left">
+      <div class="b-rows">
+        <div class="b-row">
+          <div class="b-ic" id="b-ic-main"><svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg></div>
+          <span class="b-nametxt" data-editable="personName">Moustafa Al Ali</span>
+        </div>
+        <div class="b-row">
+          <div class="b-ic" id="b-ic-ph"><svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg></div>
+          <span data-editable="phone1">0178 198 0573</span>
+        </div>
+        <div class="b-row">
+          <div class="b-ic" id="b-ic-addr"><svg viewBox="0 0 24 24"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5c-1.4 0-2.5-1.1-2.5-2.5S10.6 6.5 12 6.5s2.5 1.1 2.5 2.5S13.4 11.5 12 11.5z"/></svg></div>
+          <span data-editable="address" id="addr-span">Kaufhof 5<br>38440 Wolfsburg</span>
+        </div>
+      </div>
+      <div class="b-qr-wrap" id="qr-back" style="width:52px;height:52px;"></div>
+    </div>
+    <div class="b-right">
+      <div class="b-brand">
+        <div style="display:flex;align-items:center;gap:3px;margin-bottom:1px;">
+          <svg width="13" height="11" viewBox="0 0 24 20" fill="white" opacity="0.9"><path d="M1 7.5C4.8 3.7 10.1 1.5 12 1.5s7.2 2.2 11 6L21 9.5c-3-3-5.6-4.5-9-4.5S6 6.5 3 9.5L1 7.5z"/><path d="M5 11.5C7.2 9.3 9.5 8 12 8s4.8 1.3 7 3.5L17 13.5c-1.5-1.5-3-2.5-5-2.5s-3.5 1-5 2.5L5 11.5z"/><circle cx="12" cy="17" r="2.5"/></svg>
+          <div class="b-brand-sm" data-editable="brandSmall" id="brand-sm" style="color:rgba(255,255,255,0.8);">phone</div>
+        </div>
+        <div class="b-brand-nm" data-editable="brandName">PRINCE</div>
+        <div class="b-brand-web" data-editable="website" id="brand-web" style="color:rgba(255,255,255,0.8);">www.prince-phone.de</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p class="lbl" style="margin-top:8px;">85 × 54 mm · Druckfertig</p>
+
+<script>
+var state={
+  personName:'Moustafa Al Ali',phone1:'0178 198 0573',
+  address:'Kaufhof 5\n38440 Wolfsburg',website:'www.prince-phone.de',
+  brandName:'PRINCE',brandSmall:'phone',sloganBrand:'Prince Phone',
+  primaryColor:'#00b4d8',accentColor:'#0096b7',
+  bgImage:'',bgOpacity:0.7,logoImg:'',socialLink:''
+};
+
+function render(){
+  document.querySelectorAll('[data-editable]').forEach(function(el){
+    var k=el.getAttribute('data-editable');
+    if(state[k]===undefined) return;
+    if(k==='address'){ el.innerHTML=state[k].replace(/\n/g,'<br>'); }
+    else { el.textContent=state[k]; }
+  });
+  var p=state.primaryColor||'#00b4d8';
+  var a=state.accentColor||'#0096b7';
+  // front bg
+  document.getElementById('f-bg').style.background='#2a2d32';
+  document.getElementById('f-overlay').style.background='#2a2d32';
+  // gear colors
+  document.getElementById('gear-path').setAttribute('fill',p);
+  document.getElementById('gear-bar').setAttribute('fill',p);
+  document.getElementById('slogan-brand').style.color=p;
+  document.getElementById('f-slogan').style.color='#aaa';
+  document.getElementById('f-slogan').style.borderTopColor='rgba(255,255,255,0.13)';
+  // back bg
+  document.getElementById('b-bg').style.background=p;
+  document.getElementById('b-overlay').style.background=p;
+  // icons bg
+  ['b-ic-main','b-ic-ph','b-ic-addr'].forEach(function(id){
+    document.getElementById(id).style.background=p;
+  });
+  // bg image
+  if(state.bgImage){
+    ['front-bgimg','back-bgimg'].forEach(function(id){
+      var img=document.getElementById(id); img.src=state.bgImage; img.style.display='block'; img.style.opacity=1-state.bgOpacity;
+    });
+    document.getElementById('f-overlay').style.opacity=state.bgOpacity;
+    document.getElementById('b-overlay').style.opacity=state.bgOpacity;
+    document.getElementById('gear-inner').setAttribute('fill','transparent');
+    document.getElementById('gear-mask').setAttribute('fill','transparent');
+  } else {
+    ['front-bgimg','back-bgimg'].forEach(function(id){ document.getElementById(id).style.display='none'; });
+    document.getElementById('f-overlay').style.opacity=1;
+    document.getElementById('b-overlay').style.opacity=1;
+    document.getElementById('gear-inner').setAttribute('fill','#2a2d32');
+    document.getElementById('gear-mask').setAttribute('fill','#2a2d32');
+  }
+  // logo
+  if(state.logoImg){
+    var li=document.getElementById('logo-img'); li.src=state.logoImg; li.style.display='block';
+    document.getElementById('gear-svg').style.display='none';
+  } else {
+    document.getElementById('logo-img').style.display='none';
+    document.getElementById('gear-svg').style.display='';
+  }
+  buildQR(p);
+}
+
+function buildQR(p){
+  var el=document.getElementById('qr-back');
+  el.innerHTML='';
+  var url=state.socialLink
+    ? (state.socialLink.startsWith('http')?state.socialLink:'https://'+state.socialLink)
+    : 'https://'+(state.website||'www.prince-phone.de');
+  try{ new QRCode(el,{text:url,width:48,height:48,colorDark:'#0f172a',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.H}); }catch(e){}
+}
+
+render();
+window.addEventListener('message',function(e){
+  if(!e.data||e.data.type!=='cardUpdate') return;
+  Object.keys(e.data.data).forEach(function(k){ state[k]=e.data.data[k]; });
+  render();
+});
+</script>
+</body>
+</html>
